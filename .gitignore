@@ -1,0 +1,15 @@
+*.iml
+*.ipr
+*.iws
+target
+.idea
+catalog.xml
+nb-configuration.xml
+.settings
+.classpath
+.project
+device-notifications/.settings
+/message.html
+/atlassian-ide-plugin.xml
+nbactions.xml
+.hg
