@@ -11,5 +11,12 @@
     <packaging>war</packaging>
     <artifactId>free-agent-base</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>free-agent</groupId>
+            <artifactId>service-free-agent</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

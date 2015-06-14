@@ -11,5 +11,12 @@
 
     <artifactId>dao-free-agent</artifactId>
 
+   <dependencies>
+    <dependency>
+        <groupId>free-agent</groupId>
+        <artifactId>db-free-agent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+</dependencies>
 
 </project>
