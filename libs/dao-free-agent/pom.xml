@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dao-free-agent</artifactId>
-
+    <name>${project.readable.name} :: Libs DAO</name>
    <dependencies>
     <dependency>
         <groupId>free-agent</groupId>

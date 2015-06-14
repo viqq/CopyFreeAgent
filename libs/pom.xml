@@ -17,5 +17,5 @@
         <module>service-free-agent</module>
     </modules>
 
-
+    <name>${project.readable.name} :: Libs </name>
 </project>
