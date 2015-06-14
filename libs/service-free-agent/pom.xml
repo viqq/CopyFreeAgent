@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>service-free-agent</artifactId>
-    <name>${project.readable.name} :: Libs DB</name>
+    <name>${project.readable.name} :: Libs SERVICE</name>
     <dependencies>
         <dependency>
             <groupId>free-agent</groupId>

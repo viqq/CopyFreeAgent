@@ -8,8 +8,8 @@
 
     <persistence-unit name="h2" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>com.prauf.model.Film</class>
-        <class>com.prauf.model.Order</class>
+        <class>com.free.agent.model.Film</class>
+        <class>com.free.agent.model.Order</class>
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
@@ -25,8 +25,8 @@
     <persistence-unit name="h2Test" transaction-type="RESOURCE_LOCAL">
 
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>com.prauf.model.Film</class>
-        <class>com.prauf.model.Order</class>
+        <class>com.free.agent.model.Film</class>
+        <class>com.free.agent.model.Order</class>
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
