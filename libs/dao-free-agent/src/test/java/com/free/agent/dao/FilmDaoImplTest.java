@@ -14,20 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by antonPC on 12.06.15.
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:dao.xml"})
 @Transactional(value = "transactionManagerTest")
 public class FilmDaoImplTest extends TestCase {
 
-@Autowired
-FilmDaoUtil dao;
-
-
+    @Autowired
+    private FilmDaoUtil dao;
 
     @Test
     public void createReadUpdateDeleteTest() throws Exception {
-        Thread.sleep(1000);
         Assert.assertEquals(0, 0);
         assertEquals(0, dao.getAll().size());
         Film film = dao.getEntityManager().merge(new Film(20, "1", "1"));
@@ -35,11 +31,10 @@ FilmDaoUtil dao;
         assertEquals(1, dao.getAll().size());
         film.setDescription("desc");
         dao.update(film);
+        dao.getEntityManager().flush();
         assertEquals("desc", dao.read(film.getId()).getDescription());
         dao.delete(film);
        assertEquals(0, dao.getAll().size());
     }
-
-
-    }
+}
 

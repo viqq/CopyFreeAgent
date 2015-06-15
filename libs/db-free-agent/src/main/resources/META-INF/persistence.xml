@@ -10,6 +10,8 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>com.free.agent.model.Film</class>
         <class>com.free.agent.model.Order</class>
+        <class>com.free.agent.model.Sport</class>
+        <class>com.free.agent.model.User</class>
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
@@ -27,6 +29,8 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>com.free.agent.model.Film</class>
         <class>com.free.agent.model.Order</class>
+        <class>com.free.agent.model.Sport</class>
+        <class>com.free.agent.model.User</class>
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>

@@ -18,12 +18,11 @@ public class Sport implements Serializable {
     private Long id;
     @Column(name = "NAME")
     private String name;
-    @ManyToMany(mappedBy="SPORTS")
+    @ManyToMany(mappedBy="sports")
     private Set<User> users = new HashSet<User>();
 
-    public Sport(String name, Set<User> users) {
+    public Sport(String name) {
         this.name = name;
-        this.users = users;
     }
 
     public Sport() {

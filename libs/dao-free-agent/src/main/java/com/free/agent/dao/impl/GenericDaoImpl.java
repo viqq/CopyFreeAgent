@@ -18,7 +18,7 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
     protected abstract EntityManager getEntityManager();
 
     public T create(T t) {
-        getEntityManager().merge(t);
+        getEntityManager().persist(t);
         return t;
     }
 

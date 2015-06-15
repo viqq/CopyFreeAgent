@@ -32,10 +32,9 @@ public class User implements Serializable {
             inverseJoinColumns={@JoinColumn(name="SPORT_ID")})
     private Set<Sport> sports = new HashSet<Sport>();
 
-    public User(String login, String password, Set<Sport> sports) {
+    public User(String login, String password) {
         this.login = login;
         this.password = password;
-        this.sports = sports;
     }
 
     public User() {
