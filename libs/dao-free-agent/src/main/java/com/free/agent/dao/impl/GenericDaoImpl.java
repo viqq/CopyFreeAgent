@@ -38,4 +38,10 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
         Query query = getEntityManager().createQuery("from " + getEntityClass().getName());
         return query.getResultList();
     }
+
+    public void removeAll(){
+        for (T t : getAll()){
+            delete(t);
+        }
+    }
 }

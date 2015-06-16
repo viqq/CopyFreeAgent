@@ -1,7 +1,6 @@
 package com.free.agent.model;
 
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -16,7 +15,7 @@ public class User implements Serializable {
 
     @Id
     @Column(name = "USER_ID")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "LOGIN")
     private String login;
@@ -27,9 +26,9 @@ public class User implements Serializable {
     @Column(name = "EMAIL", nullable = true)
     private String email;
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="USER_SPORT",
-            joinColumns={@JoinColumn(name="USER_ID")},
-            inverseJoinColumns={@JoinColumn(name="SPORT_ID")})
+    @JoinTable(name = "USER_SPORT",
+            joinColumns = {@JoinColumn(name = "USER_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SPORT_ID")})
     private Set<Sport> sports = new HashSet<Sport>();
 
     public User(String login, String password) {

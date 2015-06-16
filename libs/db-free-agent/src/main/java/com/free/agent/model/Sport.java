@@ -14,7 +14,7 @@ public class Sport implements Serializable {
 
     @Id
     @Column(name = "SPORT_ID")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "NAME")
     private String name;
