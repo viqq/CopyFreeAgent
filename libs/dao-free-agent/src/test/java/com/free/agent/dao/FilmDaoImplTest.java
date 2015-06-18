@@ -32,7 +32,7 @@ public class FilmDaoImplTest extends TestCase {
         film.setDescription("desc");
         dao.update(film);
         dao.getEntityManager().flush();
-        assertEquals("desc", dao.read(film.getId()).getDescription());
+        assertEquals("desc", dao.find(film.getId()).getDescription());
         dao.delete(film);
         assertEquals(0, dao.getAll().size());
     }

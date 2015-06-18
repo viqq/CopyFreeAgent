@@ -2,6 +2,8 @@ package com.free.agent.dao;
 
 import com.free.agent.model.User;
 
+import java.util.Collection;
+
 /**
  * Created by antonPC on 15.06.15.
  */

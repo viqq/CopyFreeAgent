@@ -5,7 +5,6 @@ import com.free.agent.dao.FilmDao;
 import com.free.agent.model.Film;
 import com.free.agent.service.impl.FilmServiceImpl;
 import junit.framework.TestCase;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -41,7 +40,7 @@ public class FilmServiceImplTest extends TestCase{
 
     @Test
     public void getFilmTest(){
-        Mockito.when(dao.read(1)).thenReturn(film(1));
+        Mockito.when(dao.find(1)).thenReturn(film(1));
         Film film = service.getFilm(1);
         Assert.assertEquals(film.getDescription(),"desc");
         Assert.assertEquals(film.getName(), "name");

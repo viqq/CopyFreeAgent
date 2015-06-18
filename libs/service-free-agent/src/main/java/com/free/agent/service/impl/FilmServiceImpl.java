@@ -25,6 +25,6 @@ public class FilmServiceImpl implements FilmService {
 
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public Film getFilm(Integer id) {
-        return filmDao.read(id);
+        return filmDao.find(id);
     }
 }

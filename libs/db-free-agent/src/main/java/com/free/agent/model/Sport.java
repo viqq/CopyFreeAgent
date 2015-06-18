@@ -18,7 +18,7 @@ public class Sport implements Serializable {
     private Long id;
     @Column(name = "NAME", unique = true)
     private String name;
-    @ManyToMany(mappedBy="sports")
+    @ManyToMany(mappedBy = "sports")
     private Set<User> users = new HashSet<User>();
 
     public Sport(String name) {
