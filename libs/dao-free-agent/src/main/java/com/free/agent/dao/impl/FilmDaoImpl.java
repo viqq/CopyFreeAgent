@@ -1,6 +1,7 @@
 package com.free.agent.dao.impl;
 
 
+import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.FilmDao;
 
 import com.free.agent.model.Film;
@@ -13,7 +14,7 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class FilmDaoImpl extends GenericDaoImpl<Film,Integer> implements FilmDao {
 
-    @PersistenceContext(unitName = "h2")
+    @PersistenceContext(unitName = FreeAgentConstant.PERSISTENCE_CONTEXT)
     protected EntityManager entityManager;
 
     @Override

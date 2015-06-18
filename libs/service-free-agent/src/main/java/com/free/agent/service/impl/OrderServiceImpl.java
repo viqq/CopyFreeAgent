@@ -1,6 +1,7 @@
 package com.free.agent.service.impl;
 
 
+import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.OrderDao;
 import com.free.agent.model.Order;
 import com.free.agent.service.OrderService;
@@ -14,12 +15,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderDao orderDao;
 
-    @Transactional
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public Order createOrder(Order order) {
         return orderDao.create(order);
     }
 
-    @Transactional
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public Order updateOrder(Order order) {
         return orderDao.update(order);
     }

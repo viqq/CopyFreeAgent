@@ -16,7 +16,7 @@ public class Sport implements Serializable {
     @Column(name = "SPORT_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "NAME")
+    @Column(name = "NAME", unique = true)
     private String name;
     @ManyToMany(mappedBy="sports")
     private Set<User> users = new HashSet<User>();

@@ -10,12 +10,10 @@
     <context:annotation-config/>
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
-    <import resource="classpath*:dao.xml"/>
-    <import resource="classpath*:service.xml"/>
+    <import resource="classpath*:free-agent-dao-context.xml"/>
+    <import resource="classpath*:free-agent-services-context.xml"/>
     <context:component-scan base-package="com.free.agent">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-
-
 
 </beans>

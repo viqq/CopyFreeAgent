@@ -10,6 +10,9 @@ public class DaoUtils {
         if (list.size() == 0) {
             return null;
         }
-        return list.get(0);
+        if (list.size() == 1) {
+            return list.get(0);
+        }
+        throw new RuntimeException("Table contains many unique elements");
     }
 }

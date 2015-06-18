@@ -1,5 +1,6 @@
 package com.free.agent.service;
 
+import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.FilmDao;
 import com.free.agent.model.Film;
 import com.free.agent.service.impl.FilmServiceImpl;
@@ -23,8 +24,8 @@ import org.mockito.MockitoAnnotations;
  * Created by antonPC on 13.06.15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:dao.xml"})
-@Transactional(value = "transactionManager")
+@ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml"})
+@Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
 public class FilmServiceImplTest extends TestCase{
 
     @Before

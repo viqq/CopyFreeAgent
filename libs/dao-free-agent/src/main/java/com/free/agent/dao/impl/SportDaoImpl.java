@@ -1,5 +1,6 @@
 package com.free.agent.dao.impl;
 
+import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
 import com.free.agent.dao.UserDao;
 import com.free.agent.model.Sport;
@@ -15,7 +16,7 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class SportDaoImpl  extends GenericDaoImpl<Sport,Long> implements SportDao {
 
-    @PersistenceContext(unitName = "h2")
+    @PersistenceContext(unitName = FreeAgentConstant.PERSISTENCE_CONTEXT)
     protected EntityManager entityManager;
 
     @Override

@@ -4,18 +4,18 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
        <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-              <property name="persistenceUnitName" value="h2"/>
+              <property name="persistenceUnitName" value="free-agent-db"/>
        </bean>
 
-       <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+       <bean id="free-agent-jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
               <property name="entityManagerFactory" ref="entityManagerFactory"/>
        </bean>
 
        <bean id="entityManagerFactoryTest" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-              <property name="persistenceUnitName" value="h2Test"/>
+              <property name="persistenceUnitName" value="free-agent-db-test"/>
        </bean>
 
-       <bean id="transactionManagerTest" class="org.springframework.orm.jpa.JpaTransactionManager">
+       <bean id="free-agent-jpaTransactionManager-test" class="org.springframework.orm.jpa.JpaTransactionManager">
               <property name="entityManagerFactory" ref="entityManagerFactoryTest"/>
        </bean>
 

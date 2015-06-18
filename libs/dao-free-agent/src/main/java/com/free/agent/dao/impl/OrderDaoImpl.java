@@ -1,6 +1,7 @@
 package com.free.agent.dao.impl;
 
 
+import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.OrderDao;
 
 import com.free.agent.model.Order;
@@ -12,7 +13,7 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class OrderDaoImpl extends GenericDaoImpl<Order, Integer> implements OrderDao {
 
-    @PersistenceContext(unitName = "h2")
+    @PersistenceContext(unitName = FreeAgentConstant.PERSISTENCE_CONTEXT)
     protected EntityManager entityManager;
 
     @Override

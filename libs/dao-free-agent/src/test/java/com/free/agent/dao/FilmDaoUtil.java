@@ -1,5 +1,6 @@
 package com.free.agent.dao;
 
+import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.impl.FilmDaoImpl;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +13,7 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class FilmDaoUtil extends FilmDaoImpl {
 
-    @PersistenceContext(unitName = "h2Test")
+    @PersistenceContext(unitName = FreeAgentConstant.PERSISTENCE_CONTEXT_TEST)
     protected EntityManager entityManager;
 
     @Override

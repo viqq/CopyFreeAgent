@@ -1,5 +1,6 @@
 package com.free.agent.dao.impl;
 
+import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.FilmDao;
 import com.free.agent.dao.UserDao;
 import com.free.agent.model.Film;
@@ -20,7 +21,7 @@ import javax.persistence.criteria.Root;
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 
-    @PersistenceContext(unitName = "h2")
+    @PersistenceContext(unitName = FreeAgentConstant.PERSISTENCE_CONTEXT)
     protected EntityManager entityManager;
 
     @Override

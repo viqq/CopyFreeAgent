@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.List;
-@Transactional(value = "transactionManager")
+
 public abstract class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK> {
 
     protected abstract Class<T> getEntityClass();

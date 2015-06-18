@@ -1,5 +1,6 @@
 package com.free.agent.dao;
 
+import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.mock.SportDaoUtil;
 import com.free.agent.dao.mock.UserDaoUtil;
 import com.free.agent.model.Sport;
@@ -19,8 +20,8 @@ import java.util.*;
  * Created by antonPC on 15.06.15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:dao.xml"})
-@Transactional(value = "transactionManagerTest")
+@ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml"})
+@Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
 public class UserDaoImplTest extends TestCase {
     @Autowired
     private SportDaoUtil sportDao;
