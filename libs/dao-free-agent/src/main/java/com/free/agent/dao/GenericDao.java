@@ -12,7 +12,7 @@ public interface GenericDao<T, PK extends Serializable> {
 
     void delete(T t);
 
-    List<T> getAll();
+    List<T> findAll();
 
     void removeAll();
 }

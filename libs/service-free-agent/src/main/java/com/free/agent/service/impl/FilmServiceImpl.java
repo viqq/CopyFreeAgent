@@ -20,7 +20,7 @@ public class FilmServiceImpl implements FilmService {
 
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public List<Film> getAllFilms() {
-        return filmDao.getAll();
+        return filmDao.findAll();
     }
 
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)

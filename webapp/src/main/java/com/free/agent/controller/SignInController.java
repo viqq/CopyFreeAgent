@@ -1,5 +1,6 @@
 package com.free.agent.controller;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,12 @@ public class SignInController {
 
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
     public ModelAndView getFilms() {
+        ModelAndView model = new ModelAndView("signin");
+        return model;
+    }
+
+    @RequestMapping(value = "/signin/login", method = RequestMethod.GET)
+    public ModelAndView get() {
         ModelAndView model = new ModelAndView("signin");
         return model;
     }

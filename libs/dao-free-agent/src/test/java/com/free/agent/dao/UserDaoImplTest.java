@@ -30,8 +30,8 @@ public class UserDaoImplTest extends TestCase {
 
     @Test
     public void createReadUpdateDeleteTest() throws Exception {
-        assertEquals(0, sportDao.getAll().size());
-        assertEquals(0, userDao.getAll().size());
+        assertEquals(0, sportDao.findAll().size());
+        assertEquals(0, userDao.findAll().size());
 
         Sport s1 = new Sport("Football");
         Sport s2 = new Sport("Basketball");
@@ -46,13 +46,13 @@ public class UserDaoImplTest extends TestCase {
         userDao.getEntityManager().merge(u1);
         userDao.getEntityManager().merge(u2);
 
-        assertEquals(2, userDao.getAll().size());
+        assertEquals(2, userDao.findAll().size());
         assertEquals(2, userDao.findByLogin(u1.getLogin()).getSports().size());
         assertEquals(1, userDao.findByLogin(u2.getLogin()).getSports().size());
         assertContains(userDao.findByLogin(u1.getLogin()).getSports(), Lists.newArrayList(s1.getName(), s2.getName()));
         assertContains(userDao.findByLogin(u2.getLogin()).getSports(), Lists.newArrayList(s1.getName()));
         userDao.removeAll();
-        assertEquals(0, userDao.getAll().size());
+        assertEquals(0, userDao.findAll().size());
     }
 
 

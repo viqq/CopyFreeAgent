@@ -10,20 +10,23 @@
     <title>Signin Template for Bootstrap</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/app/signin.css" rel="stylesheet">
+
+    <script src="js/jquery-2.1.4.min.js" type='text/javascript'></script>
+    <script src="js/app/signin.js" type='text/javascript'></script>
   </head>
 
   <body>
 
     <div class="container">
 
-      <form class="form-signin" role="form">
+      <form id ="singin" class="form-signin" role="form">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="email" class="form-control" placeholder="Email address" required autofocus>
         <input type="password" class="form-control" placeholder="Password" required>
         <label class="checkbox">
           <input type="checkbox" value="remember-me"> Remember me
         </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" id = "submitButton" type="submit">Sign in</button>
       </form>
 
     </div>

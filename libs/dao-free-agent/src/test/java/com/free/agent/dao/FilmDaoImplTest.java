@@ -25,16 +25,16 @@ public class FilmDaoImplTest extends TestCase {
     @Test
     public void createReadUpdateDeleteTest() throws Exception {
         Assert.assertEquals(0, 0);
-        assertEquals(0, dao.getAll().size());
+        assertEquals(0, dao.findAll().size());
         Film film = dao.getEntityManager().merge(new Film(20, "1", "1"));
         dao.getEntityManager().flush();
-        assertEquals(1, dao.getAll().size());
+        assertEquals(1, dao.findAll().size());
         film.setDescription("desc");
         dao.update(film);
         dao.getEntityManager().flush();
         assertEquals("desc", dao.find(film.getId()).getDescription());
         dao.delete(film);
-        assertEquals(0, dao.getAll().size());
+        assertEquals(0, dao.findAll().size());
     }
 }
 

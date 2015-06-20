@@ -1,20 +1,15 @@
 package com.free.agent.dao.impl;
 
 import com.free.agent.dao.GenericDao;
-import com.free.agent.model.User;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.List;
 
 public abstract class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK> {
 
-    private final static String FROM = "FROM ";
     protected abstract Class<T> getEntityClass();
 
     protected abstract EntityManager getEntityManager();
@@ -36,13 +31,15 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
         getEntityManager().remove(t);
     }
 
-    public List<T> getAll() {
-        Query query = getEntityManager().createQuery(FROM + getEntityClass().getName());
-        return query.getResultList();
+    public List<T> findAll() {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<T> criteria = cb.createQuery(getEntityClass());
+        criteria.from(getEntityClass());
+        return getEntityManager().createQuery(criteria).getResultList();
     }
 
     public void removeAll(){
-        for (T t : getAll()){
+        for (T t : findAll()){
             delete(t);
         }
     }
