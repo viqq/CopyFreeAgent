@@ -1,11 +1,8 @@
 package com.free.agent.dao.impl;
 
 import com.free.agent.config.FreeAgentConstant;
-import com.free.agent.dao.FilmDao;
 import com.free.agent.dao.UserDao;
-import com.free.agent.model.Film;
-import com.free.agent.model.User;
-import com.free.agent.model.User_;
+import com.free.agent.model.*;
 import com.free.agent.utils.DaoUtils;
 import org.springframework.stereotype.Repository;
 
