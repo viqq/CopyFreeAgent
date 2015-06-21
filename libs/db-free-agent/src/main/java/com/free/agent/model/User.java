@@ -2,6 +2,7 @@ package com.free.agent.model;
 
 
 import com.free.agent.role.Role;
+import com.google.common.collect.Sets;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.Set;
  * Created by antonPC on 15.06.15.
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "USER" , uniqueConstraints={@UniqueConstraint(columnNames={"LOGIN", "USER_ID"})})
 public class User implements Serializable {
 
     @Id
@@ -40,7 +41,7 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLE")
-    private Role role = Role.ROLE_MODERATOR;;
+    private Role role = Role.ROLE_MODERATOR;
 
     public User(String login, String password) {
         this.login = login;
@@ -48,14 +49,6 @@ public class User implements Serializable {
     }
 
     public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getLogin() {

@@ -7,6 +7,7 @@ import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.google.common.collect.Lists;
 import junit.framework.TestCase;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.*;
 /**
  * Created by antonPC on 15.06.15.
  */
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml"})
 @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
