@@ -12,9 +12,9 @@
 		<intercept-url pattern="/admin/*" access="ROLE_ADMIN" />
 		
 		<form-login login-page="/user-login.html" 
-			default-target-url="/success-login.html"
+			default-target-url="/user/info"
 			authentication-failure-url="/error-login.html" />
-		<logout logout-success-url="/index.html" />
+		<logout logout-success-url="/user-login.html" />
 		
 	</http>
 	

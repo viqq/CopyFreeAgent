@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LinkNavigation {
 
-	@RequestMapping(value="/", method= RequestMethod.GET)
+	@RequestMapping(value="/h", method= RequestMethod.GET)
 	public ModelAndView homePage() {
 		return new ModelAndView("home");
 	}

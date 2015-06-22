@@ -26,7 +26,7 @@
     </tr>
     <tr>
       <td>Password:</td>
-      <td><input type="text" name="password" id="password" size="30" maxlength="32" /></td>
+      <td><input type="password" name="password" id="password" size="30" maxlength="32" /></td>
     </tr>
     <tr>
     <tr>
@@ -46,16 +46,16 @@
 </form>
 
 <p>
-  <a href="${pageContext.request.contextPath}/index.html">Home page</a><br/>
+  <%--<a href="${pageContext.request.contextPath}/index.html">Home page</a><br/>--%>
 </p>
 
-<c:if test="${not empty users}">
+<%--<c:if test="${not empty users}">
   <ul>
     <c:forEach var="user" items="${users}">
       <li> "${user.login} , ${user.password} , ${user.email} , ${user.city} "</li>
     </c:forEach>
   </ul>
-</c:if>
+</c:if>--%>
 
 </body>
 </html>

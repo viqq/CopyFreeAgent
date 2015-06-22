@@ -37,15 +37,15 @@
 <td><input type="password" name="j_password" id="j_password" size="30" maxlength="32" /></td>
 </tr>
 <tr>
-<td></td>
-<td><input type="submit" value="Login" /></td>
+<td><a href="${pageContext.request.contextPath}/registration">Registration</a><br/></td>
+<td><input type="submit" value="Login"/></td>
 </tr>
 </tbody>
 </table>
 </form>	
 
 <p>
-<a href="${pageContext.request.contextPath}/index.html">Home page</a><br/>
+<%--<a href="${pageContext.request.contextPath}/index.html">Home page</a><br/>--%>
 </p>
 </body>
 </html>

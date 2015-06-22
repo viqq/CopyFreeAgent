@@ -7,7 +7,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class SecurityNavigation {
-	
+
+
+	@RequestMapping(value="/", method= RequestMethod.GET)
+	public ModelAndView loginFormDef() {
+		return new ModelAndView("login-form");
+	}
+
 	@RequestMapping(value="/user-login", method= RequestMethod.GET)
 	public ModelAndView loginForm() {
 		return new ModelAndView("login-form");

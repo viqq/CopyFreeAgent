@@ -11,4 +11,6 @@ public interface UserService {
     User save(User user);
 
     Collection<User> findAll();
+
+    User findByLogin(String login);
 }

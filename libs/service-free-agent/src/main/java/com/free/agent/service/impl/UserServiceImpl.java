@@ -32,4 +32,10 @@ public class UserServiceImpl implements UserService {
     public Collection<User> findAll() {
         return userDao.findAll();
     }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+    public User findByLogin(String login) {
+        return userDao.findByLogin(login);
+    }
 }
