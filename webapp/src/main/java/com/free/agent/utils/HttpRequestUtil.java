@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Created by antonPC on 26.06.15.
  */
-public final class HttpUtil {
+public final class HttpRequestUtil {
     public static  Set<String> getParams(HttpServletRequest request,String name) {
         Enumeration enu = request.getParameterNames();
         Set<String> set = Sets.newHashSet();

@@ -19,7 +19,6 @@ public class SportServiceImpl implements SportService {
     @Autowired
     private SportDao sportDao;
 
-
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public Sport save(Sport sport) {
@@ -27,7 +26,7 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER,readOnly = true)
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public Collection<Sport> getAllSports() {
         return sportDao.findAll();
     }

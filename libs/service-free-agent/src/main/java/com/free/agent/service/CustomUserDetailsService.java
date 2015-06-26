@@ -25,23 +25,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserDao userDAO;
 
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public UserDetails loadUserByUsername(String login)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
         com.free.agent.model.User domainUser = userDAO.findByLogin(login);
         boolean enabled = true;
         boolean accountNonExpired = true;
-
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
-        return new User(
-                domainUser.getLogin(),
-                domainUser.getPassword(),
-                enabled,
-                accountNonExpired,
-                credentialsNonExpired,
-                accountNonLocked,
+        return new User(domainUser.getLogin(), domainUser.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked,
                 getAuthorities(domainUser.getRole())
         );
     }

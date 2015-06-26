@@ -1,13 +1,12 @@
 package com.free.agent.dao;
 
 import com.free.agent.config.FreeAgentConstant;
-import com.free.agent.dao.mock.SportDaoUtil;
-import com.free.agent.dao.mock.UserDaoUtil;
+import com.free.agent.dao.mock.SportDaoMock;
+import com.free.agent.dao.mock.UserDaoMock;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.google.common.collect.Lists;
 import junit.framework.TestCase;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +19,15 @@ import java.util.*;
 /**
  * Created by antonPC on 15.06.15.
  */
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml"})
 @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
 public class UserDaoImplTest extends TestCase {
+
     @Autowired
-    private SportDaoUtil sportDao;
+    private SportDaoMock sportDao;
     @Autowired
-    private UserDaoUtil userDao;
+    private UserDaoMock userDao;
 
     @Test
     public void createReadUpdateDeleteTest() throws Exception {
@@ -56,7 +55,6 @@ public class UserDaoImplTest extends TestCase {
         userDao.removeAll();
         assertEquals(0, userDao.findAll().size());
     }
-
 
     private void assertContains(Set<Sport> usersSports, ArrayList<String> sports) {
         for (Sport usersSport : usersSports) {
