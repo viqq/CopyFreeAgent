@@ -9,7 +9,7 @@ import java.util.Set;
  * Created by antonPC on 15.06.15.
  */
 @Entity
-@Table(name = "SPORT")
+@Table(name = "SPORT",uniqueConstraints={@UniqueConstraint(columnNames={"NAME"})})
 public class Sport implements Serializable {
 
     @Id

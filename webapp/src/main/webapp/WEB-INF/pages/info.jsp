@@ -7,7 +7,19 @@
 <body>
 <p>User  <b>${user.login}</b> hello</p>
 Information about  <b>${user.login}</b>
-<li> "${user.login} , ${user.password} , ${user.email} , ${user.city} "</li>
+<ol>
+<li> "${user.login} "</li>
+<li> " ${user.password} "</li>
+<li> "  ${user.email}"</li>
+<li> "   ${user.city} "</li>
+    <c:if test="${not empty user.sports}">
+        <ul>
+            <c:forEach var="sport" items="${user.sports}">
+                <li> "${sport.name} "</li>
+            </c:forEach>
+        </ul>
+    </c:if>
+</ol>
 <a href="<c:url value="/j_spring_security_logout" />" >Logout</a> <br/>
 </body>
 </html>

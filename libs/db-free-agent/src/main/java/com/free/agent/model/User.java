@@ -13,7 +13,7 @@ import java.util.Set;
  * Created by antonPC on 15.06.15.
  */
 @Entity
-@Table(name = "USER" , uniqueConstraints={@UniqueConstraint(columnNames={"LOGIN", "USER_ID"})})
+@Table(name = "USER" , uniqueConstraints={@UniqueConstraint(columnNames={"LOGIN"})})
 public class User implements Serializable {
 
     @Id
@@ -33,7 +33,7 @@ public class User implements Serializable {
     @Column(name = "EMAIL", nullable = true)
     private String email;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
     @JoinTable(name = "USER_SPORT",
             joinColumns = {@JoinColumn(name = "USER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "SPORT_ID")})

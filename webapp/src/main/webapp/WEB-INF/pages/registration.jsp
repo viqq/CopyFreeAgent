@@ -37,6 +37,21 @@
       <td>Email:</td>
       <td><input type="text" name="email" id="email" size="30" maxlength="32" /></td>
     </tr>
+    <tr>
+      <td>
+        <select name="select" id="s" multiple>
+          <c:if test="${not empty allSports}">
+
+            <c:forEach var="sport" items="${allSports}">
+
+              <option value="${sport.name}">"${sport.name}"</option>
+            </c:forEach>
+
+          </c:if>
+        </select>
+      </td>
+      <td></td>
+    </tr>
 
       <td></td>
       <td><input type="submit" value="Register" /></td>
@@ -49,13 +64,10 @@
   <%--<a href="${pageContext.request.contextPath}/index.html">Home page</a><br/>--%>
 </p>
 
-<%--<c:if test="${not empty users}">
-  <ul>
-    <c:forEach var="user" items="${users}">
-      <li> "${user.login} , ${user.password} , ${user.email} , ${user.city} "</li>
-    </c:forEach>
-  </ul>
-</c:if>--%>
+
+
+
+
 
 </body>
 </html>
