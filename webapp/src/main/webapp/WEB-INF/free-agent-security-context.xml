@@ -8,7 +8,7 @@
     
 	<http auto-config="true">
 	
-		<intercept-url pattern="/sec/moderation.html" access="ROLE_MODERATOR" />
+		<intercept-url pattern="/user/*" access="ROLE_MODERATOR" />
 		<intercept-url pattern="/admin/*" access="ROLE_ADMIN" />
 		
 		<form-login login-page="/user-login.html" 
