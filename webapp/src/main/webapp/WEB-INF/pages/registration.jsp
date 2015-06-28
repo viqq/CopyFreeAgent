@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
@@ -22,11 +23,11 @@
     <tbody>
     <tr>
       <td>Login:</td>
-      <td><input type="text" name="login" id="login"size="30" maxlength="40"  /></td>
+      <td><input type="text" name="login" id="login"size="30" maxlength="40"  />
     </tr>
     <tr>
       <td>Password:</td>
-      <td><input type="password" name="password" id="password" size="30" maxlength="32" /></td>
+      <td><input type="password" name="password" id="password" size="30" maxlength="32" />
     </tr>
     <tr>
     <tr>
@@ -36,6 +37,26 @@
     <tr>
       <td>Email:</td>
       <td><input type="text" name="email" id="email" size="30" maxlength="32" /></td>
+    </tr>
+    <tr>
+      <td>Phone:</td>
+      <td><input type="text" name="phone" id="phone"size="30" maxlength="40"  /></td>
+    </tr>
+    <tr>
+      <td>First Name:</td>
+      <td><input type="text" name="firstName" id="firstName" size="30" maxlength="32" /></td>
+    </tr>
+    <tr>
+      <td>Last Name:</td>
+      <td><input type="text" name="lastName" id="lastName"size="30" maxlength="40"  /></td>
+    </tr>
+    <tr>
+      <td>Description:</td>
+      <td><input type="text" name="description" id="description" size="30" maxlength="32" /></td>
+    </tr>
+    <tr>
+      <td>Date of Birth:</td>
+      <td><input type="text" name="dateOfBirth" id="dateOfBirth" size="30" maxlength="32" /></td>
     </tr>
     <tr>
       <td>
@@ -52,7 +73,7 @@
       </td>
       <td></td>
     </tr>
-
+<tr>
       <td></td>
       <td><input type="submit" value="Register" /></td>
     </tr>

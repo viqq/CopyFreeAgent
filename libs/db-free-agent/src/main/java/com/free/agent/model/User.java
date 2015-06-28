@@ -59,9 +59,10 @@ public class User implements Serializable {
     @Column(name = "PHONE", nullable = false, unique = true)
     private String phone;
 
-    public User(String login, String password) {
+    public User(String login, String password, String phone) {
         this.login = login;
         this.password = password;
+        this.phone = phone;
     }
 
     public User() {

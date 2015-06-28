@@ -37,15 +37,15 @@ public class UserDaoImplTest extends TestCase {
         Sport s1 = new Sport("Football");
         Sport s2 = new Sport("Basketball");
 
-        User u1 = new User("l1", "p1");
-        User u2 = new User("l2", "p2");
+        User u1 = new User("l1", "p1", "11-22-33");
+        User u2 = new User("l2", "p2", "12-34-45");
 
         u1.getSports().add(s1);
         u1.getSports().add(s2);
         u2.getSports().add(s1);
 
-        userDao.getEntityManager().merge(u1);
-        userDao.getEntityManager().merge(u2);
+        userDao.create(u1);
+        userDao.create(u2);
 
         assertEquals(2, userDao.findAll().size());
         assertEquals(2, userDao.findByLogin(u1.getLogin()).getSports().size());
