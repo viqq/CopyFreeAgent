@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -38,11 +39,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public ModelAndView get(@Valid UserDto userDto, BindingResult bindingResult, HttpServletRequest request) {
+    public String get(@Valid UserDto userDto, BindingResult bindingResult, HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
         Set<String> set = HttpRequestUtil.getParams(request, "select");
         userService.save(getUser(userDto), set);
         ModelAndView model = new ModelAndView("login-form");
-        return model;
+        return "login-form";
     }
 
     private User getUser(UserDto userDto) {

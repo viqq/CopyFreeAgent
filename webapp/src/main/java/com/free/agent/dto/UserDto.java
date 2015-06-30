@@ -2,7 +2,11 @@ package com.free.agent.dto;
 
 import com.free.agent.annotation.Phone;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 
 /**
@@ -19,7 +23,9 @@ public final class UserDto {
     private String description;
     private String firstName;
     private String lastName;
-    private String dateOfBirth;
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @Past
+    private Date dateOfBirth;
     @Phone
     private String phone;
 
@@ -87,11 +93,11 @@ public final class UserDto {
         this.phone = phone;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }
