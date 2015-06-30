@@ -2,7 +2,6 @@ package com.free.agent.model;
 
 
 import com.free.agent.role.Role;
-import com.google.common.base.Objects;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -164,28 +163,4 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User that = (User) o;
-        return Objects.equal(this.id, that.id) &&
-                Objects.equal(this.login, that.login) &&
-                Objects.equal(this.password, that.password) &&
-                Objects.equal(this.city, that.city) &&
-                Objects.equal(this.email, that.email) &&
-                Objects.equal(this.sports, that.sports) &&
-                Objects.equal(this.role, that.role) &&
-                Objects.equal(this.description, that.description) &&
-                Objects.equal(this.firstName, that.firstName) &&
-                Objects.equal(this.lastName, that.lastName) &&
-                Objects.equal(this.dateOfBirth, that.dateOfBirth) &&
-                Objects.equal(this.phone, that.phone);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id, login, password, city, email, sports, role, description, firstName, lastName,
-                dateOfBirth, phone);
-    }
 }

@@ -20,7 +20,7 @@ public class Sport implements Serializable {
     private Long id;
     @Column(name = "NAME", unique = true)
     private String name;
-    @ManyToMany(mappedBy = "sports")
+    @ManyToMany(mappedBy = "sports", fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<User>();
 
     public Sport(String name) {
@@ -46,17 +46,4 @@ public class Sport implements Serializable {
         this.users = users;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sport that = (Sport) o;
-        return Objects.equal(this.id, that.id) &&
-                Objects.equal(this.name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id, name, users);
-    }
 }
