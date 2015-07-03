@@ -1,5 +1,6 @@
 package com.free.agent.service;
 
+import com.free.agent.Filter;
 import com.free.agent.model.User;
 
 import java.util.Collection;
@@ -14,4 +15,6 @@ public interface UserService {
     Collection<User> findAll();
 
     User findByLogin(String login);
+
+    Collection<User> findByFilter(Filter filter);
 }
