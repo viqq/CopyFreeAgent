@@ -3,7 +3,6 @@ package com.free.agent.dao.impl;
 import com.free.agent.Filter;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.UserDao;
-import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.model.User_;
 import com.free.agent.utils.DaoUtils;
@@ -13,7 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.util.Collection;
 
@@ -50,8 +48,6 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
     public Collection<User> findByFilter(Filter filter) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
-        Root<User> fromUser = query.from(User.class);
-        Path<Sport> fromSport = query.from(Sport.class);
         query.where(filter.getPredicate(cb, query));
         return getEntityManager().createQuery(query).getResultList();
     }

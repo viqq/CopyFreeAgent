@@ -53,6 +53,7 @@ public class User implements Serializable {
     private String lastName;
 
     @Column(name = "DATE_OF_BIRTH")
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
     @Column(name = "PHONE", nullable = false, unique = true)

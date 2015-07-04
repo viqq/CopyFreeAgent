@@ -12,6 +12,7 @@ public class BaseController {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView getFilms() {
+        System.out.print("Exception!!!");
         ModelAndView model = new ModelAndView("login-form");
         return model;
     }

@@ -18,9 +18,17 @@ public class SearchController {
     private UserService userService;
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public ModelAndView get() {
+        ModelAndView model = new ModelAndView("search");
+        model.addObject("users", userService.findAll());
+        return model;
+    }
+
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
     public ModelAndView getInfo(Filter filter) {
-        ModelAndView model = new ModelAndView("info");
-        model.addObject("user", userService.findByFilter(filter));
+        ModelAndView model = new ModelAndView("search");
+        model.addObject("users", userService.findByFilter(filter));
         return model;
     }
 
