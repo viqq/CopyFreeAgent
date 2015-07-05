@@ -1,14 +1,13 @@
 package com.free.agent;
 
+import com.free.agent.model.Sport;
+import com.free.agent.model.Sport_;
 import com.free.agent.model.User;
 import com.free.agent.model.User_;
 import com.free.agent.utils.PredicateBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.Date;
 
 /**
@@ -24,17 +23,19 @@ public final class Filter {
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date dateOfBirthTo;
 
-    //TODO
     public Predicate getPredicate(CriteriaBuilder cb, CriteriaQuery<User> query) {
         Root<User> fromUser = query.from(User.class);
-        //Root<Sport> fromSport = query.from(Sport.class);
+        Predicate predicate = null;
+        if (validValue(sport) != null) {
+            SetJoin<User, Sport> sportName = fromUser.join(User_.sports);
+            predicate = cb.equal(sportName.get(Sport_.name), getSport());
+        }
         return new PredicateBuilder(cb)
-                .addEqualsPredicate(cb, fromUser.get(User_.firstName), getFirstName().equals("") ? null : getFirstName())
-                .addEqualsPredicate(cb, fromUser.get(User_.lastName), getLastName().equals("") ? null : getLastName())
-                .addRangePredicate(cb, fromUser.get(User_.dateOfBirth), getDateOfBirthFrom(), getDateOfBirthTo())
-                        //.add( sport, fromUser.get(User_.sports))
+                .addEqualsPredicate(cb, fromUser.get(User_.firstName), validValue(firstName))
+                .addEqualsPredicate(cb, fromUser.get(User_.lastName), validValue(lastName))
+                .addRangePredicate(cb, fromUser.get(User_.dateOfBirth), dateOfBirthFrom, dateOfBirthTo)
+                .add(predicate)
                 .buildWithAndConjunction();
-
     }
 
     public String getSport() {
@@ -77,5 +78,7 @@ public final class Filter {
         this.dateOfBirthTo = dateOfBirthTo;
     }
 
-
+    public String validValue(String value) {
+        return value == null ? null : value.equals("") ? null : value;
+    }
 }
