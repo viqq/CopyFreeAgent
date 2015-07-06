@@ -48,6 +48,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
+    public User findById(long id) {
+        return userDao.find(id);
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public Collection<User> findByFilter(Filter filter) {
         return userDao.findByFilter(filter);
     }

@@ -9,6 +9,7 @@ import com.free.agent.utils.HttpRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,6 +68,13 @@ public class UserController {
         return model;
     }
 
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public ModelAndView getUserById(@PathVariable(value = "id") long id) {
+        ModelAndView model = new ModelAndView("user");
+        model.addObject("user", userService.findById(id));
+        return model;
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView loginFormDef() {
         return new ModelAndView("login-form");
@@ -83,5 +91,4 @@ public class UserController {
         modelAndView.addObject("error", true);
         return modelAndView;
     }
-
 }
