@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Date;
 import java.util.Set;
 
 
@@ -54,7 +53,7 @@ public class UserController {
         User user = new User(userDto.getLogin(), userDto.getPassword(), userDto.getPhone());
         user.setDescription(userDto.getDescription());
         user.setCity(userDto.getCity());
-        user.setDateOfBirth(new Date());
+        user.setDateOfBirth(userDto.getDateOfBirth());
         user.setEmail(userDto.getEmail());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
