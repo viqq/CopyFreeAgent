@@ -5,7 +5,7 @@ echo "Deploying..."
 
 cd /Projects/FreeAgent/
 git pull
-mvn clean istall -Dmaven.test.skip=true
+mvn clean install -Dmaven.test.skip=true
 mv /Projects/FreeAgent/webbapp/target/free-agent-base-1.0-SNAPSHOT /var/lib/tomcat7/webapps/
 service tomcat7 restart
 
