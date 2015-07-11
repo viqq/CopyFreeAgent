@@ -2,9 +2,9 @@ package com.free.agent.model;
 
 
 import com.free.agent.role.Role;
+import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "USER", uniqueConstraints = {@UniqueConstraint(columnNames = {"LOGIN"})})
-public class User implements Serializable {
+public class User extends AbstractTable<Long> {
 
     @Id
     @Column(name = "USER_ID")
@@ -149,11 +149,11 @@ public class User implements Serializable {
     }
 
     public Date getDateOfBirth() {
-        return dateOfBirth;
+        return ObjectUtils.clone(dateOfBirth);
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = ObjectUtils.clone(dateOfBirth);
     }
 
     public String getPhone() {

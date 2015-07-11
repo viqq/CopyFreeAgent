@@ -1,11 +1,12 @@
 package com.free.agent.dto;
 
+import com.free.agent.annotation.Password;
 import com.free.agent.annotation.Phone;
+import com.free.agent.annotation.User;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 
@@ -14,8 +15,9 @@ import java.util.Date;
  */
 
 public final class UserDto {
-    @Size(min = 4, max = 20)
+    @User
     private String login;
+    @Password
     private String password;
     private String city;
     @Email
