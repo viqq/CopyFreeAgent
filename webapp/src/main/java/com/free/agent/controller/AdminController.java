@@ -2,19 +2,20 @@ package com.free.agent.controller;
 
 import com.free.agent.model.Sport;
 import com.free.agent.service.SportService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
-
 /**
  * Created by antonPC on 23.06.15.
  */
 @Controller
 public class AdminController {
+
+    private final static Logger LOGGER = Logger.getLogger(AdminController.class);
 
     @Autowired
     private SportService sportService;
@@ -28,9 +29,14 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/sport", method = RequestMethod.POST)
     public ModelAndView getSave(Sport sport) {
-        sportService.save(sport);
         ModelAndView model = new ModelAndView("admin");
-        model.addObject("sports", sportService.getAllSports());
+        try {
+            LOGGER.info("sport name " + sport.getName());
+            sportService.save(sport);
+            model.addObject("sports", sportService.getAllSports());
+        } catch (Throwable t) {
+            LOGGER.info(t.getMessage());
+        }
         return model;
     }
 }
