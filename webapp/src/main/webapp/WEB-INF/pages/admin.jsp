@@ -16,8 +16,7 @@
 <h1></h1>
 
 
-
-<form method="post" action="/admin/sport" >
+<form method="post" action="${pageContext.request.contextPath}/admin/sport">
   <table>
     <tbody>
     <tr>

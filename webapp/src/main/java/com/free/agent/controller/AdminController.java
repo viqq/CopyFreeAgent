@@ -30,13 +30,8 @@ public class AdminController {
     @RequestMapping(value = "/admin/sport", method = RequestMethod.POST)
     public ModelAndView getSave(Sport sport) {
         ModelAndView model = new ModelAndView("admin");
-        try {
-            LOGGER.info("sport name " + sport.getName());
-            sportService.save(sport);
-            model.addObject("sports", sportService.getAllSports());
-        } catch (Throwable t) {
-            LOGGER.info(t.getMessage());
-        }
+        sportService.save(sport);
+        model.addObject("sports", sportService.getAllSports());
         return model;
     }
 }
