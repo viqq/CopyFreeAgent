@@ -7,7 +7,7 @@ cd /Projects/FreeAgent/
 git pull
 mvn clean install -Dmaven.test.skip=true
 rm -r /var/lib/tomcat7/webapps/free-agent-base-1.0-SNAPSHOT/
-cd /Projects/FreeAgent/webbapp/target/
+cd /Projects/FreeAgent/webapp/target
 mv ./free-agent-base-1.0-SNAPSHOT /var/lib/tomcat7/webapps/
 service tomcat7 restart
 
