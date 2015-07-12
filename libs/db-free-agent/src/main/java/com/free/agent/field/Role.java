@@ -1,4 +1,4 @@
-package com.free.agent.role;
+package com.free.agent.field;
 
 /**
  * Created by antonPC on 21.06.15.

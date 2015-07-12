@@ -2,7 +2,7 @@ package com.free.agent.service.impl;
 
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.UserDao;
-import com.free.agent.role.Role;
+import com.free.agent.field.Role;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

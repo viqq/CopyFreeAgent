@@ -1,7 +1,8 @@
 package com.free.agent.model;
 
 
-import com.free.agent.role.Role;
+import com.free.agent.field.Gender;
+import com.free.agent.field.Role;
 import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
@@ -42,6 +43,10 @@ public class User extends AbstractTable<Long> {
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLE")
     private Role role = Role.ROLE_MODERATOR;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "GENDER")
+    private Gender gender = Gender.MALE;
 
     @Column(name = "DESCRIPTION")
     private String description;
@@ -164,4 +169,11 @@ public class User extends AbstractTable<Long> {
         this.phone = phone;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 }

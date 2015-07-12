@@ -1,7 +1,6 @@
 package com.free.agent.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +9,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "SPORT", uniqueConstraints = {@UniqueConstraint(columnNames = {"NAME"})})
-public class Sport implements Serializable {//extends AbstractTable<Long> {
+public class Sport extends AbstractTable<Long> {
 
     @Id
     @Column(name = "SPORT_ID")
