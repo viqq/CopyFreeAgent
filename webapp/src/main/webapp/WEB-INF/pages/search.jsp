@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-<form method="post" action="/search">
+<form method="post" action="${pageContext.request.contextPath}/search">
     <input type="text" name="sport" id="sport" placeholder="sport">
     <input type="text" name="firstName" id="firstName" placeholder="firstName">
     <input type="text" name="lastName" id="lastName" placeholder="lastName">
