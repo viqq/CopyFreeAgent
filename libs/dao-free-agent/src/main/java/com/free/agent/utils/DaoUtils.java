@@ -1,9 +1,8 @@
 package com.free.agent.utils;
 
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
+import org.apache.log4j.Logger;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +10,7 @@ import java.util.Set;
  * Created by antonPC on 16.06.15.
  */
 public final class DaoUtils {
+    private static final Logger LOGGER = Logger.getLogger(DaoUtils.class);
     public static <T> T getSingleResult(List<T> list) {
         if (list.size() == 0) {
             return null;
@@ -18,6 +18,7 @@ public final class DaoUtils {
         if (list.size() == 1) {
             return list.get(0);
         }
+        LOGGER.error("Table contains many unique elements");
         throw new RuntimeException("Table contains many unique elements");
     }
 

@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -36,6 +37,9 @@ import java.util.Set;
  */
 @Controller
 public class UserController {
+    private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
+    private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
+    private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
 
     @Autowired
     private UserService userService;
@@ -69,6 +73,7 @@ public class UserController {
         user.setEmail(userDto.getEmail());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
+        user.setDateOfRegistration(new Date());
         return user;
     }
 
@@ -124,10 +129,4 @@ public class UserController {
         model.addObject("user", userService.findByLogin(principal.getName()));
         return model;
     }
-
-    private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
-    private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
-    private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
-
-
 }

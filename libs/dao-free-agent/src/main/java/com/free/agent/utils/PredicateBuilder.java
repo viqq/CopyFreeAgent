@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 public final class PredicateBuilder {
-
+	@SuppressWarnings("unchecked")
 	private final ImmutableList.Builder<Predicate> builder = new ImmutableList.Builder();
 	private final CriteriaBuilder criteriaBuilder;
 

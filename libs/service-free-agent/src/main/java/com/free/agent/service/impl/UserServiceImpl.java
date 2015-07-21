@@ -8,6 +8,7 @@ import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.service.UserService;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import java.util.Set;
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {
+    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
     private static final String SAVE_PATH = "/var/free-agent/images";
 
     @Autowired
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService {
     public User save(User user, Set<String> names) {
         Set<Sport> sports = sportDao.findByNames(names);
         user.setSports(sports);
+        LOGGER.info("New user " + user.getLogin() + "was added ");
         return userDao.create(user);
     }
 
@@ -71,21 +74,22 @@ public class UserServiceImpl implements UserService {
 
 
     private String saveImage(List<FileItem> image, String login) {
-        String name = null;
         try {
             for (FileItem item : image) {
                 if (!item.isFormField()) {
                     File fileSaveDir = new File(SAVE_PATH + File.separator + login);
                     if (!fileSaveDir.exists()) {
-                        fileSaveDir.mkdir();
+                        boolean isCreated = fileSaveDir.mkdir();
+                        if (!isCreated) {
+                            LOGGER.error("don't have permission. use sudo chmod 777 /var/free-agent/images ");
+                        }
                     }
-                    name = new File(item.getName()).getName();
                     item.write(new File(SAVE_PATH + File.separator + login + File.separator + login + ".jpg"));
                     break;
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("cannot save image to data base");
         }
         return SAVE_PATH + File.separator + login + File.separator + login;
     }

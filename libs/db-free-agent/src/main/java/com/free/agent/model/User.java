@@ -67,6 +67,10 @@ public class User extends AbstractTable<Long> {
     @Column(name = "IMAGE")
     private String image;
 
+    @Column(name = "DATE_OF_REGISTRATION")
+    @Temporal(TemporalType.DATE)
+    private Date dateOfRegistration;
+
     public User(String login, String password, String phone) {
         this.login = login;
         this.password = password;
@@ -186,5 +190,13 @@ public class User extends AbstractTable<Long> {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Date getDateOfRegistration() {
+        return ObjectUtils.clone(dateOfRegistration);
+    }
+
+    public void setDateOfRegistration(Date dateOfRegistration) {
+        this.dateOfRegistration = ObjectUtils.clone(dateOfRegistration);
     }
 }
