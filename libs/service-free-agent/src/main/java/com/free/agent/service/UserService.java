@@ -2,8 +2,10 @@ package com.free.agent.service;
 
 import com.free.agent.Filter;
 import com.free.agent.model.User;
+import org.apache.commons.fileupload.FileItem;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,6 +13,8 @@ import java.util.Set;
  */
 public interface UserService {
     User save(User user, Set<String> names);
+
+    void addImage(String login, List<FileItem> image);
 
     Collection<User> findAll();
 

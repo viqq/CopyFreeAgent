@@ -15,8 +15,13 @@ public class Sport extends AbstractTable<Long> {
     @Column(name = "SPORT_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "NAME", unique = true)
     private String name;
+
+    @Column(name = "IMAGE")
+    private String image;
+
     @ManyToMany(mappedBy = "sports", fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<User>();
 
@@ -47,4 +52,11 @@ public class Sport extends AbstractTable<Long> {
         return id;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

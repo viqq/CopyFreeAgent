@@ -7,11 +7,14 @@ import com.free.agent.dao.UserDao;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.service.UserService;
+import org.apache.commons.fileupload.FileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,6 +22,7 @@ import java.util.Set;
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {
+    private static final String SAVE_PATH = "/var/free-agent/images";
 
     @Autowired
     private UserDao userDao;
@@ -32,6 +36,13 @@ public class UserServiceImpl implements UserService {
         Set<Sport> sports = sportDao.findByNames(names);
         user.setSports(sports);
         return userDao.create(user);
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+    public void addImage(String login, List<FileItem> image) {
+        User user = userDao.findByLogin(login);
+        user.setImage(saveImage(image, user.getLogin()));
     }
 
     @Override
@@ -57,4 +68,26 @@ public class UserServiceImpl implements UserService {
     public Collection<User> findByFilter(Filter filter) {
         return userDao.findByFilter(filter);
     }
+
+
+    private String saveImage(List<FileItem> image, String login) {
+        String name = null;
+        try {
+            for (FileItem item : image) {
+                if (!item.isFormField()) {
+                    File fileSaveDir = new File(SAVE_PATH + File.separator + login);
+                    if (!fileSaveDir.exists()) {
+                        fileSaveDir.mkdir();
+                    }
+                    name = new File(item.getName()).getName();
+                    item.write(new File(SAVE_PATH + File.separator + login + File.separator + login + ".jpg"));
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return SAVE_PATH + File.separator + login + File.separator + login;
+    }
+
 }

@@ -6,7 +6,13 @@ import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
 import com.free.agent.utils.HttpRequestUtil;
+import com.google.common.io.ByteStreams;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +21,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 
@@ -25,6 +36,7 @@ import java.util.Set;
  */
 @Controller
 public class UserController {
+
     @Autowired
     private UserService userService;
 
@@ -90,4 +102,32 @@ public class UserController {
         modelAndView.addObject("error", true);
         return modelAndView;
     }
+
+
+    @RequestMapping(value = "/getImage", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public void getImage(HttpServletResponse response, Principal principal) throws IOException {
+        ByteStreams.copy(new FileInputStream(userService.findByLogin(principal.getName()).getImage() + ".jpg"), response.getOutputStream());
+    }
+
+    @RequestMapping(value = "/user/setImage", method = RequestMethod.POST)
+    public ModelAndView setImage(HttpServletRequest request, Principal principal) throws IOException, FileUploadException {
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        factory.setSizeThreshold(MEMORY_THRESHOLD);
+        factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        upload.setFileSizeMax(MAX_FILE_SIZE);
+        upload.setSizeMax(MAX_REQUEST_SIZE);
+        @SuppressWarnings("unchecked")
+        List<FileItem> multiparts = upload.parseRequest(request);
+        userService.addImage(principal.getName(), multiparts);
+        ModelAndView model = new ModelAndView("info");
+        model.addObject("user", userService.findByLogin(principal.getName()));
+        return model;
+    }
+
+    private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
+    private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
+    private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
+
+
 }

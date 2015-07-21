@@ -64,6 +64,9 @@ public class User extends AbstractTable<Long> {
     @Column(name = "PHONE", nullable = false, unique = true)
     private String phone;
 
+    @Column(name = "IMAGE")
+    private String image;
+
     public User(String login, String password, String phone) {
         this.login = login;
         this.password = password;
@@ -175,5 +178,13 @@ public class User extends AbstractTable<Long> {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
