@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Collection;
 
 /**
  * Created by antonPC on 23.06.15.
@@ -17,18 +18,18 @@ public class AdminController {
     @Autowired
     private SportService sportService;
 
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String getInfo() {
+        return "admin";
+    }
+
     @RequestMapping(value = "/admin/sport", method = RequestMethod.GET)
-    public ModelAndView getInfo() {
-        ModelAndView model = new ModelAndView("admin");
-        model.addObject("sports", sportService.getAllSports());
-        return model;
+    public Collection<Sport> getInfo1() {
+        return sportService.getAllSports();
     }
 
     @RequestMapping(value = "/admin/sport", method = RequestMethod.POST)
-    public ModelAndView getSave(Sport sport) {
-        ModelAndView model = new ModelAndView("admin");
-        sportService.save(sport);
-        model.addObject("sports", sportService.getAllSports());
-        return model;
+    public Sport getSave(Sport sport) {
+        return sportService.save(sport);
     }
 }
