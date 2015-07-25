@@ -1,0 +1,36 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: #1B1C85;
+    height: 100%;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+}
+#main_wrapper {
+    background-color: white;
+    width: 960px;
+    margin: auto;
+    padding: 50px 50px 0;
+    height: 100%;
+}
+
+#main_wrapper div {
+    text-align: center;
+}
+
+#content {
+    width: 450px;
+    margin: auto;
+}
+
+#login_btn,
+#register_link {
+    width: 250px;
+    margin: 0px 0px 80px;
+}
