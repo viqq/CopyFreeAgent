@@ -1,3 +1,7 @@
-/**
- * Created by TITUS on 25.07.2015.
- */
+//
+//
+//require(['jquery'], function($) {
+//    $(function() {
+//        console.log('HELLO');
+//    })
+//});
