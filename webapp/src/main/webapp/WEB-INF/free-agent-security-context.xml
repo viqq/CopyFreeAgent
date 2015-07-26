@@ -15,8 +15,11 @@
 			default-target-url="/user/info"
 			authentication-failure-url="/error-login.html" />
 		<logout logout-success-url="/user-login.html" />
-		
+		<!--<anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>-->
+
 	</http>
+
+	<!--<global-method-security secured-annotations="enabled" />-->
 	
 	<authentication-manager>
 		<authentication-provider user-service-ref="customUserDetailsService">
