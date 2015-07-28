@@ -20,7 +20,8 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
                 redirectTo: '/home'
             });
 
-        $locationProvider.html5Mode(true);
+        //Commented untill solve problems with one page routing without hash
+        //$locationProvider.html5Mode(true);
     });
 
 
