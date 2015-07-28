@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="css/app/login.css"/>
+<div id="main_wrapper">
+
+    <div id="content">
+        <h1>Login page</h1>
+
+        <form id="login_form">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <label class="mdl-textfield__label" for="j_username">
+                    {{uiTranslations.label_login}}:
+                </label>
+                <input class="mdl-textfield__input" type="text" name="j_username" id="j_username" size="30"
+                       maxlength="40"/>
+            </div>
+
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <label class="mdl-textfield__label" for="j_password">
+                    {{uiTranslations.label_password}}:
+                </label>
+                <input class="mdl-textfield__input" type="password" name="j_password" id="j_password" size="30"
+                       maxlength="32"/>
+            </div>
+
+        </form>
+        <button id="login_btn"
+             class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            Log in
+        </button>
+        <div>
+            <p>
+                Not a member yet? Create account!
+            </p>
+            <a id="register_link" href="#/registration"
+               class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                Register
+            </a>
+        </div>
+
+        <a href="">Home page</a><br/>
+    </div>
+</div>
