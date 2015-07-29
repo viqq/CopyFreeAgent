@@ -6,23 +6,18 @@ define(['angularAMD', 'angular-route'], function (angularAMD) {
 
     app.config(function ($routeProvider, $locationProvider) {
         $routeProvider
-            .when('/home', angularAMD.route({
-                templateUrl: 'templates/view_home.html',
-                controller: 'HomeCtrl',
-                controllerUrl: 'ctrls/controller_home'
-            }))
-            .when('/view1', angularAMD.route({
-                templateUrl: 'templates/view_view1.html',
-                controller: 'View1Ctrl',
-                controllerUrl: 'ctrls/controller_view1'
-            }))
             .when('/login', angularAMD.route({
                 templateUrl: 'templates/login.html',
-                controller: 'Login1Ctrl',
+                controller: 'LoginCtrl',
                 controllerUrl: 'ctrls/login'
             }))
+            .when('/registration', angularAMD.route({
+                templateUrl: 'templates/registration.html',
+                controller: 'RegistrationCtrl',
+                controllerUrl: 'ctrls/registration'
+            }))
             .otherwise({
-                redirectTo: '/home'
+                redirectTo: '/login'
             });
 
         //Commented until solve problems with one page routing without hash
