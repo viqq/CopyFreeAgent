@@ -10,6 +10,8 @@ require.config({
         'angular-route': 'libs/angular-route',
         'angularAMD': 'libs/angularAMD',
         'jquery': 'libs/jquery',
+
+        'uiTranslations': 'resources/uiTranslations'
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim

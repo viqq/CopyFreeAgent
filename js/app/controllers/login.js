@@ -4,9 +4,5 @@
 define(['app'], function (app) {
     app.controller('LoginCtrl', function ($scope) {
         $scope.message = "Message from LoginCTRL";
-        $scope.uiTranslations = {
-            'label_login': 'Login',
-            'label_password': 'Password'
-        }
     });
 });
