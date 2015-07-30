@@ -10,11 +10,11 @@
 	
 		<intercept-url pattern="/user/*" access="ROLE_MODERATOR" />
 		<intercept-url pattern="/admin/*" access="ROLE_ADMIN" />
-		
-		<form-login login-page="/user-login.html" 
+
+		<form-login login-page="/user-login"
 			default-target-url="/user/info"
-			authentication-failure-url="/error-login.html" />
-		<logout logout-success-url="/user-login.html" />
+					authentication-failure-url="/error-login"/>
+		<logout logout-success-url="/user-login"/>
 		<!--<anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>-->
 
 	</http>
