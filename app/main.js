@@ -2,7 +2,7 @@
  * Created by TITUS on 28.07.2015.
  */
 require.config({
-    baseUrl: 'js/',
+    baseUrl: 'app/',
 
     // alias libraries paths.  Must set 'angular'
     paths: {

@@ -5,7 +5,7 @@ define([], function() {
     return {
         'en': {
             header: {
-                'text_header': 'Free agent'
+                'link_login': 'Login'
             },
             login: {
                 'label_login': 'Login',
@@ -17,7 +17,7 @@ define([], function() {
         },
         'ru': {
             header: {
-                'text_header': 'Свободный агент'
+                'link_login': 'Логин'
             },
             login: {
                 'label_login': 'Логин',

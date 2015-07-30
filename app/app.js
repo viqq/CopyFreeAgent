@@ -6,9 +6,9 @@ define(
         'angularAMD',
         'angular-route',
 
-        'app/directives/header',
+        'directives/header/header',
 
-        'app/controllers/main'
+        '../app/controllers/main'
     ],
     function (angularAMD) {
         var app = angular.module('app', ['ngRoute']);
@@ -16,14 +16,14 @@ define(
         app.config(function ($routeProvider, $locationProvider) {
             $routeProvider
                 .when('/login', angularAMD.route({
-                    templateUrl: 'templates/login.html',
+                    templateUrl: 'app/views/login.html',
                     controller: 'LoginCtrl',
-                    controllerUrl: 'app/controllers/login'
+                    controllerUrl: 'controllers/login'
                 }))
                 .when('/registration', angularAMD.route({
-                    templateUrl: 'templates/registration.html',
+                    templateUrl: 'app/views/registration.html',
                     controller: 'RegistrationCtrl',
-                    controllerUrl: 'app/controllers/registration'
+                    controllerUrl: 'controllers/registration'
                 }))
                 .otherwise({
                     redirectTo: '/login'
