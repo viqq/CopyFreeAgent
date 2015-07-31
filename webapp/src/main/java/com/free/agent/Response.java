@@ -1,5 +1,7 @@
 package com.free.agent;
 
+import com.google.gson.Gson;
+
 /**
  * Created by antonPC on 28.07.15.
  */
@@ -17,12 +19,12 @@ public class Response<T> {
         this.status = status;
     }
 
-    public static <T> Response<T> ok(T payload) {
-        return new Response<>(payload, false, null);
+    public static <T> String ok(T payload) {
+        return new Response<>(payload, false, null).toJSON();
     }
 
-    public static <T> Response<T> error(Integer status) {
-        return new Response<>(null, true, status);
+    public static <T> String error(Integer status) {
+        return new Response<>(null, true, status).toJSON();
     }
 
     public T getPayload() {
@@ -35,6 +37,10 @@ public class Response<T> {
 
     public Integer getStatus() {
         return status;
+    }
+
+    private String toJSON() {
+        return new Gson().toJson(this);
     }
 }
 
