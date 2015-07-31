@@ -6,7 +6,9 @@ define(
         'angularAMD',
         'angular-route',
 
-        'directives/header/header',
+        'directives/header/script',
+        'directives/login/script',
+        'directives/registration/script',
 
         '../app/controllers/main'
     ],

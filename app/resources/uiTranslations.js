@@ -11,6 +11,9 @@ define([], function() {
                 'label_login': 'Login',
                 'label_password': 'Password'
             },
+            registration: {
+
+            },
             footer: {
 
             }
@@ -22,6 +25,9 @@ define([], function() {
             login: {
                 'label_login': 'Логин',
                 'label_password': 'Пароль'
+            },
+            registration: {
+
             },
             footer: {
 
