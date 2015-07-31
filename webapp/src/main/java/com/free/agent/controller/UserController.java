@@ -1,6 +1,7 @@
 package com.free.agent.controller;
 
 
+import com.free.agent.Response;
 import com.free.agent.dto.UserDto;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
@@ -19,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,33 +65,48 @@ public class UserController {
         return "info";
     }
 
-    @RequestMapping(value = {"/", "/user-login", "/error-login"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/user-login"}, method = RequestMethod.GET)
     public String loginFormDef() {
         return "login-form";
     }
 
+    @RequestMapping(value = {"/error-login"}, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Response<Integer> loginFormDef1() {
+        return Response.error(450);
+    }
+
     @RequestMapping(value = "/sport", method = RequestMethod.GET)
-    public Collection<Sport> getF() {
+    public
+    @ResponseBody
+    Collection<Sport> getF() {
         return sportService.getAllSports();
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public void get(@Valid UserDto userDto, BindingResult bindingResult, HttpServletRequest request) {
+    public
+    @ResponseBody
+    Response<String> get(@Valid UserDto userDto, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
-            ///
+            return Response.error(450);//error code
         }
         Set<String> set = HttpRequestUtil.getParams(request, "select");
         userService.save(getUser(userDto), set);
-
+        return Response.ok("OK");
     }
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
-    public User getInf(Principal principal) {
+    public
+    @ResponseBody
+    User getInf(Principal principal) {
         return userService.findByLogin(principal.getName());
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public User getUserById(@PathVariable(value = "id") Long id) {
+    public
+    @ResponseBody
+    User getUserById(@PathVariable(value = "id") Long id) {
         return userService.findById(id);
     }
 
