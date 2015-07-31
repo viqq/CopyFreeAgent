@@ -1,0 +1,31 @@
+#header {
+    background-color: #484848;
+    height: 82px;
+    color: white;
+    border-bottom: 3px solid #00A99D;
+}
+
+.main-wrapper {
+    margin: auto;
+    height: 100%;
+}
+
+.valign-helper {
+    height: 100%;
+}
+
+#header .main-wrapper > * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.login-link {
+    float: right;
+    line-height: 82px;
+    margin-right: 20px;
+    color: white;
+}
+
+.logo {
+    margin-left: 20px;
+}
