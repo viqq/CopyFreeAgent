@@ -70,11 +70,11 @@ public class UserController {
         return "login-form";
     }
 
-    @RequestMapping(value = {"/error-login"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/error-login"}, method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    Response<Integer> loginFormDef1() {
-        return Response.error(450);
+    String loginFormDef1() {
+        return Response.error(459);
     }
 
     @RequestMapping(value = "/sport", method = RequestMethod.GET)
@@ -87,7 +87,7 @@ public class UserController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public
     @ResponseBody
-    Response<String> get(@Valid UserDto userDto, BindingResult bindingResult, HttpServletRequest request) {
+    String get(@Valid UserDto userDto, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return Response.error(450);//error code
         }
