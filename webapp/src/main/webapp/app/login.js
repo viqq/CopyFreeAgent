@@ -5,7 +5,7 @@ define(['jquery'], function($) {
     var initLoginPage = function() {
         $('#login_btn').on('click', function(event) {
             $.ajax({
-                url: '../j_spring_security_check',
+                url: 'j_spring_security_check',
                 method: 'POST',
                 data: $('#login_form').serialize(),
                 success: function(res, status, xhr) {
