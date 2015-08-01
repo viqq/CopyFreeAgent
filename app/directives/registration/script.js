@@ -6,8 +6,10 @@ define(['angularAMD', 'uiTranslations'], function (angularAMD, uiTranslations) {
         return {
             restrict: 'E',
             templateUrl: 'app/directives/registration/template.html',
+            replace: true,
+            //scope: true,
             controller: function($scope) {
-                //$scope.uiTranslations = uiTranslations[$scope.language].registration;
+                $scope.uiTranslations = uiTranslations[$scope.language].registration;
             }
         };
     });

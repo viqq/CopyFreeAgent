@@ -6,8 +6,10 @@ define(['angularAMD', 'uiTranslations', 'jquery'], function (angularAMD, uiTrans
         return {
             restrict: 'E',
             templateUrl: 'app/directives/login/template.html',
+            replace: true,
+            scope: true,
             controller: function($scope) {
-                //$scope.uiTranslations = uiTranslations[$scope.language].login;
+                $scope.uiTranslations = uiTranslations[$scope.language].login;
 
                 $('#login_btn').on('click', function(event) {
                     $.ajax({

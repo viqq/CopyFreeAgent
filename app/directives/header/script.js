@@ -6,6 +6,8 @@ define(['angularAMD', 'uiTranslations'], function (angularAMD, uiTranslations) {
         return {
             restrict: 'E',
             templateUrl: 'app/directives/header/template.html',
+            replace: true,
+            scope: true,
             controller: function($scope) {
                 $scope.uiTranslations = uiTranslations[$scope.language].header;
             }
