@@ -11,11 +11,11 @@ define(['angularAMD', 'uiTranslations', 'jquery'], function (angularAMD, uiTrans
             controller: function($scope) {
                 $scope.uiTranslations = uiTranslations[$scope.language].login;
 
-                $('#login_btn').on('click', function(event) {
+                $('#btn_login').on('click', function(event) {
                     $.ajax({
                         url: 'j_spring_security_check',
                         method: 'POST',
-                        data: $('#login_form').serialize(),
+                        data: $('#form_login').serialize(),
                         success: function(res, status, xhr) {
                             var isRegFailed = xhr.responseText.indexOf('<b class="error">Invalid login or password.</b>');
 

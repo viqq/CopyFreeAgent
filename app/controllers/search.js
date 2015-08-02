@@ -1,8 +1,8 @@
 /**
- * Created by TITUS on 02.08.2015.
+ * Created by TITUS on 29.07.2015.
  */
 define(['app'], function (app) {
-    app.controller('HomeCtrl', function ($scope) {
+    app.controller('SearchCtrl', function ($scope) {
         $scope.message = "Message from LoginCTRL";
     });
 });

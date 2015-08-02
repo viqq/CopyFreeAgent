@@ -1,40 +1,74 @@
-<div id="main_wrapper">
-    <link rel="stylesheet" href="css/login.css"/>
-    <div id="content">
-        <h1>Login page</h1>
-
-        <form id="login_form">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-                <label class="mdl-textfield__label" for="j_username">
-                    {{uiTranslations.label_login}}:
-                </label>
-                <input class="mdl-textfield__input" type="text" name="j_username" id="j_username" size="30"
-                       maxlength="40"/>
+<div id="homepage">
+    <link rel="stylesheet" href="css/home.css"/>
+    <div>
+        <div class="carousel">
+            <div class="heading">
+                <div class="top">{{uiTranslations.heading_top}}</div>
+                <div class="bot">{{uiTranslations.heading_bot}}</div>
             </div>
-
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-                <label class="mdl-textfield__label" for="j_password">
-                    {{uiTranslations.label_password}}:
-                </label>
-                <input class="mdl-textfield__input" type="password" name="j_password" id="j_password" size="30"
-                       maxlength="32"/>
+            <div class="welcome">{{uiTranslations.text_welcome}}</div>
+            <div class="btns">
+                <a href="#/registration">{{uiTranslations.link_reg}}</a>
+                <a href="#/search">{{uiTranslations.link_search}}</a>
             </div>
-
-        </form>
-        <button id="login_btn"
-                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-            Log in
-        </button>
-        <div>
-            <p>
-                Not a member yet? Create account!
-            </p>
-            <a id="register_link" href="#/registration"
-               class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                Register
-            </a>
         </div>
+        <div class="info">
+            <div class="wrapper">
+                <div class="heading">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</div>
+                <div class="columns">
+                    <div class="about">
 
-        <a href="">Home page</a><br/>
+                        <div>
+                            <p class="top">About us</p>
+                            <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page.</p>
+                        </div>
+                    </div>
+                    <div class="contacts"><div>
+                        <p class="top">Contacts</p>
+                        <p>Dneoropetrovsk
+                            St. 14/05 Light City
+                            +00 (123) 456 78 90
+                            first.last@email.com</p>
+                    </div></div>
+                </div>
+            </div>
+            <div class="footer">
+                <img src="img/vignette.png">
+            </div>
+        </div>
+        <div class="founders">
+            <div class="heading">
+                <div>
+                    Founders team
+                </div>
+                <img src="img/vignette.png" alt=""/>
+            </div>
+            <div class="list">
+                <div>
+                    <div class="text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some.</div>
+                    <div class="image">
+                        <img src="img/photo1.png"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some.</div>
+                    <div class="image">
+                        <img src="img/photo1.png"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some.</div>
+                    <div class="image">
+                        <img src="img/photo1.png"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some.</div>
+                    <div class="image">
+                        <img src="img/photo1.png"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

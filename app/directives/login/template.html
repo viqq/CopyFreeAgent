@@ -1,40 +1,23 @@
-<div id="main_wrapper">
+<div id="login">
     <link rel="stylesheet" href="css/login.css"/>
-    <div id="content">
-        <h1>Login page</h1>
-
-        <form id="login_form">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-                <label class="mdl-textfield__label" for="j_username">
-                    {{uiTranslations.label_login}}:
-                </label>
-                <input class="mdl-textfield__input" type="text" name="j_username" id="j_username" size="30"
+    <div>
+        <div class="container">
+            <form id="form_login">
+                <input placeholder="{{uiTranslations.placeholder_login}}" type="text" name="j_username" size="30"
                        maxlength="40"/>
-            </div>
 
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-                <label class="mdl-textfield__label" for="j_password">
-                    {{uiTranslations.label_password}}:
-                </label>
-                <input class="mdl-textfield__input" type="password" name="j_password" id="j_password" size="30"
+                <div class="line"></div>
+                <input placeholder="{{uiTranslations.placeholder_password}}" type="password" name="j_password" size="30"
                        maxlength="32"/>
+                <button id="btn_login">{{uiTranslations.button_login}}</button>
+            </form>
+            <div class="socials">
+                <a><img src="img/f.png"></a>
+                <a><img src="img/g.png"></a>
+                <a><img src="img/v.png"></a>
             </div>
-
-        </form>
-        <button id="login_btn"
-                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-            Log in
-        </button>
-        <div>
-            <p>
-                Not a member yet? Create account!
-            </p>
-            <a id="register_link" href="#/registration"
-               class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                Register
-            </a>
+            <a class="link_forgot">{{uiTranslations.link_forgot}}</a>
+            <a class="link_registration" href="#/registration">{{uiTranslations.link_registration}}</a>
         </div>
-
-        <a href="">Home page</a><br/>
     </div>
 </div>

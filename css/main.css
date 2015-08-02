@@ -3,15 +3,48 @@
     src: url(../fonts/Raleway-Regular.ttf);
 }
 
+html,
+body,
+div.view {
+    height: 100%;
+}
+
 body {
     font-family: Raleway, "Helvetica Neue", Helvetica,Arial,sans-serif;
     margin: 0px;
+    position: relative;
+    min-height: 100%;
+    background-color: lightgray;
 }
 
 a {
     text-decoration: none;
+    display: inline-block;
 }
 
+img {
+    vertical-align: middle;
+}
+
+.main-container {
+    min-height: 100%;
+    background-color: white;
+}
+
+.main-container > * {
+    padding: 82px 0px;
+}
+
+.main-container,
 .main-wrapper {
     max-width: 800px;
+    margin: auto;
+}
+
+.main-wrapper > * {
+    background-color: white;
+}
+
+.valign-helper {
+    height: 100%;
 }
