@@ -9,6 +9,29 @@ div.view {
     height: 100%;
 }
 
+.valign-container {
+    height: 100%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.valign-container > *,
+.valign-container::after,
+.valign-container::before {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.valign-container > * {
+    white-space: normal;
+}
+
+.valign-container::after,
+.valign-container::before {
+    content: '';
+    height: 100%;
+}
+
 body {
     font-family: Raleway, "Helvetica Neue", Helvetica,Arial,sans-serif;
     margin: 0px;

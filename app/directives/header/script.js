@@ -2,7 +2,7 @@
  * Created by TITUS on 30.07.2015.
  */
 define(['angularAMD', 'uiTranslations'], function (angularAMD, uiTranslations) {
-    angularAMD.directive('dirHeader', function() {
+    var dirHeader = function() {
         return {
             restrict: 'E',
             templateUrl: 'app/directives/header/template.html',
@@ -12,5 +12,7 @@ define(['angularAMD', 'uiTranslations'], function (angularAMD, uiTranslations) {
                 $scope.uiTranslations = uiTranslations[$scope.language].header;
             }
         };
-    });
+    };
+
+    angularAMD.directive('dirHeader', dirHeader);
 });
