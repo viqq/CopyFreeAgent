@@ -5,5 +5,6 @@ define(['angularAMD', 'uiTranslations'], function (angularAMD, uiTranslations) {
     angularAMD.controller('MainCtrl', function($scope) {
         console.log('main ctrl');
         $scope.language = 'en';
+        $scope.isLoggedIn = false;
     });
 });

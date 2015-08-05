@@ -3,29 +3,32 @@
     height: 82px;
     color: white;
     border-bottom: 3px solid #00A99D;
+    margin-bottom: -85px;
+    position: relative;
+    z-index: 1;
 }
 
-.main-wrapper {
-    margin: auto;
+#header .main-wrapper {
     height: 100%;
-}
-
-.valign-helper {
-    height: 100%;
+    padding: 0px 20px;
 }
 
 #header .main-wrapper > * {
-    display: inline-block;
-    vertical-align: middle;
+    background-color: transparent;
 }
 
-.login-link {
+#header .link-wrapper {
+    height: 100%;
     float: right;
-    line-height: 82px;
-    margin-right: 20px;
+}
+
+#header .logo-wrapper {
+    height: 100%;
+    float: left;
+}
+
+
+#header .login-link {
     color: white;
 }
 
-.logo {
-    margin-left: 20px;
-}
