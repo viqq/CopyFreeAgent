@@ -1,0 +1,23 @@
+<div id="login">
+    <link rel="stylesheet" href="css/login.css"/>
+    <div>
+        <div class="container">
+            <form id="form_login">
+                <input placeholder="{{uiTranslations.placeholder_login}}" type="text" name="j_username" size="30"
+                       maxlength="40"/>
+
+                <div class="line"></div>
+                <input placeholder="{{uiTranslations.placeholder_password}}" type="password" name="j_password" size="30"
+                       maxlength="32"/>
+                <button id="btn_login" ng-click="loginHandler()">{{uiTranslations.button_login}}</button>
+            </form>
+            <div class="socials">
+                <a><img src="img/f.png"></a>
+                <a><img src="img/g.png"></a>
+                <a><img src="img/v.png"></a>
+            </div>
+            <a class="link_forgot">{{uiTranslations.link_forgot}}</a>
+            <a class="link_registration" href="#/registration">{{uiTranslations.link_registration}}</a>
+        </div>
+    </div>
+</div>
