@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<form method="post" action="${pageContext.request.contextPath}/search">
+    <input type="text" name="sport" id="sport" placeholder="sport">
+    <input type="text" name="firstName" id="firstName" placeholder="firstName">
+    <input type="text" name="lastName" id="lastName" placeholder="lastName">
+    <input type="text" name="dateOfBirthFrom" id="dateOfBirthFrom" placeholder="dateOfBirthFrom">
+    <input type="text" name="dateOfBirthTo" id="dateOfBirthTo" placeholder="dateOfBirthTo">
+    <input type="submit" value="Submit"/>
+</form>
+
+<!--here we should display users-->
+<div id="users"></div>
+
+
+</body>
+</html>
