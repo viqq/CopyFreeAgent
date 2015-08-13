@@ -3,11 +3,13 @@ package com.free.agent.model;
 
 import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -70,6 +72,9 @@ public class User extends AbstractTable<Long> {
     @Column(name = "DATE_OF_REGISTRATION")
     @Temporal(TemporalType.DATE)
     private Date dateOfRegistration;
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "user")
+    private List<Message> messages = Lists.newArrayList();
 
     public User(String login, String password, String phone) {
         this.login = login;
@@ -198,5 +203,13 @@ public class User extends AbstractTable<Long> {
 
     public void setDateOfRegistration(Date dateOfRegistration) {
         this.dateOfRegistration = ObjectUtils.clone(dateOfRegistration);
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }
