@@ -20,16 +20,53 @@
             </div>
         </div>
         <div>
-            <form action="user" modelAttribute="userDto" method="post">
-                <input placeholder="{{uiTranslations.placeholder_login}}" name="login" id="loginInput"/>
-                <input placeholder="{{uiTranslations.placeholder_password}}" name="password" id="passwordInput"/>
-                <input placeholder="{{uiTranslations.placeholder_email}}" name="email" id="emailInput"/>
-                <input placeholder="{{uiTranslations.placeholder_first_name}}" name="firstName" id="firstNameInput"/>
-                <input placeholder="{{uiTranslations.placeholder_last_name}}" name="lastName" id="lastNameInput"/>
-                <input placeholder="{{uiTranslations.placeholder_city}}" name="city" id="cityInput"/>
-                <input placeholder="{{uiTranslations.placeholder_date_of_birth}}" name="dateOfBirth" id="dateOfBirthInput"/>
-                <input placeholder="{{uiTranslations.placeholder_phone_number}}" name="phone" id="phoneInput"/>
-                <input placeholder="{{uiTranslations.placeholder_description}}" name="description" id="descriptionInput"/>
+            <!--action="user" modelAttribute="userDto" method="post"-->
+            <form  ng-submit="registrationHandler()">
+                <input
+                        placeholder="{{uiTranslations.placeholder_login}}"
+                        name="login"
+                        id="loginInput"
+                        ng-model="registrationData.login"/>
+                <input
+                        placeholder="{{uiTranslations.placeholder_password}}"
+                        name="password"
+                        id="passwordInput"
+                        ng-model="registrationData.password"/>
+                <input
+                        placeholder="{{uiTranslations.placeholder_email}}"
+                        name="email"
+                        id="emailInput"
+                        ng-model="registrationData.email"/>
+                <input
+                        placeholder="{{uiTranslations.placeholder_first_name}}"
+                        name="firstName"
+                        id="firstNameInput"
+                        ng-model="registrationData.firstName"/>
+                <input
+                        placeholder="{{uiTranslations.placeholder_last_name}}"
+                        name="lastName"
+                        id="lastNameInput"
+                        ng-model="registrationData.lastName"/>
+                <input
+                        placeholder="{{uiTranslations.placeholder_city}}"
+                        name="city"
+                        id="cityInput"
+                        ng-model="registrationData.city"/>
+                <input
+                        placeholder="{{uiTranslations.placeholder_date_of_birth}}"
+                        name="dateOfBirth"
+                        id="dateOfBirthInput"
+                        ng-model="registrationData.dateOfBirth"/>
+                <input
+                        placeholder="{{uiTranslations.placeholder_phone_number}}"
+                        name="phone"
+                        id="phoneInput"
+                        ng-model="registrationData.phone"/>
+                <input
+                        placeholder="{{uiTranslations.placeholder_description}}"
+                        name="description"
+                        id="descriptionInput"
+                        ng-model="registrationData.description"/>
                 <!--here we should select sports-->
                 <button>{{uiTranslations.button_register}}</button>
             </form>

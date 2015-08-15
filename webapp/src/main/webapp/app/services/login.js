@@ -3,8 +3,8 @@
  */
 define(['angularAMD'], function (angularAMD) {
     var login = function ($http) {
-        return function () {
-            return $http.get('j_spring_security_check')
+        return function (data) {
+            return $http.post('j_spring_security_check', data)
                 .success(successLogin)
                 .error(errorLogin);
         }

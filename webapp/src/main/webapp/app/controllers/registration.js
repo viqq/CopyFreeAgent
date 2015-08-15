@@ -4,12 +4,34 @@
 /**
  * Created by TITUS on 29.07.2015.
  */
-define(['app'], function (app) {
-    app.controller('RegistrationCtrl', function ($scope) {
-        $scope.message = "Message from LoginCTRL";
-        $scope.uiTranslations = {
-            'label_login': 'Login',
-            'label_password': 'Password'
-        }
-    });
-});
+/**
+ * Created by TITUS on 29.07.2015.
+ */
+define(
+    [
+        'angularAMD',
+        'resources/uiTranslations',
+        'resources/jsObjToParamStr',
+
+        'services/registration'
+    ],
+    function (angularAMD, uiTranslations, jsObjToParamStr) {
+        var loginCtrl = function ($scope, registration) {
+            $scope.uiTranslations = uiTranslations[$scope.language].registration;
+
+            $scope.registrationData = {};
+
+            $scope.registrationHandler = function() {
+                registration(jsObjToParamStr($scope.registrationData))
+                    .success(function(data) {
+                        alert(JSON.stringify(data));
+                    })
+                    .error(function(err) {
+                        throw err;
+                    })
+            }
+        };
+
+        angularAMD.controller('RegistrationCtrl', ['$scope', 'registration', loginCtrl]);
+    }
+);

@@ -1,7 +1,7 @@
 /**
  * Created by TITUS on 30.07.2015.
  */
-define(['angularAMD', 'uiTranslations', 'jquery'], function (angularAMD, uiTranslations, $) {
+define(['angularAMD', 'resources/uiTranslations', 'jquery'], function (angularAMD, uiTranslations, $) {
     angularAMD.directive('dirHome', function() {
         return {
             restrict: 'E',
