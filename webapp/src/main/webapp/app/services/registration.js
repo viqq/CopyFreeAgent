@@ -4,7 +4,14 @@
 define(['angularAMD'], function (angularAMD) {
     var registration = function ($http) {
         return function (data) {
-            return $http.post('user', data)
+            return $http({
+                method: 'POST',
+                url: 'user',
+                data: data,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
                 .success(successRegistration)
                 .error(errorRegistration);
         }

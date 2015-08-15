@@ -4,7 +4,14 @@
 define(['angularAMD'], function (angularAMD) {
     var login = function ($http) {
         return function (data) {
-            return $http.post('j_spring_security_check', data)
+            return $http({
+                method: 'POST',
+                url: 'j_spring_security_check',
+                data: data,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
                 .success(successLogin)
                 .error(errorLogin);
         }

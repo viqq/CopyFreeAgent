@@ -1,6 +1,15 @@
 <div id="login">
     <link rel="stylesheet" href="css/login.css"/>
     <div>
+        <!--<form id="form_login" action="j_spring_security_check" method="post">-->
+            <!--<input placeholder="{{uiTranslations.placeholder_login}}" type="text" name="j_username" size="30"-->
+                   <!--maxlength="40"/>-->
+
+            <!--<div class="line"></div>-->
+            <!--<input placeholder="{{uiTranslations.placeholder_password}}" type="password" name="j_password" size="30"-->
+                   <!--maxlength="32"/>-->
+            <!--<input type="submit" value="Login"/>-->
+        <!--</form>-->
         <div class="container">
             <form id="form_login" ng-submit="loginHandler()">
                 <input placeholder="{{uiTranslations.placeholder_login}}"
@@ -26,9 +35,9 @@
                 <a><img src="img/v.png"></a>
             </div>
 
-            <div>
-                {{ loginData }}
-            </div>
+            <!--<div>-->
+                <!--{{ loginData }}-->
+            <!--</div>-->
 
             <a class="link_forgot">{{uiTranslations.link_forgot}}</a>
             <a class="link_registration" href="#/registration">{{uiTranslations.link_registration}}</a>
