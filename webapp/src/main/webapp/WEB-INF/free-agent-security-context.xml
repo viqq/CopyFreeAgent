@@ -13,6 +13,7 @@
 
 		<form-login login-page="/user-login"
 			default-target-url="/user/info"
+					authentication-success-handler-ref="loginSuccessHandler"
 					authentication-failure-handler-ref="loginFailureHandler"/>
 		<logout logout-success-url="/user-login"/>
 		<!--<anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>-->
