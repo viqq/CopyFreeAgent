@@ -11,6 +11,7 @@ define(
         'directives/home/script',
         'directives/registration/script',
         'directives/login/script',
+        'directives/account/script',
         'directives/search/script',
 
         '../app/controllers/main'
@@ -34,6 +35,11 @@ define(
                     templateUrl: 'app/views/login.html',
                     controller: 'LoginCtrl',
                     controllerUrl: 'controllers/login'
+                }))
+                .when('/account', angularAMD.route({
+                    templateUrl: 'app/views/account.html',
+                    controller: 'AccountCtrl',
+                    controllerUrl: 'controllers/account'
                 }))
                 .when('/search', angularAMD.route({
                     templateUrl: 'app/views/search.html',

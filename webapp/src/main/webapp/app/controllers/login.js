@@ -19,7 +19,10 @@ define(
                 login(jsObjToParamStr($scope.loginData))
                     .success(function(data) {
                         $scope.isLoggedIn = true;
-                        alert(JSON.stringify(data));
+
+                        if (typeof data === 'object' && data.error === false) {
+                            location.assign('#/account');
+                        }
                     })
                     .error(function(err) {
                         throw err;
