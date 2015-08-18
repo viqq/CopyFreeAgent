@@ -14,7 +14,7 @@ import java.util.Date;
  * Created by antonPC on 28.06.15.
  */
 
-public final class UserDto {
+public class UserDto {
     @User
     private String login;
     @Password

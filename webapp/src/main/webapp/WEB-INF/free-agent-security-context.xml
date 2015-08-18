@@ -11,8 +11,8 @@
 		<intercept-url pattern="/user/*" access="ROLE_MODERATOR" />
 		<intercept-url pattern="/admin/*" access="ROLE_ADMIN" />
 
-		<form-login login-page="/user-login"
-			default-target-url="/user/info"
+		<form-login
+				default-target-url="/user/info"
 					authentication-success-handler-ref="loginSuccessHandler"
 					authentication-failure-handler-ref="loginFailureHandler"/>
 		<logout logout-success-url="/user-login"/>

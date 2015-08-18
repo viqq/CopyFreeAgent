@@ -1,13 +1,16 @@
 package com.free.agent.controller;
 
 
+import com.free.agent.FreeAgentAPI;
 import com.free.agent.Response;
 import com.free.agent.dto.UserDto;
+import com.free.agent.dto.UserWithSport;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
 import com.free.agent.utils.HttpRequestUtil;
+import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -89,18 +92,18 @@ public class UserController {
     @ResponseBody
     String get(@Valid UserDto userDto, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
-            return Response.error(450);//error code
+            return Response.error(FreeAgentAPI.VALIDATION_ERROR);//error code
         }
         Set<String> set = HttpRequestUtil.getParams(request, "select");
         userService.save(getUser(userDto), set);
-        return Response.ok("OK");
+        return Response.ok(FreeAgentAPI.OK);
     }
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
     public
     @ResponseBody
-    User getInf(Principal principal) {
-        return userService.findByLogin(principal.getName());
+    String getInf(Principal principal) {
+        return Response.ok(getUserForUI(userService.findByLogin(principal.getName())));
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
@@ -138,5 +141,29 @@ public class UserController {
         user.setLastName(userDto.getLastName());
         user.setDateOfRegistration(new Date());
         return user;
+    }
+
+    private UserWithSport getUserForUI(User user) {
+        UserWithSport userDto = new UserWithSport();
+        userDto.setLogin(user.getLogin());
+        userDto.setPassword(user.getPassword());
+        userDto.setPhone(user.getPhone());
+        userDto.setDescription(user.getDescription());
+        userDto.setCity(user.getCity());
+        userDto.setDateOfBirth(user.getDateOfBirth());
+        userDto.setEmail(user.getEmail());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setDateOfRegistration(user.getDateOfRegistration());
+        userDto.setSports(getSportForUser(user.getSports()));
+        return userDto;
+    }
+
+    private List<String> getSportForUser(Set<Sport> sports) {
+        List<String> sportName = Lists.newArrayList();
+        for (Sport s : sports) {
+            sportName.add(s.getName());
+        }
+        return sportName;
     }
 }
