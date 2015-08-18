@@ -6,4 +6,5 @@ package com.free.agent;
 public final class FreeAgentAPI {
     public static final String OK = "OK";
     public static final int VALIDATION_ERROR = 460;
+    public static final int LOGIN_ERROR = 461;
 }

@@ -16,7 +16,7 @@ import java.io.IOException;
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        httpServletResponse.getWriter().write("987678");
+        httpServletResponse.getWriter().write("{\"error\":false}");
         httpServletResponse.getWriter().flush();
         httpServletResponse.getWriter().close();
     }
