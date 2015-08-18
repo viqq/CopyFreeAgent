@@ -1,5 +1,7 @@
 package com.free.agent.controller;
 
+import com.free.agent.FreeAgentAPI;
+import com.free.agent.Response;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +16,6 @@ public class BaseController {
     @ExceptionHandler(Exception.class)
     public String getFilms() {
         LOGGER.error("Exception!!! Catch in BaseController");
-        return "login-form";
+        return Response.error(FreeAgentAPI.UNEXPECTED_ERROR);
     }
 }

@@ -9,6 +9,7 @@ import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
+import com.free.agent.utils.ExtractFunction;
 import com.free.agent.utils.HttpRequestUtil;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
@@ -80,11 +81,18 @@ public class UserController {
         return Response.error(459);
     }
 
-    @RequestMapping(value = "/sport", method = RequestMethod.GET)
+    @RequestMapping(value = FreeAgentAPI.GET_ALL_SPORTS, method = RequestMethod.GET)
     public
     @ResponseBody
     Collection<Sport> getF() {
         return sportService.getAllSports();
+    }
+
+    @RequestMapping(value = FreeAgentAPI.IS_AUTHENTICATION, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String isAuthentication(Principal principal) {
+        return principal == null ? Response.ok(false) : Response.ok(true);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
@@ -99,26 +107,26 @@ public class UserController {
         return Response.ok(FreeAgentAPI.OK);
     }
 
-    @RequestMapping(value = "/user/info", method = RequestMethod.GET)
+    @RequestMapping(value = FreeAgentAPI.INFO_ABOUT_USER, method = RequestMethod.GET)
     public
     @ResponseBody
     String getInf(Principal principal) {
         return Response.ok(getUserForUI(userService.findByLogin(principal.getName())));
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = FreeAgentAPI.GET_USER_BY_ID, method = RequestMethod.GET)
     public
     @ResponseBody
     User getUserById(@PathVariable(value = "id") Long id) {
         return userService.findById(id);
     }
 
-    @RequestMapping(value = "/getImage", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(value = FreeAgentAPI.GET_IMAGE, method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public void getImage(HttpServletResponse response, Principal principal) throws IOException {
         ByteStreams.copy(new FileInputStream(userService.findByLogin(principal.getName()).getImage() + ".jpg"), response.getOutputStream());
     }
 
-    @RequestMapping(value = "/user/setImage", method = RequestMethod.POST)
+    @RequestMapping(value = FreeAgentAPI.SAVE_IMAGE, method = RequestMethod.POST)
     public void setImage(HttpServletRequest request, Principal principal) throws IOException, FileUploadException {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         factory.setSizeThreshold(MEMORY_THRESHOLD);
@@ -155,15 +163,8 @@ public class UserController {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setDateOfRegistration(user.getDateOfRegistration());
-        userDto.setSports(getSportForUser(user.getSports()));
+        userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), ExtractFunction.SPORT_NAME_INVOKE));
         return userDto;
     }
 
-    private List<String> getSportForUser(Set<Sport> sports) {
-        List<String> sportName = Lists.newArrayList();
-        for (Sport s : sports) {
-            sportName.add(s.getName());
-        }
-        return sportName;
-    }
 }
