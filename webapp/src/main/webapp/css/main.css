@@ -45,6 +45,16 @@ a {
     display: inline-block;
 }
 
+a,
+button {
+    cursor: pointer;
+}
+
+a:hover,
+button:hover {
+    font-weight: bold;
+}
+
 img {
     vertical-align: middle;
 }

@@ -4,8 +4,8 @@
 define(
     [
         'angularAMD',
-        'resources/uiTranslations',
-        'resources/jsObjToParamStr',
+        'resources/ui-translations',
+        'resources/js-obj-to-param-str',
 
         'services/get-user-info'
     ],
@@ -16,27 +16,27 @@ define(
             getUserInfo()
                 .success(function(data) {
                     if (typeof data !== 'object') {
-                        console.warn('user info: something wrong with response');
+                        console.error('user info: something wrong with response');
                         location.assign('#/login');
                         return;
                     }
 
                     if (data.error === true) {
-                        console.warn('user info: request error code' , data.code);
+                        console.error('user info: request error code' , data.code);
                         location.assign('#/login');
                         return;
                     }
 
                     if (typeof data.payload !== 'object') {
-                        console.warn('user info: payload is not object');
+                        console.error('user info: payload is not object');
                         location.assign('#/login');
                         return;
                     }
 
                     $scope.userInfo = data.payload;
                 })
-                .error(function() {
-
+                .error(function(err) {
+                    console.error('user info: request failed', err);
                 });
         };
 

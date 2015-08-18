@@ -4,13 +4,18 @@
 define(
     [
         'angularAMD',
-        'resources/uiTranslations',
-        'resources/jsObjToParamStr',
+        'resources/ui-translations',
+        'resources/js-obj-to-param-str',
 
         'services/login'
     ],
     function (angularAMD, uiTranslations, jsObjToParamStr) {
         var loginCtrl = function ($scope, login) {
+            if ($scope.$root.isLoggedIn) {
+                location.assign('#/');
+                return;
+            }
+
             $scope.uiTranslations = uiTranslations[$scope.language].login;
 
             $scope.loginData = {};
@@ -18,11 +23,19 @@ define(
             $scope.loginHandler = function() {
                 login(jsObjToParamStr($scope.loginData))
                     .success(function(data) {
-                        $scope.isLoggedIn = true;
 
-                        if (typeof data === 'object' && data.error === false) {
-                            location.assign('#/account');
+                        if (typeof data !== 'object') {
+                            console.error('login: something wrong with response');
+                            return;
                         }
+
+                        if (data.error === true) {
+                            console.error('login: request error code' , data.code);
+                            return;
+                        }
+
+                        $scope.$root.isLoggedIn = true;
+                        location.assign('#/profile');
                     })
                     .error(function(err) {
                         throw err;

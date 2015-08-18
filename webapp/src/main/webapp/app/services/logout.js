@@ -8,17 +8,11 @@ define(['angularAMD'], function (angularAMD) {
                 method: 'GET',
                 url: 'j_spring_security_logout'
             })
-                .success(successLogout)
-                .error(errorLogout);
+                .success(function () {
+                })
+                .error(function () {
+                });
         }
-    };
-
-    var successLogout = function (data) {
-        console.log(data)
-    };
-
-    var errorLogout = function (err) {
-        console.log(err)
     };
 
     angularAMD.factory('logout', ['$http', logout]);

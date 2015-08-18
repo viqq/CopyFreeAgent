@@ -10,13 +10,18 @@
 define(
     [
         'angularAMD',
-        'resources/uiTranslations',
-        'resources/jsObjToParamStr',
+        'resources/ui-translations',
+        'resources/js-obj-to-param-str',
 
         'services/registration'
     ],
     function (angularAMD, uiTranslations, jsObjToParamStr) {
-        var loginCtrl = function ($scope, registration) {
+        var registrationCtrl = function ($scope, registration) {
+            if ($scope.$root.isLoggedIn) {
+                location.assign('#/');
+                return;
+            }
+
             $scope.uiTranslations = uiTranslations[$scope.language].registration;
 
             $scope.registrationData = {};
@@ -24,14 +29,24 @@ define(
             $scope.registrationHandler = function() {
                 registration(jsObjToParamStr($scope.registrationData))
                     .success(function(data) {
-                        alert(JSON.stringify(data));
+                        if (typeof data !== 'object') {
+                            console.error('registration: something wrong with response');
+                            return;
+                        }
+
+                        if (data.error === true) {
+                            console.error('registration: request error code' , data.code);
+                            return;
+                        }
+
+                        location.assign('#/login');
                     })
                     .error(function(err) {
-                        throw err;
+                        console.error('registration: request failed', err);
                     })
             }
         };
 
-        angularAMD.controller('RegistrationCtrl', ['$scope', 'registration', loginCtrl]);
+        angularAMD.controller('RegistrationCtrl', ['$scope', 'registration', registrationCtrl]);
     }
 );

@@ -36,7 +36,7 @@ define(
                     controller: 'LoginCtrl',
                     controllerUrl: 'controllers/login'
                 }))
-                .when('/account', angularAMD.route({
+                .when('/profile', angularAMD.route({
                     templateUrl: 'app/views/account.html',
                     controller: 'AccountCtrl',
                     controllerUrl: 'controllers/account'
@@ -52,6 +52,8 @@ define(
 
             //Commented until solve problems with one page routing without hash
             //$locationProvider.html5Mode(true);
+
+
         });
 
         return angularAMD.bootstrap(app);

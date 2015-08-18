@@ -6,10 +6,20 @@
                 <img src="img/logo.png">
             </a>
         </div>
-        <div class="link-wrapper valign-container" >
-            <a class="login-link" href="#/login">
-                {{ uiTranslations.link_login }}
-            </a>
+        <div class="links-wrapper valign-container">
+            <div class="loggedout" ng-hide="isLoggedIn">
+                <a class="login-link" href="#/login">
+                    {{ uiTranslations.link_login }}
+                </a>
+            </div>
+            <div class="loggedin" ng-show="isLoggedIn">
+                <a class="profile-link" href="#/profile">
+                    {{ uiTranslations.link_my_profile }}
+                </a>
+                <a class="logout-link" ng-click="logoutHandler()">
+                    {{ uiTranslations.link_logout }}
+                </a>
+            </div>
         </div>
     </div>
 </div>

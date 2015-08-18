@@ -12,17 +12,11 @@ define(['angularAMD'], function (angularAMD) {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
-                .success(successLogin)
-                .error(errorLogin);
+                .success(function() {
+                })
+                .error(function() {
+                });
         }
-    };
-
-    var successLogin = function (data) {
-        console.log(data)
-    };
-
-    var errorLogin = function (err) {
-        console.log(err)
     };
 
     angularAMD.factory('login', ['$http', login]);

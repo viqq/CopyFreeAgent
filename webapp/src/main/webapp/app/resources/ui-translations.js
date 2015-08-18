@@ -5,7 +5,9 @@ define([], function() {
     return {
         'en': {
             header: {
-                'link_login': 'Login'
+                'link_my_profile': 'My Profile',
+                'link_login': 'Login',
+                'link_logout': 'Logout'
             },
             login: {
                 'placeholder_login': 'enter your login',
