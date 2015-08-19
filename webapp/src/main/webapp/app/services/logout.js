@@ -8,9 +8,11 @@ define(['angularAMD'], function (angularAMD) {
                 method: 'GET',
                 url: 'j_spring_security_logout'
             })
-                .success(function () {
+                .success(function(data) {
+                    console.log(data)
                 })
-                .error(function () {
+                .error(function(err) {
+                    console.log(err);
                 });
         }
     };

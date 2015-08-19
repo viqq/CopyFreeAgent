@@ -12,17 +12,13 @@ define(['angularAMD'], function (angularAMD) {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
-                .success(successRegistration)
-                .error(errorRegistration);
+                .success(function(data) {
+                    console.log(data)
+                })
+                .error(function(err) {
+                    console.log(err);
+                });
         }
-    };
-
-    var successRegistration = function (data) {
-        console.log(data)
-    };
-
-    var errorRegistration = function (err) {
-        console.log(err)
     };
 
     angularAMD.factory('registration', ['$http', registration]);

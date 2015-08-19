@@ -12,9 +12,11 @@ define(['angularAMD'], function (angularAMD) {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
-                .success(function() {
+                .success(function(data) {
+                    console.log(data)
                 })
-                .error(function() {
+                .error(function(err) {
+                    console.log(err);
                 });
         }
     };

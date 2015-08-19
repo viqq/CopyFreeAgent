@@ -8,18 +8,15 @@ define(['angularAMD'], function (angularAMD) {
                 method: 'GET',
                 url: 'user/info'
             })
-                .success(successUserInfo)
-                .error(errorUserInfo);
+                .success(function(data) {
+                    console.log(data)
+                })
+                .error(function(err) {
+                    console.log(err);
+                });
         }
     };
 
-    var successUserInfo = function (data) {
-        console.log(data)
-    };
-
-    var errorUserInfo = function (err) {
-        console.log(err)
-    };
 
     angularAMD.factory('getUserInfo', ['$http', getUserInfo]);
 });

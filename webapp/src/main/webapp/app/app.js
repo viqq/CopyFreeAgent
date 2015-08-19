@@ -22,29 +22,19 @@ define(
         app.config(function ($routeProvider, $locationProvider) {
             $routeProvider
                 .when('/', angularAMD.route({
-                    templateUrl: 'app/views/home.html',
-                    controller: 'HomeCtrl',
-                    controllerUrl: 'controllers/home'
+                    templateUrl: 'app/views/home.html'
                 }))
                 .when('/registration', angularAMD.route({
-                    templateUrl: 'app/views/registration.html',
-                    controller: 'RegistrationCtrl',
-                    controllerUrl: 'controllers/registration'
+                    templateUrl: 'app/views/registration.html'
                 }))
                 .when('/login', angularAMD.route({
-                    templateUrl: 'app/views/login.html',
-                    controller: 'LoginCtrl',
-                    controllerUrl: 'controllers/login'
+                    templateUrl: 'app/views/login.html'
                 }))
                 .when('/profile', angularAMD.route({
-                    templateUrl: 'app/views/account.html',
-                    controller: 'AccountCtrl',
-                    controllerUrl: 'controllers/account'
+                    templateUrl: 'app/views/account.html'
                 }))
                 .when('/search', angularAMD.route({
-                    templateUrl: 'app/views/search.html',
-                    controller: 'SearchCtrl',
-                    controllerUrl: 'controllers/search'
+                    templateUrl: 'app/views/search.html'
                 }))
                 .otherwise({
                     redirectTo: '/'

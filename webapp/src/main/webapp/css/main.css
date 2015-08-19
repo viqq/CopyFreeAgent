@@ -33,11 +33,12 @@ div.view {
 }
 
 body {
-    font-family: Raleway, "Helvetica Neue", Helvetica,Arial,sans-serif;
+    font-family: Raleway, "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: 0px;
     position: relative;
     min-height: 100%;
     background-color: lightgray;
+    overflow-y: scroll;
 }
 
 a {
