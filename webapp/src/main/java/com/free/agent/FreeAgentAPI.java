@@ -15,4 +15,5 @@ public final class FreeAgentAPI {
     public static final String GET_IMAGE = "/user/getImage";
     public static final String GET_ALL_SPORTS = "/sport";
     public static final String IS_AUTHENTICATION = "/isAuthentication";
+    public static final String FIND_USER = "/search/user";
 }

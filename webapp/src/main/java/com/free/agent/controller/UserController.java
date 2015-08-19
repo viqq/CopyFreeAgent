@@ -4,14 +4,12 @@ package com.free.agent.controller;
 import com.free.agent.FreeAgentAPI;
 import com.free.agent.Response;
 import com.free.agent.dto.UserDto;
-import com.free.agent.dto.UserWithSport;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
 import com.free.agent.utils.ExtractFunction;
 import com.free.agent.utils.HttpRequestUtil;
-import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -111,7 +109,7 @@ public class UserController {
     public
     @ResponseBody
     String getInf(Principal principal) {
-        return Response.ok(getUserForUI(userService.findByLogin(principal.getName())));
+        return Response.ok(ExtractFunction.getUserForUI(userService.findByLogin(principal.getName())));
     }
 
     @RequestMapping(value = FreeAgentAPI.GET_USER_BY_ID, method = RequestMethod.GET)
@@ -149,22 +147,6 @@ public class UserController {
         user.setLastName(userDto.getLastName());
         user.setDateOfRegistration(new Date());
         return user;
-    }
-
-    private UserWithSport getUserForUI(User user) {
-        UserWithSport userDto = new UserWithSport();
-        userDto.setLogin(user.getLogin());
-        userDto.setPassword(user.getPassword());
-        userDto.setPhone(user.getPhone());
-        userDto.setDescription(user.getDescription());
-        userDto.setCity(user.getCity());
-        userDto.setDateOfBirth(user.getDateOfBirth());
-        userDto.setEmail(user.getEmail());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setDateOfRegistration(user.getDateOfRegistration());
-        userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), ExtractFunction.SPORT_NAME_INVOKE));
-        return userDto;
     }
 
 }
