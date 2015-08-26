@@ -12,7 +12,7 @@ define(
         'directives/registration/script',
         'directives/login/script',
         'directives/account/script',
-        'directives/search/script',
+        'directives/search-users/script',
 
         '../app/controllers/main'
     ],
@@ -34,16 +34,14 @@ define(
                     templateUrl: 'app/views/account.html'
                 }))
                 .when('/search', angularAMD.route({
-                    templateUrl: 'app/views/search.html'
+                    templateUrl: 'app/views/search-users.html'
                 }))
                 .otherwise({
                     redirectTo: '/'
                 });
 
-            //Commented until solve problems with one page routing without hash
+            // TODO Solve problems with one page routing without hash
             //$locationProvider.html5Mode(true);
-
-
         });
 
         return angularAMD.bootstrap(app);

@@ -1,0 +1,28 @@
+<div class="main-container">
+    <div class="content">
+        <form id="search_users" ng-submit="searchUsersHandler()">
+            <input type="text" name="sport" id="sport" placeholder="sport">
+            <input type="text" name="firstName" id="firstName" placeholder="firstName">
+            <input type="text" name="lastName" id="lastName" placeholder="lastName">
+            <input type="text" name="dateOfBirthFrom" id="dateOfBirthFrom" placeholder="dateOfBirthFrom">
+            <input type="text" name="dateOfBirthTo" id="dateOfBirthTo" placeholder="dateOfBirthTo">
+            <input type="submit" value="Submit"/>
+        </form>
+        <div id="search_results">
+            <div ng-repeat="user in searchResults">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Key</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr ng-repeat="(key, value) in user">
+                        <td>{{ key }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

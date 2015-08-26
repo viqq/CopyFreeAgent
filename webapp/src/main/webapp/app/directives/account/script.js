@@ -1,7 +1,4 @@
 /**
- * Created by TITUS on 18.08.2015.
- */
-/**
  * Created by TITUS on 30.07.2015.
  */
 define(
