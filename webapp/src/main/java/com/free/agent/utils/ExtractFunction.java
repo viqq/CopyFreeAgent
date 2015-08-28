@@ -20,6 +20,7 @@ public final class ExtractFunction {
 
     public static UserWithSport getUserForUI(User user) {
         UserWithSport userDto = new UserWithSport();
+        userDto.setId(user.getId());
         userDto.setLogin(user.getLogin());
         userDto.setPhone(user.getPhone());
         userDto.setDescription(user.getDescription());

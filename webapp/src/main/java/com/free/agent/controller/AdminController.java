@@ -26,13 +26,13 @@ public class AdminController {
         return "admin";
     }
 
-    @RequestMapping(value = "/admin/sport", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/sport", method = RequestMethod.GET, produces = BaseController.PRODUCES)
     @ResponseBody
     public String getInfo1() {
         return Response.ok(Collections2.transform(sportService.getAllSports(), ExtractFunction.SPORT_NAME_INVOKE));
     }
 
-    @RequestMapping(value = "/admin/sport", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/sport", method = RequestMethod.POST, produces = BaseController.PRODUCES)
     public Sport getSave(Sport sport) {
         return sportService.save(sport);
     }

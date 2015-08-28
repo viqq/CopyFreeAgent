@@ -72,14 +72,14 @@ public class UserController {
         return "login-form";
     }
 
-    @RequestMapping(value = {"/error-login"}, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = {"/error-login"}, method = RequestMethod.GET)
     public
     @ResponseBody
     String loginFormDef1() {
         return Response.error(459);
     }
 
-    @RequestMapping(value = FreeAgentAPI.GET_ALL_SPORTS, method = RequestMethod.GET)
+    @RequestMapping(value = FreeAgentAPI.GET_ALL_SPORTS, method = RequestMethod.GET, produces = BaseController.PRODUCES)
     public
     @ResponseBody
     Collection<Sport> getF() {
@@ -105,18 +105,19 @@ public class UserController {
         return Response.ok(FreeAgentAPI.OK);
     }
 
-    @RequestMapping(value = FreeAgentAPI.INFO_ABOUT_USER, method = RequestMethod.GET)
+    @RequestMapping(value = FreeAgentAPI.INFO_ABOUT_USER, method = RequestMethod.GET, produces = BaseController.PRODUCES)
     public
     @ResponseBody
     String getInf(Principal principal) {
         return Response.ok(ExtractFunction.getUserForUI(userService.findByLogin(principal.getName())));
     }
 
-    @RequestMapping(value = FreeAgentAPI.GET_USER_BY_ID, method = RequestMethod.GET)
+    @RequestMapping(value = FreeAgentAPI.GET_USER_BY_ID, method = RequestMethod.GET, produces = BaseController.PRODUCES)
     public
     @ResponseBody
-    User getUserById(@PathVariable(value = "id") Long id) {
-        return userService.findById(id);
+    String getUserById(@PathVariable(value = "id") Long id) {
+        return Response.ok(ExtractFunction.getUserForUI(userService.findById(id)));
+
     }
 
     @RequestMapping(value = FreeAgentAPI.GET_IMAGE, method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)

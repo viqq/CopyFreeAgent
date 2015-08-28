@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class BaseController {
     private static final Logger LOGGER = Logger.getLogger(BaseController.class);
+    public static final String PRODUCES = "application/json; charset=UTF-8";
 
     @ExceptionHandler(Exception.class)
     public String getFilms() {

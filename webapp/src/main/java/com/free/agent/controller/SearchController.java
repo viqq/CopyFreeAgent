@@ -36,7 +36,7 @@ public class SearchController {
         return userService.findAll();
     }
 
-    @RequestMapping(value = FreeAgentAPI.FIND_USER, method = RequestMethod.POST)
+    @RequestMapping(value = FreeAgentAPI.FIND_USER, method = RequestMethod.POST, produces = BaseController.PRODUCES)
     public
     @ResponseBody
     String getInfo(Filter filter) {
