@@ -4,16 +4,33 @@
 define(
     [
         'angularAMD',
-        'controllers/header'
+        'resources/ui-translations',
+
+        'services/logout'
     ],
-    function (angularAMD) {
+    function (angularAMD, uiTranslations) {
         var dirHeader = function () {
             return {
                 restrict: 'E',
                 templateUrl: 'app/directives/header/template.html',
                 replace: true,
                 scope: true,
-                controller: 'HeaderCtrl'
+                controller: ['$scope', 'logout', function ($scope, logout) {
+                    $scope.uiTranslations = uiTranslations[$scope.language].header;
+
+                    $scope.loginData = {};
+
+                    $scope.logoutHandler = function() {
+                        logout()
+                            .success(function(data) {
+                                $scope.$root.isLoggedIn = false;
+                                location.assign('#/');
+                            })
+                            .error(function(err) {
+                                console.error('logout: requsest failed', err);
+                            })
+                    };
+                }]
             };
         };
 

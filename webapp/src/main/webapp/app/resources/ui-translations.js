@@ -14,7 +14,7 @@ define([], function() {
                 'placeholder_password': 'password',
                 'button_login': 'LOGIN',
                 'link_forgot': 'Forgot your password?',
-                'link_registration': 'Have no account? Register it!'
+                'link_registration': 'Have no profile? Register it!'
             },
             registration: {
                 'header_main': 'REGISTRATION',

@@ -6,10 +6,10 @@ define(
         'angularAMD',
 
         'directives/header/script',
-        'directives/search-users/script',
+        'directives/profile/script',
         'directives/footer/script'
     ],
     function (angularAMD) {
-        angularAMD.controller('SearchUsersCtrl', function() {});
+        angularAMD.controller('ProfileCtrl', function() {});
     }
 );

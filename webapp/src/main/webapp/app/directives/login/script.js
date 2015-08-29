@@ -4,19 +4,51 @@
 define(
     [
         'angularAMD',
-        'controllers/login'
+        'resources/ui-translations',
+        'resources/js-obj-to-param-str',
+
+        'services/login'
     ],
-    function (angularAMD) {
-        var dirLogin = function () {
+    function (angularAMD, uiTranslations, jsObjToParamStr) {
+        angularAMD.directive('dirLogin', ['login', function () {
             return {
                 restrict: 'E',
                 templateUrl: 'app/directives/login/template.html',
                 replace: true,
                 scope: true,
-                controller: 'LoginCtrl'
-            };
-        };
+                controller: ['$scope', 'login', function ($scope, login) {
+                    if ($scope.$root.isLoggedIn) {
+                        location.assign('#/');
+                        return;
+                    }
 
-        angularAMD.directive('dirLogin', ['login', dirLogin]);
+                    $scope.uiTranslations = uiTranslations[$scope.language].login;
+
+                    $scope.loginData = {};
+
+                    $scope.loginHandler = function() {
+                        login(jsObjToParamStr($scope.loginData))
+                            .success(function(data) {
+
+                                if (typeof data !== 'object') {
+                                    console.error('login: something wrong with response');
+                                    return;
+                                }
+
+                                if (data.error === true) {
+                                    console.error('login: request error code' , data.code);
+                                    return;
+                                }
+
+                                $scope.$root.isLoggedIn = true;
+                                location.assign('#/profile');
+                            })
+                            .error(function(err) {
+                                throw err;
+                            })
+                    }
+                }]
+            };
+        }]);
     }
 );
