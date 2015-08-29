@@ -1,8 +1,15 @@
 /**
- * Created by TITUS on 02.08.2015.
+ * Created by TITUS on 29.07.2015.
  */
-define(['app'], function (app) {
-    app.controller('HomeCtrl', function ($scope) {
-        $scope.message = "Message from LoginCTRL";
-    });
-});
+define(
+    [
+        'angularAMD',
+
+        'directives/header/script',
+        'directives/home/script',
+        'directives/footer/script'
+    ],
+    function (angularAMD) {
+        angularAMD.controller('HomeCtrl', function() {});
+    }
+);

@@ -4586,7 +4586,7 @@
          *   a number representing the offset (in pixels).<br /><br />
          * - **jqLite**: A jqLite/jQuery element to be used for specifying the offset. The distance from
          *   the top of the page to the element's bottom will be used as offset.<br />
-         *   **Note**: The element will be taken into account only as long as its `position` is set to
+         *   **Note**: The element will be taken into profile only as long as its `position` is set to
          *   `fixed`. This option is useful, when dealing with responsive navbars/headers that adjust
          *   their height and/or positioning according to the viewport's size.
          *
@@ -18750,8 +18750,8 @@
     function getFirstThursdayOfYear(year) {
         // 0 = index of January
         var dayOfWeekOnFirst = (new Date(year, 0, 1)).getDay();
-        // 4 = index of Thursday (+1 to account for 1st = 5)
-        // 11 = index of *next* Thursday (+1 account for 1st = 12)
+        // 4 = index of Thursday (+1 to profile for 1st = 5)
+        // 11 = index of *next* Thursday (+1 profile for 1st = 12)
         return new Date(year, 0, ((dayOfWeekOnFirst <= 4) ? 5 : 12) - dayOfWeekOnFirst);
     }
 
@@ -20537,7 +20537,7 @@
          *    `new RegExp('^abc$')`.<br />
          *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
          *    start at the index of the last search's match, thus not taking the whole input value into
-         *    account.
+         *    profile.
          * @param {string=} ngChange Angular expression to be executed when input changes due to user
          *    interaction with the input element.
          * @param {boolean=} [ngTrim=true] If set to false Angular will not automatically trim the input.
@@ -21131,7 +21131,7 @@
          *    `new RegExp('^abc$')`.<br />
          *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
          *    start at the index of the last search's match, thus not taking the whole input value into
-         *    account.
+         *    profile.
          * @param {string=} ngChange Angular expression to be executed when input changes due to user
          *    interaction with the input element.
          *
@@ -21229,7 +21229,7 @@
          *    `new RegExp('^abc$')`.<br />
          *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
          *    start at the index of the last search's match, thus not taking the whole input value into
-         *    account.
+         *    profile.
          * @param {string=} ngChange Angular expression to be executed when input changes due to user
          *    interaction with the input element.
          *
@@ -21328,7 +21328,7 @@
          *    `new RegExp('^abc$')`.<br />
          *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
          *    start at the index of the last search's match, thus not taking the whole input value into
-         *    account.
+         *    profile.
          * @param {string=} ngChange Angular expression to be executed when input changes due to user
          *    interaction with the input element.
          *
@@ -21961,7 +21961,7 @@
      *    `new RegExp('^abc$')`.<br />
      *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
      *    start at the index of the last search's match, thus not taking the whole input value into
-     *    account.
+     *    profile.
      * @param {string=} ngChange Angular expression to be executed when input changes due to user
      *    interaction with the input element.
      * @param {boolean=} [ngTrim=true] If set to false Angular will not automatically trim the input.
@@ -22000,7 +22000,7 @@
      *    `new RegExp('^abc$')`.<br />
      *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
      *    start at the index of the last search's match, thus not taking the whole input value into
-     *    account.
+     *    profile.
      * @param {string=} ngChange Angular expression to be executed when input changes due to user
      *    interaction with the input element.
      * @param {boolean=} [ngTrim=true] If set to false Angular will not automatically trim the input.
