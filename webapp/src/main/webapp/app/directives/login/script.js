@@ -5,18 +5,17 @@ define(
     [
         'angularAMD',
         'resources/ui-translations',
-        'resources/js-obj-to-param-str',
 
         'services/login'
     ],
-    function (angularAMD, uiTranslations, jsObjToParamStr) {
+    function (angularAMD, uiTranslations) {
         angularAMD.directive('dirLogin', ['login', function () {
             return {
                 restrict: 'E',
                 templateUrl: 'app/directives/login/template.html',
                 replace: true,
                 scope: true,
-                controller: ['$scope', 'login', function ($scope, login) {
+                controller: ['$scope', '$element', 'login', function ($scope, $element, login) {
                     if ($scope.$root.isLoggedIn) {
                         location.assign('#/');
                         return;
@@ -24,10 +23,15 @@ define(
 
                     $scope.uiTranslations = uiTranslations[$scope.language].login;
 
+                    $scope.form = $element.find('form');
+
                     $scope.loginData = {};
 
                     $scope.loginHandler = function() {
-                        login(jsObjToParamStr($scope.loginData))
+                        console.log($scope.form.serialize());
+                        var data = $scope.form.serialize();
+
+                        login(data)
                             .success(function(data) {
 
                                 if (typeof data !== 'object') {
