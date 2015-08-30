@@ -12,7 +12,7 @@ define(
         var dirProfile = function() {
             return {
                 restrict: 'E',
-                templateUrl: 'app/directives/profile/template.html',
+                templateUrl: 'app/directives/user/template.html',
                 replace: true,
                 scope: true,
                 controller: ['$scope', '$routeParams', 'getUserInfoById', function ($scope, $routeParams, getUserInfo) {
