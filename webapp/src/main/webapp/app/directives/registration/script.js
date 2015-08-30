@@ -4,49 +4,81 @@
 define([
         'angularAMD',
         'resources/ui-translations',
-        'resources/js-obj-to-param-str',
 
-        'services/registration'
+        'services/registration',
+        'services/login'
     ],
-    function (angularAMD, uiTranslations, jsObjToParamStr) {
+    function (angularAMD, uiTranslations) {
         angularAMD.directive('dirRegistration', function () {
             return {
                 restrict: 'E',
                 templateUrl: 'app/directives/registration/template.html',
                 replace: true,
                 scope: true,
-                controller: ['$scope', 'registration', function ($scope, registration) {
-                    if ($scope.$root.isLoggedIn) {
-                        location.assign('#/');
-                        return;
-                    }
-
-                    $scope.uiTranslations = uiTranslations[$scope.language].registration;
-
-                    $scope.registrationData = {};
-
-                    $scope.registrationHandler = function() {
-                        registration(jsObjToParamStr($scope.registrationData))
-                            .success(function(data) {
-                                if (typeof data !== 'object') {
-                                    console.error('registration: something wrong with response');
-                                    return;
-                                }
-
-                                if (data.error === true) {
-                                    console.error('registration: request error code' , data.code);
-                                    return;
-                                }
-
-                                location.assign('#/login');
-                            })
-                            .error(function(err) {
-                                console.error('registration: request failed', err);
-                            })
-                    }
-                }]
+                controller: controller
             };
         });
+
+        var controller = ['$scope', 'registration', 'login', function ($scope, registration, login) {
+            if ($scope.$root.isLoggedIn) {
+                location.assign('#/');
+                return;
+            }
+
+            $scope.uiTranslations = uiTranslations[$scope.language].registration;
+
+            $scope.registrationData = {};
+
+            $scope.registrationHandler = function() {
+                var data = $scope.$root.toolkit.serialize($scope.registrationData);
+
+                registration(data)
+                    .success(function(data) {
+                        if (typeof data !== 'object') {
+                            console.error('registration: something wrong with response');
+                            return;
+                        }
+
+                        if (data.error === true) {
+                            console.error('registration: request error code' , data.code);
+                            return;
+                        }
+
+                        $scope.loginAfterReg();
+                    })
+                    .error(function(err) {
+                        console.error('registration: request failed', err);
+                    })
+            };
+
+            $scope.loginAfterReg = function() {
+                var data = 'j_username=' +
+                    $scope.registrationData.login + '&' +
+                    'j_password=' +
+                    $scope.registrationData.password +'&' +
+                    'submit=Login';
+
+                login(data)
+                    .success(function(data) {
+
+                        if (typeof data !== 'object') {
+                            console.error('login: something wrong with response');
+                            return;
+                        }
+
+                        if (data.error === true || data.code) {
+                            console.error('login after reg: request error code' , data.code);
+                            return;
+                        }
+
+                        $scope.$root.isLoggedIn = true;
+                        location.assign('#/profile');
+                    })
+                    .error(function(err) {
+                        throw err;
+                    })
+            };
+        }];
     }
 );
 

@@ -1,12 +1,37 @@
 <div class="main-container">
     <div class="content">
         <form id="search_users" ng-submit="searchUsersHandler()">
-            <input type="text" name="sport" id="sport" placeholder="sport">
-            <input type="text" name="firstName" id="firstName" placeholder="firstName">
-            <input type="text" name="lastName" id="lastName" placeholder="lastName">
-            <input type="text" name="dateOfBirthFrom" id="dateOfBirthFrom" placeholder="dateOfBirthFrom">
-            <input type="text" name="dateOfBirthTo" id="dateOfBirthTo" placeholder="dateOfBirthTo">
-            <input type="submit" value="Submit"/>
+            <input ng-model="searchParams.sport"
+                    type="text"
+                    name="sport"
+                    id="sport"
+                    placeholder="sport">
+
+            <input ng-model="searchParams.firstName"
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    placeholder="firstName">
+
+            <input ng-model="searchParams.lastName"
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    placeholder="lastName">
+
+            <input ng-model="searchParams.dateOfBirthFrom"
+                    type="text"
+                    name="dateOfBirthFrom"
+                    id="dateOfBirthFrom"
+                    placeholder="dateOfBirthFrom">
+
+            <input ng-model="searchParams.dateOfBirthTo"
+                    type="text"
+                    name="dateOfBirthTo"
+                    id="dateOfBirthTo"
+                    placeholder="dateOfBirthTo">
+            <input
+                    type="submit" value="Submit"/>
         </form>
         <div id="search_results">
             <div ng-repeat="user in searchResults">

@@ -5,7 +5,6 @@ define(
     [
         'angularAMD',
         'angular-route',
-        'jquery',
 
         'controllers/main'
     ],

@@ -4,14 +4,15 @@
 define(
     [
         'angularAMD',
+        'resources/toolkit',
         'resources/ui-translations',
 
         'services/check-user-state'
     ],
-    function (angularAMD, uiTranslations) {
+    function (angularAMD, toolkit, uiTranslations) {
         var mainCtrl = function ($scope, checkUserState) {
-            console.log('main ctrl');
             $scope.$root.language = 'en';
+            $scope.$root.toolkit = toolkit;
 
             checkUserState()
                 .success(function (data) {

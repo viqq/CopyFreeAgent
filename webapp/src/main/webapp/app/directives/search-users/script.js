@@ -11,17 +11,26 @@ define(
     function (angularAMD, uiTranslations) {
         angularAMD.directive('dirSearchUsers', function () {
             return {
-                restrict: 'E',
-                templateUrl: 'app/directives/search-users/template.html',
-                replace: true,
-                scope: true,
-                controller: ['$scope', '$element', 'searchUsers', function ($scope, $element, searchUsers) {
+                controller: [
+                    '$scope',
+                    '$element',
+                    'searchUsers',
+                    function ($scope, $element, searchUsers) {
                     $scope.form = $element.find('form');
                     $scope.searchResults = [];
 
+                    $scope.searchParams = {
+                        sport: '',
+                        firstName: '',
+                        lastName: '',
+                        dateOfBirthFrom: '',
+                        dateOfBirthTo: ''
+                    };
+
                     $scope.searchUsersHandler = function() {
-                        console.log($scope.form.serialize());
-                        var data = $scope.form.serialize();
+                        var data = $scope.$root.toolkit.serialize($scope.searchParams);
+
+                        console.log(data);
 
                         searchUsers(data)
                             .success(function(data) {
@@ -46,7 +55,11 @@ define(
 
                             })
                     };
-                }]
+                }],
+                restrict: 'E',
+                templateUrl: 'app/directives/search-users/template.html',
+                replace: true,
+                scope: true
             };
         });
     }

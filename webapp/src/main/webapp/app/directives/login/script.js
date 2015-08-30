@@ -25,29 +25,37 @@ define(
 
                     $scope.form = $element.find('form');
 
-                    $scope.loginData = {};
+                    $scope.loginData = {
+                        j_username: '',
+                        j_password: '',
+                        submit: 'Login'
+                    };
 
-                    $scope.loginHandler = function() {
-                        console.log($scope.form.serialize());
-                        var data = $scope.form.serialize();
+                    $scope.error = '';
+
+                    $scope.loginHandler = function () {
+                        var data = $scope.$root.toolkit.serialize($scope.loginData);
+                        console.log(data);
 
                         login(data)
-                            .success(function(data) {
+                            .success(function (data) {
 
                                 if (typeof data !== 'object') {
+                                    $scope.error = 'Something went wrong';
                                     console.error('login: something wrong with response');
                                     return;
                                 }
 
-                                if (data.error === true) {
-                                    console.error('login: request error code' , data.code);
+                                if (data.error === true || data.code) {
+                                    $scope.error = 'Login error. Code: ' + data.code;
+                                    console.error('login: request error code', data.code);
                                     return;
                                 }
 
                                 $scope.$root.isLoggedIn = true;
                                 location.assign('#/profile');
                             })
-                            .error(function(err) {
+                            .error(function (err) {
                                 throw err;
                             })
                     }

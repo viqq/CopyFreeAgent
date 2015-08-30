@@ -18,7 +18,12 @@
                        size="30"
                        maxlength="32"/>
 
-                <input name="submit" value="Login" type="hidden">
+                <input ng-model="loginData.submit"
+                        name="submit"
+                        value="Login"
+                        type="hidden">
+
+                <div class="error">{{error}}</div>
 
                 <button id="btn_login">{{uiTranslations.button_login}}</button>
             </form>
