@@ -39,6 +39,11 @@ define(
                     controller: 'SearchUsersCtrl',
                     controllerUrl: 'controllers/search-users'
                 }))
+                .when('/user/:id', angularAMD.route({
+                    templateUrl: 'app/views/user.html',
+                    controller: 'UserCtrl',
+                    controllerUrl: 'controllers/user'
+                }))
                 .otherwise({
                     redirectTo: '/'
                 });
