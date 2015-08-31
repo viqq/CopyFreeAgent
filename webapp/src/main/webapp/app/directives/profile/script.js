@@ -6,7 +6,8 @@ define(
         'angularAMD',
         'resources/ui-translations',
 
-        'services/get-user-info'
+        'services/get-user-info',
+        'services/upload-user-pic'
     ],
     function (angularAMD) {
         var dirProfile = function() {
@@ -15,8 +16,10 @@ define(
                 templateUrl: 'app/directives/profile/template.html',
                 replace: true,
                 scope: true,
-                controller: ['$scope', 'getUserInfo', function ($scope, getUserInfo) {
+                controller: ['$scope', '$element', 'getUserInfo', 'uploadUserPic', function ($scope, $element, getUserInfo, uploadUserPic) {
                     $scope.userInfo = {};
+
+                    $scope.imageInput = $element.find('#userpic input[type="file"]');
 
                     getUserInfo()
                         .success(function(data) {
@@ -43,6 +46,16 @@ define(
                         .error(function(err) {
                             console.error('user info: request failed', err);
                         });
+
+                    $scope.uploadImage = function() {
+                        var data = $scope.imageInput[0].files[0];
+
+                        if (!data) {
+                            return;
+                        }
+
+                        uploadUserPic(data)
+                    }
                 }]
             };
         };

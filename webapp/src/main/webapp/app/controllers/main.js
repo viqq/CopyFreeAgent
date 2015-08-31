@@ -13,6 +13,12 @@ define(
         var mainCtrl = function ($scope, checkUserState) {
             $scope.$root.language = 'en';
             $scope.$root.toolkit = toolkit;
+            $scope.$root.userPicBaseUrl = '/user/getImage';
+            $scope.$root.reloadUserPics = function() {
+                $scope.$root.userPicUrl = $scope.$root.userPicBaseUrl + '?_ts=' + new Date().getTime();
+            };
+
+            $scope.$root.reloadUserPics();
 
             checkUserState()
                 .success(function (data) {
