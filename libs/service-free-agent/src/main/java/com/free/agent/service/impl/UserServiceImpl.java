@@ -24,7 +24,7 @@ import java.util.Set;
 @Service("userService")
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
-    private static final String SAVE_PATH = "/var/free-agent/images";
+    private static final String SAVE_PATH = "D:\\Projects\\FreeAgent\\imgs";
 
     @Autowired
     private UserDao userDao;
