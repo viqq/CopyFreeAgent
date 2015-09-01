@@ -6,9 +6,6 @@ import com.google.gson.Gson;
  * Created by antonPC on 28.07.15.
  */
 public class Response<T> {
-
-    private static final String OK = "OK";
-    private static final String ERROR = "ERROR";
     private final T payload;
     private final Boolean error;
     private final Integer status;
