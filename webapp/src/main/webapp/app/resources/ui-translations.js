@@ -5,7 +5,7 @@ define([], function() {
     return {
         'en': {
             header: {
-                'link_my_profile': 'My Profile',
+                'link_my_profile': '(show my profile)',
                 'link_login': 'Login',
                 'link_logout': 'Logout'
             },
@@ -46,11 +46,11 @@ define([], function() {
         },
         'ru': {
             header: {
-                'link_login': 'Логин'
+                'link_login': 'пїЅпїЅпїЅпїЅпїЅ'
             },
             login: {
-                'label_login': 'Логин',
-                'label_password': 'Пароль'
+                'label_login': 'пїЅпїЅпїЅпїЅпїЅ',
+                'label_password': 'пїЅпїЅпїЅпїЅпїЅпїЅ'
             },
             registration: {
 

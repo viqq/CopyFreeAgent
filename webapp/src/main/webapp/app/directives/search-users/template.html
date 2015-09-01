@@ -3,9 +3,19 @@
         #search .content {
             padding: 30px;
         }
+
+        #search .userpic {
+            height: 50px;
+            margin-right: 20px;
+        }
+
+        #search_users input {
+            margin-bottom: 20px;
+        }
     </style>
     <div id="search">
         <div class="content">
+            <h1>Search users</h1>
             <form id="search_users" ng-submit="searchUsersHandler()">
                 <input ng-model="searchParams.sport"
                        type="text"
@@ -46,16 +56,15 @@
                         type="submit" value="Submit"/>
                 <br>
             </form>
-            <div id="search_results">
+            <div id="search_results" ng-show="searchResults.length">
+                <h1>Results</h1>
                 <div ng-repeat="user in searchResults">
                     <div>
-                        <br>
-                        <br>
-                        {{ user.login }}
-                        <br>
-                        <a href="{{ '#/user/' + user.id }}">
-                            Show user
-                        </a>
+                        <div>
+                            <a href="{{ '#/user/' + user.id }}">
+                                <img class="userpic" ng-src="{{ 'user/getImage/' + user.id }}"><span>{{ user.login }}</span>
+                            </a>
+                        </div>
                         <br>
                         <br>
                     </div>

@@ -7,45 +7,50 @@ define(
         'resources/toolkit',
         'resources/ui-translations',
 
-        'services/check-user-state'
+        'services/get-user-info'
     ],
     function (angularAMD, toolkit, uiTranslations) {
-        var mainCtrl = function ($scope, checkUserState) {
+        var mainCtrl = function ($scope, getUserInfo) {
             $scope.$root.language = 'en';
             $scope.$root.toolkit = toolkit;
-            $scope.$root.userPicBaseUrl = '/user/getImage';
-            $scope.$root.reloadUserPics = function() {
-                $scope.$root.userPicUrl = $scope.$root.userPicBaseUrl + '?_ts=' + new Date().getTime();
+
+            $scope.$root.isLoggedIn = false;
+
+            $scope.$root.currUserData = {};
+
+            $scope.$root.userPicBaseUrl = '/user/getImage/';
+            $scope.$root.userPicUrl = '';
+            $scope.$root.reloadUserPics = function () {
+                var currUserId = $scope.$root.currUserData.id || '';
+                $scope.$root.userPicUrl = $scope.$root.userPicBaseUrl +
+                currUserId +
+                '?_ts=' + new Date().getTime();
             };
 
-            $scope.$root.reloadUserPics();
+            var updUserInfErrHndlr = function() {
+                $scope.$root.isLoggedIn = false;
+                $scope.$root.currUserData = {};
+            };
 
-            checkUserState()
-                .success(function (data) {
-                    if (typeof data !== 'object') {
-                        console.error('user info: something wrong with response');
-                        $scope.isLoggedIn = false;
-                        return;
-                    }
+            $scope.$root.updateUserInfo = function() {
+                return getUserInfo()
+                    .success(function (data) {
+                        if (!data || !data.payload) {
+                            updUserInfErrHndlr();
+                            return;
+                        }
 
-                    if (data.error === true) {
-                        console.error('user info: request error code', data.code);
-                        $scope.$root.isLoggedIn = false;
-                        return;
-                    }
-
-                    if (data.payload) {
                         $scope.$root.isLoggedIn = true;
-                    } else {
-                        $scope.$root.isLoggedIn = false;
-                    }
-                })
-                .error(function(err) {
-                    console.error('user info: request failed', err);
-                });
+                        $scope.$root.currUserData = data.payload;
+                        $scope.$root.reloadUserPics();
+                    }).error(function() {
+                        updUserInfErrHndlr();
+                    });
+            };
 
+            $scope.$root.updateUserInfo();
         };
 
-        angularAMD.controller('MainCtrl', ['$scope', 'checkUserState', mainCtrl]);
+        angularAMD.controller('MainCtrl', ['$scope','getUserInfo', mainCtrl]);
     }
 );

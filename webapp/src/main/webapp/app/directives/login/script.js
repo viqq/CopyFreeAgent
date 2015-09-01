@@ -53,6 +53,7 @@ define(
                                 }
 
                                 $scope.$root.isLoggedIn = true;
+                                $scope.$root.updateUserInfo();
                                 location.assign('#/profile');
                             })
                             .error(function (err) {

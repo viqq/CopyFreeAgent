@@ -13,9 +13,10 @@
                 </a>
             </div>
             <div class="loggedin" ng-show="isLoggedIn">
-
                 <a class="profile-link" href="#/profile">
-                    <img class="userpic" ng-src="{{ userPicUrl }}"><span>{{ uiTranslations.link_my_profile }}</span>
+                    <img class="userpic" ng-src="{{ userPicUrl }}"><!--
+                    --><span>{{ 'Profile: ' + currUserData.login }}
+                    </span>
                 </a>
                 <a class="logout-link" ng-click="logoutHandler()">
                     <span>{{ uiTranslations.link_logout }}</span>

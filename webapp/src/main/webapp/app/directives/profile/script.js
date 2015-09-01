@@ -6,57 +6,91 @@ define(
         'angularAMD',
         'resources/ui-translations',
 
-        'services/get-user-info',
+        'services/check-user-state',
         'services/upload-user-pic'
     ],
     function (angularAMD) {
-        var dirProfile = function() {
+        var controller = [
+            '$scope',
+            '$element',
+            'checkUserState',
+            'uploadUserPic',
+            function ($scope, $element, checkUserState, uploadUserPic) {
+                var executors = {
+                    'initImages' : function() {
+                        $scope.imageInput = $element.find('#userpic input[type="file"]');
+
+                        $scope.uploadImage = function () {
+                            var data = $scope.imageInput[0].files[0];
+
+                            if (!data) {
+                                return;
+                            }
+
+                            uploadUserPic(data)
+                        };
+                    },
+                    'initUserInfo' : function() {
+                        $scope.userInfo = {};
+
+                        var initSuccess = function() {
+                            $scope.userInfo = $scope.$root.currUserData;
+                        };
+
+                        var initError = function () {
+                            $scope.isLoggedIn = false;
+                            $scope.userInfo = {};
+                            location.assign('#/login');
+                        };
+
+                        $scope.$root.updateUserInfo()
+                            .success(function() {
+                                initSuccess();
+                            }).error(function() {
+                                initError();
+                            });
+
+                        /* TODO will work when isAuthorised is fixed
+                        checkUserState()
+                            .success(function (data) {
+                                if (!data || data.error || !data.payload) {
+                                    initError();
+                                    return;
+                                }
+
+                                $scope.$root.isLoggedIn = true;
+
+                                if ($scope.$root.currUserData) {
+                                    initSuccess()
+                                } else {
+                                    $scope.$root.updateUserInfo()
+                                        .success(function() {
+                                            initSuccess();
+                                        }).error(function() {
+                                            initError();
+                                        })
+                                }
+                            })
+                            .error(function (err) {
+                                initError();
+                            });
+                        */
+                    }
+                };
+
+                angular.forEach(executors, function(value, key) {
+                    value();
+                })
+            }
+        ];
+
+        var dirProfile = function () {
             return {
                 restrict: 'E',
                 templateUrl: 'app/directives/profile/template.html',
                 replace: true,
                 scope: true,
-                controller: ['$scope', '$element', 'getUserInfo', 'uploadUserPic', function ($scope, $element, getUserInfo, uploadUserPic) {
-                    $scope.userInfo = {};
-
-                    $scope.imageInput = $element.find('#userpic input[type="file"]');
-
-                    getUserInfo()
-                        .success(function(data) {
-                            if (typeof data !== 'object') {
-                                console.error('user info: something wrong with response');
-                                location.assign('#/login');
-                                return;
-                            }
-
-                            if (data.error === true) {
-                                console.error('user info: request error code' , data.code);
-                                location.assign('#/login');
-                                return;
-                            }
-
-                            if (typeof data.payload !== 'object') {
-                                console.error('user info: payload is not object');
-                                location.assign('#/login');
-                                return;
-                            }
-
-                            $scope.userInfo = data.payload;
-                        })
-                        .error(function(err) {
-                            console.error('user info: request failed', err);
-                        });
-
-                    $scope.uploadImage = function() {
-                        var data = $scope.imageInput[0].files[0];
-
-                        if (!data) {
-                            return;
-                        }
-
-                        uploadUserPic(data)
-                    }
-                }]
+                controller: controller
             };
         };
 
