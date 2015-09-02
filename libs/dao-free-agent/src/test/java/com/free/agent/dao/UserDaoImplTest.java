@@ -30,16 +30,15 @@ import java.util.Set;
 @ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml"})
 @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
 public class UserDaoImplTest extends TestCase {
-    private Sport s1, s2;
-    private User u1, u2;
-    private Message m1, m2;
     @Autowired
     private SportDaoMock sportDao;
     @Autowired
     private UserDaoMock userDao;
     @Autowired
     private MessageDaoMock messageDao;
-
+    private Sport s1, s2;
+    private User u1, u2;
+    private Message m1, m2;
 
     @Before
     public void init() {
@@ -74,8 +73,6 @@ public class UserDaoImplTest extends TestCase {
 
         messageDao.create(m1);
         messageDao.create(m2);
-
-
     }
 
     @Test

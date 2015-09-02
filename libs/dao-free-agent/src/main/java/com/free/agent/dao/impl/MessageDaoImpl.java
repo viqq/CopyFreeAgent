@@ -14,7 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.Set;
@@ -42,8 +42,9 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
     public Set<Message> findAllByReceiver(String login) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Message> query = cb.createQuery(Message.class);
-        Path<User> from = query.from(User.class);
-        query.where(cb.equal(from.get(User_.login), login));
+        Root<Message> fromMessage = query.from(Message.class);
+        Join<Message, User> fromUser = fromMessage.join(Message_.user);
+        query.where(cb.equal(fromUser.get(User_.login), login));
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
 
@@ -51,8 +52,8 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
     public Set<Message> findAllByReceiverAndAuthor(String login, String author) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Message> query = cb.createQuery(Message.class);
-        Path<User> fromUser = query.from(User.class);
         Root<Message> fromMessage = query.from(Message.class);
+        Join<Message, User> fromUser = fromMessage.join(Message_.user);
         query.where(cb.equal(fromUser.get(User_.login), login),
                 cb.equal(fromMessage.get(Message_.author), author));
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
