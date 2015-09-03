@@ -63,3 +63,11 @@
     text-align: center;
     margin: 20px auto;
 }
+
+#login .error {
+    color: red;
+    text-align: center;
+    margin: 30px;
+    font-weight: bold;
+}
+
