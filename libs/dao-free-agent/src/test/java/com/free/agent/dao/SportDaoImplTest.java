@@ -38,7 +38,7 @@ public class SportDaoImplTest extends TestCase {
         assertContains(Sets.newHashSet(s1, s3), sportDao.findByNames(Sets.newHashSet("Football", "Pref")));
         assertEquals(1, sportDao.findByNames(Sets.newHashSet("Football", "Preferance")).size());
         assertContains(Sets.newHashSet(s1), sportDao.findByNames(Sets.newHashSet("Football", "Preferance")));
-        sportDao.removeAll();
+        sportDao.deleteAll();
         assertEquals(0, sportDao.findAll().size());
     }
 

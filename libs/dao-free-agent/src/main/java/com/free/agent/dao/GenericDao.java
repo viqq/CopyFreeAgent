@@ -1,6 +1,7 @@
 package com.free.agent.dao;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 public interface GenericDao<T, PK extends Serializable> {
@@ -14,5 +15,7 @@ public interface GenericDao<T, PK extends Serializable> {
 
     List<T> findAll();
 
-    void removeAll();
+    void deleteAll();
+
+    void delete(Collection<T> ts);
 }
