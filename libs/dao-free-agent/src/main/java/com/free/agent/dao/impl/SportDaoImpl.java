@@ -24,7 +24,6 @@ import java.util.Set;
  */
 @Repository
 public class SportDaoImpl extends GenericDaoImpl<Sport, Long> implements SportDao {
-
     @PersistenceContext(unitName = FreeAgentConstant.PERSISTENCE_CONTEXT)
     protected EntityManager entityManager;
 
@@ -51,23 +50,19 @@ public class SportDaoImpl extends GenericDaoImpl<Sport, Long> implements SportDa
     @Override
     @Cacheable(value = "sportCache")
     public List<Sport> findAll() {
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Sport> criteria = cb.createQuery(getEntityClass());
-        criteria.from(getEntityClass());
-        return getEntityManager().createQuery(criteria).getResultList();
+        return super.findAll();
     }
 
     @Override
     @CachePut(value = "sportCache")
     public Sport create(Sport sport) {
-        getEntityManager().persist(sport);
-        return sport;
+        return super.create(sport);
     }
 
     @Override
     @CacheEvict(value = "sportCache", allEntries = true)
     public Sport update(Sport sport) {
-        return getEntityManager().merge(sport);
+        return super.update(sport);
     }
 
 }

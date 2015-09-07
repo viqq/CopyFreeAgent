@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 public abstract class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK> {
@@ -38,8 +39,14 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
         return getEntityManager().createQuery(criteria).getResultList();
     }
 
-    public void removeAll(){
+    public void deleteAll() {
         for (T t : findAll()){
+            delete(t);
+        }
+    }
+
+    public void delete(Collection<T> entries) {
+        for (T t : entries) {
             delete(t);
         }
     }

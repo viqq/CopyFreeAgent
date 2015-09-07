@@ -3,11 +3,11 @@ package com.free.agent.controller;
 
 import com.free.agent.Response;
 import com.free.agent.dto.UserDto;
-import com.free.agent.model.Sport;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
 import com.free.agent.utils.ExtractFunction;
 import com.free.agent.utils.HttpRequestUtil;
+import com.google.common.collect.Collections2;
 import com.google.common.io.ByteStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,7 +24,6 @@ import javax.validation.Valid;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Collection;
 import java.util.Set;
 
 import static com.free.agent.FreeAgentAPI.*;
@@ -69,10 +68,9 @@ public class UserController {
     }
 
     @RequestMapping(value = GET_ALL_SPORTS, method = RequestMethod.GET, produces = BaseController.PRODUCES)
-    public
     @ResponseBody
-    Collection<Sport> getF() {
-        return sportService.getAllSports();
+    public String getInfo1() {
+        return Response.ok(Collections2.transform(sportService.getAllSports(), ExtractFunction.SPORT_NAME_INVOKE));
     }
 
     @RequestMapping(value = IS_AUTHENTICATION, method = RequestMethod.GET)
