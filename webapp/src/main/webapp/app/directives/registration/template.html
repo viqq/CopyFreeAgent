@@ -20,8 +20,8 @@
             </div>
         </div>
         <div>
-            <!--action="user" modelAttribute="userDto" method="post"-->
             <form  ng-submit="registrationHandler()">
+                <p class="error">{{ error }}</p>
                 <input
                         placeholder="{{uiTranslations.placeholder_login}}"
                         name="login"

@@ -29,25 +29,28 @@ define([
 
             $scope.registrationData = {};
 
+            $scope.error = '';
+
             $scope.registrationHandler = function() {
                 var data = $scope.$root.toolkit.serialize($scope.registrationData);
+                $scope.error = '';
 
                 registration(data)
                     .success(function(data) {
                         if (typeof data !== 'object') {
-                            console.error('registration: something wrong with response');
+                            $scope.error = 'Something wrong with response';
                             return;
                         }
 
                         if (data.error === true) {
-                            console.error('registration: request error code' , data.code);
+                            $scope.error = 'Registration error. Code: ' + data.status;
                             return;
                         }
 
                         $scope.loginAfterReg();
                     })
                     .error(function(err) {
-                        console.error('registration: request failed', err);
+                        $scope.error = 'Request failed';
                     })
             };
 
@@ -66,8 +69,8 @@ define([
                             return;
                         }
 
-                        if (data.error === true || data.code) {
-                            console.error('login after reg: request error code' , data.code);
+                        if (data.error === true || data.status) {
+                            console.error('login after reg: request error code' , data.status);
                             return;
                         }
 
