@@ -1834,7 +1834,6 @@
      * @param {boolean} [bindFnToScope=true]
      * @returns {Object} value as accessible by path
      */
-//TODO(misko): this function needs to be removed
     function getter(obj, path, bindFnToScope) {
         if (!path) return obj;
         var keys = path.split('.');
@@ -1860,7 +1859,6 @@
      * @returns {jqLite} jqLite collection containing the nodes
      */
     function getBlockNodes(nodes) {
-        // TODO(perf): just check if all items in `nodes` are siblings and if they are return the original
         //             collection, otherwise update the original collection.
         var node = nodes[0];
         var endNode = nodes[nodes.length - 1];
@@ -3247,7 +3245,6 @@
                     return this;
                 } else {
                     // we are a read, so read the first child.
-                    // TODO: do we still need this?
                     var value = fn.$dv;
                     // Only if we have $dv do we iterate over all, otherwise it is just the first element.
                     var jj = (value === undefined) ? Math.min(nodeCount, 1) : nodeCount;
@@ -3311,7 +3308,6 @@
             }
         };
 
-        // TODO: this is a hack for angularMocks/clearDataCache that makes it possible to deregister all
         //       events on `element`
         eventHandler.elem = element;
         return eventHandler;
@@ -5436,7 +5432,6 @@
         var outstandingRequestCount = 0;
         var outstandingRequestCallbacks = [];
 
-        // TODO(vojta): remove this temporary api
         self.$$completeOutstandingRequest = completeOutstandingRequest;
         self.$$incOutstandingRequestCount = function () {
             outstandingRequestCount++;
@@ -5471,7 +5466,6 @@
         /**
          * @private
          * Note: this method is used only by scenario runner
-         * TODO(vojta): prefix this method with $$ ?
          * @param {function()} callback Function that will be called when no outstanding request
          */
         self.notifyWhenNoOutstandingRequests = function (callback) {
@@ -5649,7 +5643,6 @@
          * @return {function(string)} Returns the registered listener fn - handy if the fn is anonymous.
          */
         self.onUrlChange = function (callback) {
-            // TODO(vojta): refactor to use node's syntax for events
             if (!urlChangeInit) {
                 // We listen on both (hashchange/popstate) when available, as some browsers (e.g. Opera)
                 // don't fire popstate when user change the address bar and don't fire hashchange when url
@@ -7228,7 +7221,6 @@
                      * @param {string=} attrName Optional none normalized name. Defaults to key.
                      */
                     $set: function (key, value, writeAttr, attrName) {
-                        // TODO: decide whether or not to throw an error if "class"
                         //is set through this function since it may cause $updateClass to
                         //become unstable.
 
@@ -7477,7 +7469,6 @@
                 }
 
                 function detectNamespaceForChildElements(parentElement) {
-                    // TODO: Make this detect MathML as well...
                     var node = parentElement && parentElement[0];
                     if (!node) {
                         return 'html';
@@ -8658,7 +8649,6 @@
                         parent.replaceChild(newNode, firstElementToRemove);
                     }
 
-                    // TODO(perf): what's this document fragment for? is it needed? can we at least reuse it?
                     var fragment = document.createDocumentFragment();
                     fragment.appendChild(firstElementToRemove);
 
@@ -10490,7 +10480,6 @@
     }
 
     function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDocument) {
-        // TODO(vojta): fix the signature
         return function (method, url, post, callback, headers, timeout, withCredentials, responseType) {
             $browser.$$incOutstandingRequestCount();
             url = url || $browser.url();
@@ -12108,7 +12097,6 @@
                 }
 
                 $rootElement.on('click', function (event) {
-                    // TODO(vojta): rewrite link when opening in new tab/window (in legacy browser)
                     // currently we open nice url link and redirect then
 
                     if (!html5Mode.rewriteLinks || event.ctrlKey || event.metaKey || event.shiftKey || event.which == 2 || event.button == 2) return;
@@ -12904,7 +12892,6 @@
         },
 
         constant: function () {
-            // TODO check that it is a constant
             return {type: AST.Literal, value: this.consume().value};
         },
 
@@ -14190,7 +14177,6 @@
                 if (typeof newValue === 'object') {
 
                     // attempt to convert the value to a primitive type
-                    // TODO(docs): add a note to docs that by implementing valueOf even objects and arrays can
                     //             be cheaply dirty-checked
                     newValue = getValueOf(newValue);
 
@@ -21818,7 +21804,6 @@
                     val = parseFloat(val, 10);
                 }
                 minVal = isNumber(val) && !isNaN(val) ? val : undefined;
-                // TODO(matsko): implement validateLater to reduce number of validations
                 ctrl.$validate();
             });
         }
@@ -21834,7 +21819,6 @@
                     val = parseFloat(val, 10);
                 }
                 maxVal = isNumber(val) && !isNaN(val) ? val : undefined;
-                // TODO(matsko): implement validateLater to reduce number of validations
                 ctrl.$validate();
             });
         }
@@ -25254,7 +25238,6 @@
                 var modelValue = ngModelGet($scope);
 
                 // if scope model value and ngModel value are out of sync
-                // TODO(perf): why not move this to the action fn?
                 if (modelValue !== ctrl.$modelValue &&
                         // checks for NaN is needed to allow setting the model to NaN when there's an asyncValidator
                     (ctrl.$modelValue === ctrl.$modelValue || modelValue === modelValue)
@@ -27107,7 +27090,6 @@
         var ngRepeatMinErr = minErr('ngRepeat');
 
         var updateScope = function (scope, index, valueIdentifier, value, keyIdentifier, key, arrayLength) {
-            // TODO(perf): generate setters to shave off ~40ms or 1-1.5%
             scope[valueIdentifier] = value;
             if (keyIdentifier) scope[keyIdentifier] = key;
             scope.$index = index;
@@ -27313,7 +27295,6 @@
                                     var endNode = ngRepeatEndComment.cloneNode(false);
                                     clone[clone.length++] = endNode;
 
-                                    // TODO(perf): support naked previousNode in `enter` to avoid creation of jqLite wrapper?
                                     $animate.enter(clone, null, jqLite(previousNode));
                                     previousNode = endNode;
                                     // Note: We only need the first/last node of the cloned nodes.
