@@ -1,12 +1,24 @@
 <div id="login" class="main-container">
-    <link rel="stylesheet" href="css/login.css"/>
-    <div>
+    <style>
+        #admin .container {
+            padding: 30px;
+        }
+    </style>
+    <div id="admin">
         <div class="container">
-            <form method="post" ng-submit="submitHandler">
+            <h2>Add new sport</h2>
+            <form method="post" ng-submit="submitHandler()">
                 <label></label>
-                <input type="text" name="name" id="name" size="30" maxlength="40"/>
+                <input type="text" name="name" ng-model="formData.name" size="30" maxlength="40"/>
+                <br>
+                <br>
                 <input type="submit" value="Add Sport"/>
             </form>
+            <br>
+            <h2>Existing sports</h2>
+            <div ng-repeat="sport in sports">
+                <p>{{ sport }}</p>
+            </div>
         </div>
     </div>
 </div>

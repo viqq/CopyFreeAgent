@@ -6,7 +6,8 @@ define(
         'angularAMD',
         'resources/ui-translations',
 
-        'services/add-sport'
+        'services/add-sport',
+        'services/get-all-sports'
     ],
     function (angularAMD, uiTranslations) {
         angularAMD.directive('dirAdmin', ['addSport', function () {
@@ -19,25 +20,43 @@ define(
             };
         }]);
 
-        var controller = ['$scope', '$element', 'addSport', '$q', function ($scope, $element, addSport, $q) {
-            window.qqq = $q;
+        var controller = [
+            '$scope', '$element', 'addSport', 'getAllSports', '$q',
+            function ($scope, $element, addSport, getAllSports, $q) {
+                window.qqq = $q;
 
-            $scope.uiTranslations = uiTranslations[$scope.language].login;
+                $scope.uiTranslations = uiTranslations[$scope.language].login;
 
-            $scope.form = $element.find('form');
+                $scope.form = $element.find('form');
 
-            $scope.formData = {
-                name: ''
-            };
+                $scope.formData = {
+                    name: ''
+                };
 
-            $scope.submitHandler = function() {
-                var data = $scope.$root.toolkit.serialize($scope.formData);
-                addSport(data).success(function() {
+                $scope.sports = [];
 
-                }).error(function() {
+                var updateSports = function() {
+                    var d = getAllSports();
 
-                });
-            }
-        }]
+                    d.success(function(data) {
+                        if (!data.payload.length) {
+                            return;
+                        }
+
+                        $scope.sports = data.payload;
+                    });
+
+                    return d
+                };
+
+                $scope.submitHandler = function () {
+                    var data = $scope.$root.toolkit.serialize($scope.formData);
+                    addSport(data).success(function () {
+                        updateSports();
+                    })
+                };
+
+                updateSports();
+            }]
     }
 );
