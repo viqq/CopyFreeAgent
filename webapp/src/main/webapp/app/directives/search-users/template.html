@@ -1,0 +1,75 @@
+<div class="main-container">
+    <style>
+        #search .content {
+            padding: 30px;
+        }
+
+        #search .userpic {
+            height: 50px;
+            margin-right: 20px;
+        }
+
+        #search_users input {
+            margin-bottom: 20px;
+        }
+    </style>
+    <div id="search">
+        <div class="content">
+            <h1>Search users</h1>
+            <form id="search_users" ng-submit="searchUsersHandler()">
+                <input ng-model="searchParams.sport"
+                       type="text"
+                       name="sport"
+                       id="sport"
+                       placeholder="sport">
+                <br>
+
+                <input ng-model="searchParams.firstName"
+                       type="text"
+                       name="firstName"
+                       id="firstName"
+                       placeholder="firstName">
+                <br>
+
+                <input ng-model="searchParams.lastName"
+                       type="text"
+                       name="lastName"
+                       id="lastName"
+                       placeholder="lastName">
+                <br>
+
+                <input ng-model="searchParams.dateOfBirthFrom"
+                       type="text"
+                       name="dateOfBirthFrom"
+                       id="dateOfBirthFrom"
+                       placeholder="dateOfBirthFrom">
+                <br>
+
+                <input ng-model="searchParams.dateOfBirthTo"
+                       type="text"
+                       name="dateOfBirthTo"
+                       id="dateOfBirthTo"
+                       placeholder="dateOfBirthTo">
+                <br>
+
+                <input
+                        type="submit" value="Submit"/>
+                <br>
+            </form>
+            <div id="search_results" ng-show="searchResults.length">
+                <h1>Results</h1>
+                <div ng-repeat="user in searchResults">
+                    <div>
+                        <div>
+                            <a href="{{ '#/user/' + user.id }}">
+                                <img class="userpic" ng-src="{{ 'user/getImage/' + user.id }}"><span>{{ user.login }}</span>
+                            </a>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

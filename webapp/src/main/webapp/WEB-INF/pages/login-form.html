@@ -1,36 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+
+<head>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="css/main.css">
+    <!--<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.indigo-pink.min.css">-->
+    <!--<script src="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>-->
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
+
+    <!-- This tag is for no-hash angular routing-->
+    <!--<base href="/free-agent-base-1.0-SNAPSHOT/">-->
+
+    <script data-main="app/config.js" src="app/libs/require.js"></script>
 </head>
-<body>
-<h1>Login page</h1>
-
-<!-- if Invalid login or password
-     <b class="error">Invalid login or password.</b>-->
-
-
-<!--do not change names and id-->
-<form method="post" action="j_spring_security_check">
-    <table>
-        <tbody>
-        <tr>
-            <td>Login:</td>
-            <td><input type="text" name="j_username" id="j_username" size="30" maxlength="40"/></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type="password" name="j_password" id="j_password" size="30" maxlength="32"/></td>
-        </tr>
-        <tr>
-            <td><a href="/registration">Registration</a><br/></td>
-            <td><input type="submit" value="Login"/></td>
-        </tr>
-        </tbody>
-    </table>
-</form>
-
-</body>
+<body ng-controller="MainCtrl">
+<div ng-view class="view"></div>
 </body>
 </html>

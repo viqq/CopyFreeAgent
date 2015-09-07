@@ -13,3 +13,5 @@ device-notifications/.settings
 /atlassian-ide-plugin.xml
 nbactions.xml
 .hg
+.git
+.gitignore

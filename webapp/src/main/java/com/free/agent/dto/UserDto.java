@@ -14,7 +14,8 @@ import java.util.Date;
  * Created by antonPC on 28.06.15.
  */
 
-public final class UserDto {
+public class UserDto {
+    private Long id;
     @User
     private String login;
     @Password
@@ -101,5 +102,13 @@ public final class UserDto {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
