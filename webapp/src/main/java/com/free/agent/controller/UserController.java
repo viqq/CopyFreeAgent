@@ -89,7 +89,7 @@ public class UserController {
         }
         Set<String> set = HttpRequestUtil.getParams(request, "select");
         userService.save(ExtractFunction.getUser(userDto), set);
-        return Response.ok(OK);
+        return Response.ok();
     }
 
     @RequestMapping(value = INFO_ABOUT_USER, method = RequestMethod.GET, produces = BaseController.PRODUCES)
@@ -116,7 +116,7 @@ public class UserController {
     public String setImage(HttpServletRequest request, Principal principal) {
         try {
             userService.addImage(principal.getName(), request);
-            return Response.ok(OK);
+            return Response.ok();
         } catch (Exception e) {
             return Response.error(SAVE_IMAGE_ERROR);
         }

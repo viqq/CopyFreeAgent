@@ -14,4 +14,10 @@ public interface MessageService {
     Set<Message> findAllByReceiver(String login);
 
     Set<Message> findAllByReceiverAndAuthor(String login, String author);
+
+    void save(Long id, Message message, String author);
+
+    void updateMessageStatus(Long id, String name);
+
+    int countUnreadMessages(String name);
 }
