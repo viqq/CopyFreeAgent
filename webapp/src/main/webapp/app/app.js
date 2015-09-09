@@ -44,6 +44,11 @@ define(
                     controller: 'UserCtrl',
                     controllerUrl: 'controllers/user'
                 }))
+                .when('/admin', angularAMD.route({
+                    templateUrl: 'app/views/admin.html',
+                    controller: 'AdminCtrl',
+                    controllerUrl: 'controllers/admin'
+                }))
                 .otherwise({
                     redirectTo: '/'
                 });
