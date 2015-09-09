@@ -12,10 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -70,7 +67,15 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
 
     @Override
     public int countUnreadMessages(String login) {
-        return 1;
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<Message> fromMessage = query.from(Message.class);
+        Join<Message, User> fromUser = fromMessage.join(Message_.user);
+        query.where(cb.equal(fromUser.get(User_.login), login),
+                cb.isNull(fromMessage.get(Message_.timeOfRead)));
+        Expression<Long> count = cb.count(fromMessage);
+        query.select(count);
+        return getEntityManager().createQuery(query).getSingleResult().intValue();
     }
 
 

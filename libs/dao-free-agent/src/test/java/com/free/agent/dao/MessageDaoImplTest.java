@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Set;
 
@@ -38,6 +39,7 @@ public class MessageDaoImplTest extends TestCase {
     public void init() {
         m1 = new Message("Vania", "Learning", "Hello, I am learning");
         m1.setTimeOfCreate(new GregorianCalendar(2000, 1, 1).getTime());
+        m1.setTimeOfRead(new Date());
         m2 = new Message("Karina", "Play", "I like play");
         m2.setTimeOfCreate(new GregorianCalendar(2000, 1, 2).getTime());
         m3 = new Message("Karina", "Play", "I like play again");
@@ -105,6 +107,12 @@ public class MessageDaoImplTest extends TestCase {
         assertEquals(1, messageDao.findOlderThen(new GregorianCalendar(2000, 1, 1).getTime()).size());
         assertEquals(0, messageDao.findOlderThen(new GregorianCalendar(1999, 12, 12).getTime()).size());
 
+    }
+
+    @Test
+    public void countUnreadMessages() {
+        assertEquals(2, messageDao.countUnreadMessages(u1.getLogin()));
+        assertEquals(0, messageDao.countUnreadMessages(u2.getLogin()));
     }
 
     private void assertContainsMessage(Set<Message> usersMessages, ArrayList<String> messages) {
