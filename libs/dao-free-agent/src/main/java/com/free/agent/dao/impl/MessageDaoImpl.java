@@ -67,4 +67,11 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
         query.where(new PredicateBuilder(cb).addRangePredicate(from.get(Message_.timeOfCreate), null, date).buildWithAndConjunction());
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
+
+    @Override
+    public int countUnreadMessages(String login) {
+        return 1;
+    }
+
+
 }

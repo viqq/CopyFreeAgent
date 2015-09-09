@@ -16,6 +16,10 @@ public class Response<T> {
         this.status = status;
     }
 
+    public static <T> String ok() {
+        return ok(FreeAgentAPI.OK);
+    }
+
     public static <T> String ok(T payload) {
         return new Response<>(payload, false, null).toJSON();
     }
