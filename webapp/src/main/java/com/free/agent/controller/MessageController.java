@@ -1,6 +1,7 @@
 package com.free.agent.controller;
 
 import com.free.agent.Response;
+import com.free.agent.dto.MessageDto;
 import com.free.agent.model.Message;
 import com.free.agent.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,11 @@ public class MessageController {
     @RequestMapping(value = "/message", method = RequestMethod.POST)
     public
     @ResponseBody
-    String get(Long idReceiver, Message message, String email, Principal principal) {
-        messageService.save(idReceiver, message, principal == null ? email : principal.getName());
+    String get(Long idReceiver, MessageDto message, String email, Principal principal) {
+        Message m = new Message();
+        m.setText(message.getText());
+        m.setTitle(message.getTitle());
+        messageService.save(idReceiver, m, principal == null ? email : principal.getName());
         return Response.ok();
     }
 

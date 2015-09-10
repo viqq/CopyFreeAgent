@@ -4,6 +4,7 @@ import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.MessageDao;
 import com.free.agent.dao.UserDao;
 import com.free.agent.model.Message;
+import com.free.agent.model.User;
 import com.free.agent.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -48,7 +50,13 @@ public class MessageServiceImpl implements MessageService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void save(Long id, Message message, String author) {
         message.setAuthor(author);
+        message.setTimeOfCreate(new Date());
         messageDao.create(message);
+        User u = userDao.find(id);
+        List<Message> list = u.getMessages();
+        list.add(message);
+        u.setMessages(list);
+        userDao.update(u);
     }
 
     @Override
