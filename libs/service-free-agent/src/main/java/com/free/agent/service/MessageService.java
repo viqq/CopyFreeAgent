@@ -13,6 +13,8 @@ public interface MessageService {
 
     Set<Message> findAllByReceiver(String login);
 
+    Set<Message> findAllByAuthor(String author);
+
     Set<Message> findAllByReceiverAndAuthor(String login, String author);
 
     void save(Long id, Message message, String author);

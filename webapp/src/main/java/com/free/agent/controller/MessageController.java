@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 
+import static com.free.agent.FreeAgentAPI.*;
+
 /**
  * Created by antonPC on 31.07.15.
  */
@@ -21,18 +23,25 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    @RequestMapping(value = "/message/unread", method = RequestMethod.GET)
+    @RequestMapping(value = GET_UNREAD_MESSAGES, method = RequestMethod.GET)
     public
     @ResponseBody
     String getq(Principal principal) {
         return Response.ok(messageService.countUnreadMessages(principal.getName()));
     }
 
-    @RequestMapping(value = "/message", method = RequestMethod.GET)
+    @RequestMapping(value = GET_ALL_MESSAGES, method = RequestMethod.GET)
     public
     @ResponseBody
     String get(Principal principal) {
         return Response.ok(messageService.findAllByReceiver(principal.getName()));
+    }
+
+    @RequestMapping(value = GET_SENT_MESSAGES, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String gett(Principal principal) {
+        return Response.ok(messageService.findAllByAuthor(principal.getName()));
     }
 
     @RequestMapping(value = "/message", method = RequestMethod.POST)
@@ -46,7 +55,7 @@ public class MessageController {
         return Response.ok();
     }
 
-    @RequestMapping(value = "/message/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = GET_MESSAGE_BY_ID, method = RequestMethod.POST)
     public
     @ResponseBody
     String get(@PathVariable("id") Long id, Principal principal) {

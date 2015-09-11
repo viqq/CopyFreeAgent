@@ -42,6 +42,12 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
+    public Set<Message> findAllByAuthor(String author) {
+        return messageDao.findAllByAuthor(author);
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public Set<Message> findAllByReceiverAndAuthor(String login, String author) {
         return messageDao.findAllByReceiverAndAuthor(login, author);
     }

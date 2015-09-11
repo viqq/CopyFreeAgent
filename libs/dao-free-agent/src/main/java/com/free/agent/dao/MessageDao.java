@@ -17,4 +17,7 @@ public interface MessageDao extends GenericDao<Message, Long> {
     Set<Message> findOlderThen(Date date);
 
     int countUnreadMessages(String login);
+
+    Set<Message> findAllByAuthor(String author);
+
 }

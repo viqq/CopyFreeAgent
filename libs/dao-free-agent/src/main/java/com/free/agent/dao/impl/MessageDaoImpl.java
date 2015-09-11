@@ -78,5 +78,14 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
         return getEntityManager().createQuery(query).getSingleResult().intValue();
     }
 
+    @Override
+    public Set<Message> findAllByAuthor(String author) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Message> query = cb.createQuery(Message.class);
+        Root<Message> fromMessage = query.from(Message.class);
+        query.where(cb.equal(fromMessage.get(Message_.author), author));
+        return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
+    }
+
 
 }

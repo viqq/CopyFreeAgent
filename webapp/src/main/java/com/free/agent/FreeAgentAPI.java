@@ -17,4 +17,8 @@ public final class FreeAgentAPI {
     public static final String GET_ALL_SPORTS = "/sport";
     public static final String IS_AUTHENTICATION = "/isAuthentication";
     public static final String FIND_USER = "/search/user";
+    public static final String GET_UNREAD_MESSAGES = "/message/unread";
+    public static final String GET_ALL_MESSAGES = "/message";
+    public static final String GET_SENT_MESSAGES = "/message/sent";
+    public static final String GET_MESSAGE_BY_ID = "/message/{id}";
 }

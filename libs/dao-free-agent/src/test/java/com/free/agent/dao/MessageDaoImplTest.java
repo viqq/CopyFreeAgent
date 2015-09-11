@@ -92,6 +92,13 @@ public class MessageDaoImplTest extends TestCase {
     }
 
     @Test
+    public void findAllByAuthor() {
+        assertEquals(1, messageDao.findAllByAuthor("Vania").size());
+        assertEquals(2, messageDao.findAllByAuthor("Karina").size());
+        assertContainsMessage(messageDao.findAllByAuthor("Karina"), Lists.newArrayList(m2.getText(), m3.getText()));
+    }
+
+    @Test
     public void findAllByReceiverAndAuthor() {
         assertEquals(1, messageDao.findAllByReceiverAndAuthor(u1.getLogin(), m1.getAuthor()).size());
         assertEquals(2, messageDao.findAllByReceiverAndAuthor(u1.getLogin(), m2.getAuthor()).size());
