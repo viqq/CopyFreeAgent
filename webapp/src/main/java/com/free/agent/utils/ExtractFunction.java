@@ -1,7 +1,9 @@
 package com.free.agent.utils;
 
+import com.free.agent.dto.MessageUIDto;
 import com.free.agent.dto.UserDto;
 import com.free.agent.dto.UserWithSport;
+import com.free.agent.model.Message;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.google.common.base.Function;
@@ -18,6 +20,20 @@ public final class ExtractFunction {
         @Override
         public String apply(Sport input) {
             return input.getName();
+        }
+    };
+
+    public static final Function<Message, MessageUIDto> MESSAGE_INVOKE = new Function<Message, MessageUIDto>() {
+        @Override
+        public MessageUIDto apply(Message input) {
+            MessageUIDto message = new MessageUIDto();
+            message.setId(input.getId());
+            message.setTimeOfRead(input.getTimeOfRead());
+            message.setTimeOfCreate(input.getTimeOfCreate());
+            message.setTitle(input.getTitle());
+            message.setText(input.getText());
+            message.setAuthor(input.getAuthor());
+            return message;
         }
     };
 
