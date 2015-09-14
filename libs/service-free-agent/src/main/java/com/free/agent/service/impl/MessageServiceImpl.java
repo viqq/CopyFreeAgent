@@ -57,11 +57,12 @@ public class MessageServiceImpl implements MessageService {
     public void save(Long id, Message message, String author) {
         message.setAuthor(author);
         message.setTimeOfCreate(new Date());
-        messageDao.create(message);
         User u = userDao.find(id);
+        message.setUser(u);
         List<Message> list = u.getMessages();
         list.add(message);
         u.setMessages(list);
+        messageDao.create(message);
         userDao.update(u);
     }
 

@@ -47,11 +47,11 @@ public class MessageController {
     @RequestMapping(value = "/message", method = RequestMethod.POST)
     public
     @ResponseBody
-    String get(Long idReceiver, MessageDto message, String email, Principal principal) {
+    String get(MessageDto message, String email, Principal principal) {
         Message m = new Message();
         m.setText(message.getText());
         m.setTitle(message.getTitle());
-        messageService.save(idReceiver, m, principal == null ? email : principal.getName());
+        messageService.save(Long.parseLong(message.getId()), m, principal == null ? email : principal.getName());
         return Response.ok();
     }
 
