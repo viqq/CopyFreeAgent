@@ -44,7 +44,16 @@ define(
                     controller: 'UserCtrl',
                     controllerUrl: 'controllers/user'
                 }))
-                .when('/admin', angularAMD.route({
+                .when('/message/send/:id', angularAMD.route({
+                    templateUrl: 'app/views/message-send.html',
+                    controller: 'MessageSendCtrl',
+                    controllerUrl: 'controllers/message-send'
+                }))
+                .when('/message/read', angularAMD.route({
+                    templateUrl: 'app/views/message-read.html',
+                    controller: 'MessageReadCtrl',
+                    controllerUrl: 'controllers/message-read'
+                }))              .when('/admin', angularAMD.route({
                     templateUrl: 'app/views/admin.html',
                     controller: 'AdminCtrl',
                     controllerUrl: 'controllers/admin'

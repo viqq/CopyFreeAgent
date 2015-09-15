@@ -69,6 +69,10 @@ img {
     padding: 82px 0px;
 }
 
+.main-container > * > * {
+    padding: 30px;
+}
+
 .main-container,
 .main-wrapper {
     max-width: 800px;

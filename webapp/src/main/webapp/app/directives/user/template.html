@@ -11,8 +11,13 @@
     </style>
     <div>
         <div class="content">
-            <h1>User data</h1>
             <img class="userpic" ng-src="{{ 'user/getImage/' + userInfo.id }}">
+
+            <a href="{{ '#/message/send/' + userInfo.id }}">Send message to <b>{{ userInfo.login}}</b></a>
+            <br>
+            <br>
+
+            <h1>User data</h1>
             <table>
                 <tbody>
                 <tr ng-repeat="(key, value) in userInfo">
