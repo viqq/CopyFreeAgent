@@ -6,6 +6,7 @@ import com.free.agent.dao.UserDao;
 import com.free.agent.model.Message;
 import com.free.agent.model.User;
 import com.free.agent.service.MessageService;
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,6 +81,15 @@ public class MessageServiceImpl implements MessageService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public int countUnreadMessages(String name) {
         return messageDao.countUnreadMessages(name);
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
+    public Set<Message> getHistory(String name, Long id) {
+        Set<Message> messages = Sets.newHashSet();
+        messages.addAll(messageDao.findAllByReceiverAndAuthor(name, userDao.find(id).getLogin()));
+        messages.addAll(messageDao.findAllByReceiverAndAuthor(userDao.find(id).getLogin(), name));
+        return messageDao.getHistory(name, userDao.find(id).getLogin());
     }
 
 

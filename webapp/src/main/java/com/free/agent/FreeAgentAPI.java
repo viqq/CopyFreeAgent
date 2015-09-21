@@ -21,4 +21,5 @@ public final class FreeAgentAPI {
     public static final String GET_ALL_MESSAGES = "/message";
     public static final String GET_SENT_MESSAGES = "/message/sent";
     public static final String GET_MESSAGE_BY_ID = "/message/{id}";
+    public static final String GET_HISTORY = "message/history/{id}";
 }

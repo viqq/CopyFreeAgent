@@ -46,6 +46,13 @@ public class MessageController {
         return Response.ok(messageService.findAllByAuthor(principal.getName()));
     }
 
+    @RequestMapping(value = GET_HISTORY, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String gett(Principal principal, @PathVariable("id") Long id) {
+        return Response.ok(messageService.getHistory(principal.getName(), id));
+    }
+
     @RequestMapping(value = "/message", method = RequestMethod.POST)
     public
     @ResponseBody

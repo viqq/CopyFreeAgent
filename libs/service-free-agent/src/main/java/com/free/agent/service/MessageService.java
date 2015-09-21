@@ -22,4 +22,6 @@ public interface MessageService {
     void updateMessageStatus(Long id, String name);
 
     int countUnreadMessages(String name);
+
+    Set<Message> getHistory(String name, Long id);
 }

@@ -20,4 +20,5 @@ public interface MessageDao extends GenericDao<Message, Long> {
 
     Set<Message> findAllByAuthor(String author);
 
+    Set<Message> getHistory(String name, String user);
 }

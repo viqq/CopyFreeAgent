@@ -53,6 +53,7 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
         Join<Message, User> fromUser = fromMessage.join(Message_.user);
         query.where(cb.equal(fromUser.get(User_.login), login),
                 cb.equal(fromMessage.get(Message_.author), author));
+        //todo order
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
 
@@ -84,6 +85,19 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
         CriteriaQuery<Message> query = cb.createQuery(Message.class);
         Root<Message> fromMessage = query.from(Message.class);
         query.where(cb.equal(fromMessage.get(Message_.author), author));
+        return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
+    }
+
+    @Override
+    public Set<Message> getHistory(String name, String user) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Message> query = cb.createQuery(Message.class);
+        Root<Message> fromMessage = query.from(Message.class);
+        Join<Message, User> fromUser = fromMessage.join(Message_.user);
+        query.where(cb.or(
+                cb.and(cb.equal(fromUser.get(User_.login), name), cb.equal(fromMessage.get(Message_.author), user)),
+                cb.and(cb.equal(fromUser.get(User_.login), user), cb.equal(fromMessage.get(Message_.author), name))));
+        query.orderBy(cb.asc(fromMessage.get(Message_.timeOfCreate)));
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
 
