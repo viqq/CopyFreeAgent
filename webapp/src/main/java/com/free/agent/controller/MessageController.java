@@ -50,7 +50,7 @@ public class MessageController {
     public
     @ResponseBody
     String gett(Principal principal, @PathVariable("id") Long id) {
-        return Response.ok(messageService.getHistory(principal.getName(), id));
+        return Response.ok(Collections2.transform(messageService.getHistory(principal.getName(), id), ExtractFunction.MESSAGE_INVOKE));
     }
 
     @RequestMapping(value = "/message", method = RequestMethod.POST)
