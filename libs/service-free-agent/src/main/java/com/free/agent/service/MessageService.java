@@ -1,7 +1,9 @@
 package com.free.agent.service;
 
 import com.free.agent.model.Message;
+import com.free.agent.service.dto.MessageDto;
 
+import java.security.Principal;
 import java.util.Set;
 
 /**
@@ -13,15 +15,15 @@ public interface MessageService {
 
     Set<Message> findAllByReceiver(String login);
 
-    Set<Message> findAllByAuthor(String author);
+    Set<Message> findAllByAuthor(String login);
 
-    Set<Message> findAllByReceiverAndAuthor(String login, String author);
+    Set<Message> findAllByReceiverAndAuthor(Long id, String email, Principal principal);
 
-    void save(Long id, Message message, String author);
+    void save(MessageDto messageDto, String email, Principal principal) throws IllegalAccessException;
 
     void updateMessageStatus(Long id, String name);
 
-    int countUnreadMessages(String name);
+    int countUnreadMessages(String id);
 
-    Set<Message> getHistory(String name, Long id);
+    Set<Message> getHistory(Long name, String login);
 }

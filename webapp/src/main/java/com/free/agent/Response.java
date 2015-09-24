@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 /**
  * Created by antonPC on 28.07.15.
  */
-public class Response<T> {
+public final class Response<T> {
     private final T payload;
     private final Boolean error;
     private final Integer status;

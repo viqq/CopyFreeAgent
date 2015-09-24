@@ -93,17 +93,17 @@ public class MessageDaoImplTest extends TestCase {
 
     @Test
     public void findAllByAuthor() {
-        assertEquals(1, messageDao.findAllByAuthor("Vania").size());
-        assertEquals(2, messageDao.findAllByAuthor("Karina").size());
-        assertContainsMessage(messageDao.findAllByAuthor("Karina"), Lists.newArrayList(m2.getText(), m3.getText()));
+        assertEquals(1, messageDao.findAllByAuthorEmailAndId("Vania", null).size());
+        assertEquals(2, messageDao.findAllByAuthorEmailAndId("Karina", null).size());
+        assertContainsMessage(messageDao.findAllByAuthorEmailAndId("Karina", null), Lists.newArrayList(m2.getText(), m3.getText()));
     }
 
     @Test
     public void findAllByReceiverAndAuthor() {
-        assertEquals(1, messageDao.findAllByReceiverAndAuthor(u1.getLogin(), m1.getAuthor()).size());
-        assertEquals(2, messageDao.findAllByReceiverAndAuthor(u1.getLogin(), m2.getAuthor()).size());
-        assertContainsMessage(messageDao.findAllByReceiverAndAuthor(u1.getLogin(), m2.getAuthor()), Lists.newArrayList(m2.getText(), m3.getText()));
-        assertEquals(0, messageDao.findAllByReceiverAndAuthor(u2.getLogin(), m1.getAuthor()).size());
+        assertEquals(1, messageDao.findAllByReceiverAndAuthor(u1.getId(), m1.getAuthorEmail(), null).size());
+        assertEquals(2, messageDao.findAllByReceiverAndAuthor(u1.getId(), m2.getAuthorEmail(), null).size());
+        assertContainsMessage(messageDao.findAllByReceiverAndAuthor(u1.getId(), m2.getAuthorEmail(), null), Lists.newArrayList(m2.getText(), m3.getText()));
+        assertEquals(0, messageDao.findAllByReceiverAndAuthor(u2.getId(), m1.getAuthorEmail(), null).size());
     }
 
     @Test

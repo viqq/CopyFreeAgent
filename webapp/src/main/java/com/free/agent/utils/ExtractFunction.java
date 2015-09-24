@@ -32,7 +32,8 @@ public final class ExtractFunction {
             message.setTimeOfCreate(input.getTimeOfCreate());
             message.setTitle(input.getTitle());
             message.setText(input.getText());
-            message.setAuthor(input.getAuthor());
+            message.setAuthorId(input.getAuthorId());
+            message.setAuthorEmail(input.getAuthorEmail());
             return message;
         }
     };

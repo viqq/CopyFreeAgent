@@ -12,13 +12,15 @@ public interface MessageDao extends GenericDao<Message, Long> {
 
     Set<Message> findAllByReceiver(String login);
 
-    Set<Message> findAllByReceiverAndAuthor(String login, String author);
+    Set<Message> findAllByReceiverAndAuthor(Long login, String authorEmail, Long authorId);
 
     Set<Message> findOlderThen(Date date);
 
     int countUnreadMessages(String login);
 
-    Set<Message> findAllByAuthor(String author);
+    Set<Message> findAllByAuthorEmailAndId(String authorEmail, Long id);
 
-    Set<Message> getHistory(String name, String user);
+    Set<Message> findAllByAuthorId(Long authorId);
+
+    Set<Message> getHistory(Long userId, Long authorId, String authorEmail);
 }

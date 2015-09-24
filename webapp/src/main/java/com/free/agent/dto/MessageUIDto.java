@@ -7,7 +7,8 @@ import java.util.Date;
  */
 public class MessageUIDto {
     private Long id;
-    private String author;
+    private Long authorId;
+    private String authorEmail;
     private String title;
     private String text;
     private Date timeOfCreate;
@@ -21,12 +22,20 @@ public class MessageUIDto {
         this.id = id;
     }
 
-    public String getAuthor() {
-        return author;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    public void setAuthorEmail(String authorEmail) {
+        this.authorEmail = authorEmail;
     }
 
     public String getTitle() {

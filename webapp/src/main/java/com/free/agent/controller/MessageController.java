@@ -1,9 +1,8 @@
 package com.free.agent.controller;
 
 import com.free.agent.Response;
-import com.free.agent.dto.MessageDto;
-import com.free.agent.model.Message;
 import com.free.agent.service.MessageService;
+import com.free.agent.service.dto.MessageDto;
 import com.free.agent.utils.ExtractFunction;
 import com.google.common.collect.Collections2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,46 +27,47 @@ public class MessageController {
     @RequestMapping(value = GET_UNREAD_MESSAGES, method = RequestMethod.GET)
     public
     @ResponseBody
-    String getq(Principal principal) {
+    String getUnreadMessages(Principal principal) {
         return Response.ok(messageService.countUnreadMessages(principal.getName()));
     }
 
     @RequestMapping(value = GET_ALL_MESSAGES, method = RequestMethod.GET)
     public
     @ResponseBody
-    String get(Principal principal) {
+    String getAllMessages(Principal principal) {
         return Response.ok(Collections2.transform(messageService.findAllByReceiver(principal.getName()), ExtractFunction.MESSAGE_INVOKE));
     }
 
     @RequestMapping(value = GET_SENT_MESSAGES, method = RequestMethod.GET)
     public
     @ResponseBody
-    String gett(Principal principal) {
+    String getSentMessages(Principal principal) {
         return Response.ok(messageService.findAllByAuthor(principal.getName()));
     }
 
     @RequestMapping(value = GET_HISTORY, method = RequestMethod.GET)
     public
     @ResponseBody
-    String gett(Principal principal, @PathVariable("id") Long id) {
-        return Response.ok(Collections2.transform(messageService.getHistory(principal.getName(), id), ExtractFunction.MESSAGE_INVOKE));
+    String getHistory(Principal principal, @PathVariable("id") Long id) {
+        return Response.ok(Collections2.transform(messageService.getHistory(id, principal.getName()), ExtractFunction.MESSAGE_INVOKE));
     }
 
     @RequestMapping(value = "/message", method = RequestMethod.POST)
     public
     @ResponseBody
-    String get(MessageDto message, String email, Principal principal) {
-        Message m = new Message();
-        m.setText(message.getText());
-        m.setTitle(message.getTitle());
-        messageService.save(Long.parseLong(message.getId()), m, principal == null ? email : principal.getName());
+    String saveMessage(MessageDto dto, String email, Principal principal) {
+        try {
+            messageService.save(dto, email, principal);
+        } catch (IllegalAccessException e) {
+            Response.error(EMAIL_REGISTERED);
+        }
         return Response.ok();
     }
 
     @RequestMapping(value = GET_MESSAGE_BY_ID, method = RequestMethod.POST)
     public
     @ResponseBody
-    String get(@PathVariable("id") Long id, Principal principal) {
+    String getMessageById(@PathVariable("id") Long id, Principal principal) {
         messageService.updateMessageStatus(id, principal.getName());
         return Response.ok();
     }

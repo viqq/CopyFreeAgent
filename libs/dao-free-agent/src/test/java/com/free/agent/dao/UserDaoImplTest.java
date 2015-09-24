@@ -45,8 +45,8 @@ public class UserDaoImplTest extends TestCase {
         s1 = new Sport("Football");
         s2 = new Sport("Basketball");
 
-        m1 = new Message("Vania", "Learning", "Hello, I am learning");
-        m2 = new Message("Karina", "Play", "I like play");
+        m1 = new Message(1L, "Learning", "Hello, I am learning");
+        m2 = new Message(1L, "Play", "I like play");
 
         u1 = new User("l1", "p1", "11-22-33");
         u1.setFirstName("Anton");

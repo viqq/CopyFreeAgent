@@ -17,8 +17,11 @@ public class Message extends AbstractTable<Long> {
     @Column(name = "MESSAGE_ID")
     private Long id;
 
-    @Column(name = "AUTHOR")
-    private String author;
+    @Column(name = "AUTHOR_ID")
+    private Long authorId;
+
+    @Column(name = "AUTHOR_EMAIL")
+    private String authorEmail;
 
     @Column(name = "TITLE")
     private String title;
@@ -41,8 +44,19 @@ public class Message extends AbstractTable<Long> {
     public Message() {
     }
 
-    public Message(String author, String title, String text) {
-        this.author = author;
+    public Message(String title, String text) {
+        this.title = title;
+        this.text = text;
+    }
+
+    public Message(Long authorId, String title, String text) {
+        this.authorId = authorId;
+        this.title = title;
+        this.text = text;
+    }
+
+    public Message(String authorEmail, String title, String text) {
+        this.authorEmail = authorEmail;
         this.title = title;
         this.text = text;
     }
@@ -52,12 +66,20 @@ public class Message extends AbstractTable<Long> {
         return id;
     }
 
-    public String getAuthor() {
-        return author;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    public void setAuthorEmail(String authorEmail) {
+        this.authorEmail = authorEmail;
     }
 
     public String isTitle() {

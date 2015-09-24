@@ -16,7 +16,7 @@ public class BaseController {
     public static final String PRODUCES = MediaType.APPLICATION_JSON_VALUE + "; charset=UTF-8";
 
     @ExceptionHandler(Exception.class)
-    public String getFilms() {
+    public String exceptionHandler() {
         LOGGER.error("Exception!!! Catch in BaseController");
         return Response.error(FreeAgentAPI.UNEXPECTED_ERROR);
     }

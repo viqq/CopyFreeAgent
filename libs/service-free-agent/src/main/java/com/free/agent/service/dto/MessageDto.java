@@ -1,19 +1,19 @@
-package com.free.agent.dto;
+package com.free.agent.service.dto;
 
 /**
  * Created by antonPC on 11.09.15.
  */
 public class MessageDto {
-    public String id;
+    public Long id;
     public String title;
     public String text;
     public String email;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

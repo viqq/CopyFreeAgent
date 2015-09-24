@@ -41,35 +41,35 @@ public class UserController {
     private SportService sportService;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String getFilms() {
+    public String getRegistrationPage() {
         return "registration";
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String loginFormDe() {
+    public String getLoginUserPage() {
         return "user";
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public String loginFormD() {
+    public String getInfoPage() {
         return "info";
     }
 
     @RequestMapping(value = {"/", "/user-login"}, method = RequestMethod.GET)
-    public String loginFormDef() {
+    public String getLoginPage() {
         return "login-form";
     }
 
     @RequestMapping(value = {"/error-login"}, method = RequestMethod.GET)
     public
     @ResponseBody
-    String loginFormDef1() {
+    String errorLogin() {
         return Response.error(459);
     }
 
     @RequestMapping(value = GET_ALL_SPORTS, method = RequestMethod.GET, produces = BaseController.PRODUCES)
     @ResponseBody
-    public String getInfo1() {
+    public String getAllSports() {
         return Response.ok(Collections2.transform(sportService.getAllSports(), ExtractFunction.SPORT_NAME_INVOKE));
     }
 
@@ -113,6 +113,7 @@ public class UserController {
     }
 
     @RequestMapping(value = SAVE_IMAGE, method = RequestMethod.POST, produces = BaseController.PRODUCES)
+    @ResponseBody
     public String setImage(HttpServletRequest request, Principal principal) {
         try {
             userService.addImage(principal.getName(), request);

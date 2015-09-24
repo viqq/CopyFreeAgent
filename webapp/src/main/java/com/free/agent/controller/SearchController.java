@@ -27,19 +27,19 @@ public class SearchController {
     private UserService userService;
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String get() {
+    public String getSearchPage() {
         return "search";
     }
 
     @RequestMapping(value = "/search/user", method = RequestMethod.GET)
-    public Collection<User> get2() {
+    public Collection<User> getAllUsers() {
         return userService.findAll();
     }
 
     @RequestMapping(value = FreeAgentAPI.FIND_USER, method = RequestMethod.POST, produces = BaseController.PRODUCES)
     public
     @ResponseBody
-    String getInfo(Filter filter) {
+    String findUserByFilter(Filter filter) {
         List<UserWithSport> list = Lists.newArrayList();
         for (User u : userService.findByFilter(filter)) {
             list.add(ExtractFunction.getUserForUI(u));

@@ -46,16 +46,20 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
     }
 
     @Override
-    public Set<Message> findAllByReceiverAndAuthor(String login, String author) {
+    public Set<Message> findAllByReceiverAndAuthor(Long id, String authorEmail, Long authorId) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Message> query = cb.createQuery(Message.class);
         Root<Message> fromMessage = query.from(Message.class);
         Join<Message, User> fromUser = fromMessage.join(Message_.user);
-        query.where(cb.equal(fromUser.get(User_.login), login),
-                cb.equal(fromMessage.get(Message_.author), author));
-        //todo order
+        Predicate predicate = new PredicateBuilder(cb)
+                .addEqualsPredicate(cb, fromUser.get(User_.id), id)
+                .addEqualsPredicate(fromMessage.get(Message_.authorEmail), authorEmail)
+                .addEqualsPredicate(fromMessage.get(Message_.authorId), authorId)
+                .buildWithAndConjunction();
+        query.where(predicate);
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
+
 
     @Override
     public Set<Message> findOlderThen(Date date) {
@@ -80,26 +84,51 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
     }
 
     @Override
-    public Set<Message> findAllByAuthor(String author) {
+    public Set<Message> findAllByAuthorEmailAndId(String authorEmail, Long authorId) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Message> query = cb.createQuery(Message.class);
         Root<Message> fromMessage = query.from(Message.class);
-        query.where(cb.equal(fromMessage.get(Message_.author), author));
+        Predicate predicate = new PredicateBuilder(cb)
+                .addEqualsPredicate(fromMessage.get(Message_.authorEmail), authorEmail)
+                .addEqualsPredicate(fromMessage.get(Message_.authorId), authorId)
+                .buildWithAndConjunction();
+        query.where(predicate);
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
 
     @Override
-    public Set<Message> getHistory(String name, String user) {
+    public Set<Message> findAllByAuthorId(Long authorId) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Message> query = cb.createQuery(Message.class);
+        Root<Message> fromMessage = query.from(Message.class);
+        query.where(cb.equal(fromMessage.get(Message_.authorId), authorId));
+        return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
+    }
+
+    @Override
+    public Set<Message> getHistory(Long userId, Long authorId, String authorEmail) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Message> query = cb.createQuery(Message.class);
         Root<Message> fromMessage = query.from(Message.class);
         Join<Message, User> fromUser = fromMessage.join(Message_.user);
-        query.where(cb.or(
-                cb.and(cb.equal(fromUser.get(User_.login), name), cb.equal(fromMessage.get(Message_.author), user)),
-                cb.and(cb.equal(fromUser.get(User_.login), user), cb.equal(fromMessage.get(Message_.author), name))));
+
+        Predicate p1, p2 = null, p3 = null;
+        p1 = new PredicateBuilder(cb).addEqualsPredicate(fromUser.get(User_.id), userId)
+                .addEqualsPredicate(fromMessage.get(Message_.authorId), authorId)
+                .buildWithAndConjunction();
+        if (authorEmail != null) {
+            p2 = new PredicateBuilder(cb).addEqualsPredicate(fromUser.get(User_.id), userId)
+                    .addEqualsPredicate(fromMessage.get(Message_.authorEmail), authorEmail)
+                    .buildWithAndConjunction();
+        }
+        if (authorId != null) {
+            p3 = new PredicateBuilder(cb).addEqualsPredicate(fromUser.get(User_.id), authorId)
+                    .addEqualsPredicate(fromMessage.get(Message_.authorId), userId)
+                    .buildWithAndConjunction();
+        }
+
+        query.where(cb.or(cb.and(p1), cb.and(p2), cb.and(p3)));
         query.orderBy(cb.asc(fromMessage.get(Message_.timeOfCreate)));
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
-
-
 }
