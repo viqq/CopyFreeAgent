@@ -17,7 +17,7 @@ import java.io.IOException;
 public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        httpServletResponse.getWriter().write("{\"error\":false,\"code\":461}");
+        httpServletResponse.getWriter().write("{\"error\":true,\"code\":461}");
         httpServletResponse.getWriter().flush();
         httpServletResponse.getWriter().close();
     }

@@ -14,9 +14,6 @@ public class UserConstraintValidator implements ConstraintValidator<User, String
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return false;
-        }
-        return value.matches("^[a-z0-9_-]{3,15}$");
+        return value != null && value.matches("^[a-z0-9_-]{3,15}$");
     }
 }
