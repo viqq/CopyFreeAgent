@@ -13,11 +13,11 @@ import java.util.Set;
 public interface UserService {
     User save(User user, Set<String> names);
 
-    void addImage(String login, HttpServletRequest request) throws Exception;
+    void addImage(String email, HttpServletRequest request) throws Exception;
 
     Collection<User> findAll();
 
-    User findByLogin(String login);
+    User findByEmail(String email);
 
     User findById(long id);
 

@@ -16,7 +16,7 @@ import java.util.Set;
  * Created by antonPC on 15.06.15.
  */
 @Entity
-@Table(name = "USER", uniqueConstraints = {@UniqueConstraint(columnNames = {"LOGIN"})})
+@Table(name = "USER", uniqueConstraints = {@UniqueConstraint(columnNames = {"EMAIL"})})
 public class User extends AbstractTable<Long> {
 
     @Id
@@ -24,17 +24,14 @@ public class User extends AbstractTable<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "LOGIN", nullable = false, unique = true)
-    private String login;
+    @Column(name = "EMAIL", nullable = false, unique = true)
+    private String email;
 
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
     @Column(name = "CITY")
     private String city;
-
-    @Column(name = "EMAIL")
-    private String email;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_SPORT",
@@ -63,7 +60,7 @@ public class User extends AbstractTable<Long> {
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
-    @Column(name = "PHONE", nullable = false, unique = true)
+    @Column(name = "PHONE")
     private String phone;
 
     @Column(name = "IMAGE")
@@ -76,22 +73,20 @@ public class User extends AbstractTable<Long> {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "user")
     private List<Message> messages = Lists.newArrayList();
 
-    public User(String login, String password, String phone) {
-        this.login = login;
+    public User(String email, String password, String phone) {
+        this.email = email;
         this.password = password;
         this.phone = phone;
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public User() {
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     public String getPassword() {
         return password;

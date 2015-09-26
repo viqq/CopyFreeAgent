@@ -1,11 +1,12 @@
 package com.free.agent.utils;
 
 import com.free.agent.dto.MessageUIDto;
-import com.free.agent.dto.UserDto;
+import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.UserWithSport;
 import com.free.agent.model.Message;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
+import com.free.agent.service.util.EncryptionUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
@@ -41,12 +42,11 @@ public final class ExtractFunction {
     public static UserWithSport getUserForUI(User user) {
         UserWithSport userDto = new UserWithSport();
         userDto.setId(user.getId());
-        userDto.setLogin(user.getLogin());
+        userDto.setEmail(user.getEmail());
         userDto.setPhone(user.getPhone());
         userDto.setDescription(user.getDescription());
         userDto.setCity(user.getCity());
         userDto.setDateOfBirth(user.getDateOfBirth());
-        userDto.setEmail(user.getEmail());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setDateOfRegistration(user.getDateOfRegistration());
@@ -54,14 +54,9 @@ public final class ExtractFunction {
         return userDto;
     }
 
-    public static User getUser(UserDto userDto) {
-        User user = new User(userDto.getLogin(), userDto.getPassword(), userDto.getPhone());
-        user.setDescription(userDto.getDescription());
-        user.setCity(userDto.getCity());
-        user.setDateOfBirth(userDto.getDateOfBirth());
-        user.setEmail(userDto.getEmail());
+    public static User getUser(UserRegistrationDto userDto) {
+        User user = new User(userDto.getEmail(), EncryptionUtils.encrypt(userDto.getPassword()));
         user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
         user.setDateOfRegistration(new Date());
         return user;
     }

@@ -11,7 +11,7 @@ import java.util.Collection;
  */
 public interface UserDao extends GenericDao<User,Long> {
 
-    User findByLogin(String login);
+    User findByEmail(String email);
 
     Collection<User> findByFilter(Filter filter);
 }

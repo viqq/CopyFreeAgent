@@ -10,13 +10,13 @@ import java.util.Set;
  */
 public interface MessageDao extends GenericDao<Message, Long> {
 
-    Set<Message> findAllByReceiver(String login);
+    Set<Message> findAllByReceiver(String email);
 
-    Set<Message> findAllByReceiverAndAuthor(Long login, String authorEmail, Long authorId);
+    Set<Message> findAllByReceiverAndAuthor(Long id, String authorEmail, Long authorId);
 
     Set<Message> findOlderThen(Date date);
 
-    int countUnreadMessages(String login);
+    int countUnreadMessages(String email);
 
     Set<Message> findAllByAuthorEmailAndId(String authorEmail, Long id);
 

@@ -86,9 +86,9 @@ public class MessageDaoImplTest extends TestCase {
 
     @Test
     public void findAllByReceiver() {
-        assertEquals(3, messageDao.findAllByReceiver(u1.getLogin()).size());
-        assertContainsMessage(messageDao.findAllByReceiver(u1.getLogin()), Lists.newArrayList(m1.getText(), m2.getText(), m3.getText()));
-        assertEquals(0, messageDao.findAllByReceiver(u2.getLogin()).size());
+        assertEquals(3, messageDao.findAllByReceiver(u1.getEmail()).size());
+        assertContainsMessage(messageDao.findAllByReceiver(u1.getEmail()), Lists.newArrayList(m1.getText(), m2.getText(), m3.getText()));
+        assertEquals(0, messageDao.findAllByReceiver(u2.getEmail()).size());
     }
 
     @Test
@@ -118,8 +118,8 @@ public class MessageDaoImplTest extends TestCase {
 
     @Test
     public void countUnreadMessages() {
-        assertEquals(2, messageDao.countUnreadMessages(u1.getLogin()));
-        assertEquals(0, messageDao.countUnreadMessages(u2.getLogin()));
+        assertEquals(2, messageDao.countUnreadMessages(u1.getEmail()));
+        assertEquals(0, messageDao.countUnreadMessages(u2.getEmail()));
     }
 
     private void assertContainsMessage(Set<Message> usersMessages, ArrayList<String> messages) {

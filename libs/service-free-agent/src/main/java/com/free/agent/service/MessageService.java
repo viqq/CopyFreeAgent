@@ -13,17 +13,17 @@ public interface MessageService {
 
     void removeOldMessages();
 
-    Set<Message> findAllByReceiver(String login);
+    Set<Message> findAllByReceiver(String email);
 
-    Set<Message> findAllByAuthor(String login);
+    Set<Message> findAllByAuthor(String email);
 
     Set<Message> findAllByReceiverAndAuthor(Long id, String email, Principal principal);
 
     void save(MessageDto messageDto, String email, Principal principal) throws IllegalAccessException;
 
-    void updateMessageStatus(Long id, String name);
+    void updateMessageStatus(Long id, String email);
 
-    int countUnreadMessages(String id);
+    int countUnreadMessages(String email);
 
-    Set<Message> getHistory(Long name, String login);
+    Set<Message> getHistory(Long id, String email);
 }

@@ -36,11 +36,11 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 
 
     @Override
-    public User findByLogin(String login) {
+    public User findByEmail(String email) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
         Root<User> from = query.from(User.class);
-        query.where(cb.equal(from.get(User_.login), login));
+        query.where(cb.equal(from.get(User_.email), email));
         return DaoUtils.getSingleResult(getEntityManager().createQuery(query).getResultList());
     }
 

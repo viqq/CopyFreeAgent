@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
     private static final String SAVE_PATH = "/var/free-agent/images";
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
-    private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
-    private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
+    private static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
+    private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 30; // 30MB
 
     @Autowired
     private UserDao userDao;
@@ -43,13 +43,13 @@ public class UserServiceImpl implements UserService {
     public User save(User user, Set<String> names) {
         Set<Sport> sports = sportDao.findByNames(names);
         user.setSports(sports);
-        LOGGER.info("New user " + user.getLogin() + "was added ");
+        LOGGER.info("New user " + user.getEmail() + "was added ");
         return userDao.create(user);
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public void addImage(String login, HttpServletRequest request) throws Exception {
+    public void addImage(String email, HttpServletRequest request) throws Exception {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         factory.setSizeThreshold(MEMORY_THRESHOLD);
         factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
@@ -58,8 +58,8 @@ public class UserServiceImpl implements UserService {
         upload.setSizeMax(MAX_REQUEST_SIZE);
         @SuppressWarnings("unchecked")
         List<FileItem> multiparts = upload.parseRequest(request);
-        User user = userDao.findByLogin(login);
-        user.setImage(saveImage(multiparts, user.getLogin()));
+        User user = userDao.findByEmail(email);
+        user.setImage(saveImage(multiparts, user.getEmail()));
     }
 
     @Override
@@ -70,8 +70,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public User findByLogin(String login) {
-        return userDao.findByLogin(login);
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
     }
 
     @Override
@@ -87,21 +87,21 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private String saveImage(List<FileItem> image, String login) throws Exception {
+    private String saveImage(List<FileItem> image, String email) throws Exception {
         for (FileItem item : image) {
             if (!item.isFormField()) {
-                File fileSaveDir = new File(SAVE_PATH + File.separator + login);
+                File fileSaveDir = new File(SAVE_PATH + File.separator + email);
                 if (!fileSaveDir.exists()) {
                     boolean isCreated = fileSaveDir.mkdir();
                     if (!isCreated) {
                         LOGGER.error("Don't have permission. Use sudo chmod 777 /var/free-agent/images ");
                     }
                 }
-                item.write(new File(SAVE_PATH + File.separator + login + File.separator + login + ".jpg"));
+                item.write(new File(SAVE_PATH + File.separator + email + File.separator + email + ".jpg"));
                 break;
             }
         }
-        return SAVE_PATH + File.separator + login + File.separator + login;
+        return SAVE_PATH + File.separator + email + File.separator + email;
     }
 
 }

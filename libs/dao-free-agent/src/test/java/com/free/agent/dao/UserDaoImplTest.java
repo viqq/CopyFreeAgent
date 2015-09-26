@@ -80,13 +80,13 @@ public class UserDaoImplTest extends TestCase {
         assertEquals(2, userDao.findAll().size());
         assertEquals(2, sportDao.findAll().size());
         assertEquals(2, messageDao.findAll().size());
-        assertEquals(2, userDao.findByLogin(u1.getLogin()).getMessages().size());
-        assertEquals(0, userDao.findByLogin(u2.getLogin()).getMessages().size());
-        assertEquals(2, userDao.findByLogin(u1.getLogin()).getSports().size());
-        assertEquals(1, userDao.findByLogin(u2.getLogin()).getSports().size());
-        assertContainsMessage(userDao.findByLogin(u1.getLogin()).getMessages(), Lists.newArrayList(m1.getText(), m2.getText()));
-        assertContainsSport(userDao.findByLogin(u1.getLogin()).getSports(), Lists.newArrayList(s1.getName(), s2.getName()));
-        assertContainsSport(userDao.findByLogin(u2.getLogin()).getSports(), Lists.newArrayList(s1.getName()));
+        assertEquals(2, userDao.findByEmail(u1.getEmail()).getMessages().size());
+        assertEquals(0, userDao.findByEmail(u2.getEmail()).getMessages().size());
+        assertEquals(2, userDao.findByEmail(u1.getEmail()).getSports().size());
+        assertEquals(1, userDao.findByEmail(u2.getEmail()).getSports().size());
+        assertContainsMessage(userDao.findByEmail(u1.getEmail()).getMessages(), Lists.newArrayList(m1.getText(), m2.getText()));
+        assertContainsSport(userDao.findByEmail(u1.getEmail()).getSports(), Lists.newArrayList(s1.getName(), s2.getName()));
+        assertContainsSport(userDao.findByEmail(u2.getEmail()).getSports(), Lists.newArrayList(s1.getName()));
         userDao.deleteAll();
         assertEquals(0, userDao.findAll().size());
     }

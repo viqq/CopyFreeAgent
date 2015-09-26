@@ -150,6 +150,7 @@ public final class EncryptionUtils {
             List<String> lines = FileUtils.readLines(file, "UTF-8");
             key = lines.get(0);
         } catch (IOException e) {
+            LOGGER.warn("Use default key 179-148-214...");
             key = "179-148-214-15-232-42-145-147-198-251-203-43-228-134-119-188";
         }
         return key;

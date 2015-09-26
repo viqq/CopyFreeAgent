@@ -3,6 +3,7 @@ package com.free.agent.service.impl;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.UserDao;
 import com.free.agent.field.Role;
+import com.free.agent.service.util.EncryptionUtils;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,15 +25,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserDao userDao;
 
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        com.free.agent.model.User domainUser = userDao.findByLogin(login);
+        com.free.agent.model.User domainUser = userDao.findByEmail(email);
         boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
-        return new User(domainUser.getLogin(), domainUser.getPassword(), enabled, accountNonExpired, //
+        return new User(domainUser.getEmail(), EncryptionUtils.decrypt(domainUser.getPassword()), enabled, accountNonExpired, //
                 credentialsNonExpired, accountNonLocked, getAuthorities(domainUser.getRole()));
     }
 

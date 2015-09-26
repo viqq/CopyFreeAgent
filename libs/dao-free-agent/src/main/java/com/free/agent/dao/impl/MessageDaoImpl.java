@@ -36,12 +36,12 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
     }
 
     @Override
-    public Set<Message> findAllByReceiver(String login) {
+    public Set<Message> findAllByReceiver(String email) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Message> query = cb.createQuery(Message.class);
         Root<Message> fromMessage = query.from(Message.class);
         Join<Message, User> fromUser = fromMessage.join(Message_.user);
-        query.where(cb.equal(fromUser.get(User_.login), login));
+        query.where(cb.equal(fromUser.get(User_.email), email));
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
 
@@ -71,12 +71,12 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
     }
 
     @Override
-    public int countUnreadMessages(String login) {
+    public int countUnreadMessages(String email) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Long> query = cb.createQuery(Long.class);
         Root<Message> fromMessage = query.from(Message.class);
         Join<Message, User> fromUser = fromMessage.join(Message_.user);
-        query.where(cb.equal(fromUser.get(User_.login), login),
+        query.where(cb.equal(fromUser.get(User_.email), email),
                 cb.isNull(fromMessage.get(Message_.timeOfRead)));
         Expression<Long> count = cb.count(fromMessage);
         query.select(count);

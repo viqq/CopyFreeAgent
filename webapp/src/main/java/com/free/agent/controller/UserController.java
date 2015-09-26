@@ -3,6 +3,7 @@ package com.free.agent.controller;
 
 import com.free.agent.Response;
 import com.free.agent.dto.UserDto;
+import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
 import com.free.agent.utils.ExtractFunction;
@@ -80,10 +81,10 @@ public class UserController {
         return principal == null ? Response.ok(false) : Response.ok(true);
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = SAVE_USER, method = RequestMethod.POST)
     public
     @ResponseBody
-    String saveUser(@Valid UserDto userDto, BindingResult bindingResult, HttpServletRequest request) {
+    String saveUser(@Valid UserRegistrationDto userDto, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return Response.error(VALIDATION_ERROR);
         }
@@ -92,11 +93,27 @@ public class UserController {
         return Response.ok();
     }
 
+    @RequestMapping(value = DELETE_USER, method = RequestMethod.DELETE, produces = BaseController.PRODUCES)
+    public
+    @ResponseBody
+    String deleteUser(@PathVariable(value = "id") Long id) {
+        //userService.deleteUser(id);
+        return Response.ok();
+    }
+
+    @RequestMapping(value = EDIT_USER, method = RequestMethod.POST, produces = BaseController.PRODUCES)
+    public
+    @ResponseBody
+    String editUser(@PathVariable(value = "id") Long id, UserDto userDto) {
+        //userService.editUser(id,userDto);
+        return Response.ok();
+    }
+
     @RequestMapping(value = INFO_ABOUT_USER, method = RequestMethod.GET, produces = BaseController.PRODUCES)
     public
     @ResponseBody
     String getInfoAboutUser(Principal principal) {
-        return Response.ok(ExtractFunction.getUserForUI(userService.findByLogin(principal.getName())));
+        return Response.ok(ExtractFunction.getUserForUI(userService.findByEmail(principal.getName())));
     }
 
     @RequestMapping(value = GET_USER_BY_ID, method = RequestMethod.GET, produces = BaseController.PRODUCES)

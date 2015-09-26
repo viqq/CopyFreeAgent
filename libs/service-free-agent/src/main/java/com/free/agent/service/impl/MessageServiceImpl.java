@@ -40,21 +40,21 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Set<Message> findAllByReceiver(String login) {
-        return messageDao.findAllByReceiver(login);
+    public Set<Message> findAllByReceiver(String email) {
+        return messageDao.findAllByReceiver(email);
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Set<Message> findAllByAuthor(String login) {
-        User user = userDao.findByLogin(login);
+    public Set<Message> findAllByAuthor(String email) {
+        User user = userDao.findByEmail(email);
         return messageDao.findAllByAuthorEmailAndId(user.getEmail(), user.getId());
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public Set<Message> findAllByReceiverAndAuthor(Long id, String email, Principal principal) {
-        return messageDao.findAllByReceiverAndAuthor(id, email, userDao.findByLogin(principal.getName()).getId());
+        return messageDao.findAllByReceiverAndAuthor(id, email, userDao.findByEmail(principal.getName()).getId());
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MessageServiceImpl implements MessageService {
                 throw new IllegalAccessException("User with " + email + " has registered already");
             }
         } else {
-            message.setAuthorId(userDao.findByLogin(principal.getName()).getId());
+            message.setAuthorId(userDao.findByEmail(principal.getName()).getId());
         }
         message.setTimeOfCreate(new Date());
         //unchecked
@@ -83,15 +83,14 @@ public class MessageServiceImpl implements MessageService {
     }
 
     private boolean isEmailFree(String email) {
-        //todo by login??
-        return userDao.findByLogin(email) == null;
+        return userDao.findByEmail(email) == null;
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public void updateMessageStatus(Long id, String name) {
+    public void updateMessageStatus(Long id, String email) {
         Message message = messageDao.find(id);
-        if (message.getUser().getLogin().equals(name)) {
+        if (message.getUser().getEmail().equals(email)) {
             message.setTimeOfRead(new Date());
             messageDao.update(message);
         }
@@ -105,8 +104,8 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Set<Message> getHistory(Long id, String login) {
-        User user = userDao.findByLogin(login);
+    public Set<Message> getHistory(Long id, String email) {
+        User user = userDao.findByEmail(email);
         return messageDao.getHistory(id, user.getId(), user.getEmail());
     }
 
