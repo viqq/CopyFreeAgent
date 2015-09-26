@@ -1,6 +1,6 @@
-package com.free.agent.dto;
+package com.free.agent.service.dto;
 
-import com.free.agent.annotation.Phone;
+import com.free.agent.service.annotation.Phone;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Past;

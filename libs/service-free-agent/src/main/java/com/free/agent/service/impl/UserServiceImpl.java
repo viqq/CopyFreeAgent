@@ -7,6 +7,7 @@ import com.free.agent.dao.UserDao;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.service.UserService;
+import com.free.agent.service.dto.UserDto;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -86,6 +87,47 @@ public class UserServiceImpl implements UserService {
         return userDao.findByFilter(filter);
     }
 
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+    public void deleteUser(Long id) {
+        User user = userDao.find(id);
+        userDao.delete(user);
+        LOGGER.info("User " + user.getEmail() + "was deleted");
+        deleteImage(user.getEmail());
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+    public void editUser(Long id, UserDto userDto, Set<String> sports) {
+        User editedUser = getUser(id, userDto, sports);
+        userDao.update(editedUser);
+    }
+
+    private User getUser(Long id, UserDto userDto, Set<String> names) {
+        User user = new User(userDto.getEmail(), userDto.getPassword());
+        user.setId(id);
+        user.setEmail(userDto.getEmail());
+        user.setPhone(userDto.getPhone());
+        user.setDescription(userDto.getDescription());
+        user.setCity(userDto.getCity());
+        user.setDateOfBirth(userDto.getDateOfBirth());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        Set<Sport> sports = sportDao.findByNames(names);
+        user.setSports(sports);
+        return user;
+    }
+
+    private void deleteImage(String email) {
+        File fileSaveDir = new File(SAVE_PATH + File.separator + email);
+        if (fileSaveDir.exists()) {
+            if (fileSaveDir.delete()) {
+                LOGGER.info("Image for " + email + "was deleted");
+            } else {
+                LOGGER.error("Image for " + email + "can not be deleted");
+            }
+        }
+    }
 
     private String saveImage(List<FileItem> image, String email) throws Exception {
         for (FileItem item : image) {

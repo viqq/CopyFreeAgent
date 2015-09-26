@@ -2,6 +2,7 @@ package com.free.agent.service;
 
 import com.free.agent.Filter;
 import com.free.agent.model.User;
+import com.free.agent.service.dto.UserDto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -22,4 +23,8 @@ public interface UserService {
     User findById(long id);
 
     Collection<User> findByFilter(Filter filter);
+
+    void deleteUser(Long id);
+
+    void editUser(Long name, UserDto userDto, Set<String> sports);
 }

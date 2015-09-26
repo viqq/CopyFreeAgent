@@ -1,6 +1,6 @@
-package com.free.agent.dto;
+package com.free.agent.service.dto;
 
-import com.free.agent.annotation.Password;
+import com.free.agent.service.annotation.Password;
 import org.hibernate.validator.constraints.Email;
 
 /**

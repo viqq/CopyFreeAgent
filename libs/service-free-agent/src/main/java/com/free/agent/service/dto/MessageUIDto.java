@@ -1,4 +1,4 @@
-package com.free.agent.dto;
+package com.free.agent.service.dto;
 
 import java.util.Date;
 

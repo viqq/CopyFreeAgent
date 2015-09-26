@@ -1,4 +1,4 @@
-package com.free.agent.annotation;
+package com.free.agent.service.annotation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

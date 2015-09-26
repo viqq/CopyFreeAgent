@@ -1,4 +1,4 @@
-package com.free.agent.dto;
+package com.free.agent.service.dto;
 
 import java.util.Date;
 import java.util.List;
@@ -7,7 +7,6 @@ import java.util.List;
  * Created by antonPC on 18.08.15.
  */
 public class UserWithSport extends UserDto {
-
     private List<String> sports;
     private Date dateOfRegistration;
 

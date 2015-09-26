@@ -1,11 +1,11 @@
 package com.free.agent.utils;
 
-import com.free.agent.dto.MessageUIDto;
-import com.free.agent.dto.UserRegistrationDto;
-import com.free.agent.dto.UserWithSport;
 import com.free.agent.model.Message;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
+import com.free.agent.service.dto.MessageUIDto;
+import com.free.agent.service.dto.UserRegistrationDto;
+import com.free.agent.service.dto.UserWithSport;
 import com.free.agent.service.util.EncryptionUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;

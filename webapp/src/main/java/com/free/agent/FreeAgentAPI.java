@@ -11,19 +11,19 @@ public final class FreeAgentAPI {
     public static final int EMAIL_REGISTERED = 463;
     public static final int UNEXPECTED_ERROR = 499;
 
-    public static final String SAVE_USER = "/user";//POST
-    public static final String EDIT_USER = "/user/{id}";//POST
-    public static final String DELETE_USER = "/user/{id}";//DELETE
+    public static final String SAVE_USER = "/user"; //POST
+    public static final String EDIT_USER = "/user/{id}"; //POST
+    public static final String DELETE_USER = "/user/{id}"; //DELETE
     public static final String GET_USER_BY_ID = "/user/{id}";
     public static final String INFO_ABOUT_USER = "/user/info";
-    public static final String SAVE_IMAGE = "/user/setImage";//POST
+    public static final String SAVE_IMAGE = "/user/setImage"; //POST
     public static final String GET_IMAGE = "/user/getImage/{id}";
     public static final String GET_ALL_SPORTS = "/sport";
     public static final String IS_AUTHENTICATION = "/isAuthentication";
-    public static final String FIND_USER = "/search/user";//POST
+    public static final String FIND_USER = "/search/user"; //POST
     public static final String GET_UNREAD_MESSAGES = "/message/unread";
     public static final String GET_ALL_MESSAGES = "/message";
     public static final String GET_SENT_MESSAGES = "/message/sent";
     public static final String GET_MESSAGE_BY_ID = "/message/{id}";
-    public static final String GET_HISTORY = "message/history/{id}";
+    public static final String GET_HISTORY = "/message/history/{id}";
 }
