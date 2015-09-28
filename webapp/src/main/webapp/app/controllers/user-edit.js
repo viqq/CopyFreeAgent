@@ -6,7 +6,7 @@ define(
         'angularAMD',
 
         'directives/header/script',
-        'directives/profile-edit/script',
+        'directives/edit-profile/script',
         'directives/footer/script'
     ],
     function (angularAMD) {

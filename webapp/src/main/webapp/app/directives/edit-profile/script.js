@@ -1,62 +1,58 @@
 /**
- * Created by TITUS on 30.07.2015.
+ * Created by TITUS on 28.09.2015.
  */
-define(
-    [
+define([
         'angularAMD',
         'resources/ui-translations',
 
-        'services/add-sport',
-        'services/get-all-sports'
+        'services/edit-user-info'
     ],
     function (angularAMD, uiTranslations) {
-        angularAMD.directive('dirAdmin', ['addSport', function () {
+        angularAMD.directive('dirRegistration', function () {
             return {
                 restrict: 'E',
-                templateUrl: 'app/directives/admin/template.html',
+                templateUrl: 'app/directives/edit-profile/template.html',
                 replace: true,
                 scope: true,
                 controller: controller
             };
-        }]);
+        });
 
-        var controller = [
-            '$scope', '$element', 'addSport', 'getAllSports', '$q',
-            function ($scope, $element, addSport, getAllSports, $q) {
-                window.qqq = $q;
+        var controller = ['$scope', 'editUserInfo', function ($scope, editUserInfo) {
+            if ($scope.$root.isLoggedIn) {
+                location.assign('#/');
+                return;
+            }
 
-                $scope.uiTranslations = uiTranslations[$scope.language].login;
+            $scope.uiTranslations = uiTranslations[$scope.language].registration;
 
-                $scope.form = $element.find('form');
+            $scope.registrationData = {};
 
-                $scope.formData = {
-                    name: ''
-                };
+            $scope.error = '';
 
-                $scope.sports = [];
+            $scope.registrationHandler = function() {
+                var data = $scope.$root.toolkit.serialize($scope.registrationData);
+                $scope.error = '';
 
-                var updateSports = function() {
-                    var d = getAllSports();
-
-                    d.success(function(data) {
-                        if (!data.payload.length) {
+                editUserInfo(data, $scope.currUserData.id)
+                    .success(function(data) {
+                        if (typeof data !== 'object') {
+                            $scope.error = 'Something wrong with response';
                             return;
                         }
 
-                        $scope.sports = data.payload;
-                    });
+                        if (data.error === true) {
+                            $scope.error = 'User data edit error. Code: ' + data.status;
+                            return;
+                        }
 
-                    return d
-                };
-
-                $scope.submitHandler = function () {
-                    var data = $scope.$root.toolkit.serialize($scope.formData);
-                    addSport(data).success(function () {
-                        updateSports();
+                        location.assign('#/profile')
                     })
-                };
-
-                updateSports();
-            }]
+                    .error(function(err) {
+                        $scope.error = 'Request failed';
+                    })
+            };
+        }];
     }
 );
+

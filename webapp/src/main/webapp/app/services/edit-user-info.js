@@ -24,5 +24,5 @@ define(['angularAMD'], function (angularAMD) {
         }
     };
 
-    angularAMD.factory('registration', ['$http', editData]);
+    angularAMD.factory('editUserInfo', ['$http', editData]);
 });
