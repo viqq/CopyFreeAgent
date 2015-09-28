@@ -40,7 +40,7 @@ define(
                         var initError = function () {
                             $scope.isLoggedIn = false;
                             $scope.userInfo = {};
-                            location.assign('#/login');
+                            location.assign('/login');
                         };
 
                         $scope.$root.updateUserInfo()

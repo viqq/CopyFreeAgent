@@ -17,7 +17,7 @@ define(
                 scope: true,
                 controller: ['$scope', '$element', 'login', function ($scope, $element, login) {
                     if ($scope.$root.isLoggedIn) {
-                        location.assign('#/');
+                        location.assign('/');
                         return;
                     }
 
@@ -54,7 +54,7 @@ define(
 
                                 $scope.$root.isLoggedIn = true;
                                 $scope.$root.updateUserInfo();
-                                location.assign('#/profile');
+                                location.assign('/profile');
                             })
                             .error(function (err) {
                                 throw err;
