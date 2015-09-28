@@ -34,6 +34,11 @@ define(
                     controller: 'ProfileCtrl',
                     controllerUrl: 'controllers/profile'
                 }))
+                .when('/edit', angularAMD.route({
+                    templateUrl: 'app/views/profile.html',
+                    controller: 'UserEditCtrl',
+                    controllerUrl: 'controllers/user-edit.js'
+                }))
                 .when('/search', angularAMD.route({
                     templateUrl: 'app/views/search-users.html',
                     controller: 'SearchUsersCtrl',
@@ -53,7 +58,8 @@ define(
                     templateUrl: 'app/views/message-read.html',
                     controller: 'MessageReadCtrl',
                     controllerUrl: 'controllers/message-read'
-                }))              .when('/admin', angularAMD.route({
+                }))
+                .when('/admin', angularAMD.route({
                     templateUrl: 'app/views/admin.html',
                     controller: 'AdminCtrl',
                     controllerUrl: 'controllers/admin'

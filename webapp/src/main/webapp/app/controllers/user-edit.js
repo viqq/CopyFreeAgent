@@ -10,6 +10,6 @@ define(
         'directives/footer/script'
     ],
     function (angularAMD) {
-        angularAMD.controller('UserEditCtrl', function() {});
+        angularAMD.controller('ProfileEditCtrl', function() {});
     }
 );
