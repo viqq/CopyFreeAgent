@@ -8,7 +8,7 @@ define([
         'services/edit-user-info'
     ],
     function (angularAMD, uiTranslations) {
-        angularAMD.directive('dirRegistration', function () {
+        angularAMD.directive('dirEditProfile', function () {
             return {
                 restrict: 'E',
                 templateUrl: 'app/directives/edit-profile/template.html',
@@ -20,7 +20,7 @@ define([
 
         var controller = ['$scope', 'editUserInfo', function ($scope, editUserInfo) {
             if ($scope.$root.isLoggedIn) {
-                location.assign('#/');
+                location.assign('/');
                 return;
             }
 
@@ -46,7 +46,7 @@ define([
                             return;
                         }
 
-                        location.assign('#/profile')
+                        location.assign('/profile')
                     })
                     .error(function(err) {
                         $scope.error = 'Request failed';
