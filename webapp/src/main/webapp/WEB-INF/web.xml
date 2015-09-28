@@ -6,6 +6,12 @@
 
     <display-name>Free Agent</display-name>
 
+    <!-- HTTP-error -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/pages/index.html</location>
+    </error-page>
+
     <servlet>
         <servlet-name>mvc-dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

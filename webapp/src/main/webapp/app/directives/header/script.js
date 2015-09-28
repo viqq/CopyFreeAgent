@@ -24,7 +24,7 @@ define(
                         logout()
                             .success(function(data) {
                                 $scope.$root.isLoggedIn = false;
-                                location.assign('#/');
+                                location.assign('/');
                             })
                             .error(function(err) {
                                 console.error('logout: requsest failed', err);

@@ -69,7 +69,7 @@ define(
                 });
 
             // TODO Solve problems with one page routing without hash
-            //$locationProvider.html5Mode(true);
+            $locationProvider.html5Mode(true);
         }]);
 
         return angularAMD.bootstrap(app);
