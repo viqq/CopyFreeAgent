@@ -19,19 +19,19 @@ define([
         });
 
         var controller = ['$scope', 'editUserInfo', function ($scope, editUserInfo) {
-            if ($scope.$root.isLoggedIn) {
+            if (!$scope.$root.isLoggedIn) {
                 location.assign('/');
                 return;
             }
 
             $scope.uiTranslations = uiTranslations[$scope.language].registration;
 
-            $scope.registrationData = {};
+            $scope.formData = {};
 
             $scope.error = '';
 
             $scope.registrationHandler = function() {
-                var data = $scope.$root.toolkit.serialize($scope.registrationData);
+                var data = $scope.$root.toolkit.serialize($scope.formData);
                 $scope.error = '';
 
                 editUserInfo(data, $scope.currUserData.id)

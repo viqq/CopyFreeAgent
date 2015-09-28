@@ -3,10 +3,14 @@
  */
 define(['angularAMD'], function (angularAMD) {
     var editData = function ($http) {
-        return function (data) {
+        return function (data, id) {
+            if (typeof id !== 'number' || !id && id !== 0) {
+                return;
+            }
+
             var d = $http({
                 method: 'POST',
-                url: 'user',
+                url: '/user/' + id,
                 data: data,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

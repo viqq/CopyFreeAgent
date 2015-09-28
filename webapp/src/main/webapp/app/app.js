@@ -35,7 +35,7 @@ define(
                     controllerUrl: 'controllers/profile'
                 }))
                 .when('/edit', angularAMD.route({
-                    templateUrl: 'app/views/profile.html',
+                    templateUrl: 'app/views/edit.html',
                     controller: 'ProfileEditCtrl',
                     controllerUrl: 'controllers/user-edit'
                 }))
