@@ -1,5 +1,6 @@
 package com.free.agent.dao;
 
+import com.free.agent.dao.dto.Participant;
 import com.free.agent.model.Message;
 
 import java.util.Date;
@@ -23,4 +24,6 @@ public interface MessageDao extends GenericDao<Message, Long> {
     Set<Message> findAllByAuthorId(Long authorId);
 
     Set<Message> getHistory(Long userId, Long authorId, String authorEmail);
+
+    Set<Participant> getParticipants(Long id);
 }

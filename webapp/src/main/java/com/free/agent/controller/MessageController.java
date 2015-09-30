@@ -2,6 +2,7 @@ package com.free.agent.controller;
 
 import com.free.agent.Response;
 import com.free.agent.service.MessageService;
+import com.free.agent.service.UserService;
 import com.free.agent.service.dto.MessageDto;
 import com.free.agent.utils.ExtractFunction;
 import com.google.common.collect.Collections2;
@@ -23,6 +24,9 @@ import static com.free.agent.FreeAgentAPI.*;
 public class MessageController {
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = GET_UNREAD_MESSAGES, method = RequestMethod.GET)
     public
@@ -50,6 +54,13 @@ public class MessageController {
     @ResponseBody
     String getHistory(Principal principal, @PathVariable("id") Long id) {
         return Response.ok(Collections2.transform(messageService.getHistory(id, principal.getName()), ExtractFunction.MESSAGE_INVOKE));
+    }
+
+    @RequestMapping(value = GET_ALL_PARTICIPANTS, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String getParticipants(Principal principal) {
+        return Response.ok(messageService.getParticipants(principal.getName()));
     }
 
     @RequestMapping(value = SAVE_MESSAGES, method = RequestMethod.POST)

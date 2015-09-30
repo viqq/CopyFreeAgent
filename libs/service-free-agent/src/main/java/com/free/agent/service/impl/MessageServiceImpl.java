@@ -3,6 +3,7 @@ package com.free.agent.service.impl;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.MessageDao;
 import com.free.agent.dao.UserDao;
+import com.free.agent.dao.dto.Participant;
 import com.free.agent.model.Message;
 import com.free.agent.model.User;
 import com.free.agent.service.MessageService;
@@ -107,6 +108,12 @@ public class MessageServiceImpl implements MessageService {
     public Set<Message> getHistory(Long id, String email) {
         User user = userDao.findByEmail(email);
         return messageDao.getHistory(id, user.getId(), user.getEmail());
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
+    public Set<Participant> getParticipants(String email) {
+        return messageDao.getParticipants(userDao.findByEmail(email).getId());
     }
 
 

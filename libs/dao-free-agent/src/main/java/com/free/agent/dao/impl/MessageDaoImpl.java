@@ -2,6 +2,7 @@ package com.free.agent.dao.impl;
 
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.MessageDao;
+import com.free.agent.dao.dto.Participant;
 import com.free.agent.model.Message;
 import com.free.agent.model.Message_;
 import com.free.agent.model.User;
@@ -129,6 +130,20 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
 
         query.where(cb.or(cb.and(p1), cb.and(p2), cb.and(p3)));
         query.orderBy(cb.asc(fromMessage.get(Message_.timeOfCreate)));
+        return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
+    }
+
+    @Override
+    public Set<Participant> getParticipants(Long id) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Participant> query = cb.createQuery(Participant.class);
+        Root<Message> fromMessage = query.from(Message.class);
+        Join<Message, User> fromUser = fromMessage.join(Message_.user);
+        query.multiselect(fromMessage.get(Message_.authorId), fromMessage.get(Message_.authorEmail));
+        query.where(cb.and(
+                cb.equal(fromMessage.get(Message_.authorId), id),
+                cb.equal(fromUser.get(User_.id), id)));
+        query.distinct(true);
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
 }
