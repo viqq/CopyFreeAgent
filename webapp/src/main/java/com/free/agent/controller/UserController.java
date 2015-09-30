@@ -10,6 +10,7 @@ import com.free.agent.utils.ExtractFunction;
 import com.free.agent.utils.HttpRequestUtil;
 import com.google.common.collect.Collections2;
 import com.google.common.io.ByteStreams;
+import junit.framework.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -103,6 +104,7 @@ public class UserController {
     public
     @ResponseBody
     String editUser(@PathVariable(value = "id") Long id, Principal principal, UserDto userDto, HttpServletRequest request) {
+        checkUser(id, principal);
         userService.editUser(id, userDto, HttpRequestUtil.getParams(request, "select"));
         return Response.ok();
     }
@@ -136,6 +138,11 @@ public class UserController {
         } catch (Exception e) {
             return Response.error(SAVE_IMAGE_ERROR);
         }
+    }
+
+
+    private void checkUser(Long id, Principal principal) {
+        Assert.assertEquals(userService.findById(id).getEmail(), principal.getName());
     }
 
 }

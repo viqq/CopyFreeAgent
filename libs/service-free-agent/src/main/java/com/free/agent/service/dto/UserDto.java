@@ -1,5 +1,6 @@
 package com.free.agent.service.dto;
 
+import com.free.agent.field.Gender;
 import com.free.agent.service.annotation.Phone;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,6 +21,7 @@ public class UserDto extends UserRegistrationDto {
     private Date dateOfBirth;
     @Phone
     private String phone;
+    private Gender gender;
 
     public String getCity() {
         return city;
@@ -59,5 +61,13 @@ public class UserDto extends UserRegistrationDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 }

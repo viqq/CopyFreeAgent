@@ -99,20 +99,18 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void editUser(Long id, UserDto userDto, Set<String> sports) {
-        User editedUser = getUser(id, userDto, sports);
-        userDao.update(editedUser);
+        User editedUser = getUser(userDao.find(id), userDto, sports);
+        userDao.updateUser(editedUser);
     }
 
-    private User getUser(Long id, UserDto userDto, Set<String> names) {
-        User user = new User(userDto.getEmail(), userDto.getPassword());
-        user.setId(id);
-        user.setEmail(userDto.getEmail());
+    private User getUser(User user, UserDto userDto, Set<String> names) {
         user.setPhone(userDto.getPhone());
         user.setDescription(userDto.getDescription());
         user.setCity(userDto.getCity());
         user.setDateOfBirth(userDto.getDateOfBirth());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
+        user.setGender(userDto.getGender());
         Set<Sport> sports = sportDao.findByNames(names);
         user.setSports(sports);
         return user;

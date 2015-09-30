@@ -52,7 +52,7 @@ public class MessageController {
         return Response.ok(Collections2.transform(messageService.getHistory(id, principal.getName()), ExtractFunction.MESSAGE_INVOKE));
     }
 
-    @RequestMapping(value = "/message", method = RequestMethod.POST)
+    @RequestMapping(value = SAVE_MESSAGES, method = RequestMethod.POST)
     public
     @ResponseBody
     String saveMessage(MessageDto dto, String email, Principal principal) {

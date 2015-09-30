@@ -12,15 +12,21 @@
     <artifactId>dao-free-agent</artifactId>
     <name>${project.readable.name} :: Libs DAO</name>
    <dependencies>
-    <dependency>
-        <groupId>free-agent</groupId>
-        <artifactId>db-free-agent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </dependency>
+       <dependency>
+           <groupId>free-agent</groupId>
+           <artifactId>db-free-agent</artifactId>
+           <version>1.0-SNAPSHOT</version>
+       </dependency>
        <dependency>
            <groupId>net.sf.ehcache</groupId>
            <artifactId>ehcache</artifactId>
            <version>2.9.0</version>
+       </dependency>
+
+       <dependency>
+           <groupId>org.hibernate.javax.persistence</groupId>
+           <artifactId>hibernate-jpa-2.1-api</artifactId>
+           <version>1.0.0.Final</version>
        </dependency>
 </dependencies>
 
