@@ -140,7 +140,7 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
         Root<Message> fromMessage = query.from(Message.class);
         Join<Message, User> fromUser = fromMessage.join(Message_.user);
         query.multiselect(fromMessage.get(Message_.authorId), fromMessage.get(Message_.authorEmail));
-        query.where(cb.and(
+        query.where(cb.or(
                 cb.equal(fromMessage.get(Message_.authorId), id),
                 cb.equal(fromUser.get(User_.id), id)));
         query.distinct(true);

@@ -10,10 +10,10 @@ import com.free.agent.utils.ExtractFunction;
 import com.free.agent.utils.HttpRequestUtil;
 import com.google.common.collect.Collections2;
 import com.google.common.io.ByteStreams;
-import junit.framework.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -140,9 +140,8 @@ public class UserController {
         }
     }
 
-
     private void checkUser(Long id, Principal principal) {
-        Assert.assertEquals(userService.findById(id).getEmail(), principal.getName());
+        Assert.isTrue(userService.findById(id).getEmail().equals(principal.getName()));
     }
 
 }
