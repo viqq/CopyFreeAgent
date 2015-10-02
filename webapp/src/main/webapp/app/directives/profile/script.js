@@ -34,17 +34,12 @@ define(
                     'initUserInfo' : function() {
                         $scope.userInfo = {};
 
-                        var initSuccess = function() {
-                            $scope.userInfo = $scope.$root.currUserData;
-                        };
-
-                        var initError = function () {
-                            $scope.isLoggedIn = false;
-                            $scope.userInfo = {};
+                        if (!$scope.isLoggedIn) {
                             location.assign('/login');
-                        };
+                            return;
+                        }
 
-                        $scope.$root.updateUserInfo().then(initSuccess, initError);
+                        $scope.userInfo = $scope.$root.currUserData;
                     }
                 };
 

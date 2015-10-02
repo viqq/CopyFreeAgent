@@ -11,7 +11,7 @@ define(
         '/app/services/check-user-state.js'
     ],
     function (angularAMD, toolkit, uiTranslations) {
-        var mainCtrl = function ($scope, getUserInfo, checkUserState) {
+        var mainCtrl = function ($scope, $q, getUserInfo, checkUserState) {
             $scope.$root.language = 'en';
             $scope.$root.toolkit = toolkit;
 
@@ -33,35 +33,63 @@ define(
                 $scope.$root.currUserData = {};
             };
 
+            window.$q = $q;
+
             $scope.$root.updateUserInfo = function () {
-                return checkUserState()
-                    .then(function(res) {
-                        if (!res || !res.data || res.data.error || !res.data.payload) {
-                            updUserInfErrHndlr();
+                return $q(function (resolve, reject) {
+                    checkUserState().then(function (data) {
+                        if (!data || !data.data || data.data.error || !data.data.payload) {
+                            reject(data);
                             return;
                         }
-
-                        $scope.$root.isLoggedIn = true;
 
                         return getUserInfo();
-                    })
-                    .then(function (res) {
-                        if (!res || !res.data || !res.data.payload) {
-                            updUserInfErrHndlr();
-                            return;
-                        }
-
-                        $scope.$root.isLoggedIn = true;
-                        $scope.$root.currUserData = res.data.payload;
-                        $scope.$root.reloadUserPics();
-                    }, function () {
-                        updUserInfErrHndlr();
+                    }).then(function (data) {
+                        resolve(data);
+                    }, function (err) {
+                        reject(err);
                     });
+                }).then(function (res) {
+                    if (!res || !res.data || !res.data.payload) {
+                        updUserInfErrHndlr();
+                        return;
+                    }
+
+                    $scope.$root.isLoggedIn = true;
+                    $scope.$root.currUserData = res.data.payload;
+                    $scope.$root.reloadUserPics();
+                }, function () {
+                    updUserInfErrHndlr();
+                });
+
+                //return checkUserState()
+                //    .then(function(res) {
+                //        if (!res || !res.data || res.data.error || !res.data.payload) {
+                //            updUserInfErrHndlr();
+                //            return;
+                //        }
+                //
+                //        $scope.$root.isLoggedIn = true;
+                //
+                //        return getUserInfo();
+                //    })
+                //    .then(function (res) {
+                //        if (!res || !res.data || !res.data.payload) {
+                //            updUserInfErrHndlr();
+                //            return;
+                //        }
+                //
+                //        $scope.$root.isLoggedIn = true;
+                //        $scope.$root.currUserData = res.data.payload;
+                //        $scope.$root.reloadUserPics();
+                //    }, function () {
+                //        updUserInfErrHndlr();
+                //    });
             };
 
             $scope.$root.updateUserInfo();
         };
 
-        angularAMD.controller('MainCtrl', ['$scope', 'getUserInfo', 'checkUserState', mainCtrl]);
+        angularAMD.controller('MainCtrl', ['$scope', '$q', 'getUserInfo', 'checkUserState', mainCtrl]);
     }
 );
