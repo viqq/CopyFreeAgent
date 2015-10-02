@@ -30,6 +30,7 @@ define([], function() {
                 'placeholder_phone_number': 'phone number',
                 'placeholder_hobbies': 'hobbies',
                 'placeholder_description': 'description',
+                'placeholder_gender': 'gender',
                 'button_register': 'REGISTER',
                 'checkbox_remember_me': 'remember me'
             },

@@ -1,11 +1,13 @@
 package com.free.agent.dao;
 
 import com.free.agent.config.FreeAgentConstant;
+import com.free.agent.dao.dto.Participant;
 import com.free.agent.dao.mock.MessageDaoMock;
 import com.free.agent.dao.mock.UserDaoMock;
 import com.free.agent.model.Message;
 import com.free.agent.model.User;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,9 +17,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -113,7 +115,13 @@ public class MessageDaoImplTest extends TestCase {
         assertEquals(2, messageDao.findOlderThen(new GregorianCalendar(2000, 1, 2).getTime()).size());
         assertEquals(1, messageDao.findOlderThen(new GregorianCalendar(2000, 1, 1).getTime()).size());
         assertEquals(0, messageDao.findOlderThen(new GregorianCalendar(1999, 12, 12).getTime()).size());
+    }
 
+    @Test
+    public void getParticipants() {
+        assertEquals(2, messageDao.getParticipants(u1.getId()).size());
+        assertEquals(0, messageDao.getParticipants(u2.getId()).size());
+        assertContainsMessage(Sets.newHashSet(m1.getAuthorEmail(), m2.getAuthorEmail(), m3.getAuthorEmail()), messageDao.getParticipants(u1.getId()));
     }
 
     @Test
@@ -122,7 +130,13 @@ public class MessageDaoImplTest extends TestCase {
         assertEquals(0, messageDao.countUnreadMessages(u2.getEmail()));
     }
 
-    private void assertContainsMessage(Set<Message> usersMessages, ArrayList<String> messages) {
+    private void assertContainsMessage(Set<String> users, Set<Participant> findParticipants) {
+        for (Participant participant : findParticipants) {
+            assertTrue(users.contains(participant.getAuthorEmail() == null ? participant.getAuthorId() : participant.getAuthorEmail()));
+        }
+    }
+
+    private void assertContainsMessage(Set<Message> usersMessages, List<String> messages) {
         for (Message usersMessage : usersMessages) {
             assertTrue(messages.contains(usersMessage.getText()));
         }

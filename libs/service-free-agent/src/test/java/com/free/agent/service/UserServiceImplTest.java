@@ -27,7 +27,7 @@ import java.util.Set;
  * Created by antonPC on 28.06.15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml"})
+@ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml", "classpath*:free-agent-services-context.xml"})
 @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
 public class UserServiceImplTest extends TestCase {
     private static final String FOOTBALL = "FOOTBALL";

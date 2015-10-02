@@ -26,5 +26,5 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    void editUser(Long name, UserDto userDto, Set<String> sports);
+    void editUser(Long id, UserDto userDto, Set<String> sports);
 }

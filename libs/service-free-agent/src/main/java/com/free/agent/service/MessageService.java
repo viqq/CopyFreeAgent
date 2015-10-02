@@ -1,5 +1,6 @@
 package com.free.agent.service;
 
+import com.free.agent.dao.dto.Participant;
 import com.free.agent.model.Message;
 import com.free.agent.service.dto.MessageDto;
 
@@ -26,4 +27,6 @@ public interface MessageService {
     int countUnreadMessages(String email);
 
     Set<Message> getHistory(Long id, String email);
+
+    Set<Participant> getParticipants(String email);
 }

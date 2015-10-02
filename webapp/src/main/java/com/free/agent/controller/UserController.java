@@ -13,6 +13,7 @@ import com.google.common.io.ByteStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,6 +104,7 @@ public class UserController {
     public
     @ResponseBody
     String editUser(@PathVariable(value = "id") Long id, Principal principal, UserDto userDto, HttpServletRequest request) {
+        checkUser(id, principal);
         userService.editUser(id, userDto, HttpRequestUtil.getParams(request, "select"));
         return Response.ok();
     }
@@ -136,6 +138,10 @@ public class UserController {
         } catch (Exception e) {
             return Response.error(SAVE_IMAGE_ERROR);
         }
+    }
+
+    private void checkUser(Long id, Principal principal) {
+        Assert.isTrue(userService.findById(id).getEmail().equals(principal.getName()));
     }
 
 }
