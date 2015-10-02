@@ -4,16 +4,19 @@
 define(['angularAMD'], function (angularAMD) {
     var checkUserState = function ($http) {
         return function () {
-            return $http({
+            var d = $http({
                 method: 'GET',
                 url: '/api/isAuthentication'
-            })
-                .success(function(data) {
-                    console.log(data)
-                })
-                .error(function(err) {
-                    console.log(err);
-                });
+            });
+
+            d.success(function (data) {
+                console.log(data)
+            }).error(function (err) {
+                console.log(err);
+            });
+
+            return d;
+
         }
     };
 

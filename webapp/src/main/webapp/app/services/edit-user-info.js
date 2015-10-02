@@ -10,7 +10,7 @@ define(['angularAMD'], function (angularAMD) {
 
             var d = $http({
                 method: 'POST',
-                url: '/user/' + id,
+                url: '/api/user/' + id,
                 data: data,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

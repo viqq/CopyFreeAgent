@@ -27,7 +27,7 @@ define([
 
             $scope.uiTranslations = uiTranslations[$scope.language].registration;
 
-            $scope.formData = {};
+            $scope.formData = angular.copy($scope.currUserData);
 
             $scope.error = '';
 
@@ -67,7 +67,7 @@ define([
                             return;
                         }
 
-                        location.assign('/profile')
+                        location.assign('/')
                     })
                     .error(function(err) {
                         $scope.error = 'Request failed';

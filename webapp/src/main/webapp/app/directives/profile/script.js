@@ -44,38 +44,7 @@ define(
                             location.assign('/login');
                         };
 
-                        $scope.$root.updateUserInfo()
-                            .success(function() {
-                                initSuccess();
-                            }).error(function() {
-                                initError();
-                            });
-
-                        /* TODO will work when isAuthorised is fixed
-                        checkUserState()
-                            .success(function (data) {
-                                if (!data || data.error || !data.payload) {
-                                    initError();
-                                    return;
-                                }
-
-                                $scope.$root.isLoggedIn = true;
-
-                                if ($scope.$root.currUserData) {
-                                    initSuccess()
-                                } else {
-                                    $scope.$root.updateUserInfo()
-                                        .success(function() {
-                                            initSuccess();
-                                        }).error(function() {
-                                            initError();
-                                        })
-                                }
-                            })
-                            .error(function (err) {
-                                initError();
-                            });
-                        */
+                        $scope.$root.updateUserInfo().then(initSuccess, initError);
                     }
                 };
 

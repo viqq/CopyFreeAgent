@@ -4,16 +4,18 @@
 define(['angularAMD'], function (angularAMD) {
     var getUserInfo = function ($http) {
         return function () {
-            return $http({
+            var req = $http({
                 method: 'GET',
                 url: '/api/user/info'
-            })
-                .success(function(data) {
-                    console.log(data)
-                })
-                .error(function(err) {
-                    console.log(err);
-                });
+            });
+
+            req.success(function (data) {
+                console.log(data)
+            }).error(function (err) {
+                console.log(err);
+            });
+
+            return req;
         }
     };
 

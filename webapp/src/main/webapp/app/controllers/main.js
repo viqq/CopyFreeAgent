@@ -7,10 +7,11 @@ define(
         'resources/toolkit',
         'resources/ui-translations',
 
-        'services/get-user-info'
+        'services/get-user-info',
+        '/app/services/check-user-state.js'
     ],
     function (angularAMD, toolkit, uiTranslations) {
-        var mainCtrl = function ($scope, getUserInfo) {
+        var mainCtrl = function ($scope, getUserInfo, checkUserState) {
             $scope.$root.language = 'en';
             $scope.$root.toolkit = toolkit;
 
@@ -27,23 +28,33 @@ define(
                 '?_ts=' + new Date().getTime();
             };
 
-            var updUserInfErrHndlr = function() {
+            var updUserInfErrHndlr = function () {
                 $scope.$root.isLoggedIn = false;
                 $scope.$root.currUserData = {};
             };
 
-            $scope.$root.updateUserInfo = function() {
-                return getUserInfo()
-                    .success(function (data) {
-                        if (!data || !data.payload) {
+            $scope.$root.updateUserInfo = function () {
+                return checkUserState()
+                    .then(function(res) {
+                        if (!res || !res.data || res.data.error || !res.data.payload) {
                             updUserInfErrHndlr();
                             return;
                         }
 
                         $scope.$root.isLoggedIn = true;
-                        $scope.$root.currUserData = data.payload;
+
+                        return getUserInfo();
+                    })
+                    .then(function (res) {
+                        if (!res || !res.data || !res.data.payload) {
+                            updUserInfErrHndlr();
+                            return;
+                        }
+
+                        $scope.$root.isLoggedIn = true;
+                        $scope.$root.currUserData = res.data.payload;
                         $scope.$root.reloadUserPics();
-                    }).error(function() {
+                    }, function () {
                         updUserInfErrHndlr();
                     });
             };
@@ -51,6 +62,6 @@ define(
             $scope.$root.updateUserInfo();
         };
 
-        angularAMD.controller('MainCtrl', ['$scope','getUserInfo', mainCtrl]);
+        angularAMD.controller('MainCtrl', ['$scope', 'getUserInfo', 'checkUserState', mainCtrl]);
     }
 );
