@@ -5,7 +5,8 @@ define([
         'angularAMD',
         'resources/ui-translations',
 
-        'services/edit-user-info'
+        'services/edit-user-info',
+        'services/user-delete'
     ],
     function (angularAMD, uiTranslations) {
         angularAMD.directive('dirEditProfile', function () {
@@ -18,7 +19,7 @@ define([
             };
         });
 
-        var controller = ['$scope', 'editUserInfo', function ($scope, editUserInfo) {
+        var controller = ['$scope', 'editUserInfo', 'deleteUser', function ($scope, editUserInfo, deleteUser) {
             if (!$scope.$root.isLoggedIn) {
                 location.assign('/');
                 return;
@@ -30,7 +31,7 @@ define([
 
             $scope.error = '';
 
-            $scope.registrationHandler = function() {
+            $scope.submitHandler = function() {
                 var data = $scope.$root.toolkit.serialize($scope.formData);
                 $scope.error = '';
 
@@ -52,6 +53,26 @@ define([
                         $scope.error = 'Request failed';
                     })
             };
+
+            $scope.deleteProfile = function() {
+                deleteUser($scope.currUserData.id)
+                    .success(function(data) {
+                        if (typeof data !== 'object') {
+                            $scope.error = 'Something wrong with response';
+                            return;
+                        }
+
+                        if (data.error === true) {
+                            $scope.error = 'User delete error. Code: ' + data.status;
+                            return;
+                        }
+
+                        location.assign('/profile')
+                    })
+                    .error(function(err) {
+                        $scope.error = 'Request failed';
+                    })
+            }
         }];
     }
 );

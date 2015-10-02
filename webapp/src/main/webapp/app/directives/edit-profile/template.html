@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="css/registration.css"/>
         <h2>Edit profile info</h2>
         <div>
-            <form  ng-submit="registrationHandler()">
+            <form  ng-submit="submitHandler()">
                 <p class="error">{{ error }}</p>
                 <input
                         placeholder="{{uiTranslations.placeholder_first_name}}"
@@ -36,8 +36,9 @@
                         id="descriptionInput"
                         ng-model="formData.description"/>
                 <!--here we should select sports-->
-                <button>{{uiTranslations.button_register}}</button>
+                <button>EDIT</button>
             </form>
+            <a ng-click="deleteProfile()">Delete profile</a>
         </div>
     </div>
 </div>
