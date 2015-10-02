@@ -28,7 +28,7 @@ import java.util.Set;
 @Service("userService")
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
-    private static final String SAVE_PATH = "D:\\Projects\\FreeAgent\\imgs";
+    private static final String SAVE_PATH = "/var/free-agent/images";
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 30; // 30MB
