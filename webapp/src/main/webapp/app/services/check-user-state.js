@@ -6,7 +6,7 @@ define(['angularAMD'], function (angularAMD) {
         return function () {
             return $http({
                 method: 'GET',
-                url: 'isAuthentication'
+                url: '/api/isAuthentication'
             })
                 .success(function(data) {
                     console.log(data)

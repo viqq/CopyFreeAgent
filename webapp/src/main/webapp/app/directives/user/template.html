@@ -11,7 +11,7 @@
     </style>
     <div>
         <div class="content">
-            <img class="userpic" ng-src="{{ 'user/getImage/' + userInfo.id }}">
+            <img class="userpic" ng-src="{{ '/api/user/getImage/' + userInfo.id }}">
 
             <a href="{{ '/message/send/' + userInfo.id }}">Send message to <b>{{ userInfo.login}}</b></a>
             <br>

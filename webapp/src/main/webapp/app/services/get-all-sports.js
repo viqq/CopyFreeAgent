@@ -6,7 +6,7 @@ define(['angularAMD'], function (angularAMD) {
         return function () {
             var d = $http({
                 method: 'GET',
-                url: 'sport'
+                url: '/api/sport'
             });
 
             d.success(function (data) {

@@ -18,7 +18,7 @@ define(
 
             $scope.$root.currUserData = {};
 
-            $scope.$root.userPicBaseUrl = '/user/getImage/';
+            $scope.$root.userPicBaseUrl = '/api/user/getImage/';
             $scope.$root.userPicUrl = '';
             $scope.$root.reloadUserPics = function () {
                 var currUserId = $scope.$root.currUserData.id || '';

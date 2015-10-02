@@ -6,7 +6,7 @@ define(['angularAMD'], function (angularAMD) {
         return function (data) {
             return $http({
                 method: 'POST',
-                url: 'j_spring_security_check',
+                url: '/api/j_spring_security_check',
                 data: data,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

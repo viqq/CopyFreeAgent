@@ -6,7 +6,7 @@ define(['angularAMD'], function (angularAMD) {
         return function (data) {
             return $http({
                 method: 'POST',
-                url: 'search/user',
+                url: '/api/search/user',
                 data: data,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

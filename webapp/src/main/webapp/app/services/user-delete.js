@@ -10,7 +10,7 @@ define(['angularAMD'], function (angularAMD) {
 
             var d = $http({
                 method: 'DELETE',
-                url: '/user/' + id
+                url: '/api/user/' + id
             });
 
             d.success(function (data) {

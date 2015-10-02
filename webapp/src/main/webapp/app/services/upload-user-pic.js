@@ -10,7 +10,7 @@ define(['angularAMD'], function (angularAMD) {
             return $http({
                 method: 'POST',
                 data: data,
-                url: 'user/setImage',
+                url: '/api/user/setImage',
                 transformRequest: angular.identity,
                 headers: {
                     'Content-Type': undefined

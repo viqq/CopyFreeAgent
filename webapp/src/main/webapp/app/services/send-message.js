@@ -6,7 +6,7 @@ define(['angularAMD'], function (angularAMD) {
         return function (data) {
             var d = $http({
                 method: 'POST',
-                url: 'message',
+                url: '/api/message',
                 data: data,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
