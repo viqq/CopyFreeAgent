@@ -126,7 +126,11 @@ public class UserController {
 
     @RequestMapping(value = GET_IMAGE, method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public void getImage(HttpServletResponse response, @PathVariable(value = "id") Long id) throws IOException {
-        ByteStreams.copy(new FileInputStream(userService.findById(id).getImage() + ".jpg"), response.getOutputStream());
+        if (userService.findById(id).getImage() != null) {
+            ByteStreams.copy(new FileInputStream(userService.findById(id).getImage() + ".jpg"), response.getOutputStream());
+        } else {
+            ByteStreams.copy(new FileInputStream(UserController.class.getClassLoader().getResource("images/freeagent.jpg").getFile()), response.getOutputStream());
+        }
     }
 
     @RequestMapping(value = SAVE_IMAGE, method = RequestMethod.POST, produces = BaseController.PRODUCES)
