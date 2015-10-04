@@ -12,7 +12,7 @@ define(
     function (angularAMD) {
         var app = angular.module('app', ['ngRoute']);
 
-        app.config(['$routeProvider', '$locationProvider', '$route', function ($routeProvider, $locationProvider, $route) {
+        app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
             $routeProvider
                 .when('/', angularAMD.route({
                     templateUrl: 'app/views/home.html',
@@ -69,8 +69,6 @@ define(
                 });
 
             $locationProvider.html5Mode(true);
-
-            $route
         }]);
 
         return angularAMD.bootstrap(app);
