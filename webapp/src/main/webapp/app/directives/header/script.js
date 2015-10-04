@@ -27,11 +27,7 @@ define(
                                 location.assign('/');
                             })
                             .error(function(err) {
-                                console.error('logout: requsest failed', err);
-
-                                //TODO remove when logout will responde with JSON
-                                $scope.$root.isLoggedIn = false;
-                                location.assign('/');
+                                console.error('logout: request failed', err);
                             })
                     };
                 }]

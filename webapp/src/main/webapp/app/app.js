@@ -68,7 +68,6 @@ define(
                     redirectTo: '/'
                 });
 
-            // TODO Solve problems with one page routing without hash
             $locationProvider.html5Mode(true);
         }]);
 

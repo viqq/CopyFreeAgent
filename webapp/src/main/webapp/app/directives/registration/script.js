@@ -55,11 +55,11 @@ define([
             };
 
             $scope.loginAfterReg = function() {
-                var data = 'j_username=' +
-                    $scope.formData.login + '&' +
-                    'j_password=' +
-                    $scope.formData.password +'&' +
-                    'submit=Login';
+                var data = $scope.$root.toolkit.serialize({
+                    'j_username': $scope.formData.email,
+                    'j_password': $scope.formData.password,
+                    'submit': 'Login'
+                });
 
                 login(data)
                     .success(function(data) {
