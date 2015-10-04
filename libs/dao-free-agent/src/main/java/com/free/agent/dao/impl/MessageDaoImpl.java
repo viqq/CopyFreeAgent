@@ -9,6 +9,7 @@ import com.free.agent.model.User;
 import com.free.agent.model.User_;
 import com.free.agent.utils.DaoUtils;
 import com.free.agent.utils.PredicateBuilder;
+import com.google.common.collect.Sets;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -135,15 +136,21 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
 
     @Override
     public Set<Participant> getParticipants(Long id) {
+        Set<Participant> result = Sets.newHashSet();
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Participant> query = cb.createQuery(Participant.class);
         Root<Message> fromMessage = query.from(Message.class);
         Join<Message, User> fromUser = fromMessage.join(Message_.user);
-        query.multiselect(fromMessage.get(Message_.authorId), fromMessage.get(Message_.authorEmail));
-        query.where(cb.or(
-                cb.equal(fromMessage.get(Message_.authorId), id),
-                cb.equal(fromUser.get(User_.id), id)));
         query.distinct(true);
-        return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
+
+        query.multiselect(fromMessage.get(Message_.authorId), fromMessage.get(Message_.authorEmail));
+        query.where(cb.equal(fromUser.get(User_.id), id));
+        result.addAll(getEntityManager().createQuery(query).getResultList());
+
+        query.multiselect(fromUser.get(User_.id), fromMessage.get(Message_.authorEmail));
+        query.where(cb.equal(fromMessage.get(Message_.authorId), id));
+        result.addAll(getEntityManager().createQuery(query).getResultList());
+
+        return result;
     }
 }
