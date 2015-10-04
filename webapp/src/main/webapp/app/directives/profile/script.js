@@ -13,9 +13,10 @@ define(
         var controller = [
             '$scope',
             '$element',
+            '$location',
             'checkUserState',
             'uploadUserPic',
-            function ($scope, $element, checkUserState, uploadUserPic) {
+            function ($scope, $element, $location, checkUserState, uploadUserPic) {
                 var executors = {
                     'initImages' : function() {
                         console.log( $element.find('input'));
@@ -35,7 +36,7 @@ define(
                         $scope.userInfo = {};
 
                         if (!$scope.isLoggedIn) {
-                            location.assign('/login');
+                            $location.path('/login');
                             return;
                         }
 

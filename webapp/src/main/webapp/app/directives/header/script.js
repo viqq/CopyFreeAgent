@@ -15,7 +15,7 @@ define(
                 templateUrl: 'app/directives/header/template.html',
                 replace: true,
                 scope: true,
-                controller: ['$scope', 'logout', function ($scope, logout) {
+                controller: ['$scope', '$location', 'logout', function ($scope, $location, logout) {
                     $scope.uiTranslations = uiTranslations[$scope.language].header;
 
                     $scope.loginData = {};
@@ -24,7 +24,7 @@ define(
                         logout()
                             .success(function(data) {
                                 $scope.$root.isLoggedIn = false;
-                                location.assign('/');
+                                $location.path('/');
                             })
                             .error(function(err) {
                                 console.error('logout: request failed', err);

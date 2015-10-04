@@ -19,9 +19,9 @@ define([
             };
         });
 
-        var controller = ['$scope', 'registration', 'login', function ($scope, registration, login) {
+        var controller = ['$scope', '$location', 'registration', 'login', function ($scope, $location, registration, login) {
             if ($scope.$root.isLoggedIn) {
-                location.assign('/');
+                $location.path('/');
                 return;
             }
 
@@ -75,7 +75,7 @@ define([
                         }
 
                         $scope.$root.isLoggedIn = true;
-                        location.assign('/profile');
+                        $location.path('/profile');
                     })
                     .error(function(err) {
                         throw err;

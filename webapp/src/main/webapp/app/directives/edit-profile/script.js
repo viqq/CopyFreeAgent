@@ -19,61 +19,67 @@ define([
             };
         });
 
-        var controller = ['$scope', 'editUserInfo', 'deleteUser', function ($scope, editUserInfo, deleteUser) {
-            if (!$scope.$root.isLoggedIn) {
-                location.assign('/');
-                return;
-            }
+        var controller = [
+            '$scope',
+            '$location',
+            'editUserInfo',
+            'deleteUser',
+            function ($scope, $location, editUserInfo, deleteUser) {
+                if (!$scope.$root.isLoggedIn) {
+                    $location.path('/');
+                    return;
+                }
 
-            $scope.uiTranslations = uiTranslations[$scope.language].registration;
+                $scope.uiTranslations = uiTranslations[$scope.language].registration;
 
-            $scope.formData = angular.copy($scope.currUserData);
+                $scope.formData = angular.copy($scope.currUserData);
 
-            $scope.error = '';
-
-            $scope.submitHandler = function() {
-                var data = $scope.$root.toolkit.serialize($scope.formData);
                 $scope.error = '';
 
-                editUserInfo(data, $scope.currUserData.id)
-                    .success(function(data) {
-                        if (typeof data !== 'object') {
-                            $scope.error = 'Something wrong with response';
-                            return;
-                        }
+                $scope.submitHandler = function () {
+                    var data = $scope.$root.toolkit.serialize($scope.formData);
+                    $scope.error = '';
 
-                        if (data.error === true) {
-                            $scope.error = 'User data edit error. Code: ' + data.status;
-                            return;
-                        }
+                    editUserInfo(data, $scope.currUserData.id)
+                        .success(function (data) {
+                            if (typeof data !== 'object') {
+                                $scope.error = 'Something wrong with response';
+                                return;
+                            }
 
-                        location.assign('/profile')
-                    })
-                    .error(function(err) {
-                        $scope.error = 'Request failed';
-                    })
-            };
+                            if (data.error === true) {
+                                $scope.error = 'User data edit error. Code: ' + data.status;
+                                return;
+                            }
 
-            $scope.deleteProfile = function() {
-                deleteUser($scope.currUserData.id)
-                    .success(function(data) {
-                        if (typeof data !== 'object') {
-                            $scope.error = 'Something wrong with response';
-                            return;
-                        }
+                            $location.path('/profile')
+                        })
+                        .error(function (err) {
+                            $scope.error = 'Request failed';
+                        })
+                };
 
-                        if (data.error === true) {
-                            $scope.error = 'User delete error. Code: ' + data.status;
-                            return;
-                        }
+                $scope.deleteProfile = function () {
+                    deleteUser($scope.currUserData.id)
+                        .success(function (data) {
+                            if (typeof data !== 'object') {
+                                $scope.error = 'Something wrong with response';
+                                return;
+                            }
 
-                        location.assign('/')
-                    })
-                    .error(function(err) {
-                        $scope.error = 'Request failed';
-                    })
+                            if (data.error === true) {
+                                $scope.error = 'User delete error. Code: ' + data.status;
+                                return;
+                            }
+
+                            $location.path('/')
+                        })
+                        .error(function (err) {
+                            $scope.error = 'Request failed';
+                        })
+                }
             }
-        }];
+        ];
     }
 );
 
