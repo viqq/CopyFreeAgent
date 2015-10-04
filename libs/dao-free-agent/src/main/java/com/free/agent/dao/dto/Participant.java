@@ -30,4 +30,23 @@ public class Participant {
     public void setAuthorEmail(String authorEmail) {
         this.authorEmail = authorEmail;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Participant that = (Participant) o;
+
+        if (authorId != null ? !authorId.equals(that.authorId) : that.authorId != null) return false;
+        return !(authorEmail != null ? !authorEmail.equals(that.authorEmail) : that.authorEmail != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = authorId != null ? authorId.hashCode() : 0;
+        result = 31 * result + (authorEmail != null ? authorEmail.hashCode() : 0);
+        return result;
+    }
 }
