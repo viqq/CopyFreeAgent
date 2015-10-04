@@ -121,12 +121,26 @@ public class UserServiceImpl implements UserService {
     private void deleteImage(String email) {
         File fileSaveDir = new File(SAVE_PATH + File.separator + email);
         if (fileSaveDir.exists()) {
-            if (fileSaveDir.delete()) {
+            if (deleteDirectory(fileSaveDir)) {
                 LOGGER.info("Image for " + email + "was deleted");
             } else {
                 LOGGER.error("Image for " + email + "can not be deleted");
             }
         }
+    }
+
+    private boolean deleteDirectory(File path) {
+        if (path.exists()) {
+            File[] files = path.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectory(file);
+                } else {
+                    file.delete();
+                }
+            }
+        }
+        return (path.delete());
     }
 
     private String saveImage(List<FileItem> image, String email) throws Exception {
