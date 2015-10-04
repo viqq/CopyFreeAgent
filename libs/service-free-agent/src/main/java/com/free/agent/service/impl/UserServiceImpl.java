@@ -44,8 +44,9 @@ public class UserServiceImpl implements UserService {
     public User save(User user, Set<String> names) {
         Set<Sport> sports = sportDao.findByNames(names);
         user.setSports(sports);
+        User createdUser = userDao.create(user);
         LOGGER.info("New user " + user.getEmail() + "was added ");
-        return userDao.create(user);
+        return createdUser;
     }
 
     @Override
@@ -61,6 +62,7 @@ public class UserServiceImpl implements UserService {
         List<FileItem> multiparts = upload.parseRequest(request);
         User user = userDao.findByEmail(email);
         user.setImage(saveImage(multiparts, user.getEmail()));
+        userDao.update(user);
     }
 
     @Override
