@@ -4,7 +4,7 @@ import com.free.agent.Filter;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
 import com.free.agent.dao.UserDao;
-import com.free.agent.model.Sport;
+import com.free.agent.field.Gender;
 import com.free.agent.model.User;
 import com.free.agent.service.UserService;
 import com.free.agent.service.dto.UserDto;
@@ -41,9 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public User save(User user, Set<String> names) {
-        Set<Sport> sports = sportDao.findByNames(names);
-        user.setSports(sports);
+    public User save(User user) {
         User createdUser = userDao.create(user);
         LOGGER.info("New user " + user.getEmail() + "was added ");
         return createdUser;
@@ -102,7 +100,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void editUser(Long id, UserDto userDto, Set<String> sports) {
         User editedUser = getUser(userDao.find(id), userDto, sports);
-        userDao.updateUser(editedUser);
+        userDao.update(editedUser);
     }
 
     private User getUser(User user, UserDto userDto, Set<String> names) {
@@ -112,9 +110,8 @@ public class UserServiceImpl implements UserService {
         user.setDateOfBirth(userDto.getDateOfBirth());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        user.setGender(userDto.getGender());
-        Set<Sport> sports = sportDao.findByNames(names);
-        user.setSports(sports);
+        user.setGender(Gender.valueOf(userDto.getGender()));
+        user.setSports(sportDao.findByNames(names));
         return user;
     }
 
@@ -148,8 +145,7 @@ public class UserServiceImpl implements UserService {
             if (!item.isFormField()) {
                 File fileSaveDir = new File(SAVE_PATH + File.separator + email);
                 if (!fileSaveDir.exists()) {
-                    boolean isCreated = fileSaveDir.mkdir();
-                    if (!isCreated) {
+                    if (!fileSaveDir.mkdir()) {
                         LOGGER.error("Don't have permission. Use sudo chmod 777 /var/free-agent/images ");
                     }
                 }

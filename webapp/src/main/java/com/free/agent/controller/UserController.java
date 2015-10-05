@@ -58,7 +58,7 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/user-login"}, method = RequestMethod.GET)
     public String getLoginPage() {
-        return "login-form";
+        return "index";
     }
 
     @RequestMapping(value = {"/error-login"}, method = RequestMethod.GET)
@@ -84,11 +84,11 @@ public class UserController {
     @RequestMapping(value = SAVE_USER, method = RequestMethod.POST)
     public
     @ResponseBody
-    String saveUser(@Valid UserRegistrationDto userDto, BindingResult bindingResult, HttpServletRequest request) {
+    String saveUser(@Valid UserRegistrationDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return Response.error(VALIDATION_ERROR);
         }
-        userService.save(ExtractFunction.getUser(userDto), HttpRequestUtil.getParams(request, "select"));
+        userService.save(ExtractFunction.getUser(userDto));
         return Response.ok();
     }
 

@@ -47,11 +47,11 @@ public class UserServiceImplTest extends TestCase {
     }
 
     @Test
-    public void getFilmTest() {
+    public void saveUserTest() {
         User user = new User();
         Mockito.when(sportDao.findByNames(Sets.newHashSet(FOOTBALL))).thenReturn(sports());
         Mockito.when(userDao.create(user)).thenReturn(user);
-        User savedUser = service.save(user, Sets.newHashSet(FOOTBALL));
+        User savedUser = service.save(user);
         Assert.assertEquals(Role.ROLE_MODERATOR, savedUser.getRole());
         Assert.assertEquals(1, savedUser.getSports().size());
         Assert.assertEquals(FOOTBALL, savedUser.getSports().iterator().next().getName());
