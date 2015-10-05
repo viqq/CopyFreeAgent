@@ -50,6 +50,7 @@ public final class ExtractFunction {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setDateOfRegistration(user.getDateOfRegistration());
+        userDto.setGender(user.getGender().name());
         userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), ExtractFunction.SPORT_NAME_INVOKE));
         return userDto;
     }
