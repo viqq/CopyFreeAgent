@@ -4,20 +4,22 @@
 define(['angularAMD'], function (angularAMD) {
     var login = function ($http) {
         return function (data) {
-            return $http({
+            var req = $http({
                 method: 'POST',
                 url: '/api/j_spring_security_check',
                 data: data,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
-            })
-                .success(function(data) {
-                    console.log(data)
-                })
-                .error(function(err) {
-                    console.log(err);
-                });
+            });
+
+            req.success(function (data) {
+                console.log(data)
+            }).error(function (err) {
+                console.log(err);
+            });
+
+            return req;
         }
     };
 

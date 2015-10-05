@@ -43,7 +43,7 @@ define(
                             console.log(data);
 
                             login(data)
-                                .success(function (data) {
+                                .then(function (data) {
 
                                     if (typeof data !== 'object') {
                                         $scope.error = 'Something went wrong';
@@ -57,13 +57,13 @@ define(
                                         return;
                                     }
 
-                                    $scope.$root.isLoggedIn = true;
-                                    $scope.$root.updateUserInfo();
+                                    return $scope.$root.updateUserInfo();
+                                })
+                                .then(function() {
                                     $location.path('/profile');
-                                })
-                                .error(function (err) {
+                                }, function (err) {
                                     throw err;
-                                })
+                                });
                         }
                     }
                 ]

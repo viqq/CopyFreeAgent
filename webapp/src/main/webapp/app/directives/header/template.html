@@ -15,7 +15,7 @@
             <div class="loggedin" ng-show="isLoggedIn">
                 <a class="profile-link" href="/profile">
                     <img class="userpic" ng-src="{{ userPicUrl }}"><!--
-                    --><span>{{ 'Profile: ' + currUserData.login }}
+                    --><span>{{ 'Profile: ' + currUserData.firstName }}
                     </span>
                 </a>
                 <a class="logout-link" ng-click="logoutHandler()">

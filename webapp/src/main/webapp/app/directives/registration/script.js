@@ -62,24 +62,25 @@ define([
                 });
 
                 login(data)
-                    .success(function(data) {
+                    .then(function(data) {
 
                         if (typeof data !== 'object') {
                             console.error('login: something wrong with response');
                             return;
                         }
 
-                        if (data.error === true || data.status) {
-                            console.error('login after reg: request error code' , data.status);
+                        if (data.data.error === true || data.data.status) {
+                            console.error('login after reg: request error code' , data.data.status);
                             return;
                         }
 
-                        $scope.$root.isLoggedIn = true;
+                        return $scope.$root.updateUserInfo();
+                    })
+                    .then(function() {
                         $location.path('/profile');
-                    })
-                    .error(function(err) {
+                    }, function(err) {
                         throw err;
-                    })
+                    });
             };
         }];
     }

@@ -41,7 +41,7 @@ define([
                     $scope.error = '';
 
                     editUserInfo(data, $scope.currUserData.id)
-                        .success(function (data) {
+                        .then(function (data) {
                             if (typeof data !== 'object') {
                                 $scope.error = 'Something wrong with response';
                                 return;
@@ -52,11 +52,13 @@ define([
                                 return;
                             }
 
-                            $location.path('/profile')
+                            return $scope.$root.updateUserInfo();
                         })
-                        .error(function (err) {
+                        .then(function () {
+                            $location.path('/profile');
+                        }, function (err) {
                             $scope.error = 'Request failed';
-                        })
+                        });
                 };
 
                 $scope.deleteProfile = function () {
@@ -72,7 +74,7 @@ define([
                                 return;
                             }
 
-                            $location.path('/')
+                            $location.path('/');
                         })
                         .error(function (err) {
                             $scope.error = 'Request failed';
