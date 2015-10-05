@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
         user.setDateOfBirth(userDto.getDateOfBirth());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        user.setGender(Gender.valueOf(userDto.getGender()));
+        user.setGender(userDto.getGender() == null ? null : Gender.valueOf(userDto.getGender()));
         user.setSports(sportDao.findByNames(names));
         return user;
     }
