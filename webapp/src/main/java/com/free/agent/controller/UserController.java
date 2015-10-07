@@ -2,13 +2,13 @@ package com.free.agent.controller;
 
 
 import com.free.agent.Response;
+import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
 import com.free.agent.service.dto.UserDto;
 import com.free.agent.service.dto.UserRegistrationDto;
-import com.free.agent.utils.ExtractFunction;
+import com.free.agent.service.util.ExtractFunction;
 import com.free.agent.utils.HttpRequestUtil;
-import com.google.common.collect.Collections2;
 import com.google.common.io.ByteStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -71,7 +71,7 @@ public class UserController {
     @RequestMapping(value = GET_ALL_SPORTS, method = RequestMethod.GET, produces = BaseController.PRODUCES)
     @ResponseBody
     public String getAllSports() {
-        return Response.ok(Collections2.transform(sportService.getAllSports(), ExtractFunction.SPORT_NAME_INVOKE));
+        return Response.ok(sportService.getAllSports());
     }
 
     @RequestMapping(value = IS_AUTHENTICATION, method = RequestMethod.GET)
@@ -95,7 +95,7 @@ public class UserController {
     @RequestMapping(value = DELETE_USER, method = RequestMethod.DELETE, produces = BaseController.PRODUCES)
     public
     @ResponseBody
-    String deleteUser(@PathVariable(value = "id") Long id, Principal principal) {
+    String deleteUser(@PathVariable(value = "id") Long id) {
         userService.deleteUser(id);
         return Response.ok();
     }
@@ -113,24 +113,28 @@ public class UserController {
     public
     @ResponseBody
     String getInfoAboutUser(Principal principal) {
-        return Response.ok(ExtractFunction.getUserForUI(userService.findByEmail(principal.getName())));
+        return Response.ok(userService.getInfoAboutUser(principal.getName()));
     }
 
     @RequestMapping(value = GET_USER_BY_ID, method = RequestMethod.GET, produces = BaseController.PRODUCES)
     public
     @ResponseBody
     String getUserById(@PathVariable(value = "id") Long id) {
-        return Response.ok(ExtractFunction.getUserForUI(userService.findById(id)));
+        return Response.ok(userService.getInfoAboutUserById(id));
 
     }
 
     @RequestMapping(value = GET_IMAGE, method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public void getImage(HttpServletResponse response, @PathVariable(value = "id") Long id) throws IOException {
-        if (userService.findById(id).getImage() != null) {
-            ByteStreams.copy(new FileInputStream(userService.findById(id).getImage() + ".jpg"), response.getOutputStream());
+        User user = userService.findById(id);
+        FileInputStream fis;
+        if (user.getImage() != null) {
+            fis = new FileInputStream(userService.findById(id).getImage() + ".jpg");
         } else {
-            ByteStreams.copy(new FileInputStream(UserController.class.getClassLoader().getResource("images/freeagent.jpg").getFile()), response.getOutputStream());
+            fis = new FileInputStream(UserController.class.getClassLoader().getResource("images/freeagent.jpg").getFile());
         }
+        ByteStreams.copy(fis, response.getOutputStream());
+
     }
 
     @RequestMapping(value = SAVE_IMAGE, method = RequestMethod.POST, produces = BaseController.PRODUCES)

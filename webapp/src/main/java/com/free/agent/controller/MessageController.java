@@ -2,10 +2,7 @@ package com.free.agent.controller;
 
 import com.free.agent.Response;
 import com.free.agent.service.MessageService;
-import com.free.agent.service.UserService;
 import com.free.agent.service.dto.MessageDto;
-import com.free.agent.utils.ExtractFunction;
-import com.google.common.collect.Collections2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +22,6 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    @Autowired
-    private UserService userService;
-
     @RequestMapping(value = GET_UNREAD_MESSAGES, method = RequestMethod.GET)
     public
     @ResponseBody
@@ -39,7 +33,7 @@ public class MessageController {
     public
     @ResponseBody
     String getAllMessages(Principal principal) {
-        return Response.ok(Collections2.transform(messageService.findAllByReceiver(principal.getName()), ExtractFunction.MESSAGE_INVOKE));
+        return Response.ok(messageService.findAllByReceiver(principal.getName()));
     }
 
     @RequestMapping(value = GET_SENT_MESSAGES, method = RequestMethod.GET)
@@ -53,7 +47,7 @@ public class MessageController {
     public
     @ResponseBody
     String getHistory(Principal principal, @PathVariable("id") Long id) {
-        return Response.ok(Collections2.transform(messageService.getHistory(id, principal.getName()), ExtractFunction.MESSAGE_INVOKE));
+        return Response.ok(messageService.getHistory(id, principal.getName()));
     }
 
     @RequestMapping(value = GET_ALL_PARTICIPANTS, method = RequestMethod.GET)

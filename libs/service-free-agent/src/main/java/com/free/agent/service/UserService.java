@@ -3,6 +3,7 @@ package com.free.agent.service;
 import com.free.agent.Filter;
 import com.free.agent.model.User;
 import com.free.agent.service.dto.UserDto;
+import com.free.agent.service.dto.UserWithSportUIDto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -18,13 +19,15 @@ public interface UserService {
 
     Collection<User> findAll();
 
-    User findByEmail(String email);
+    User findById(Long id);
 
-    User findById(long id);
-
-    Collection<User> findByFilter(Filter filter);
+    Collection<UserWithSportUIDto> findByFilter(Filter filter);
 
     void deleteUser(Long id);
 
     void editUser(Long id, UserDto userDto, Set<String> sports);
+
+    UserWithSportUIDto getInfoAboutUser(String email);
+
+    UserWithSportUIDto getInfoAboutUserById(Long id);
 }

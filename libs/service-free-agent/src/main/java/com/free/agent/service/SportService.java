@@ -1,6 +1,7 @@
 package com.free.agent.service;
 
 import com.free.agent.model.Sport;
+import com.free.agent.service.dto.SportUIDto;
 
 import java.util.Collection;
 
@@ -11,5 +12,5 @@ public interface SportService {
 
     Sport save(Sport sport);
 
-    Collection<Sport> getAllSports();
+    Collection<SportUIDto> getAllSports();
 }

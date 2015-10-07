@@ -70,7 +70,7 @@ public class User extends AbstractTable<Long> {
     @Temporal(TemporalType.DATE)
     private Date dateOfRegistration;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Message> messages = Lists.newArrayList();
 
     public User(String email, String password, String phone) {

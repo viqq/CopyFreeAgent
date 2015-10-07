@@ -6,15 +6,15 @@ import java.util.List;
 /**
  * Created by antonPC on 18.08.15.
  */
-public class UserWithSport extends UserDto {
-    private List<String> sports;
+public class UserWithSportUIDto extends UserDto {
+    private List<SportUIDto> sports;
     private Date dateOfRegistration;
 
-    public List<String> getSports() {
+    public List<SportUIDto> getSports() {
         return sports;
     }
 
-    public void setSports(List<String> sports) {
+    public void setSports(List<SportUIDto> sports) {
         this.sports = sports;
     }
 

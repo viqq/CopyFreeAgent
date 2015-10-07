@@ -37,7 +37,7 @@ public class Message extends AbstractTable<Long> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeOfRead;
 
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
 

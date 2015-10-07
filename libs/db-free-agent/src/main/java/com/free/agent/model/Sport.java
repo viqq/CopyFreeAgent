@@ -22,7 +22,7 @@ public class Sport extends AbstractTable<Long> {
     @Column(name = "IMAGE")
     private String image;
 
-    @ManyToMany(mappedBy = "sports", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "sports", fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<User>();
 
     public Sport(String name) {

@@ -1,12 +1,12 @@
-package com.free.agent.utils;
+package com.free.agent.service.util;
 
 import com.free.agent.model.Message;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.service.dto.MessageUIDto;
+import com.free.agent.service.dto.SportUIDto;
 import com.free.agent.service.dto.UserRegistrationDto;
-import com.free.agent.service.dto.UserWithSport;
-import com.free.agent.service.util.EncryptionUtils;
+import com.free.agent.service.dto.UserWithSportUIDto;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
@@ -17,10 +17,14 @@ import java.util.Date;
  */
 public final class ExtractFunction {
 
-    public static final Function<Sport, String> SPORT_NAME_INVOKE = new Function<Sport, String>() {
+    public static final Function<Sport, SportUIDto> SPORT_NAME_INVOKE = new Function<Sport, SportUIDto>() {
         @Override
-        public String apply(Sport input) {
-            return input.getName();
+        public SportUIDto apply(Sport input) {
+            SportUIDto dto = new SportUIDto();
+            dto.setId(input.getId());
+            dto.setImage(input.getImage());
+            dto.setName(input.getName());
+            return dto;
         }
     };
 
@@ -39,8 +43,8 @@ public final class ExtractFunction {
         }
     };
 
-    public static UserWithSport getUserForUI(User user) {
-        UserWithSport userDto = new UserWithSport();
+    public static UserWithSportUIDto getUserForUI(User user) {
+        UserWithSportUIDto userDto = new UserWithSportUIDto();
         userDto.setId(user.getId());
         userDto.setEmail(user.getEmail());
         userDto.setPhone(user.getPhone());

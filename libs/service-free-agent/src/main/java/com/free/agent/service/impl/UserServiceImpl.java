@@ -8,6 +8,9 @@ import com.free.agent.field.Gender;
 import com.free.agent.model.User;
 import com.free.agent.service.UserService;
 import com.free.agent.service.dto.UserDto;
+import com.free.agent.service.dto.UserWithSportUIDto;
+import com.free.agent.service.util.ExtractFunction;
+import com.google.common.collect.Lists;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -47,6 +50,7 @@ public class UserServiceImpl implements UserService {
         return createdUser;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void addImage(String email, HttpServletRequest request) throws Exception {
@@ -56,7 +60,6 @@ public class UserServiceImpl implements UserService {
         ServletFileUpload upload = new ServletFileUpload(factory);
         upload.setFileSizeMax(MAX_FILE_SIZE);
         upload.setSizeMax(MAX_REQUEST_SIZE);
-        @SuppressWarnings("unchecked")
         List<FileItem> multiparts = upload.parseRequest(request);
         User user = userDao.findByEmail(email);
         user.setImage(saveImage(multiparts, user.getEmail()));
@@ -71,20 +74,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public User findByEmail(String email) {
-        return userDao.findByEmail(email);
-    }
-
-    @Override
-    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public User findById(long id) {
+    public User findById(Long id) {
         return userDao.find(id);
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<User> findByFilter(Filter filter) {
-        return userDao.findByFilter(filter);
+    public Collection<UserWithSportUIDto> findByFilter(Filter filter) {
+        List<UserWithSportUIDto> list = Lists.newArrayList();
+        for (User user : userDao.findByFilter(filter)) {
+            list.add(ExtractFunction.getUserForUI(user));
+        }
+        return list;
     }
 
     @Override
@@ -101,6 +102,18 @@ public class UserServiceImpl implements UserService {
     public void editUser(Long id, UserDto userDto, Set<String> sports) {
         User editedUser = getUser(userDao.find(id), userDto, sports);
         userDao.update(editedUser);
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
+    public UserWithSportUIDto getInfoAboutUser(String email) {
+        return ExtractFunction.getUserForUI(userDao.findByEmail(email));
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
+    public UserWithSportUIDto getInfoAboutUserById(Long id) {
+        return ExtractFunction.getUserForUI(userDao.find(id));
     }
 
     private User getUser(User user, UserDto userDto, Set<String> names) {
@@ -126,6 +139,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private boolean deleteDirectory(File path) {
         if (path.exists()) {
             File[] files = path.listFiles();
