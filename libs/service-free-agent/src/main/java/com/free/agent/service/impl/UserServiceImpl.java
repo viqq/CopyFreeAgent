@@ -5,10 +5,14 @@ import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
 import com.free.agent.dao.UserDao;
 import com.free.agent.field.Gender;
+import com.free.agent.field.Role;
 import com.free.agent.model.User;
+import com.free.agent.service.MailService;
 import com.free.agent.service.UserService;
+import com.free.agent.service.WrongLinkException;
 import com.free.agent.service.dto.UserDto;
 import com.free.agent.service.dto.UserWithSportUIDto;
+import com.free.agent.service.util.EncryptionUtils;
 import com.free.agent.service.util.ExtractFunction;
 import com.google.common.collect.Lists;
 import org.apache.commons.fileupload.FileItem;
@@ -32,6 +36,7 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
     private static final String SAVE_PATH = "/var/free-agent/images";
+    private static final String HOST = "http://localhost:8080/activate?";
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 30; // 30MB
@@ -42,15 +47,20 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SportDao sportDao;
 
+    @Autowired
+    private MailService mailService;
+
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public User save(User user) {
         User createdUser = userDao.create(user);
+        String link = getLinkForActivated(createdUser.getPassword(), createdUser.getHash());
+        mailService.sendMail(createdUser.getEmail(), "Activate yor profile", "Go to the link " + link);
+        LOGGER.info("Email was sent for " + createdUser.getEmail());
         LOGGER.info("New user " + user.getEmail() + "was added ");
         return createdUser;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void addImage(String email, HttpServletRequest request) throws Exception {
@@ -116,6 +126,23 @@ public class UserServiceImpl implements UserService {
         return ExtractFunction.getUserForUI(userDao.find(id));
     }
 
+    @Override
+    public UserWithSportUIDto activateUser(String hash, String key) {
+        checkCondition(hash == null || key == null, "Hash or key is null");
+        User user = userDao.findByHash(hash);
+        checkCondition(user == null, "User with " + hash + " didn't register");
+        checkCondition(!EncryptionUtils.md5(user.getPassword()).equals(key), "Hash and password don't correspond");
+        user.setRole(Role.ROLE_MODERATOR);
+        return ExtractFunction.getUserForUI(userDao.update(user));
+    }
+
+    private void checkCondition(boolean condition, String message) {
+        if (condition) {
+            throw new WrongLinkException(message);
+        }
+    }
+
+
     private User getUser(User user, UserDto userDto, Set<String> names) {
         user.setPhone(userDto.getPhone());
         user.setDescription(userDto.getDescription());
@@ -168,6 +195,12 @@ public class UserServiceImpl implements UserService {
             }
         }
         return SAVE_PATH + File.separator + email + File.separator + email;
+    }
+
+    private String getLinkForActivated(String email, String randomString) {
+        String hash = "&hash=" + randomString;
+        String key = "key=" + EncryptionUtils.md5(email);
+        return HOST + key + hash;
     }
 
 }

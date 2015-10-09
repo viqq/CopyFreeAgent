@@ -30,4 +30,6 @@ public interface UserService {
     UserWithSportUIDto getInfoAboutUser(String email);
 
     UserWithSportUIDto getInfoAboutUserById(Long id);
+
+    UserWithSportUIDto activateUser(String hash, String key);
 }

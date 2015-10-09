@@ -66,6 +66,9 @@ public class User extends AbstractTable<Long> {
     @Column(name = "IMAGE")
     private String image;
 
+    @Column(name = "HASH")
+    private String hash;
+
     @Column(name = "DATE_OF_REGISTRATION")
     @Temporal(TemporalType.DATE)
     private Date dateOfRegistration;
@@ -206,5 +209,13 @@ public class User extends AbstractTable<Long> {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }

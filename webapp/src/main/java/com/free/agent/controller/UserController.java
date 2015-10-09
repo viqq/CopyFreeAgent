@@ -92,6 +92,13 @@ public class UserController {
         return Response.ok();
     }
 
+    @RequestMapping(value = "/activate", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String activateUser(String hash, String key) {
+        return Response.ok(userService.activateUser(hash, key));
+    }
+
     @RequestMapping(value = DELETE_USER, method = RequestMethod.DELETE, produces = BaseController.PRODUCES)
     public
     @ResponseBody
@@ -149,7 +156,7 @@ public class UserController {
     }
 
     private void checkUser(Long id, Principal principal) {
-        Assert.isTrue(userService.findById(id).getEmail().equals(principal.getName()));
+        Assert.isTrue(userService.findById(id).getEmail().equals(principal.getName()), "You can not edit another user");
     }
 
 }
