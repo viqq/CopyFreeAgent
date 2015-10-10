@@ -127,6 +127,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public UserWithSportUIDto activateUser(String hash, String key) {
         checkCondition(hash == null || key == null, "Hash or key is null");
         User user = userDao.findByHash(hash);
@@ -136,12 +137,24 @@ public class UserServiceImpl implements UserService {
         return ExtractFunction.getUserForUI(userDao.update(user));
     }
 
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+    public void resetPassword(String email) {
+        User user = userDao.findByEmail(email);
+        if (user == null) {
+            throw new IllegalArgumentException("User with email " + email + " didn't existed");
+        }
+        String password = EncryptionUtils.getRandomString();
+        user.setPassword(EncryptionUtils.encrypt(password));
+        userDao.update(user);
+        mailService.sendMail(email, "New password", "Your new password - " + password);
+    }
+
     private void checkCondition(boolean condition, String message) {
         if (condition) {
             throw new WrongLinkException(message);
         }
     }
-
 
     private User getUser(User user, UserDto userDto, Set<String> names) {
         user.setPhone(userDto.getPhone());

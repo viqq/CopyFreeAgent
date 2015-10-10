@@ -32,4 +32,6 @@ public interface UserService {
     UserWithSportUIDto getInfoAboutUserById(Long id);
 
     UserWithSportUIDto activateUser(String hash, String key);
+
+    void resetPassword(String email);
 }

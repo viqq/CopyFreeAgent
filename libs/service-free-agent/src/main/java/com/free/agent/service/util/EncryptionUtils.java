@@ -174,10 +174,19 @@ public final class EncryptionUtils {
     }
 
     public static String getRandomString() {
-        String symbols = "qwertyuiopasdfghjklzxcvbnm1234567890";
+        String symbols = "qwertyuiopasdfghjklzxcvbnm";
+        String digits = "1234567890";
+        String all = symbols + digits;
         StringBuilder randString = new StringBuilder();
         for (int i = 0; i < 9; i++) {
-            randString.append(symbols.charAt((int) (Math.random() * symbols.length())));
+            if (i % 3 == 0) {
+                randString.append(symbols.toUpperCase().charAt((int) (Math.random() * symbols.length())));
+            }
+            if (i % 4 == 0) {
+                randString.append(digits.charAt((int) (Math.random() * digits.length())));
+            }
+            randString.append(all.charAt((int) (Math.random() * all.length())));
+
         }
         return randString.toString();
     }

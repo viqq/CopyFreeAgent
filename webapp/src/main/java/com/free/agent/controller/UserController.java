@@ -5,6 +5,7 @@ import com.free.agent.Response;
 import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
+import com.free.agent.service.WrongLinkException;
 import com.free.agent.service.dto.UserDto;
 import com.free.agent.service.dto.UserRegistrationDto;
 import com.free.agent.service.util.ExtractFunction;
@@ -13,7 +14,6 @@ import com.google.common.io.ByteStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,31 +41,9 @@ public class UserController {
     @Autowired
     private SportService sportService;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String getRegistrationPage() {
-        return "registration";
-    }
-
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String getLoginUserPage() {
-        return "user";
-    }
-
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public String getInfoPage() {
-        return "info";
-    }
-
-    @RequestMapping(value = {"/", "/user-login"}, method = RequestMethod.GET)
-    public String getLoginPage() {
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    public String getBasePage() {
         return "index";
-    }
-
-    @RequestMapping(value = {"/error-login"}, method = RequestMethod.GET)
-    public
-    @ResponseBody
-    String errorLogin() {
-        return Response.error(459);
     }
 
     @RequestMapping(value = GET_ALL_SPORTS, method = RequestMethod.GET, produces = BaseController.PRODUCES)
@@ -92,12 +70,29 @@ public class UserController {
         return Response.ok();
     }
 
-    @RequestMapping(value = "/activate", method = RequestMethod.GET)
+    @RequestMapping(value = ACTIVATE_USER, method = RequestMethod.GET)
     public
     @ResponseBody
     String activateUser(String hash, String key) {
-        return Response.ok(userService.activateUser(hash, key));
+        try {
+            return Response.ok(userService.activateUser(hash, key));
+        } catch (WrongLinkException e) {
+            return Response.error(ACTIVATED_ERROR);
+        }
     }
+
+    @RequestMapping(value = RESET_PASSWORD, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String activateUser(@PathVariable(value = "email") String email) {
+        try {
+            userService.resetPassword(email);
+            return Response.ok();
+        } catch (Exception e) {
+            return Response.error(EMAIL_DID_NOT_REGISTERED_ERROR);
+        }
+    }
+
 
     @RequestMapping(value = DELETE_USER, method = RequestMethod.DELETE, produces = BaseController.PRODUCES)
     public
@@ -111,7 +106,9 @@ public class UserController {
     public
     @ResponseBody
     String editUser(@PathVariable(value = "id") Long id, Principal principal, UserDto userDto, HttpServletRequest request) {
-        checkUser(id, principal);
+        if (userService.findById(id).getEmail().equals(principal.getName())) {
+            return Response.error(EDIT_PROFILE_ERROR);
+        }
         userService.editUser(id, userDto, HttpRequestUtil.getParams(request, "select"));
         return Response.ok();
     }
@@ -153,10 +150,6 @@ public class UserController {
         } catch (Exception e) {
             return Response.error(SAVE_IMAGE_ERROR);
         }
-    }
-
-    private void checkUser(Long id, Principal principal) {
-        Assert.isTrue(userService.findById(id).getEmail().equals(principal.getName()), "You can not edit another user");
     }
 
 }

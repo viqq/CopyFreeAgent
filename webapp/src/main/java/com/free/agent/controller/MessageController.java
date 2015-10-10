@@ -64,7 +64,7 @@ public class MessageController {
         try {
             messageService.save(dto, email, principal);
         } catch (IllegalAccessException e) {
-            Response.error(EMAIL_REGISTERED);
+            Response.error(EMAIL_REGISTERED_ERROR);
         }
         return Response.ok();
     }
