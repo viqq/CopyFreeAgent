@@ -1,10 +1,6 @@
 package com.free.agent.service.dto;
 
 import com.free.agent.service.annotation.Phone;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.Past;
-import java.util.Date;
 
 
 /**
@@ -15,9 +11,7 @@ public class UserDto extends UserRegistrationDto {
     private String city;
     private String description;
     private String lastName;
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
-    @Past
-    private Date dateOfBirth;
+    private Long dateOfBirth;
     @Phone
     private String phone;
     private String gender;
@@ -46,11 +40,11 @@ public class UserDto extends UserRegistrationDto {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public Long getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(Long dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
