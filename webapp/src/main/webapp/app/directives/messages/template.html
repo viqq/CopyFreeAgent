@@ -1,0 +1,41 @@
+<div class="main-container">
+    <div>
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <div id="all-dialogs"></div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="chosen-dialog"></div>
+                    </td>
+                    <td>
+                        <div id="message-form"></div>
+                    </td>
+                </tr>
+            </table>
+            <form ng-submit="submitHandler()">
+                <br>
+                <label ng-hide="isLoggedIn">Email</label>
+                <br>
+                <input ng-model="msgData.email" ng-hide="isLoggedIn">
+                <br>
+                <br>
+                <label>Theme</label>
+                <br>
+                <input ng-model="msgData.title">
+                <br>
+                <br>
+                <label>Message</label>
+                <br>
+                <textarea ng-model="msgData.text"></textarea>
+                <br>
+                <br>
+                <button>Send message</button>
+            </form>
+        </div>
+    </div>
+</div>

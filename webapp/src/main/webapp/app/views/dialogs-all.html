@@ -1,0 +1,31 @@
+<dir-header></dir-header>
+<div class="main-container">
+    <style>
+        .content {
+            padding: 30px;
+        }
+
+        .userpic {
+            height: 50px;
+            margin-right: 20px;
+        }
+    </style>
+    <div>
+        <div class="content">
+            <a href="/profile"></a>
+            <h1>Dialogs</h1>
+            <div ng-repeat="user in dialogs">
+                <div>
+                    <div>
+                        <a href="{{ '/dialogs/' + user.id }}">
+                            <img class="userpic" ng-src="{{ '/api/user/getImage/' + user.id }}"><span>{{ user.firstName }}</span>
+                        </a>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<dir-footer></dir-footer>

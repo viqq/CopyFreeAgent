@@ -1,19 +1,37 @@
 /**
- * Created by TITUS on 30.07.2015.
+ * Created by TITUS on 15.09.2015.
  */
 define(
     [
         'angularAMD',
-        'resources/ui-translations',
 
+        'directives/header/script',
+        'directives/footer/script',
+
+        'services/get-user-info-by-id',
+        'services/message-dialog-get-by-id',
         'services/message-send'
     ],
-    function (angularAMD, uiTranslations) {
-        var controller = [
+    function (angularAMD) {
+        angularAMD.controller('DialogByIdCtrl', [
             '$scope',
             '$routeParams',
+            'getUserInfoById',
+            'getDialogById',
             'sendMessage',
-            function ($scope, $routeParams, sendMessage) {
+            function ($scope,
+                      $routeParams,
+                      getUserInfoById,
+                      getDialogById,
+                      sendMessage) {
+
+                if (!$scope.isLoggedIn) {
+                    $location.path('/login');
+                    return;
+                }
+
+                $scope.messages = [];
+
                 $scope.msgData = {
                     id: $routeParams.id,
                     email: '',
@@ -40,22 +58,26 @@ define(
                             console.error('login: request error code', data.code);
                             return;
                         }
+
+                        updateDialog();
                     }, function (err) {
                         $scope.error = 'Request error';
                         throw err;
                     })
-                }
-            }
-        ];
+                };
 
-        angularAMD.directive('dirMessageSend', ['sendMessage', function () {
-            return {
-                restrict: 'E',
-                templateUrl: 'app/directives/message-send/template.html',
-                replace: true,
-                scope: true,
-                controller: controller
-            };
-        }]);
+                var updateDialog = function() {
+                    var req = getDialogById($routeParams.id);
+
+                    req.success(function(data) {
+                        $scope.messages = data.payload;
+                    });
+
+                    return req;
+                };
+
+                updateDialog();
+            }
+        ]);
     }
 );
