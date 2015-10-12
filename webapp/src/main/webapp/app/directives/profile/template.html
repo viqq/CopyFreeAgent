@@ -16,7 +16,8 @@
                 <tbody>
                 <tr ng-repeat="(key, value) in userInfo">
                     <td>{{ key }}</td>
-                    <td>{{ value }}</td>
+                    <td ng-hide="key !== 'dateOfRegistration' && key !== 'dateOfBirth'">{{ value | date }}</td>
+                    <td ng-show="key !== 'dateOfRegistration' && key !== 'dateOfBirth'">{{ value }}</td>
                 </tr>
                 </tbody>
             </table>
