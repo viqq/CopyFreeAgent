@@ -21,19 +21,23 @@
         <div>
             <div class="container">
                 <h1>Dialog</h1>
-                <table ng-repeat="message in messages" class="message {{ message.authorId === currUserData.id ? 'my-message' : 'others-message' }}">
+                <table ng-repeat="message in messages"
+                       class="message {{ message.authorId === currUserData.id ? 'my-message' : 'others-message' }}">
                     <tbody>
                     <tr ng-repeat="(key, value) in message">
                         <td>{{ key }}</td>
-                        <td>{{ value }}</td>
+                        <td ng-hide="key !== 'timeOfCreate'"> {{ value | date :'medium' }} </td>
+                        <td ng-show="key !== 'timeOfCreate'"> {{ value }} </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <br>
             <br>
+
             <div class="container">
                 <h1>Send Message</h1>
+
                 <form ng-submit="submitHandler()">
                     <label>Theme</label>
                     <br>
