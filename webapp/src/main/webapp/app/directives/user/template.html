@@ -13,7 +13,7 @@
         <div class="content">
             <img class="userpic" ng-src="{{ '/api/user/getImage/' + userInfo.id }}">
 
-            <a href="{{ '/message/send/' + userInfo.id }}">Send message to <b>{{ userInfo.login}}</b></a>
+            <a href="{{ (isLoggedIn ? '/dialogs/' : '/message/send/') + userInfo.id }}">Send message to <b>{{ userInfo.login}}</b></a>
             <br>
             <br>
 
