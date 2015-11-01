@@ -4,6 +4,8 @@ import com.free.agent.Filter;
 import com.free.agent.model.User;
 import com.free.agent.service.dto.UserDto;
 import com.free.agent.service.dto.UserWithSportUIDto;
+import com.free.agent.service.exception.EmailAlreadyUsedException;
+import com.free.agent.service.exception.WrongLinkException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -13,7 +15,7 @@ import java.util.Set;
  * Created by antonPC on 21.06.15.
  */
 public interface UserService {
-    User save(User user);
+    User save(User user) throws EmailAlreadyUsedException;
 
     void addImage(String email, HttpServletRequest request) throws Exception;
 
@@ -31,7 +33,7 @@ public interface UserService {
 
     UserWithSportUIDto getInfoAboutUserById(Long id);
 
-    UserWithSportUIDto activateUser(String hash, String key);
+    UserWithSportUIDto activateUser(String hash, String key) throws WrongLinkException;
 
-    void resetPassword(String email);
+    void resetPassword(String email) throws IllegalArgumentException;
 }

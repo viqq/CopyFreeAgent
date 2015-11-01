@@ -9,9 +9,10 @@ import com.free.agent.field.Role;
 import com.free.agent.model.User;
 import com.free.agent.service.MailService;
 import com.free.agent.service.UserService;
-import com.free.agent.service.WrongLinkException;
 import com.free.agent.service.dto.UserDto;
 import com.free.agent.service.dto.UserWithSportUIDto;
+import com.free.agent.service.exception.EmailAlreadyUsedException;
+import com.free.agent.service.exception.WrongLinkException;
 import com.free.agent.service.util.EncryptionUtils;
 import com.free.agent.service.util.ExtractFunction;
 import com.google.common.collect.Lists;
@@ -52,7 +53,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public User save(User user) {
+    public User save(User user) throws EmailAlreadyUsedException {
+        if (userDao.findByEmail(user.getEmail()) != null) {
+            LOGGER.error("User with " + user.getEmail() + " has registered already");
+            throw new EmailAlreadyUsedException("User with " + user.getEmail() + " has registered already");
+        }
         User createdUser = userDao.create(user);
         String link = getLinkForActivated(createdUser.getPassword(), createdUser.getHash());
         mailService.sendMail(createdUser.getEmail(), "Activate yor profile", "Go to the link " + link);
@@ -128,7 +133,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public UserWithSportUIDto activateUser(String hash, String key) {
+    public UserWithSportUIDto activateUser(String hash, String key) throws WrongLinkException {
         checkCondition(hash == null || key == null, "Hash or key is null");
         User user = userDao.findByHash(hash);
         checkCondition(user == null, "User with " + hash + " didn't register");
@@ -139,7 +144,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public void resetPassword(String email) {
+    public void resetPassword(String email) throws IllegalArgumentException {
         User user = userDao.findByEmail(email);
         if (user == null) {
             throw new IllegalArgumentException("User with email " + email + " didn't existed");

@@ -17,8 +17,7 @@ public final class HttpRequestUtil {
         while (enu.hasMoreElements()) {
             String param = (String) enu.nextElement();
             if (param.equals(name)) {
-                String[] values = request.getParameterValues(param);
-                Collections.addAll(set, values);
+                Collections.addAll(set, request.getParameterValues(param));
                 break;
             }
         }

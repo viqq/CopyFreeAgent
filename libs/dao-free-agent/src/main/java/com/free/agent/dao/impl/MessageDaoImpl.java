@@ -2,7 +2,6 @@ package com.free.agent.dao.impl;
 
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.MessageDao;
-import com.free.agent.dao.dto.Participant;
 import com.free.agent.model.Message;
 import com.free.agent.model.Message_;
 import com.free.agent.model.User;
@@ -48,14 +47,13 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
     }
 
     @Override
-    public Set<Message> findAllByReceiverAndAuthor(Long id, String authorEmail, Long authorId) {
+    public Set<Message> findAllByReceiverAndAuthor(Long id, Long authorId) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Message> query = cb.createQuery(Message.class);
         Root<Message> fromMessage = query.from(Message.class);
         Join<Message, User> fromUser = fromMessage.join(Message_.user);
         Predicate predicate = new PredicateBuilder(cb)
                 .addEqualsPredicate(cb, fromUser.get(User_.id), id)
-                .addEqualsPredicate(fromMessage.get(Message_.authorEmail), authorEmail)
                 .addEqualsPredicate(fromMessage.get(Message_.authorId), authorId)
                 .buildWithAndConjunction();
         query.where(predicate);
@@ -86,12 +84,11 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
     }
 
     @Override
-    public Set<Message> findAllByAuthorEmailAndId(String authorEmail, Long authorId) {
+    public Set<Message> findAllByAuthorEmailAndId(Long authorId) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Message> query = cb.createQuery(Message.class);
         Root<Message> fromMessage = query.from(Message.class);
         Predicate predicate = new PredicateBuilder(cb)
-                .addEqualsPredicate(fromMessage.get(Message_.authorEmail), authorEmail)
                 .addEqualsPredicate(fromMessage.get(Message_.authorId), authorId)
                 .buildWithAndConjunction();
         query.where(predicate);
@@ -108,46 +105,42 @@ public class MessageDaoImpl extends GenericDaoImpl<Message, Long> implements Mes
     }
 
     @Override
-    public Set<Message> getHistory(Long userId, Long authorId, String authorEmail) {
+    public Set<Message> getHistory(Long userId, Long authorId) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Message> query = cb.createQuery(Message.class);
         Root<Message> fromMessage = query.from(Message.class);
         Join<Message, User> fromUser = fromMessage.join(Message_.user);
 
-        Predicate p1, p2 = null, p3 = null;
+        Predicate p1, p3 = null;
         p1 = new PredicateBuilder(cb).addEqualsPredicate(fromUser.get(User_.id), userId)
                 .addEqualsPredicate(fromMessage.get(Message_.authorId), authorId)
                 .buildWithAndConjunction();
-        if (authorEmail != null) {
-            p2 = new PredicateBuilder(cb).addEqualsPredicate(fromUser.get(User_.id), userId)
-                    .addEqualsPredicate(fromMessage.get(Message_.authorEmail), authorEmail)
-                    .buildWithAndConjunction();
-        }
+
         if (authorId != null) {
             p3 = new PredicateBuilder(cb).addEqualsPredicate(fromUser.get(User_.id), authorId)
                     .addEqualsPredicate(fromMessage.get(Message_.authorId), userId)
                     .buildWithAndConjunction();
         }
 
-        query.where(cb.or(cb.and(p1), cb.and(p2), cb.and(p3)));
+        query.where(cb.or(cb.and(p1), cb.and(p3)));
         query.orderBy(cb.asc(fromMessage.get(Message_.timeOfCreate)));
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
 
     @Override
-    public Set<Participant> getParticipants(Long id) {
-        Set<Participant> result = Sets.newHashSet();
+    public Set<Long> getParticipants(Long id) {
+        Set<Long> result = Sets.newHashSet();
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Participant> query = cb.createQuery(Participant.class);
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
         Root<Message> fromMessage = query.from(Message.class);
         Join<Message, User> fromUser = fromMessage.join(Message_.user);
         query.distinct(true);
 
-        query.multiselect(fromMessage.get(Message_.authorId), fromMessage.get(Message_.authorEmail));
+        query.select(fromMessage.get(Message_.authorId));
         query.where(cb.equal(fromUser.get(User_.id), id));
         result.addAll(getEntityManager().createQuery(query).getResultList());
 
-        query.multiselect(fromUser.get(User_.id), fromMessage.get(Message_.authorEmail));
+        query.select(fromUser.get(User_.id));
         query.where(cb.equal(fromMessage.get(Message_.authorId), id));
         result.addAll(getEntityManager().createQuery(query).getResultList());
 

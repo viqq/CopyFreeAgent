@@ -27,7 +27,7 @@ public class User extends AbstractTable<Long> {
     @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "PASSWORD", nullable = false)
+    @Column(name = "PASSWORD")
     private String password;
 
     @Column(name = "CITY")
@@ -72,6 +72,10 @@ public class User extends AbstractTable<Long> {
     @Column(name = "DATE_OF_REGISTRATION")
     @Temporal(TemporalType.DATE)
     private Date dateOfRegistration;
+
+    @Column(name = "LAST_ACTIVITY")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastActivity;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Message> messages = Lists.newArrayList();
@@ -217,5 +221,13 @@ public class User extends AbstractTable<Long> {
 
     public void setHash(String hash) {
         this.hash = hash;
+    }
+
+    public Date getLastActivity() {
+        return lastActivity;
+    }
+
+    public void setLastActivity(Date lastActivity) {
+        this.lastActivity = lastActivity;
     }
 }

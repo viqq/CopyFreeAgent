@@ -5,9 +5,10 @@ import com.free.agent.Response;
 import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
-import com.free.agent.service.WrongLinkException;
 import com.free.agent.service.dto.UserDto;
 import com.free.agent.service.dto.UserRegistrationDto;
+import com.free.agent.service.exception.EmailAlreadyUsedException;
+import com.free.agent.service.exception.WrongLinkException;
 import com.free.agent.service.util.ExtractFunction;
 import com.free.agent.utils.HttpRequestUtil;
 import com.google.common.io.ByteStreams;
@@ -66,7 +67,11 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return Response.error(VALIDATION_ERROR);
         }
-        userService.save(ExtractFunction.getUser(userDto));
+        try {
+            userService.save(ExtractFunction.getUser(userDto));
+        } catch (EmailAlreadyUsedException e) {
+            Response.error(EMAIL_REGISTERED_ERROR);
+        }
         return Response.ok();
     }
 
@@ -84,16 +89,17 @@ public class UserController {
     @RequestMapping(value = RESET_PASSWORD, method = RequestMethod.GET)
     public
     @ResponseBody
-    String activateUser(@PathVariable(value = "email") String email) {
+    String resetPassword(@PathVariable(value = "email") String email) {
         try {
             userService.resetPassword(email);
             return Response.ok();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             return Response.error(EMAIL_DID_NOT_REGISTERED_ERROR);
         }
     }
 
 
+    //todo only for admin
     @RequestMapping(value = DELETE_USER, method = RequestMethod.DELETE, produces = BaseController.PRODUCES)
     public
     @ResponseBody

@@ -39,7 +39,6 @@ public final class ExtractFunction {
             message.setTitle(input.getTitle());
             message.setText(input.getText());
             message.setAuthorId(input.getAuthorId());
-            message.setAuthorEmail(input.getAuthorEmail());
             return message;
         }
     };
@@ -65,7 +64,8 @@ public final class ExtractFunction {
         user.setFirstName(userDto.getFirstName());
         user.setDateOfRegistration(new Date());
         user.setHash(EncryptionUtils.getRandomString());
-        user.setRole(Role.ROLE_NOT_ACTIVATED);
+        user.setLastActivity(new Date());
+        user.setRole(Role.ROLE_NOT_CONFIRMED);
         return user;
     }
 
