@@ -1,162 +1,68 @@
-#homepage {
-    padding-bottom: 85px;
+#home {
+    background-color: white;
+    padding: 30px;
+    box-sizing: border-box;
 }
 
-#homepage .carousel .heading .top {
-    float: left;
+#home > div {
+    background-color: #181b1f;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#home span {
     color: white;
+    font-family: RobotoLight;
+    font-size: 1em;
 }
 
-#homepage .carousel .heading .bot {
-    float: right;
-    clear: left;
-    color: #00A99D;
+#home #logo {
+    position: absolute;
+    top: 30px;
+    left: 30px;
 }
 
-#homepage .carousel .heading {
-    width: 490px;
-    overflow: hidden;
-    margin: auto;
-    font-size: 50px;
-    font-weight: bold;
-    padding-top: 145px;
+#home #logo > img {
+    height: 60px;
 }
 
-#homepage .carousel {
-    background-image: url(../img/hp_bgn.png);
-    background-repeat: no-repeat;
-    height: 600px;
+#home #login {
+    position: absolute;
+    top: 30px;
+    right: 30px;
 }
 
-#homepage .carousel .welcome {
-    color: white;
-    font-size: 14px;
-    max-width: 490px;
-    margin: 30px auto 0px;
-    text-align: justify;
-}
-
-#homepage .btns {
-    text-align: center;
-}
-
-#homepage .btns a {
-    outline: none;
-    border: none;
-    background-color: rgba(26, 26, 26, 0.8);
-    color: #00A99D;
-    padding: 8px 0px;
-    width: 175px;
-    margin: 30px 5px 0px;
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-#homepage .info .columns > div > * {
+#home #login > * {
     vertical-align: middle;
 }
 
-#homepage .info .columns > div {
-    width: 180px;
-    display: inline-block;
-    vertical-align: top;
+#home #login > img {
+    height: 17px;
 }
 
-#homepage .info .columns p {
-    margin: 0px;
-    padding-left: 40px;
-    font-size: 12px;
-    text-align: left;
-}
-
-#homepage .info .columns .about p.top {
-    background-image: url(../img/about.png);
-}
-
-#homepage .info .columns .contacts p.top {
-    background-image: url(../img/contact.png);
-}
-
-#homepage .info .columns p.top {
-    background-repeat: no-repeat;
-    background-position: left center;
-    line-height: 30px;
-    font-size: 16px;
-}
-
-#homepage .info .heading {
-    font-size: 12px;
-    padding: 170px 0px 40px;
-    display: inline-block;
-}
-
-#homepage .info .columns > div.about {
-    float: left;
-}
-
-#homepage .info .columns > div.contacts {
-    float: right;
-}
-
-#homepage .columns {
-    display: inline-block;
-    width: 100%;
-}
-
-#homepage .wrapper {
-    margin: auto;
-    max-width: 530px;
-}
-
-#homepage .info {
-    text-align: center;
-}
-
-#homepage .info .footer {
-    padding: 5px 0px 10px;
-    margin-top: 30px;
-    border-top: 3px solid #00A99D;
-}
-
-#homepage .founders {
-    padding: 100px 0px 50px;
-}
-
-#homepage .founders .heading {
-    text-align: center;
-    margin-bottom: 20px
-}
-
-#homepage .founders .list {
-    text-align: center;
-}
-
-#homepage .founders .list > div {
-    display: inline-block;
-    width: 150px;
-    text-align: center;
-    background-color: rgba(26, 26, 26, 0.8);
-    border-radius: 10px;
-    vertical-align: top;
-    margin: 0px 10px;
-}
-
-#homepage .founders .list .image img {
-    border-radius: 50%;
-}
-
-#homepage .founders .list .image {
-    border: 5px #00A99D solid;
-    display: inline-block;
-    border-radius: 50%;
-    margin-bottom: -50px;
-}
-
-#homepage .founders .list .text {
-    min-height: 100px;
+#home #login > span {
     color: white;
-    padding: 10px;
-    font-size: 12px;
+    font-family: RobotoLight;
 }
 
+#home #socials {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+}
+
+#home #socials > img {
+    height: 18px;
+    margin-right: 10px;
+}
+
+#home #socials > span {
+    margin-right: 10px;
+}
+
+#home #copyright {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
