@@ -3,6 +3,7 @@ package com.free.agent.service;
 import com.free.agent.Filter;
 import com.free.agent.model.User;
 import com.free.agent.service.dto.UserDto;
+import com.free.agent.service.dto.UserRegistrationDto;
 import com.free.agent.service.dto.UserWithSportUIDto;
 import com.free.agent.service.exception.EmailAlreadyUsedException;
 import com.free.agent.service.exception.WrongLinkException;
@@ -15,7 +16,7 @@ import java.util.Set;
  * Created by antonPC on 21.06.15.
  */
 public interface UserService {
-    User save(User user) throws EmailAlreadyUsedException;
+    User save(UserRegistrationDto userDto) throws EmailAlreadyUsedException;
 
     void addImage(String email, HttpServletRequest request) throws Exception;
 

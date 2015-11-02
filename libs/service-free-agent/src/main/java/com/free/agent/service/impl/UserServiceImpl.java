@@ -10,6 +10,7 @@ import com.free.agent.model.User;
 import com.free.agent.service.MailService;
 import com.free.agent.service.UserService;
 import com.free.agent.service.dto.UserDto;
+import com.free.agent.service.dto.UserRegistrationDto;
 import com.free.agent.service.dto.UserWithSportUIDto;
 import com.free.agent.service.exception.EmailAlreadyUsedException;
 import com.free.agent.service.exception.WrongLinkException;
@@ -53,16 +54,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public User save(User user) throws EmailAlreadyUsedException {
-        if (userDao.findByEmail(user.getEmail()) != null) {
-            LOGGER.error("User with " + user.getEmail() + " has registered already");
-            throw new EmailAlreadyUsedException("User with " + user.getEmail() + " has registered already");
+    public User save(UserRegistrationDto userDto) throws EmailAlreadyUsedException {
+        User user = userDao.findByEmail(userDto.getEmail());
+        if (user != null) {
+            if (!user.getRole().equals(Role.ROLE_NOT_ACTIVATED)) {
+                LOGGER.error("User with " + userDto.getEmail() + " has registered already");
+                throw new EmailAlreadyUsedException("User with " + userDto.getEmail() + " has registered already");
+            } else {
+                User newUser = ExtractFunction.getUser(userDto);
+                newUser.setId(user.getId());
+                userDao.update(newUser);
+                String link = getLinkForActivated(newUser.getPassword(), newUser.getHash());
+                mailService.sendMail(newUser.getEmail(), "Activate yor profile", "Go to the link " + link);
+                LOGGER.info("Email was sent for " + newUser.getEmail());
+                LOGGER.info("New user " + newUser.getEmail() + "was added ");
+                return newUser;
+            }
         }
-        User createdUser = userDao.create(user);
+        User createdUser = userDao.create(ExtractFunction.getUser(userDto));
         String link = getLinkForActivated(createdUser.getPassword(), createdUser.getHash());
         mailService.sendMail(createdUser.getEmail(), "Activate yor profile", "Go to the link " + link);
         LOGGER.info("Email was sent for " + createdUser.getEmail());
-        LOGGER.info("New user " + user.getEmail() + "was added ");
+        LOGGER.info("New user " + userDto.getEmail() + "was added ");
         return createdUser;
     }
 

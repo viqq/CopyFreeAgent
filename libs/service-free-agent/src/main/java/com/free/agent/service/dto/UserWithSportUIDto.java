@@ -9,6 +9,7 @@ import java.util.List;
 public class UserWithSportUIDto extends UserDto {
     private List<SportUIDto> sports;
     private Date dateOfRegistration;
+    private String role;
 
     public List<SportUIDto> getSports() {
         return sports;
@@ -24,5 +25,13 @@ public class UserWithSportUIDto extends UserDto {
 
     public void setDateOfRegistration(Date dateOfRegistration) {
         this.dateOfRegistration = dateOfRegistration;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -104,12 +104,15 @@ public class MessageServiceImpl implements MessageService {
             case ROLE_NOT_ACTIVATED: {
                 mailService.sendMail(u.getEmail(), "New message in FA", "You have new message. " +
                         "Please finish registration " + linkForFinishRegistration(u));
+                break;
             }
             case ROLE_NOT_CONFIRMED: {
                 //todo
+                break;
             }
             default: {
                 mailService.sendMail(u.getEmail(), "New message in FA", messageDto.getText());
+                break;
             }
         }
     }

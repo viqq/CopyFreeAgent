@@ -31,6 +31,7 @@ define([], function() {
                 'placeholder_hobbies': 'hobbies',
                 'placeholder_description': 'description',
                 'placeholder_gender': 'gender',
+                'placeholder_role': 'role',
                 'button_register': 'REGISTER',
                 'checkbox_remember_me': 'remember me'
             },

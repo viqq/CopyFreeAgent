@@ -9,7 +9,6 @@ import com.free.agent.service.dto.UserDto;
 import com.free.agent.service.dto.UserRegistrationDto;
 import com.free.agent.service.exception.EmailAlreadyUsedException;
 import com.free.agent.service.exception.WrongLinkException;
-import com.free.agent.service.util.ExtractFunction;
 import com.free.agent.utils.HttpRequestUtil;
 import com.google.common.io.ByteStreams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +67,7 @@ public class UserController {
             return Response.error(VALIDATION_ERROR);
         }
         try {
-            userService.save(ExtractFunction.getUser(userDto));
+            userService.save(userDto);
         } catch (EmailAlreadyUsedException e) {
             Response.error(EMAIL_REGISTERED_ERROR);
         }
