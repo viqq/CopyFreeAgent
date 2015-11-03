@@ -2,6 +2,7 @@
     background-color: white;
     padding: 30px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 #home > div {
@@ -9,6 +10,7 @@
     width: 100%;
     height: 100%;
     position: relative;
+    text-align: center;
 }
 
 #home span {
@@ -31,6 +33,7 @@
     position: absolute;
     top: 30px;
     right: 30px;
+    cursor: pointer;
 }
 
 #home #login > * {
@@ -65,4 +68,41 @@
     position: absolute;
     bottom: 30px;
     right: 30px;
+}
+
+#img-player,
+#img-ball {
+    top: -2.5%;
+    height: 105%;
+}
+
+
+
+#main {
+    height: 100%;
+    display: inline-block;
+}
+
+#main > div {
+    position: relative;
+    height: 100%;
+}
+
+#main span {
+    font-family: norwester;
+    font-size: 7.5em;
+    position: absolute;
+}
+
+#main span#text-free {
+    color: #fa2044;
+}
+
+#img-player {
+    position: relative;
+}
+
+#img-ball {
+    position: absolute;
+    left: 0px;
 }
