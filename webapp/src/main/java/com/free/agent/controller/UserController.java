@@ -74,6 +74,17 @@ public class UserController {
         return Response.ok();
     }
 
+    @RequestMapping(value = GET_POSTPONE_EMAIL, method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String getPostponeEmail(String hash, String key) {
+        try {
+            return Response.ok(userService.getPostponeEmail(hash, key));
+        } catch (WrongLinkException e) {
+            return Response.error(ACTIVATED_ERROR);
+        }
+    }
+
     @RequestMapping(value = ACTIVATE_USER, method = RequestMethod.GET)
     public
     @ResponseBody

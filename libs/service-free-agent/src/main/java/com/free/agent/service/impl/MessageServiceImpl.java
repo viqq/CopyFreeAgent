@@ -13,6 +13,7 @@ import com.free.agent.service.dto.MessageUIDto;
 import com.free.agent.service.exception.EmailAlreadyUsedException;
 import com.free.agent.service.util.EncryptionUtils;
 import com.free.agent.service.util.ExtractFunction;
+import com.free.agent.service.util.LinkUtils;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ import java.util.List;
 @Service("messageService")
 public class MessageServiceImpl implements MessageService {
     private static final Logger LOGGER = Logger.getLogger(MessageServiceImpl.class);
-    private final int HALF_YEAR_BEFORE = -6;
+    private static final int HALF_YEAR_BEFORE = -6;
 
     @Autowired
     private MessageDao messageDao;
@@ -99,11 +100,14 @@ public class MessageServiceImpl implements MessageService {
         u.setMessages(list);
         messageDao.create(message);
         userDao.update(u);
+        sendEmailToUser(u, messageDto.getText());
+    }
 
+    private void sendEmailToUser(User u, String text) {
         switch (u.getRole()) {
             case ROLE_NOT_ACTIVATED: {
                 mailService.sendMail(u.getEmail(), "New message in FA", "You have new message. " +
-                        "Please finish registration " + linkForFinishRegistration(u));
+                        "Please finish registration " + LinkUtils.getLinkForRegistration(u.getEmail(), u.getHash(), true));
                 break;
             }
             case ROLE_NOT_CONFIRMED: {
@@ -111,15 +115,10 @@ public class MessageServiceImpl implements MessageService {
                 break;
             }
             default: {
-                mailService.sendMail(u.getEmail(), "New message in FA", messageDto.getText());
+                mailService.sendMail(u.getEmail(), "New message in FA", text);
                 break;
             }
         }
-    }
-
-    private String linkForFinishRegistration(User u) {
-        //todo
-        return "/postponeRegistration?true";
     }
 
     private User postponeRegistration(String email) {
@@ -163,6 +162,5 @@ public class MessageServiceImpl implements MessageService {
     private boolean isEmailFree(String email) {
         return userDao.findByEmail(email) == null;
     }
-
 
 }

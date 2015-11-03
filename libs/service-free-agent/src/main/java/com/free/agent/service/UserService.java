@@ -37,4 +37,6 @@ public interface UserService {
     UserWithSportUIDto activateUser(String hash, String key) throws WrongLinkException;
 
     void resetPassword(String email) throws IllegalArgumentException;
+
+    String getPostponeEmail(String hash, String key);
 }

@@ -16,6 +16,7 @@ import com.free.agent.service.exception.EmailAlreadyUsedException;
 import com.free.agent.service.exception.WrongLinkException;
 import com.free.agent.service.util.EncryptionUtils;
 import com.free.agent.service.util.ExtractFunction;
+import com.free.agent.service.util.LinkUtils;
 import com.google.common.collect.Lists;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -38,7 +39,6 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
     private static final String SAVE_PATH = "/var/free-agent/images";
-    private static final String HOST = "http://localhost:8080/activate?";
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 30; // 30MB
@@ -64,17 +64,13 @@ public class UserServiceImpl implements UserService {
                 User newUser = ExtractFunction.getUser(userDto);
                 newUser.setId(user.getId());
                 userDao.update(newUser);
-                String link = getLinkForActivated(newUser.getPassword(), newUser.getHash());
-                mailService.sendMail(newUser.getEmail(), "Activate yor profile", "Go to the link " + link);
-                LOGGER.info("Email was sent for " + newUser.getEmail());
+                sendLinkForConfirm(newUser.getEmail(), newUser.getHash());
                 LOGGER.info("New user " + newUser.getEmail() + "was added ");
                 return newUser;
             }
         }
         User createdUser = userDao.create(ExtractFunction.getUser(userDto));
-        String link = getLinkForActivated(createdUser.getPassword(), createdUser.getHash());
-        mailService.sendMail(createdUser.getEmail(), "Activate yor profile", "Go to the link " + link);
-        LOGGER.info("Email was sent for " + createdUser.getEmail());
+        sendLinkForConfirm(createdUser.getEmail(), createdUser.getHash());
         LOGGER.info("New user " + userDto.getEmail() + "was added ");
         return createdUser;
     }
@@ -147,10 +143,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public UserWithSportUIDto activateUser(String hash, String key) throws WrongLinkException {
-        checkCondition(hash == null || key == null, "Hash or key is null");
-        User user = userDao.findByHash(hash);
-        checkCondition(user == null, "User with " + hash + " didn't register");
-        checkCondition(!EncryptionUtils.md5(user.getPassword()).equals(key), "Hash and password don't correspond");
+        User user = findUserByHash(hash, key);
         user.setRole(Role.ROLE_MODERATOR);
         return ExtractFunction.getUserForUI(userDao.update(user));
     }
@@ -168,10 +161,30 @@ public class UserServiceImpl implements UserService {
         mailService.sendMail(email, "New password", "Your new password - " + password);
     }
 
+    @Override
+    public String getPostponeEmail(String hash, String key) {
+        User user = findUserByHash(hash, key);
+        return user.getEmail();
+    }
+
+    private User findUserByHash(String hash, String key) {
+        checkCondition(hash == null || key == null, "Hash or key is null");
+        User user = userDao.findByHash(hash);
+        checkCondition(user == null, "User with " + hash + " didn't register");
+        checkCondition(!EncryptionUtils.md5(user.getEmail()).equals(key), "Hash and password don't correspond");
+        return user;
+    }
+
     private void checkCondition(boolean condition, String message) {
         if (condition) {
             throw new WrongLinkException(message);
         }
+    }
+
+    private void sendLinkForConfirm(String email, String hash) {
+        String link = LinkUtils.getLinkForRegistration(email, hash, false);
+        mailService.sendMail(email, "Activate yor profile", "Go to the link " + link);
+        LOGGER.info("Email was sent for " + email);
     }
 
     private User getUser(User user, UserDto userDto, Set<String> names) {
@@ -226,12 +239,6 @@ public class UserServiceImpl implements UserService {
             }
         }
         return SAVE_PATH + File.separator + email + File.separator + email;
-    }
-
-    private String getLinkForActivated(String email, String randomString) {
-        String hash = "&hash=" + randomString;
-        String key = "key=" + EncryptionUtils.md5(email);
-        return HOST + key + hash;
     }
 
 }
