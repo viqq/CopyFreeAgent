@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+}
+
 #home {
     background-color: white;
     overflow: hidden;
@@ -60,44 +64,44 @@ span {
     right: 60px;
 }
 
-.items,
-.main {
+.inner-frame,
+.title-group {
     width: 100%;
     height: 100%;
     position: absolute;
 }
 
-.items > div {
+.inner-frame > div {
     background-color: #181b1f;
     width: 100%;
     height: 100%;
 }
 
-.items {
+.inner-frame {
     padding: 30px;
     box-sizing: border-box;
 }
 
-.main {
+.title-group {
     height: 100%;
     text-align: center;
 }
 
-.main > div {
+.title-group > div {
     height: 100%;
     display: inline-block;
     margin-right: 10%;
     position: relative;
 }
 
-.main > div > div {
+.title-group > div > div {
     position: absolute;
     height: 97%;
     width: 100%;
     top: 1.5%;
 }
 
-.main > div > div.relative {
+.title-group > div > div.relative {
     position: relative;
 }
 
@@ -108,11 +112,14 @@ span {
 
 #img-player,
 #img-ball {
+    display: block;
+    min-height: 100%;
     height: 100%;
+    width: auto;
 }
 
-.main p#text-free,
-.main p#text-agent {
+.title-group p#text-free,
+.title-group p#text-agent {
     font-family: norwester;
     font-size: 13.5vh;
     margin: 0px;
@@ -120,16 +127,49 @@ span {
     position: absolute;
 }
 
-.main p#text-free {
+.title-group p#text-free {
     color: #fa2044;
     top: 31%;
     left: 11%;
     z-index: 0;
 }
 
-.main p#text-agent {
+.title-group p#text-agent {
     color: white;
     top: 45%;
     left: 29%;
     z-index: 2;
+}
+
+.subtitle-group {
+    text-align: center;
+    position: relative;
+    z-index: 3;
+    top: 60%;
+    color: white;
+    font-family: RobotoMedium;
+}
+
+.subtitle-group span {
+    margin: 10px;
+    padding: 20px 63px;
+    border-radius: 30px;
+    font-family: RobotoMedium;
+    cursor: pointer;
+}
+
+.subtitle-group #find {
+    background-color: #353d48;
+}
+
+.subtitle-group #register {
+    background-color: #2272b5;
+}
+
+.subtitle-group p {
+    font-size: 1.5em;
+}
+
+.subtitle-group > div {
+    display: inline-block;margin-right: 8%;
 }
