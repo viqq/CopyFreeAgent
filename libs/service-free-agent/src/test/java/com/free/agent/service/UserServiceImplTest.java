@@ -11,6 +11,7 @@ import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -26,6 +27,7 @@ import java.util.Set;
 /**
  * Created by antonPC on 28.06.15.
  */
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml", "classpath*:free-agent-services-context.xml"})
 @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
