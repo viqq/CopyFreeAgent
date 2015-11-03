@@ -2,6 +2,7 @@ package com.free.agent.service.util;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.springframework.security.crypto.codec.Hex;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -10,6 +11,9 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
 import java.security.Security;
 import java.util.List;
@@ -155,5 +159,37 @@ public final class EncryptionUtils {
         }
         return key;
     }
+
+    public static String md5(String source) {
+        try {
+            final MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.reset();
+            messageDigest.update(source.getBytes(Charset.forName("UTF8")));
+            final byte[] resultByte = messageDigest.digest();
+            return new String(Hex.encode(resultByte));
+        } catch (NoSuchAlgorithmException e) {
+            LOGGER.error("Password cannot be encrypted", e);
+        }
+        return null;
+    }
+
+    public static String getRandomString() {
+        String symbols = "qwertyuiopasdfghjklzxcvbnm";
+        String digits = "1234567890";
+        String all = symbols + digits;
+        StringBuilder randString = new StringBuilder();
+        for (int i = 0; i < 9; i++) {
+            if (i % 3 == 0) {
+                randString.append(symbols.toUpperCase().charAt((int) (Math.random() * symbols.length())));
+            }
+            if (i % 4 == 0) {
+                randString.append(digits.charAt((int) (Math.random() * digits.length())));
+            }
+            randString.append(all.charAt((int) (Math.random() * all.length())));
+
+        }
+        return randString.toString();
+    }
+
 
 }

@@ -51,4 +51,13 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
         query.where(filter.getPredicate(cb, query));
         return getEntityManager().createQuery(query).getResultList();
     }
+
+    @Override
+    public User findByHash(String hash) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> from = query.from(User.class);
+        query.where(cb.equal(from.get(User_.hash), hash));
+        return DaoUtils.getSingleResult(getEntityManager().createQuery(query).getResultList());
+    }
 }

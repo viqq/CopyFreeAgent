@@ -1,5 +1,6 @@
 package com.free.agent.service.dto;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -8,6 +9,8 @@ import java.util.List;
 public class UserWithSportUIDto extends UserDto {
     private List<SportUIDto> sports;
     private Long dateOfRegistration;
+    private Date dateOfRegistration;
+    private String role;
 
     public List<SportUIDto> getSports() {
         return sports;
@@ -17,11 +20,11 @@ public class UserWithSportUIDto extends UserDto {
         this.sports = sports;
     }
 
-    public Long getDateOfRegistration() {
+    public Date getDateOfRegistration() {
         return dateOfRegistration;
     }
 
-    public void setDateOfRegistration(Long dateOfRegistration) {
+    public void setDateOfRegistration(Date dateOfRegistration) {
         this.dateOfRegistration = dateOfRegistration;
     }
 }

@@ -14,4 +14,7 @@ public interface UserDao extends GenericDao<User,Long> {
     User findByEmail(String email);
 
     Collection<User> findByFilter(Filter filter);
+
+    User findByHash(String hash);
+
 }

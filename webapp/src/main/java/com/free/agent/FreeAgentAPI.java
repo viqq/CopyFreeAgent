@@ -8,7 +8,10 @@ public final class FreeAgentAPI {
     public static final int VALIDATION_ERROR = 460;
     public static final int LOGIN_ERROR = 461;
     public static final int SAVE_IMAGE_ERROR = 462;
-    public static final int EMAIL_REGISTERED = 463;
+    public static final int EMAIL_REGISTERED_ERROR = 463;
+    public static final int EMAIL_DID_NOT_REGISTERED_ERROR = 464;
+    public static final int ACTIVATED_ERROR = 465;
+    public static final int EDIT_PROFILE_ERROR = 466;
     public static final int UNEXPECTED_ERROR = 499;
 
     public static final String SAVE_USER = "/api/user"; //POST
@@ -28,4 +31,7 @@ public final class FreeAgentAPI {
     public static final String GET_MESSAGE_BY_ID = "/api/message/{id}";
     public static final String GET_HISTORY = "/api/message/history/{id}";
     public static final String GET_ALL_PARTICIPANTS = "/api/message/participants/";
+    public static final String ACTIVATE_USER = "api/activate";
+    public static final String RESET_PASSWORD = "api/password/{email}";
+    public static final String GET_POSTPONE_EMAIL = "api/postpone";
 }

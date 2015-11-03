@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Service("customUserDetailsService")
@@ -28,13 +29,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         com.free.agent.model.User domainUser = userDao.findByEmail(email);
+        domainUser.setLastActivity(new Date());
+        userDao.update(domainUser);
         boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
-        return new User(domainUser.getEmail(), EncryptionUtils.decrypt(domainUser.getPassword()), enabled, accountNonExpired, //
-                credentialsNonExpired, accountNonLocked, getAuthorities(domainUser.getRole()));
+        return new User(domainUser.getEmail(), EncryptionUtils.decrypt(domainUser.getPassword()), enabled, //
+                accountNonExpired, credentialsNonExpired, accountNonLocked, getAuthorities(domainUser.getRole()));
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities(Role role) {
@@ -43,11 +46,25 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public List<String> getRoles(Role role) {
         List<String> roles = Lists.newArrayList();
-        if (role.equals(Role.ROLE_ADMIN)) {
-            roles.add(Role.ROLE_MODERATOR.name());
-            roles.add(Role.ROLE_ADMIN.name());
-        } else if (role.equals(Role.ROLE_MODERATOR)) {
-            roles.add(Role.ROLE_MODERATOR.name());
+        switch (role) {
+            case ROLE_ADMIN: {
+                roles.add(Role.ROLE_ADMIN.name());
+                roles.add(Role.ROLE_MODERATOR.name());
+                roles.add(Role.ROLE_NOT_CONFIRMED.name());
+                roles.add(Role.ROLE_NOT_ACTIVATED.name());
+            }
+            case ROLE_MODERATOR: {
+                roles.add(Role.ROLE_MODERATOR.name());
+                roles.add(Role.ROLE_NOT_CONFIRMED.name());
+                roles.add(Role.ROLE_NOT_ACTIVATED.name());
+            }
+            case ROLE_NOT_CONFIRMED: {
+                roles.add(Role.ROLE_NOT_CONFIRMED.name());
+                roles.add(Role.ROLE_NOT_ACTIVATED.name());
+            }
+            default: {
+                roles.add(Role.ROLE_NOT_ACTIVATED.name());
+            }
         }
         return roles;
     }

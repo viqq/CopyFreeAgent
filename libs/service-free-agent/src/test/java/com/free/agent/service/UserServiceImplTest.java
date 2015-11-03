@@ -3,10 +3,12 @@ package com.free.agent.service;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
 import com.free.agent.dao.UserDao;
-import com.free.agent.field.Role;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
+import com.free.agent.service.dto.UserRegistrationDto;
 import com.free.agent.service.impl.UserServiceImpl;
+import com.free.agent.service.util.EncryptionUtils;
+import com.free.agent.service.util.ExtractFunction;
 import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.junit.Assert;
@@ -38,6 +40,9 @@ public class UserServiceImplTest extends TestCase {
     @Mock
     private UserDao userDao;
 
+    @Mock
+    private MailService mailService;
+
     @InjectMocks
     private UserServiceImpl service;
 
@@ -48,11 +53,10 @@ public class UserServiceImplTest extends TestCase {
 
     @Test
     public void saveUserTest() {
-        User user = new User();
+        UserRegistrationDto user = new UserRegistrationDto();
         Mockito.when(sportDao.findByNames(Sets.newHashSet(FOOTBALL))).thenReturn(sports());
-        Mockito.when(userDao.create(user)).thenReturn(user);
+        Mockito.when(userDao.create(ExtractFunction.getUser(user))).thenReturn(user());
         User savedUser = service.save(user);
-        Assert.assertEquals(Role.ROLE_MODERATOR, savedUser.getRole());
         Assert.assertEquals(1, savedUser.getSports().size());
         Assert.assertEquals(FOOTBALL, savedUser.getSports().iterator().next().getName());
     }
@@ -61,5 +65,13 @@ public class UserServiceImplTest extends TestCase {
         Sport sport = new Sport();
         sport.setName(FOOTBALL);
         return Sets.newHashSet(sport);
+    }
+
+    private User user() {
+        User user = new User();
+        user.setEmail("email@gmail.com");
+        user.setPassword(EncryptionUtils.encrypt("12345"));
+        user.setSports(Sets.newHashSet(new Sport(FOOTBALL)));
+        return user;
     }
 }

@@ -3,6 +3,7 @@ package com.free.agent.controller;
 import com.free.agent.Response;
 import com.free.agent.service.MessageService;
 import com.free.agent.service.dto.MessageDto;
+import com.free.agent.service.exception.EmailAlreadyUsedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,12 +64,13 @@ public class MessageController {
     String saveMessage(MessageDto dto, String email, Principal principal) {
         try {
             messageService.save(dto, email, principal);
-        } catch (IllegalAccessException e) {
-            Response.error(EMAIL_REGISTERED);
+        } catch (EmailAlreadyUsedException e) {
+            Response.error(EMAIL_REGISTERED_ERROR);
         }
         return Response.ok();
     }
 
+    //todo how is it work??? is it used?
     @RequestMapping(value = GET_MESSAGE_BY_ID, method = RequestMethod.POST)
     public
     @ResponseBody

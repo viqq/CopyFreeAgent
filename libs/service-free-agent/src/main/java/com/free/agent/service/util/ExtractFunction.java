@@ -1,5 +1,6 @@
 package com.free.agent.service.util;
 
+import com.free.agent.field.Role;
 import com.free.agent.model.Message;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
@@ -38,7 +39,6 @@ public final class ExtractFunction {
             message.setTitle(input.getTitle());
             message.setText(input.getText());
             message.setAuthorId(input.getAuthorId());
-            message.setAuthorEmail(input.getAuthorEmail());
             return message;
         }
     };
@@ -55,6 +55,7 @@ public final class ExtractFunction {
         userDto.setLastName(user.getLastName());
         userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
         userDto.setGender(user.getGender().name());
+        userDto.setRole(user.getRole().name());
         userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), ExtractFunction.SPORT_NAME_INVOKE));
         return userDto;
     }
@@ -63,6 +64,9 @@ public final class ExtractFunction {
         User user = new User(userDto.getEmail(), EncryptionUtils.encrypt(userDto.getPassword()));
         user.setFirstName(userDto.getFirstName());
         user.setDateOfRegistration(new Date());
+        user.setHash(EncryptionUtils.getRandomString());
+        user.setLastActivity(new Date());
+        user.setRole(Role.ROLE_NOT_CONFIRMED);
         return user;
     }
 

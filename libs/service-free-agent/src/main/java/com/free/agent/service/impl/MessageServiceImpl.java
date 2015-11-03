@@ -3,13 +3,17 @@ package com.free.agent.service.impl;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.MessageDao;
 import com.free.agent.dao.UserDao;
-import com.free.agent.dao.dto.Participant;
+import com.free.agent.field.Role;
 import com.free.agent.model.Message;
 import com.free.agent.model.User;
+import com.free.agent.service.MailService;
 import com.free.agent.service.MessageService;
 import com.free.agent.service.dto.MessageDto;
 import com.free.agent.service.dto.MessageUIDto;
+import com.free.agent.service.exception.EmailAlreadyUsedException;
+import com.free.agent.service.util.EncryptionUtils;
 import com.free.agent.service.util.ExtractFunction;
+import com.free.agent.service.util.LinkUtils;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +32,16 @@ import java.util.List;
 @Service("messageService")
 public class MessageServiceImpl implements MessageService {
     private static final Logger LOGGER = Logger.getLogger(MessageServiceImpl.class);
-    private final int HALF_YEAR_BEFORE = -6;
+    private static final int HALF_YEAR_BEFORE = -6;
 
     @Autowired
     private MessageDao messageDao;
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private MailService mailService;
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
@@ -54,29 +61,37 @@ public class MessageServiceImpl implements MessageService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public Collection<Message> findAllByAuthor(String email) {
         User user = userDao.findByEmail(email);
-        return messageDao.findAllByAuthorEmailAndId(user.getEmail(), user.getId());
+        return messageDao.findAllByAuthorEmailAndId(user.getId());
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<Message> findAllByReceiverAndAuthor(Long id, String email, Principal principal) {
-        return messageDao.findAllByReceiverAndAuthor(id, email, userDao.findByEmail(principal.getName()).getId());
+    public Collection<Message> findAllByReceiverAndAuthor(Long id, Principal principal) {
+        return messageDao.findAllByReceiverAndAuthor(id, userDao.findByEmail(principal.getName()).getId());
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public void save(MessageDto messageDto, String email, Principal principal) throws IllegalAccessException {
+    public void save(MessageDto messageDto, String email, Principal principal) throws EmailAlreadyUsedException {
         Message message = new Message(messageDto.getTitle(), messageDto.getText());
+
         if (principal == null) {
             if (isEmailFree(email)) {
-                message.setAuthorEmail(email);
+                User newUser = postponeRegistration(email);
+                message.setAuthorId(newUser.getId());
             } else {
-                LOGGER.error("User with " + email + " has registered already");
-                throw new IllegalAccessException("User with " + email + " has registered already");
+                User user = userDao.findByEmail(email);
+                if (user.getRole().equals(Role.ROLE_NOT_ACTIVATED)) {
+                    message.setAuthorId(user.getId());
+                } else {
+                    LOGGER.error("User with " + email + " has registered already");
+                    throw new EmailAlreadyUsedException("User with " + email + " has registered already");
+                }
             }
         } else {
             message.setAuthorId(userDao.findByEmail(principal.getName()).getId());
         }
+
         message.setTimeOfCreate(new Date());
         User u = userDao.find(messageDto.getId());
         message.setUser(u);
@@ -85,6 +100,34 @@ public class MessageServiceImpl implements MessageService {
         u.setMessages(list);
         messageDao.create(message);
         userDao.update(u);
+        sendEmailToUser(u, messageDto.getText());
+    }
+
+    private void sendEmailToUser(User u, String text) {
+        switch (u.getRole()) {
+            case ROLE_NOT_ACTIVATED: {
+                mailService.sendMail(u.getEmail(), "New message in FA", "You have new message. " +
+                        "Please finish registration " + LinkUtils.getLinkForRegistration(u.getEmail(), u.getHash(), true));
+                break;
+            }
+            case ROLE_NOT_CONFIRMED: {
+                //todo
+                break;
+            }
+            default: {
+                mailService.sendMail(u.getEmail(), "New message in FA", text);
+                break;
+            }
+        }
+    }
+
+    private User postponeRegistration(String email) {
+        User u = new User();
+        u.setEmail(email);
+        u.setRole(Role.ROLE_NOT_ACTIVATED);
+        u.setDateOfRegistration(new Date());
+        u.setHash(EncryptionUtils.getRandomString());
+        return userDao.create(u);
     }
 
     @Override
@@ -107,18 +150,17 @@ public class MessageServiceImpl implements MessageService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public Collection<MessageUIDto> getHistory(Long id, String email) {
         User user = userDao.findByEmail(email);
-        return Collections2.transform(messageDao.getHistory(id, user.getId(), user.getEmail()), ExtractFunction.MESSAGE_INVOKE);
+        return Collections2.transform(messageDao.getHistory(id, user.getId()), ExtractFunction.MESSAGE_INVOKE);
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<Participant> getParticipants(String email) {
+    public Collection<Long> getParticipants(String email) {
         return messageDao.getParticipants(userDao.findByEmail(email).getId());
     }
 
     private boolean isEmailFree(String email) {
         return userDao.findByEmail(email) == null;
     }
-
 
 }

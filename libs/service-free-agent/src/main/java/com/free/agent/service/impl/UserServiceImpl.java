@@ -5,11 +5,18 @@ import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
 import com.free.agent.dao.UserDao;
 import com.free.agent.field.Gender;
+import com.free.agent.field.Role;
 import com.free.agent.model.User;
+import com.free.agent.service.MailService;
 import com.free.agent.service.UserService;
 import com.free.agent.service.dto.UserDto;
+import com.free.agent.service.dto.UserRegistrationDto;
 import com.free.agent.service.dto.UserWithSportUIDto;
+import com.free.agent.service.exception.EmailAlreadyUsedException;
+import com.free.agent.service.exception.WrongLinkException;
+import com.free.agent.service.util.EncryptionUtils;
 import com.free.agent.service.util.ExtractFunction;
+import com.free.agent.service.util.LinkUtils;
 import com.google.common.collect.Lists;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -43,15 +50,32 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SportDao sportDao;
 
+    @Autowired
+    private MailService mailService;
+
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public User save(User user) {
-        User createdUser = userDao.create(user);
-        LOGGER.info("New user " + user.getEmail() + "was added ");
+    public User save(UserRegistrationDto userDto) throws EmailAlreadyUsedException {
+        User user = userDao.findByEmail(userDto.getEmail());
+        if (user != null) {
+            if (!user.getRole().equals(Role.ROLE_NOT_ACTIVATED)) {
+                LOGGER.error("User with " + userDto.getEmail() + " has registered already");
+                throw new EmailAlreadyUsedException("User with " + userDto.getEmail() + " has registered already");
+            } else {
+                User newUser = ExtractFunction.getUser(userDto);
+                newUser.setId(user.getId());
+                userDao.update(newUser);
+                sendLinkForConfirm(newUser.getEmail(), newUser.getHash());
+                LOGGER.info("New user " + newUser.getEmail() + "was added ");
+                return newUser;
+            }
+        }
+        User createdUser = userDao.create(ExtractFunction.getUser(userDto));
+        sendLinkForConfirm(createdUser.getEmail(), createdUser.getHash());
+        LOGGER.info("New user " + userDto.getEmail() + "was added ");
         return createdUser;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void addImage(String email, HttpServletRequest request) throws Exception {
@@ -115,6 +139,53 @@ public class UserServiceImpl implements UserService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public UserWithSportUIDto getInfoAboutUserById(Long id) {
         return ExtractFunction.getUserForUI(userDao.find(id));
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+    public UserWithSportUIDto activateUser(String hash, String key) throws WrongLinkException {
+        User user = findUserByHash(hash, key);
+        user.setRole(Role.ROLE_MODERATOR);
+        return ExtractFunction.getUserForUI(userDao.update(user));
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+    public void resetPassword(String email) throws IllegalArgumentException {
+        User user = userDao.findByEmail(email);
+        if (user == null) {
+            throw new IllegalArgumentException("User with email " + email + " didn't existed");
+        }
+        String password = EncryptionUtils.getRandomString();
+        user.setPassword(EncryptionUtils.encrypt(password));
+        userDao.update(user);
+        mailService.sendMail(email, "New password", "Your new password - " + password);
+    }
+
+    @Override
+    public String getPostponeEmail(String hash, String key) {
+        User user = findUserByHash(hash, key);
+        return user.getEmail();
+    }
+
+    private User findUserByHash(String hash, String key) {
+        checkCondition(hash == null || key == null, "Hash or key is null");
+        User user = userDao.findByHash(hash);
+        checkCondition(user == null, "User with " + hash + " didn't register");
+        checkCondition(!EncryptionUtils.md5(user.getEmail()).equals(key), "Hash and password don't correspond");
+        return user;
+    }
+
+    private void checkCondition(boolean condition, String message) {
+        if (condition) {
+            throw new WrongLinkException(message);
+        }
+    }
+
+    private void sendLinkForConfirm(String email, String hash) {
+        String link = LinkUtils.getLinkForRegistration(email, hash, false);
+        mailService.sendMail(email, "Activate yor profile", "Go to the link " + link);
+        LOGGER.info("Email was sent for " + email);
     }
 
     private User getUser(User user, UserDto userDto, Set<String> names) {

@@ -20,9 +20,6 @@ public class Message extends AbstractTable<Long> {
     @Column(name = "AUTHOR_ID")
     private Long authorId;
 
-    @Column(name = "AUTHOR_EMAIL")
-    private String authorEmail;
-
     @Column(name = "TITLE")
     private String title;
 
@@ -55,12 +52,6 @@ public class Message extends AbstractTable<Long> {
         this.text = text;
     }
 
-    public Message(String authorEmail, String title, String text) {
-        this.authorEmail = authorEmail;
-        this.title = title;
-        this.text = text;
-    }
-
     @Override
     public Long getId() {
         return id;
@@ -72,14 +63,6 @@ public class Message extends AbstractTable<Long> {
 
     public void setAuthorId(Long authorId) {
         this.authorId = authorId;
-    }
-
-    public String getAuthorEmail() {
-        return authorEmail;
-    }
-
-    public void setAuthorEmail(String authorEmail) {
-        this.authorEmail = authorEmail;
     }
 
     public String isTitle() {
