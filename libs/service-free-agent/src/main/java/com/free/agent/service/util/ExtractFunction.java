@@ -33,8 +33,8 @@ public final class ExtractFunction {
         public MessageUIDto apply(Message input) {
             MessageUIDto message = new MessageUIDto();
             message.setId(input.getId());
-            message.setTimeOfRead(input.getTimeOfRead());
-            message.setTimeOfCreate(input.getTimeOfCreate());
+            message.setTimeOfRead(getTime(input.getTimeOfRead()));
+            message.setTimeOfCreate(getTime(input.getTimeOfCreate()));
             message.setTitle(input.getTitle());
             message.setText(input.getText());
             message.setAuthorId(input.getAuthorId());
@@ -50,10 +50,10 @@ public final class ExtractFunction {
         userDto.setPhone(user.getPhone());
         userDto.setDescription(user.getDescription());
         userDto.setCity(user.getCity());
-        userDto.setDateOfBirth(user.getDateOfBirth());
+        userDto.setDateOfBirth(getTime(user.getDateOfBirth()));
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
-        userDto.setDateOfRegistration(user.getDateOfRegistration());
+        userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
         userDto.setGender(user.getGender().name());
         userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), ExtractFunction.SPORT_NAME_INVOKE));
         return userDto;
@@ -64,6 +64,10 @@ public final class ExtractFunction {
         user.setFirstName(userDto.getFirstName());
         user.setDateOfRegistration(new Date());
         return user;
+    }
+
+    private static Long getTime(Date dateOfBirth) {
+        return dateOfBirth == null ? null : dateOfBirth.getTime();
     }
 
 }

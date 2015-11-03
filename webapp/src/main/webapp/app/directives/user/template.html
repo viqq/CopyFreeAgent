@@ -13,7 +13,7 @@
         <div class="content">
             <img class="userpic" ng-src="{{ '/api/user/getImage/' + userInfo.id }}">
 
-            <a href="{{ '/message/send/' + userInfo.id }}">Send message to <b>{{ userInfo.login}}</b></a>
+            <a href="{{ (isLoggedIn ? '/dialogs/' : '/message/send/') + userInfo.id }}">Send message to <b>{{ userInfo.login}}</b></a>
             <br>
             <br>
 
@@ -22,7 +22,8 @@
                 <tbody>
                 <tr ng-repeat="(key, value) in userInfo">
                     <td>{{ key }}</td>
-                    <td>{{ value }}</td>
+                    <td ng-hide="key !== 'dateOfRegistration'">{{ value | date }}</td>
+                    <td ng-show="key !== 'dateOfRegistration'">{{ value }}</td>
                 </tr>
                 </tbody>
             </table>

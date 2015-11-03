@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -120,7 +121,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(userDto.getPhone());
         user.setDescription(userDto.getDescription());
         user.setCity(userDto.getCity());
-        user.setDateOfBirth(userDto.getDateOfBirth());
+        user.setDateOfBirth(new Date(userDto.getDateOfBirth()));
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setGender(userDto.getGender() == null ? null : Gender.valueOf(userDto.getGender()));

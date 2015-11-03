@@ -64,6 +64,16 @@ define(
                     controller: 'AdminCtrl',
                     controllerUrl: 'controllers/admin'
                 }))
+                .when('/dialogs', angularAMD.route({
+                    templateUrl: 'app/views/dialogs-all.html',
+                    controller: 'AllDialogsCtrl',
+                    controllerUrl: 'controllers/dialogs-all'
+                }))
+                .when('/dialogs/:id', angularAMD.route({
+                    templateUrl: 'app/views/dialog-by-id.html',
+                    controller: 'DialogByIdCtrl',
+                    controllerUrl: 'controllers/dialog-by-id'
+                }))
                 .otherwise({
                     redirectTo: '/'
                 });

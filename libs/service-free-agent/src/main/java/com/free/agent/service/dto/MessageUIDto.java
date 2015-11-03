@@ -1,7 +1,5 @@
 package com.free.agent.service.dto;
 
-import java.util.Date;
-
 /**
  * Created by antonPC on 15.09.15.
  */
@@ -11,8 +9,8 @@ public class MessageUIDto {
     private String authorEmail;
     private String title;
     private String text;
-    private Date timeOfCreate;
-    private Date timeOfRead;
+    private Long timeOfCreate;
+    private Long timeOfRead;
 
     public Long getId() {
         return id;
@@ -54,19 +52,19 @@ public class MessageUIDto {
         this.text = text;
     }
 
-    public Date getTimeOfCreate() {
+    public Long getTimeOfCreate() {
         return timeOfCreate;
     }
 
-    public void setTimeOfCreate(Date timeOfCreate) {
+    public void setTimeOfCreate(Long timeOfCreate) {
         this.timeOfCreate = timeOfCreate;
     }
 
-    public Date getTimeOfRead() {
+    public Long getTimeOfRead() {
         return timeOfRead;
     }
 
-    public void setTimeOfRead(Date timeOfRead) {
+    public void setTimeOfRead(Long timeOfRead) {
         this.timeOfRead = timeOfRead;
     }
 }

@@ -1,0 +1,59 @@
+<dir-header></dir-header>
+<div class="main-container">
+    <style>
+        .message {
+            clear: both;
+        }
+
+        .my-message {
+            float: left;
+        }
+
+        .others-message {
+            float: right;
+        }
+
+        .container {
+            overflow: hidden;
+        }
+    </style>
+    <div>
+        <div>
+            <div class="container">
+                <h1>Dialog</h1>
+                <table ng-repeat="message in messages"
+                       class="message {{ message.authorId === currUserData.id ? 'my-message' : 'others-message' }}">
+                    <tbody>
+                    <tr ng-repeat="(key, value) in message">
+                        <td>{{ key }}</td>
+                        <td ng-hide="key !== 'timeOfCreate'"> {{ value | date :'medium' }} </td>
+                        <td ng-show="key !== 'timeOfCreate'"> {{ value }} </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <br>
+
+            <div class="container">
+                <h1>Send Message</h1>
+
+                <form ng-submit="submitHandler()">
+                    <label>Theme</label>
+                    <br>
+                    <input ng-model="msgData.title">
+                    <br>
+                    <br>
+                    <label>Message</label>
+                    <br>
+                    <textarea ng-model="msgData.text"></textarea>
+                    <br>
+                    <br>
+                    <button>Send message</button>
+                    <div>{{ error }}</div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<dir-footer></dir-footer>
