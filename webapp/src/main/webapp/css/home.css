@@ -187,6 +187,8 @@ span {
     margin-right: 8%;
 }
 
-[parallax-layer] {
-    transition: all 0.1s;
+[parallax-layer].paralax-transition {
+    transition: transform 0.2s linear 0s;
+    -webkit-transition: transform 0.2s linear 0s;
+    -moz-transition: transform 0.2s linear 0s;
 }

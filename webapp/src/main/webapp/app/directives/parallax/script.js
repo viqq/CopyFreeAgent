@@ -18,18 +18,47 @@ define(
                     '$element',
                     '$attrs',
                     function ($scope, $document, $element, $attrs) {
-                        var layerNum = Math.pow(parseInt($attrs.parallaxLayer, 10), 1),
-                            xCoef = 0.005,
-                            yCoef = 0.02;
+                        var layerNum = parseInt($attrs.parallaxLayer, 10),
+                            xCoef = 0.013,
+                            yCoef = 0.01,
+                            wCoef = 0.5,
+                            hCoef = 1,
+                            timeGap = 200,
+                            lastTimestamp = 0;
 
 
-                        $document.on('mousemove', function(event) {
-                            var deltaX = xCoef * layerNum * (event.clientX - window.innerWidth / 2) + 'px',
-                                deltaY = yCoef * layerNum * (event.clientY - window.innerHeight / 2) + 'px';
+                        $document.on('mousemove', function (event) {
+                            if (event.timestamp - lastTimestamp < (timeGap + 1) * 2) {
+                                return;
+                            }
+
+                            lastTimestamp = event.timestamp;
+
+                            var deltaX = xCoef * layerNum * (event.clientX - window.innerWidth * wCoef),
+                                deltaY = yCoef * layerNum * (event.clientY - window.innerHeight * hCoef),
+                                cssString;
+
+                            deltaX = Math.round(deltaX);
+                            deltaY = Math.round(deltaY);
+
+                            cssString = 'translate(' + Math.round(deltaX) + 'px, ' + Math.round(deltaY) + 'px)';
 
                             $element.css({
-                                transform: 'translate(' + deltaX + ', ' + deltaY + ')'
+                                'transform': cssString,
+                                '-webkit-transform': cssString,
+                                '-ms-transform': cssString,
+                                '-moz-transform': cssString
                             })
+                        });
+
+                        $document.on('mouseleave', function(event) {
+                            $element.addClass('paralax-transition');
+                        });
+
+                        $document.on('mouseenter', function (event) {
+                            setTimeout(function() {
+                                $element.removeClass('paralax-transition');
+                            }, timeGap - 1)
                         })
                     }
                 ]

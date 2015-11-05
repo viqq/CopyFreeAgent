@@ -14,7 +14,7 @@ require.config({
         'angularAMD': 'libs/angularAMD',
         'angular-material': 'libs/angular-material',
 
-        'jquery': 'libs/jquery'
+        'jquery': 'libs/jquery.min'
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim
