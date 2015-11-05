@@ -18,7 +18,7 @@ define(
                     '$element',
                     '$attrs',
                     function ($scope, $document, $element, $attrs) {
-                        var layerNum = Math.pow(parseInt($attrs.parallaxLayer, 10), 1.2),
+                        var layerNum = Math.pow(parseInt($attrs.parallaxLayer, 10), 1),
                             xCoef = 0.005,
                             yCoef = 0.02;
 
