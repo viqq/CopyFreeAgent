@@ -40,7 +40,7 @@ define(
                             return;
                         }
 
-                        $scope.userInfo = $scope.$root.currUserData;
+                        $scope.userInfo = $scope.$root.currUserInfo;
                     }
                 };
 

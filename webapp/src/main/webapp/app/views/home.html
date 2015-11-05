@@ -1,4 +1,15 @@
 <div id="home" class="view ng-scope">
+    <div id="header">
+        <a id="logo" href="/">
+            <img src="/img/icon-logo.svg">
+        </a>
+
+        <a id="login" href="/login">
+            <img src="/img/icon-user.svg">
+            <span>LOGIN</span>
+        </a>
+    </div>
+
     <div class="inner-frame">
         <div>
             <div id="socials">
@@ -15,26 +26,17 @@
         </div>
     </div>
 
-    <div id="logo">
-        <img src="/img/icon-logo.svg">
-    </div>
-
-    <div id="login">
-        <img src="/img/icon-user.svg">
-        <span>LOGIN</span>
-    </div>
-
     <div class="title-group">
         <div>
-            <div class="player">
+            <div class="player" parallax-layer="2">
 
             </div>
-            <div class="ball">
+            <div class="ball" parallax-layer="4">
 
             </div>
             <div>
-                <p id="text-free">FREE</p>
-                <p id="text-agent">AGENT</p>
+                <p id="text-free" parallax-layer="1">FREE</p>
+                <p id="text-agent" parallax-layer="3">AGENT</p>
             </div>
         </div>
     </div>
@@ -48,11 +50,12 @@
             </p>
 
             <div>
-                <span id="find">НАЙТИ FREE AGENT</span>
-                <span id="register">Я С ВАМИ!</span>
+                <a id="find" href="/search">НАЙТИ FREE AGENT</a>
+                <a id="register" href="/registration">Я С ВАМИ!</a>
             </div>
         </div>
     </div>
+
+
 </div>
 <link rel="stylesheet" href="css/home.css"/>
-<link rel="stylesheet" href="css/fonts.css"/>

@@ -40,5 +40,5 @@
 
 @font-face {
     font-family: "norwester";
-    src: url("../fonts/norwester.ttf");
+    src: url("../fonts/norwester.ttf") format("truetype");
 }
