@@ -9,7 +9,7 @@ define(['angularAMD'], function (angularAMD) {
                 url: '/api/user',
                 data: data,
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
                 }
             })
                 .success(function(data) {

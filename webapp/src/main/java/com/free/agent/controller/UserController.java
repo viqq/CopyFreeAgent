@@ -122,7 +122,7 @@ public class UserController {
     public
     @ResponseBody
     String editUser(@PathVariable(value = "id") Long id, Principal principal, UserDto userDto, HttpServletRequest request) {
-        if (userService.findById(id).getEmail().equals(principal.getName())) {
+        if (!userService.findById(id).getEmail().equals(principal.getName())) {
             return Response.error(EDIT_PROFILE_ERROR);
         }
         userService.editUser(id, userDto, HttpRequestUtil.getParams(request, "select"));

@@ -192,7 +192,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(userDto.getPhone());
         user.setDescription(userDto.getDescription());
         user.setCity(userDto.getCity());
-        user.setDateOfBirth(new Date(userDto.getDateOfBirth()));
+        user.setDateOfBirth(userDto.getDateOfBirth() == null ? null : new Date(userDto.getDateOfBirth()));
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setGender(userDto.getGender() == null ? null : Gender.valueOf(userDto.getGender()));

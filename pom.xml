@@ -14,6 +14,7 @@
     <name>${project.readable.name} :: Root</name>
     <properties>
         <spring.version>3.2.0.RELEASE</spring.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hibernate.version>3.6.7.Final</hibernate.version>
         <project.readable.name>Free Agent</project.readable.name>
         <maven.compile.source>1.7</maven.compile.source>
