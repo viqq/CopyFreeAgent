@@ -53,7 +53,8 @@ span {
     width:0%;
 }
 
-#login:hover > span:after {
+#login:hover > span:after,
+#login:active > span:after {
     width: 100%;
 }
 
@@ -227,4 +228,12 @@ span {
     transition: transform 0.2s linear 0s;
     -webkit-transition: transform 0.2s linear 0s;
     -moz-transition: transform 0.2s linear 0s;
+}
+
+@media (max-width: 768px) {
+    #socials,
+    #copyright,
+    .title-group {
+        display: none;
+    }
 }
