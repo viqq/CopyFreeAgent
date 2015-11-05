@@ -22,44 +22,48 @@ define(
                             xCoef = 0.013,
                             yCoef = 0.01,
                             wCoef = 0.5,
-                            hCoef = 1,
+                            hCoef = 0.5,
                             timeGap = 200,
                             lastTimestamp = 0;
 
 
-                        $document.on('mousemove', function (event) {
-                            if (event.timestamp - lastTimestamp < (timeGap + 1) * 2) {
-                                return;
-                            }
+                        $document
+                            .on('mousemove', function (event) {
+                                if (event.timestamp - lastTimestamp < (timeGap + 1) * 2) {
+                                    return;
+                                }
 
-                            lastTimestamp = event.timestamp;
+                                lastTimestamp = event.timestamp;
 
-                            var deltaX = xCoef * layerNum * (event.clientX - window.innerWidth * wCoef),
-                                deltaY = yCoef * layerNum * (event.clientY - window.innerHeight * hCoef),
-                                cssString;
+                                var deltaX = xCoef * layerNum * (event.clientX - window.innerWidth * wCoef),
+                                    deltaY = yCoef * layerNum * (event.clientY - window.innerHeight * hCoef),
+                                    cssString;
 
-                            deltaX = Math.round(deltaX);
-                            deltaY = Math.round(deltaY);
+                                deltaX = Math.round(deltaX);
+                                deltaY = Math.round(deltaY);
 
-                            cssString = 'translate(' + Math.round(deltaX) + 'px, ' + Math.round(deltaY) + 'px)';
+                                cssString = 'translate(' + Math.round(deltaX) + 'px, ' + Math.round(deltaY) + 'px)';
 
-                            $element.css({
-                                'transform': cssString,
-                                '-webkit-transform': cssString,
-                                '-ms-transform': cssString,
-                                '-moz-transform': cssString
+                                $element.css({
+                                    'transform': cssString,
+                                    '-webkit-transform': cssString,
+                                    '-ms-transform': cssString,
+                                    '-moz-transform': cssString
+                                });
                             })
-                        });
+                            .on('mouseleave', function () {
+                                $element.addClass('paralax-transition');
+                            })
+                            .on('mouseenter', function () {
+                                setTimeout(function () {
+                                    $element.removeClass('paralax-transition');
+                                }, timeGap - 1);
+                            });
 
-                        $document.on('mouseleave', function(event) {
-                            $element.addClass('paralax-transition');
-                        });
-
-                        $document.on('mouseenter', function (event) {
-                            setTimeout(function() {
-                                $element.removeClass('paralax-transition');
-                            }, timeGap - 1)
-                        })
+                        $element.addClass('paralax-transition');
+                        setTimeout(function () {
+                            $element.removeClass('paralax-transition');
+                        }, timeGap - 1);
                     }
                 ]
             };

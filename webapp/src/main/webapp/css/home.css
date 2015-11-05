@@ -11,6 +11,7 @@ span {
     color: white;
     font-family: RobotoLight;
     font-size: 1em;
+    display: inline-block;
 }
 
 #header {
@@ -34,7 +35,7 @@ span {
 }
 
 #login > img {
-    height: 17px;
+    height: 0.7em;
 }
 
 #login > span {
@@ -42,15 +43,35 @@ span {
     font-family: RobotoLight;
 }
 
+#login > span:after {
+    content: '';
+    display: block;
+    width: 0%;
+    height: 1px;
+    background-color: #fa2044;
+    transition: width 0.3s linear 0.1s;
+    width:0%;
+}
+
+#login:hover > span:after {
+    width: 100%;
+}
+
 #socials {
     position: absolute;
     bottom: 60px;
     left: 60px;
+    z-index: 4;
 }
 
 #socials > img {
     height: 18px;
     margin-right: 10px;
+    cursor: pointer;
+}
+
+#socials > img:hover {
+    opacity: 0.5;
 }
 
 #socials > span {
@@ -61,6 +82,7 @@ span {
     position: absolute;
     bottom: 60px;
     right: 60px;
+    z-index: 4;
 }
 
 .inner-frame,
@@ -172,10 +194,24 @@ span {
 
 .subtitle-group #find {
     background-color: #353d48;
+    border: 2px solid #353d48;
+}
+
+.subtitle-group #find:active,
+.subtitle-group #find:hover {
+    background-color: #3c4551;
+    border: 2px solid #424b57;
 }
 
 .subtitle-group #register {
     background-color: #2272b5;
+    border: 2px solid #2272b5;
+}
+
+.subtitle-group #register:active,
+.subtitle-group #register:hover {
+    background-color: #2272b5;
+    border: 2px solid #429ce7;
 }
 
 .subtitle-group p {
