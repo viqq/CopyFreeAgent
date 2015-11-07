@@ -5,6 +5,9 @@ body {
 #home {
     background-color: white;
     overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 span {
@@ -50,7 +53,7 @@ span {
     height: 1px;
     background-color: #fa2044;
     transition: width 0.3s linear 0.1s;
-    width:0%;
+    width: 0%;
 }
 
 #login:hover > span:after,
@@ -150,23 +153,34 @@ span {
     width: auto;
 }
 
-.title-group p#text-free,
-.title-group p#text-agent {
+.text-free,
+.text-agent {
     font-family: norwester;
+    font-size: 3em;
+    line-height: 0.85em;
+}
+
+.text-free {
+    color: #fa2044;
+}
+
+
+.title-group p.text-free,
+.title-group p.text-agent {
     font-size: 13.5vh;
     margin: 0px;
     text-align: center;
     position: relative;
 }
 
-.title-group p#text-free {
+.title-group p.text-free {
     color: #fa2044;
     top: 33%;
     left: -17vh;
     z-index: 0;
 }
 
-.title-group p#text-agent {
+.title-group p.text-agent {
     color: white;
     top: 30%;
     left: 1vh;
@@ -224,16 +238,107 @@ span {
     margin-right: 8%;
 }
 
+.subtitle-group .mobile-title {
+    display: none;
+}
+
 [parallax-layer].paralax-transition {
     transition: transform 0.2s linear 0s;
     -webkit-transition: transform 0.2s linear 0s;
     -moz-transition: transform 0.2s linear 0s;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
+    #header {
+        padding: 40px 40px 0px;
+        font-size: 14px;
+    }
+
+    #logo > img {
+        height: 40px
+    }
+
     #socials,
     #copyright,
     .title-group {
         display: none;
+    }
+
+    .inner-frame {
+        padding: 20px;
+    }
+
+    .subtitle-group {
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        display: table;
+        padding: 40px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    .subtitle-group > div {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .subtitle-group > div > * {
+        max-width: 260px;
+        margin: auto;
+    }
+
+    .subtitle-group > div > p {
+        margin-bottom: 10vh;
+    }
+
+    .subtitle-group .mobile-title {
+        display: block;
+        margin-bottom: 5vh;
+    }
+
+    .text-free, .text-agent {
+        font-size: 3.5em;
+    }
+
+    .subtitle-group #find {
+        margin-bottom: 20px;
+    }
+
+    .subtitle-group p br {
+        display: none;
+    }
+
+    .subtitle-group a {
+        margin: 0px;
+        padding: 0px;
+        line-height: 40px;
+        display: block;
+    }
+}
+
+@media (max-height: 340px) {
+    .subtitle-group > div > * {
+        max-width: 100%;
+    }
+
+    .subtitle-group > div > p {
+        margin-bottom: 5vh;
+    }
+
+    .subtitle-group a {
+        display:inline-block;
+        padding: 0px 20px;
+        margin: 0px 20px;
+    }
+
+    .subtitle-group #find {
+        margin-bottom: 0px;
+    }
+}
+
+@media (max-height: 767px) {
+    .subtitle-group > div {
+        vertical-align: bottom;
     }
 }
