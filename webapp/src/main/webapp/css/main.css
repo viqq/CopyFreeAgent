@@ -38,8 +38,17 @@ body {
     position: relative;
     min-height: 100%;
     background-color: lightgray;
-    overflow-y: scroll;
 }
+
+
+
+
+
+
+
+/*
+old styles
+*/
 
 a {
     text-decoration: none;
@@ -53,7 +62,7 @@ button {
 
 a:hover,
 button:hover {
-    text-decoration: underline;
+    /*text-decoration: underline;*/
 }
 
 img {

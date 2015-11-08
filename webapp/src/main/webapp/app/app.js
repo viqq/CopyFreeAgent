@@ -5,12 +5,16 @@ define(
     [
         'angularAMD',
         'angular-route',
+        'angular-animate',
+        'angular-aria',
+        'angular-material',
+
         'jquery',
 
         'controllers/main'
     ],
     function (angularAMD) {
-        var app = angular.module('app', ['ngRoute']);
+        var app = angular.module('app', ['ngRoute', 'ngAnimate']);
 
         app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
             $routeProvider

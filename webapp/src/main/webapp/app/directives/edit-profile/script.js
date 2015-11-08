@@ -32,7 +32,7 @@ define([
 
                 $scope.uiTranslations = uiTranslations[$scope.language].registration;
 
-                $scope.formData = angular.copy($scope.currUserData);
+                $scope.formData = angular.copy($scope.currUserInfo);
 
                 $scope.error = '';
 
@@ -40,7 +40,7 @@ define([
                     var data = $scope.$root.toolkit.serialize($scope.formData);
                     $scope.error = '';
 
-                    editUserInfo(data, $scope.currUserData.id)
+                    editUserInfo(data, $scope.currUserInfo.id)
                         .then(function (data) {
                             if (typeof data !== 'object') {
                                 $scope.error = 'Something wrong with response';
@@ -62,7 +62,7 @@ define([
                 };
 
                 $scope.deleteProfile = function () {
-                    deleteUser($scope.currUserData.id)
+                    deleteUser($scope.currUserInfo.id)
                         .success(function (data) {
                             if (typeof data !== 'object') {
                                 $scope.error = 'Something wrong with response';

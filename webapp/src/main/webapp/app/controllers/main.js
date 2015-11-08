@@ -4,68 +4,78 @@
 define(
     [
         'angularAMD',
+
         'resources/toolkit',
-        'resources/ui-translations',
 
         'services/get-user-info',
-        '/app/services/check-user-state.js'
+        'services/check-user-state'
     ],
-    function (angularAMD, toolkit, uiTranslations) {
+    function (angularAMD, toolkit) {
         angularAMD.controller('MainCtrl', [
             '$scope',
             '$q',
             '$route',
+            '$location',
             'getUserInfo',
             'checkUserState',
-            function ($scope, $q, $route, getUserInfo, checkUserState) {
-                $scope.$root.language = 'en';
-                $scope.$root.toolkit = toolkit;
+            function ($scope, $q, $route, $location, getUserInfo, checkUserState) {
 
-                $scope.$root.isLoggedIn = false;
+                $scope.$root.$on("$routeChangeStart", function (event, next, current) {
+                    console.log('start', 'nex:' + next.originalPath, 'curr:' + (current && current.originalPath))
+                });
 
-                $scope.$root.currUserData = {};
+                $scope.$root.$on("$routeChangeSuccess", function (event, next, current) {
+                    console.log('success', 'nex:' + next.originalPath, 'curr:' + (current && current.originalPath))
+                });
 
-                $scope.$root.userPicBaseUrl = '/api/user/getImage/';
-                $scope.$root.userPicUrl = '';
-                $scope.$root.reloadUserPics = function () {
-                    var currUserId = $scope.$root.currUserData.id || '';
-                    $scope.$root.userPicUrl = $scope.$root.userPicBaseUrl +
-                    currUserId +
-                    '?_ts=' + new Date().getTime();
-                };
+                angular.extend($scope.$root, {
+                    language: 'en',
+                    toolkit: toolkit,
+                    isLoggedIn: false,
 
-                var updUserInfErrHndlr = function () {
-                    $scope.$root.isLoggedIn = false;
-                    $scope.$root.currUserData = {};
-                };
+                    currUserInfo: {},
+                    updateUserInfo: function () {
+                        var errHandler = function () {
+                            $scope.$root.isLoggedIn = false;
+                            $scope.$root.currUserInfo = {};
+                        };
 
-                $scope.$root.updateUserInfo = function () {
-                    return $q(function (resolve, reject) {
-                        checkUserState().then(function (data) {
-                            if (!data || !data.data || data.data.error || !data.data.payload) {
-                                reject(data);
+                        return $q(function (resolve, reject) {
+                            checkUserState().then(function (data) {
+                                if (!data || !data.data || data.data.error || !data.data.payload) {
+                                    reject(data);
+                                    return;
+                                }
+
+                                return getUserInfo();
+                            }).then(function (data) {
+                                resolve(data);
+                            }, function (err) {
+                                reject(err);
+                            });
+                        }).then(function (res) {
+                            if (!res || !res.data || !res.data.payload) {
+                                errHandler();
                                 return;
                             }
 
-                            return getUserInfo();
-                        }).then(function (data) {
-                            resolve(data);
-                        }, function (err) {
-                            reject(err);
+                            $scope.$root.isLoggedIn = true;
+                            $scope.$root.currUserInfo = res.data.payload;
+                            $scope.$root.reloadUserPics();
+                        }, function () {
+                            errHandler();
                         });
-                    }).then(function (res) {
-                        if (!res || !res.data || !res.data.payload) {
-                            updUserInfErrHndlr();
-                            return;
-                        }
+                    },
 
-                        $scope.$root.isLoggedIn = true;
-                        $scope.$root.currUserData = res.data.payload;
-                        $scope.$root.reloadUserPics();
-                    }, function () {
-                        updUserInfErrHndlr();
-                    });
-                };
+                    userPicBaseUrl: '/api/user/getImage/',
+                    userPicUrl: '',
+                    reloadUserPics: function () {
+                        var currUserId = $scope.$root.currUserInfo.id || '';
+                        $scope.$root.userPicUrl = $scope.$root.userPicBaseUrl +
+                        currUserId +
+                        '?_ts=' + new Date().getTime();
+                    }
+                });
 
                 $scope.$root.updateUserInfo();
             }

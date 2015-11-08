@@ -7,9 +7,11 @@ define(
 
         'directives/header/script',
         'directives/home/script',
-        'directives/footer/script'
+        'directives/footer/script',
+        'directives/parallax/script'
     ],
     function (angularAMD) {
+
         angularAMD.controller('HomeCtrl', function() {});
     }
 );

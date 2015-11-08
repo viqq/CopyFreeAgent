@@ -6,16 +6,24 @@ require.config({
 
     // alias libraries paths.  Must set 'angular'
     paths: {
-        'angular': 'libs/angular',
-        'angular-route': 'libs/angular-route',
+        'angular': 'libs/angular.min',
+        'angular-route': 'libs/angular-route.min',
+        'angular-animate': 'libs/angular-animate.min',
+        'angular-aria': 'libs/angular-aria.min',
+
         'angularAMD': 'libs/angularAMD',
-        'jquery': 'libs/jquery'
+        'angular-material': 'libs/angular-material',
+
+        'jquery': 'libs/jquery.min'
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim
     shim: {
         'angularAMD': ['angular'],
-        'angular-route': ['angular']
+        'angular-route': ['angular'],
+        'angular-animate': ['angular'],
+        'angular-aria': ['angular'],
+        'angular-material': ['angular']
     },
 
     // kick start application
