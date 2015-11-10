@@ -1,73 +1,73 @@
-#registration .header {
-    color: #00A99D;
-    font-size: 18px;
-    text-align: center;
-    padding: 20px 0px;
-    font-weight: bold;
-}
+/*#registration .header {*/
+    /*color: #00A99D;*/
+    /*font-size: 18px;*/
+    /*text-align: center;*/
+    /*padding: 20px 0px;*/
+    /*font-weight: bold;*/
+/*}*/
 
-#registration form {
-    width: 325px;
-    margin: auto;
-}
+/*#registration form {*/
+    /*width: 325px;*/
+    /*margin: auto;*/
+/*}*/
 
-#registration input, #registration button {
-    outline: none;
-    display: block;
-    margin: auto;
-    font-family: Raleway, "Helvetica Neue", Helvetica,Arial,sans-serif;
-    border: none;
-    width: 100%;
-}
+/*#registration input, #registration button {*/
+    /*outline: none;*/
+    /*display: block;*/
+    /*margin: auto;*/
+    /*font-family: Raleway, "Helvetica Neue", Helvetica,Arial,sans-serif;*/
+    /*border: none;*/
+    /*width: 100%;*/
+/*}*/
 
-#registration input {
-    margin-bottom: 20px;
-    font-size: 16px;
-    border-bottom: 1px solid lightgray;
-}
+/*#registration input {*/
+    /*margin-bottom: 20px;*/
+    /*font-size: 16px;*/
+    /*border-bottom: 1px solid lightgray;*/
+/*}*/
 
-#registration button {
-    background-color: #00A99D;
-    color: white;
-    font-size: 16px;
-    padding: 10px 0px;
-    border-radius: 5px;
-    min-width: 300px;
-    margin-top: 50px;
-}
+/*#registration button {*/
+    /*background-color: #00A99D;*/
+    /*color: white;*/
+    /*font-size: 16px;*/
+    /*padding: 10px 0px;*/
+    /*border-radius: 5px;*/
+    /*min-width: 300px;*/
+    /*margin-top: 50px;*/
+/*}*/
 
-#registration h1 {
-    text-align: center;
-}
+/*#registration h1 {*/
+    /*text-align: center;*/
+/*}*/
 
-#registration .socials p {
-    margin: 0px;
-    font-size: 14px;
-    color: lightslategray;
-}
+/*#registration .socials p {*/
+    /*margin: 0px;*/
+    /*font-size: 14px;*/
+    /*color: lightslategray;*/
+/*}*/
 
-#registration .socials * {
-    display: inline-block;
-}
+/*#registration .socials * {*/
+    /*display: inline-block;*/
+/*}*/
 
-#registration .socials > div {
-    margin: 0px 30px;
-}
+/*#registration .socials > div {*/
+    /*margin: 0px 30px;*/
+/*}*/
 
-#registration .socials {
-    text-align: center;
-    padding: 20px 0px;
-}
+/*#registration .socials {*/
+    /*text-align: center;*/
+    /*padding: 20px 0px;*/
+/*}*/
 
-#registration .info {
-    text-align: center;
-    font-size: 14px;
-    color: lightslategray;
-    padding-bottom: 20px;
-}
+/*#registration .info {*/
+    /*text-align: center;*/
+    /*font-size: 14px;*/
+    /*color: lightslategray;*/
+    /*padding-bottom: 20px;*/
+/*}*/
 
-#registration .error {
-    color: red;
-    text-align: center;
-    font-weight: bold;
-}
+/*#registration .error {*/
+    /*color: red;*/
+    /*text-align: center;*/
+    /*font-weight: bold;*/
+/*}*/

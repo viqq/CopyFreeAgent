@@ -189,7 +189,8 @@ span {
 
 .subtitle-group {
     text-align: center;
-    position: relative;
+    position: absolute;
+    width: 100%;
     z-index: 3;
     top: 63%;
     color: white;
@@ -240,12 +241,6 @@ span {
 
 .subtitle-group .mobile-title {
     display: none;
-}
-
-[parallax-layer].paralax-transition {
-    transition: transform 0.2s linear 0s;
-    -webkit-transition: transform 0.2s linear 0s;
-    -moz-transition: transform 0.2s linear 0s;
 }
 
 @media (max-width: 1023px) {
@@ -342,3 +337,4 @@ span {
         vertical-align: bottom;
     }
 }
+

@@ -1,12 +1,14 @@
-/*@font-face {*/
-    /*font-family: Raleway;*/
-    /*src: url(../fonts/Raleway-Regular.ttf);*/
-/*}*/
-
 html,
 body,
 div.view {
     height: 100%;
+}
+
+.view {
+    background-image: url(/img/hex-loader.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: white;
 }
 
 .valign-container {
@@ -38,60 +40,4 @@ body {
     position: relative;
     min-height: 100%;
     background-color: lightgray;
-}
-
-
-
-
-
-
-
-/*
-old styles
-*/
-
-a {
-    text-decoration: none;
-    display: inline-block;
-}
-
-a,
-button {
-    cursor: pointer;
-}
-
-a:hover,
-button:hover {
-    /*text-decoration: underline;*/
-}
-
-img {
-    vertical-align: middle;
-}
-
-.main-container {
-    min-height: 100%;
-    background-color: white;
-}
-
-.main-container > * {
-    padding: 82px 0px;
-}
-
-.main-container > * > * {
-    padding: 30px;
-}
-
-.main-container,
-.main-wrapper {
-    max-width: 800px;
-    margin: auto;
-}
-
-.main-wrapper > * {
-    background-color: white;
-}
-
-.valign-helper {
-    height: 100%;
 }
