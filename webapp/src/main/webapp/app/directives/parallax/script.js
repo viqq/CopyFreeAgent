@@ -74,7 +74,7 @@ define(
                             };
 
 
-                        setTimeout(init, 10000);
+                        setTimeout(init, 4000);
                     }
                 ]
             };

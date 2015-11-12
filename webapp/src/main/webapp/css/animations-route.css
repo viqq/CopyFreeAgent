@@ -1,7 +1,7 @@
 /*Routing Animations*/
 .view.ng-enter,
 .view.ng-leave {
-    transition: all 10s ease-in-out;
+    transition: all 4s ease-in-out;
     /*position: absolute;*/
     width: 100%;
 }
@@ -44,9 +44,11 @@
 
 /*Fade in rules*/
 .view.ng-enter .fade-in {
-    transition: all 0.5s ease-in-out;
+    transition:
+    opacity 0.5s ease-in-out,
+    transform 0.5s ease-in-out;
     transform: translate(0px, 50px);
-    /*opacity: 0.01;*/
+    opacity: 0;
 }
 
 .view.ng-enter.ng-enter-active .fade-in {
@@ -56,11 +58,11 @@
 
 
 .view.ng-enter .fade-in.fade-in-order-1 {
-    transition-delay: 20s;
+    transition-delay: 1s;
 }
 
 .view.ng-enter .fade-in.fade-in-order-2 {
-    transition-delay: 20.5s;
+    transition-delay: 1.5s;
 }
 
 .view.ng-enter .fade-in.fade-in-order-3 {
