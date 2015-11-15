@@ -52,7 +52,7 @@ span {
     width: 0%;
     height: 1px;
     background-color: #fa2044;
-    transition: width 0.3s linear 0.1s;
+    transition: width 0.1s linear 0.1s;
     width: 0%;
 }
 
@@ -90,7 +90,8 @@ span {
 }
 
 .inner-frame,
-.title-group {
+.title-group,
+.net-group {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -107,10 +108,25 @@ span {
     box-sizing: border-box;
 }
 
+.net-group {
+    padding: 15px;
+    box-sizing: border-box;
+    top: 0px;
+    left: 0px;
+}
+
+.net-group > div {
+    height: 100%;
+    width: 100%;
+    background-image: url(/img/home/grid.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .title-group {
     height: 100%;
     text-align: center;
-    padding-right: 10%;
     box-sizing: border-box;
 }
 
@@ -182,7 +198,7 @@ span {
 
 .title-group p.text-agent {
     color: white;
-    top: 30%;
+    top: 34%;
     left: 1vh;
     z-index: 2;
 }
@@ -220,14 +236,14 @@ span {
 }
 
 .subtitle-group #register {
-    background-color: #2272b5;
-    border: 2px solid #2272b5;
+    background-color: #139cb5;
+    border: 2px solid #139cb5;
 }
 
 .subtitle-group #register:active,
 .subtitle-group #register:hover {
-    background-color: #2272b5;
-    border: 2px solid #429ce7;
+    background-color: #17a7c1;
+    border: 2px solid #29b6cf;
 }
 
 .subtitle-group p {
@@ -236,7 +252,6 @@ span {
 
 .subtitle-group > div {
     display: inline-block;
-    margin-right: 8%;
 }
 
 .subtitle-group .mobile-title {

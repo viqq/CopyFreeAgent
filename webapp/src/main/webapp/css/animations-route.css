@@ -1,33 +1,63 @@
-/*Routing Animations*/
+/*General animation styles*/
 .view.ng-enter,
 .view.ng-leave {
-    transition: all 4s ease-in-out;
-    /*position: absolute;*/
+    position: absolute;
+    top: 0px;
     width: 100%;
 }
 
+.view.ng-enter {
+    transition: all 2.9s ease-in-out;
+    /*z-index: -100;*/
+}
+
 .view.ng-leave {
-    top: 0%;
-    left: 0%;
+    transition: all 0.5s ease-in-out;
+    z-index: 100;
+}
+
+/*General enter styles*/
+
+.view.ng-enter > div {
+    transition:
+    opacity 0.5s ease-in-out 0.7s,
+    transform 0.5s ease-in-out 0.7s;
+
+    transform: translate(0px, 50px);
+    opacity: 0;
+}
+
+.view.ng-enter.ng-enter-active > div {
+    transform: translate(0px, 0px);
+    opacity: 1;
+}
+
+/*Home page enter overriding*/
+.view.ng-enter > #home {
+    transition: initial;
+}
+
+/*General leave styles*/
+.view.ng-leave {
+    transition:
+    opacity 0.5s ease-in-out,
+    transform 0.5s ease-in-out;
+
+    transform: translate(0px, 0px);
+    opacity: 1;
 }
 
 .view.ng-leave.ng-leave-active {
-    top: 50%;
-    left: 50%;
+    transform: translate(0px, 50px);
+    opacity: 0;
 }
-
-/*.view.ng-enter #home,*/
-/*.view.ng-leave #home {*/
-    /*position: absolute;*/
-/*}*/
-
 
 /*Home inner frame*/
 .view.ng-enter #home > .inner-frame,
 .view.ng-leave #home > .inner-frame {
     transition:
-    transform ease-in-out 0.5s 0s,
-    width ease-in-out 0.5s 0.5s;
+    transform 0.5s ease-in-out 0.7s,
+    width 0.5s ease-in-out 1.2s;
 
     display: block;
     margin: auto;
@@ -62,27 +92,31 @@
 }
 
 .view.ng-enter .fade-in.fade-in-order-2 {
-    transition-delay: 1.5s;
+    transition-delay: 1.2s;
 }
 
 .view.ng-enter .fade-in.fade-in-order-3 {
-    transition-delay: 2s;
+    transition-delay: 1.4s;
 }
 
 .view.ng-enter .fade-in.fade-in-order-4 {
-    transition-delay: 2.5s;
+    transition-delay: 1.6s;
 }
 
 .view.ng-enter .fade-in.fade-in-order-5 {
-    transition-delay: 3s;
+    transition-delay: 1.8s;
 }
 
 .view.ng-enter .fade-in.fade-in-order-6 {
-    transition-delay: 3.5s;
+    transition-delay: 2s;
 }
 
 .view.ng-enter .fade-in.fade-in-order-7 {
-    transition-delay: 4s;
+    transition-delay: 2.2s;
+}
+
+.view.ng-enter .fade-in.fade-in-order-8 {
+    transition-delay: 2.4s;
 }
 
 /*Fixes*/

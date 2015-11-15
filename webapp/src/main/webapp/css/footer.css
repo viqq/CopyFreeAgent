@@ -1,34 +1,34 @@
-/*#footer {*/
-    /*background-color: #484848;*/
-    /*height: 82px;*/
-    /*color: white;*/
-    /*width: 100%;*/
-    /*border-top: 3px solid #00A99D;*/
-    /*margin-top: -85px;*/
-    /*position: relative;*/
-    /*z-index: 1;*/
-/*}*/
+#footer {
+    background-color: #484848;
+    height: 82px;
+    color: white;
+    width: 100%;
+    border-top: 3px solid #00A99D;
+    margin-top: -85px;
+    position: relative;
+    z-index: 1;
+}
 
-/*#footer .main-wrapper {*/
-    /*padding: 0px 20px;*/
-    /*height: 100%;*/
-/*}*/
+#footer .main-wrapper {
+    padding: 0px 20px;
+    height: 100%;
+}
 
-/*#footer .main-wrapper > * {*/
-    /*background-color: transparent;*/
-/*}*/
+#footer .main-wrapper > * {
+    background-color: transparent;
+}
 
-/*#footer .socials {*/
-    /*padding-right: 30px;*/
-    /*margin-right: 10px;*/
-    /*border-right: 1px solid white;*/
-/*}*/
+#footer .socials {
+    padding-right: 30px;
+    margin-right: 10px;
+    border-right: 1px solid white;
+}
 
-/*#footer .float-right-wrapper {*/
-    /*float: right;*/
-    /*height: 100%;*/
-/*}*/
+#footer .float-right-wrapper {
+    float: right;
+    height: 100%;
+}
 
-/*#footer .line {*/
+#footer .line {
 
-/*}*/
+}

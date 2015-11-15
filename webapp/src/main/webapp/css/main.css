@@ -1,14 +1,22 @@
 html,
 body,
-div.view {
+.view {
     height: 100%;
 }
 
-.view {
+body {
+    font-family: Raleway, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0px;
+    position: relative;
+    min-height: 100%;
     background-image: url(/img/hex-loader.gif);
     background-position: center;
     background-repeat: no-repeat;
     background-color: white;
+}
+
+.view {
+    position:relative;
 }
 
 .valign-container {
@@ -34,10 +42,3 @@ div.view {
     height: 100%;
 }
 
-body {
-    font-family: Raleway, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    margin: 0px;
-    position: relative;
-    min-height: 100%;
-    background-color: lightgray;
-}
