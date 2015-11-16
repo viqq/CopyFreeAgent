@@ -121,16 +121,14 @@ a {
 
 /*Header*/
 
-#logo {
-    transition: all linear 0.2s;
-}
-
-#logo:hover {
+#logo  > img:hover {
     opacity: 0.8;
 }
 
 #logo > img {
     height: 48px;
+    transition: opacity linear 0.2s;
+
 }
 
 #login {

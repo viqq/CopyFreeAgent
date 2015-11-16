@@ -38,23 +38,23 @@
 }
 
 /*General leave styles*/
-.view.ng-leave {
-    transition:
-    opacity 0.5s ease-in-out,
-    transform 0.5s ease-in-out;
+/*.view.ng-leave {*/
+    /*transition:*/
+    /*opacity 0.5s ease-in-out,*/
+    /*transform 0.5s ease-in-out;*/
 
-    transform: translate(0px, 0px);
-    opacity: 1;
-}
+    /*transform: translate(0px, 0px);*/
+    /*opacity: 1;*/
+/*}*/
 
-.view.ng-leave.ng-leave-active {
-    transform: translate(0px, 50px);
-    opacity: 0;
-}
+/*.view.ng-leave.ng-leave-active {*/
+    /*transform: translate(0px, 50px);*/
+    /*opacity: 0;*/
+/*}*/
 
 /*Home inner frame*/
-.view.ng-enter #home > .inner-frame,
-.view.ng-leave #home > .inner-frame {
+.view.ng-enter #home > .inner-frame/*,
+.view.ng-leave #home > .inner-frame*/ {
     transition:
     transform 0.5s ease-in-out 0.7s,
     width 0.5s ease-in-out 1.2s;
@@ -125,4 +125,44 @@
     top: 0%;
     width: 100%;
     height: 100%;
+}
+
+/**/
+#animation-helper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    display: none;
+    top:0px;
+    z-index: 101;
+}
+
+#animation-helper .middle {
+    background-color: transparent;
+    /*width: 100%;*/
+    /*height: 100%;*/
+}
+
+#animation-helper td {
+    background-color: white;
+    padding: 0;
+}
+
+.view.ng-leave #animation-helper {
+    display: table;
+}
+
+.view.ng-leave #animation-helper .middle {
+    transition:
+    width 0.5s ease-in-out,
+    height 0.5s ease-in-out;
+
+    width: 100%;
+    height: 100%;
+}
+
+.view.ng-leave.ng-leave-active #animation-helper .middle {
+    width: 0%;
+    height: 0%;
 }
