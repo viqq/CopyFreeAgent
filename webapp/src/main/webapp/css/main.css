@@ -15,8 +15,13 @@ body {
     background-color: white;
 }
 
+a {
+    text-decoration: none;
+}
+
 .view {
     position:relative;
+    background-color: white;
 }
 
 .valign-container {
@@ -42,3 +47,121 @@ body {
     height: 100%;
 }
 
+
+/*Field inputs*/
+.form-field {
+    padding-top: 1.5em;
+    position: relative;
+}
+
+.form-field input {
+    padding: 0px;
+    padding-bottom: 0.2em;
+    font-size: 1em;
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px #cccccc solid;
+}
+
+.form-field input:focus {
+    outline: none;
+}
+
+.form-field input:after {
+    content: '';
+    display: block;
+    width: 0%;
+    height: 1px;
+    background-color: #fa2044;
+    transition: width 0.1s linear 0.1s;
+    width: 0%;
+}
+
+.form-field label {
+    color: #787878;
+    position: absolute;
+    top: 1.5em;
+    transition:
+    font-size 0.1s linear,
+    top 0.1s linear;
+    display:none;
+}
+
+.form-field input:empty+label {
+    display: block;
+}
+
+.form-field input:focus+label {
+    top: 0%;
+    font-size:75%;
+}
+
+.form-field > * {
+    display: block;
+    width: 100%;
+}
+
+
+
+.form-field .underline {
+    position: relative;
+    background-color: #fa2044;
+    height: 1px;
+    top:-1px;
+    z-index:1;
+    width: 0px;
+    transition: width 0.1s linear,;
+}
+
+.form-field input:focus+label+.underline {
+    width: 100%;
+}
+
+/*Header*/
+
+#logo {
+    transition: all linear 0.2s;
+}
+
+#logo:hover {
+    opacity: 0.8;
+}
+
+#logo > img {
+    height: 48px;
+}
+
+#login {
+    float: right;
+}
+
+#login > * {
+    vertical-align: baseline;
+}
+
+#login > img {
+    height: 16px;
+    margin-right: 7px;
+}
+
+#login > span {
+    color: white;
+    font-family: RobotoLight;
+}
+
+#login > span:after {
+    content: '';
+    display: block;
+    width: 0%;
+    height: 1px;
+    background-color: #fa2044;
+    transition: width 0.1s linear 0.1s;
+    width: 0%;
+}
+
+#login:hover > span:after,
+#login:active > span:after {
+    width: 100%;
+}
