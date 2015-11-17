@@ -1,3 +1,57 @@
-<dir-header></dir-header>
-<dir-registration></dir-registration>
-<dir-footer></dir-footer>
+<div id="registration">
+    <div id="header">
+        <a id="logo" href="/" class="">
+            <img src="/img/icon-logo.svg">
+        </a>
+
+        <a id="login" href="/login" class="">
+            <img src="/img/icons/user_dark.svg">
+            <span>LOGIN</span>
+        </a>
+    </div>
+    <form id="reg-form">
+        <md-input-container>
+            <label>Email</label>
+            <input ng-model="formData.email">
+        </md-input-container>
+
+
+        <p class="error">{{ error }}</p>
+
+        <div class="form-field" ng-class="{}">
+            <input ng-model="formData.email" class="">
+            <label>
+                Email
+            </label>
+            <div class="underline"></div>
+            <span class="error">error</span>
+        </div>
+
+
+
+
+        <input
+                type="password"
+                placeholder="{{uiTranslations.placeholder_password}}"
+                name="password"
+                id="passwordInput"
+                ng-model="formData.password"/>
+
+        <input
+                type="password"
+                placeholder="{{uiTranslations.placeholder_password}}"
+                name="password"
+                id="confirmPassInput"
+                ng-model="confirmPass"/>
+
+        <input
+                placeholder="{{uiTranslations.placeholder_first_name}}"
+                name="firstName"
+                id="firstNameInput"
+                ng-model="formData.firstName"/>
+
+        <!--here we should select sports-->
+        <button>SUBMIT</button>
+    </form>
+</div>
+<link rel="stylesheet" href="/css/registration.css"/>

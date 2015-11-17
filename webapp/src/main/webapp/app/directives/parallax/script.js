@@ -18,25 +18,34 @@ define(
                     '$element',
                     '$attrs',
                     function ($scope, $document, $element, $attrs) {
-                        var layerNum = parseInt($attrs.parallaxLayer, 10),
-                            xCoef = 0.013,
-                            yCoef = 0.01,
-                            wCoef = 0.5,
-                            hCoef = 0.5,
-                            timeGap = 200,
-                            lastTimestamp = 0;
+                        var X_COEF = 0.013,
+                            Y_COEF = 0.01,
+                            W_COEF = 0.5,
+                            H_COEF = 0.5,
+                            TIME_GAP = 200,
 
+                            layerNum = parseInt($attrs.parallaxLayer, 10),
+                            transitionDuration = TIME_GAP / 2 / 1000,
+                            lastTimestamp = 0,
 
-                        $document
-                            .on('mousemove', function (event) {
-                                if (event.timestamp - lastTimestamp < (timeGap + 1) * 2) {
+                            init = function() {
+                                $document
+                                    .on('mousemove', parallaxTransformation)
+                                    .on('mouseleave', addTransition)
+                                    .on('mouseenter', removeTransition);
+
+                                addTransition();
+                                removeTransition();
+                            },
+                            parallaxTransformation = function(event) {
+                                if (event.timestamp - lastTimestamp < (TIME_GAP + 1) * 2) {
                                     return;
                                 }
 
                                 lastTimestamp = event.timestamp;
 
-                                var deltaX = xCoef * layerNum * (event.clientX - window.innerWidth * wCoef),
-                                    deltaY = yCoef * layerNum * (event.clientY - window.innerHeight * hCoef),
+                                var deltaX = X_COEF * layerNum * (event.clientX - window.innerWidth * W_COEF),
+                                    deltaY = Y_COEF * layerNum * (event.clientY - window.innerHeight * H_COEF),
                                     cssString;
 
                                 deltaX = Math.round(deltaX);
@@ -50,20 +59,22 @@ define(
                                     '-ms-transform': cssString,
                                     '-moz-transform': cssString
                                 });
-                            })
-                            .on('mouseleave', function () {
-                                $element.addClass('paralax-transition');
-                            })
-                            .on('mouseenter', function () {
-                                setTimeout(function () {
-                                    $element.removeClass('paralax-transition');
-                                }, timeGap - 1);
-                            });
+                            },
+                            addTransition = function() {
+                                $element.css({
+                                    'transition': 'transform ' + transitionDuration + 's linear'
+                                })
+                            },
+                            removeTransition = function() {
+                                setTimeout(function() {
+                                    $element.css({
+                                        'transition': 'initial'
+                                    })
+                                }, TIME_GAP)
+                            };
 
-                        $element.addClass('paralax-transition');
-                        setTimeout(function () {
-                            $element.removeClass('paralax-transition');
-                        }, timeGap - 1);
+
+                        setTimeout(init, 4000);
                     }
                 ]
             };

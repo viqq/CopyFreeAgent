@@ -5,13 +5,10 @@ define(
     [
         'angularAMD',
 
-        'directives/header/script',
-        'directives/home/script',
-        'directives/footer/script',
-        'directives/parallax/script'
+        'directives/parallax/script',
+        'css!/css/home.css'
     ],
     function (angularAMD) {
-
         angularAMD.controller('HomeCtrl', function() {});
     }
 );
