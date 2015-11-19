@@ -1,0 +1,20 @@
+<div class="form-field">
+    <input ng-model="value" ng-blur="validate()">
+    <label ng-class="{ 'not-empty': value }">
+        {{ label }}
+    </label>
+
+    <div class="underline"></div>
+    <div class="hint">
+    </div>
+    <div class="error" ng-hide="isValid">
+        <div class="icon">
+            <img src="/img/icons/alarm.svg">
+        </div>
+        <div class="text">
+            <span>
+                {{error}}
+            </span>
+        </div>
+    </div>
+</div>

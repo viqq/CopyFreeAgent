@@ -127,7 +127,7 @@ span {
 
 .title-group > div > div.player {
     background-image: url(/img/home/football_player.png);
-    z-index: 1;
+    z-index: 2;
 }
 
 .title-group > div > div.ball {
@@ -173,14 +173,14 @@ span {
     color: #fa2044;
     top: 33%;
     left: -17vh;
-    z-index: 0;
+    z-index: 1;
 }
 
 .title-group p.text-agent {
     color: white;
     top: 34.5%;
     left: 1.8vh;
-    z-index: 2;
+    z-index: 3;
     text-shadow: 0px -3px 20px rgba(0,0,0,0.5);
 }
 

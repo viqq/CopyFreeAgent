@@ -1,0 +1,92 @@
+.form-field {
+    padding-top: 1em;
+    position: relative;
+}
+
+.form-field input {
+    padding: 0px;
+    padding-bottom: 0.2em;
+    font-size: 1em;
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px #cccccc solid;
+}
+
+.form-field input:focus {
+    outline: none;
+}
+
+.form-field input:after {
+    content: '';
+    display: block;
+    width: 0%;
+    height: 1px;
+    background-color: #fa2044;
+    transition: width 0.1s linear 0.1s;
+    width: 0%;
+}
+
+.form-field label {
+    color: #787878;
+    position: absolute;
+    top: 1em;
+    transition:
+    font-size 0.1s linear,
+    top 0.1s linear;
+    display: block;
+}
+
+.form-field input:focus + label,
+.form-field label.not-empty {
+    top: 0%;
+    font-size:75%;
+}
+
+.form-field > * {
+    display: block;
+    width: 100%;
+}
+
+.form-field .underline {
+    position: relative;
+    background-color: #fa2044;
+    height: 1px;
+    top:-1px;
+    z-index:1;
+    width: 0px;
+    transition: width 0.2s linear;
+}
+
+.form-field input:focus ~ .underline {
+    width: 100%;
+}
+
+.form-field .error {
+    padding-top: 5px;
+    display: table;
+}
+
+.form-field .error > * {
+    display:table-cell;
+}
+
+.form-field .error > * > * {
+    vertical-align: top;
+}
+
+.form-field .error .icon {
+    width: 20px
+}
+
+.form-field .error img {
+    height: 12px;
+}
+
+.form-field .error span {
+    font-family: Roboto;
+    font-size: .625em;
+    color: #fa2044;
+    display: inline-table;
+}

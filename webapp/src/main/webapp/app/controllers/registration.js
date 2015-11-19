@@ -6,7 +6,9 @@ define(
         'angularAMD',
 
         'services/registration',
-        'services/login'
+        'services/login',
+
+        'directives/field-text/script'
     ],
     function (angularAMD, uiTranslations) {
         var controller = ['$scope', '$location', 'registration', 'login', function ($scope, $location, registration, login) {
@@ -15,7 +17,7 @@ define(
                 return;
             }
 
-            $scope.uiTranslations = uiTranslations[$scope.language].registration;
+            //$scope.uiTranslations = uiTranslations[$scope.language].registration;
 
             $scope.formData = {};
 
