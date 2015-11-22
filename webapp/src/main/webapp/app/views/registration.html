@@ -9,37 +9,42 @@
             <span>LOGIN</span>
         </a>
     </div>
-    <form id="reg-form">
-        <dir-field-text ng-model="formData.email"
-                        field-label="Email"
-                        field-hint="It will be used for authentication and notifications"
-                        field-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"
-                        field-error="Invalid email">
+    <form id="reg-form" ng-submit="registrationHandler()">
+
+        <dir-field-text field-model="form.firstName"
+                        field-label="Name"
+                        field-hint=""
+                        field-pattern="^([a-z0-9_-]).{3,15}$"
+                        field-error="Имя может содержать только цифры, буквы, подчеркивание и тире. Длина должна быть 3-15 символов.">
         </dir-field-text>
 
+        <dir-field-text field-model="form.email"
+                        field-label="Email"
+                        field-hint=""
+                        field-pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@([a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])$"
+                        field-error="Некорректный адрес электронной почты">
+        </dir-field-text>
 
-        <input
-                type="password"
-                placeholder="{{uiTranslations.placeholder_password}}"
-                name="password"
-                id="passwordInput"
-                ng-model="formData.password"/>
+        <!--field-pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"-->
 
-        <input
-                type="password"
-                placeholder="{{uiTranslations.placeholder_password}}"
-                name="password"
-                id="confirmPassInput"
-                ng-model="confirmPass"/>
+        <dir-field-text field-model="form.password"
+                        field-label="Password"
+                        field-type="password"
+                        field-hint=""
+                        field-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"
+                        field-error="Пароль может содержать только цифры и буквы, быть длиной 6-20 символов и содержать хотя бы одну цифру и заглавную букву">
+        </dir-field-text>
 
-        <input
-                placeholder="{{uiTranslations.placeholder_first_name}}"
-                name="firstName"
-                id="firstNameInput"
-                ng-model="formData.firstName"/>
+        <dir-field-text field-model="passwordConfirm"
+                        field-label="Password confirm"
+                        field-type="password"
+                        field-hint=""
+                        field-pattern=""
+                        field-error="Пароли должны совпадать"
+                        field-validation="confPassValidation">
+        </dir-field-text>
 
-        <!--here we should select sports-->
-        <button>SUBMIT</button>
+        <button class="btn primary">SUBMIT</button>
     </form>
 </div>
 <link rel="stylesheet" href="/css/registration.css"/>

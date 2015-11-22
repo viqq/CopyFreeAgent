@@ -1,6 +1,7 @@
 .form-field {
-    padding-top: 1em;
+    padding-top: 1.5em;
     position: relative;
+    margin: 5px 0;
 }
 
 .form-field input {
@@ -18,30 +19,20 @@
     outline: none;
 }
 
-.form-field input:after {
-    content: '';
-    display: block;
-    width: 0%;
-    height: 1px;
-    background-color: #fa2044;
-    transition: width 0.1s linear 0.1s;
-    width: 0%;
-}
-
 .form-field label {
     color: #787878;
     position: absolute;
-    top: 1em;
+    top: 1.5em;
     transition:
     font-size 0.1s linear,
     top 0.1s linear;
     display: block;
 }
 
-.form-field input:focus + label,
-.form-field label.not-empty {
+.form-field.focused label,
+.form-field.not-empty label {
     top: 0%;
-    font-size:75%;
+    /*font-size:75%;*/
 }
 
 .form-field > * {
@@ -59,13 +50,18 @@
     transition: width 0.2s linear;
 }
 
-.form-field input:focus ~ .underline {
+.form-field.focused .underline {
     width: 100%;
 }
 
 .form-field .error {
     padding-top: 5px;
     display: table;
+    visibility: hidden;
+}
+
+.form-field.invalid .error {
+    visibility: visible;
 }
 
 .form-field .error > * {
@@ -89,4 +85,18 @@
     font-size: .625em;
     color: #fa2044;
     display: inline-table;
+}
+
+
+.form-field .hint,
+.form-field.invalid .hint {
+    display: block;
+    font-family: Roboto;
+    font-size: .625em;
+
+    visibility: hidden;
+}
+
+.form-field.focused .hint {
+    visibility: visible;;
 }
