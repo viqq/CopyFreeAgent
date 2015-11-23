@@ -1,6 +1,7 @@
 /*General animation styles*/
 .view.ng-enter,
 .view.ng-leave {
+    overflow: hidden;
     position: absolute;
     top: 0px;
     width: 100%;

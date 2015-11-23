@@ -5,7 +5,7 @@ define(
     [
         'angularAMD',
 
-        'css!/app/directives/field-text/styles.css'
+        'css!/app/directives/form-field/styles.css'
     ],
     function (angularAMD) {
         var ctrl =  [
@@ -51,14 +51,13 @@ define(
                     validate();
                     evt.targetScope.validationResults.push($scope.isValid.toString());
                 });
-
             }
         ];
 
-        angularAMD.directive('dirFieldText', [function () {
+        angularAMD.directive('dirFormField', [function () {
             return {
                 restrict: 'E',
-                templateUrl: 'app/directives/field-text/template.html',
+                templateUrl: 'app/directives/form-field/template.html',
                 replace: true,
                 scope: {
                     value: '=fieldModel',

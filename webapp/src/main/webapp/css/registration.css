@@ -7,3 +7,19 @@
 #registration #login > span {
     color: black;
 }
+
+#form-wrapper {
+    padding: 45px;
+    border: 1px lightgray solid;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 465px;
+    box-sizing: border-box;
+    margin: auto;
+    margin-top: 20px;
+}
+
+#registration button.btn.primary {
+    display: block;
+    margin: auto;
+}

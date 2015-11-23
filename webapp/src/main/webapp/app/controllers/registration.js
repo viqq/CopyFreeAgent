@@ -8,7 +8,7 @@ define(
         'services/registration',
         'services/login',
 
-        'directives/field-text/script'
+        'directives/form-field/script'
     ],
     function (angularAMD) {
         var controller = [
@@ -87,10 +87,6 @@ define(
                             throw err;
                         });
                     }
-                });
-
-                $scope.$on('form-field-validated', function() {
-                    console.log(arguments);
                 });
             }
         ];

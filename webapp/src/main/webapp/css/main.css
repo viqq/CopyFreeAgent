@@ -21,6 +21,14 @@ a {
     text-decoration: none;
 }
 
+span {
+    color: black;
+    font-family: RobotoLight;
+    font-size: 1em;
+    display: inline-block;
+    letter-spacing: 0.1em;
+}
+
 .view {
     position:relative;
     background-color: white;
@@ -53,8 +61,8 @@ a {
 /*Field inputs*/
 .btn {
     font-size: 0.9375em;
-
-    padding: 1.25em 3em;
+    line-height: 1;
+    padding: 1em 3em;
     border-radius: 30px;
     font-family: RobotoMedium;
     cursor: pointer;

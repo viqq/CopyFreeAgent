@@ -12,10 +12,6 @@ body {
 
 span {
     color: white;
-    font-family: RobotoLight;
-    font-size: 1em;
-    display: inline-block;
-    letter-spacing: 0.1em;
 }
 
 #home #header {
