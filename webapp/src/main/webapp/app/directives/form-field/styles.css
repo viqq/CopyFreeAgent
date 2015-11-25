@@ -2,9 +2,12 @@
     padding-top: 1.5em;
     position: relative;
     margin: 5px 0;
+    height: 2.5em;
+    overflow: hidden;
 }
 
 .form-field input {
+    height: 1em;
     padding: 0px;
     padding-bottom: 0.2em;
     font-size: 1em;
@@ -44,6 +47,7 @@
     position: relative;
     background-color: #fa2044;
     height: 1px;
+    margin-bottom: -1px;
     top:-1px;
     z-index:1;
     width: 0px;
@@ -55,7 +59,7 @@
 }
 
 .form-field .error {
-    padding-top: 5px;
+    padding-top: 0.25em;
     display: table;
     visibility: hidden;
 }
@@ -83,6 +87,7 @@
 .form-field .error span {
     font-family: Roboto;
     font-size: .625em;
+    line-height: 1.2;
     color: #fa2044;
     display: inline-table;
 }
@@ -98,5 +103,5 @@
 }
 
 .form-field.focused .hint {
-    visibility: visible;;
+    visibility: visible;
 }

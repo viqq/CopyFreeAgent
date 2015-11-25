@@ -9,10 +9,8 @@ require.config({
         'angular': 'libs/angular.min',
         'angular-route': 'libs/angular-route.min',
         'angular-animate': 'libs/angular-animate.min',
-        'angular-aria': 'libs/angular-aria.min',
 
         'angularAMD': 'libs/angularAMD',
-        'angular-material': 'libs/angular-material',
 
         'jquery': 'libs/jquery.min',
 

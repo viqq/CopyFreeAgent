@@ -12,39 +12,60 @@
 
     <div id="form-wrapper">
         <form id="reg-form" ng-submit="registrationHandler()">
+            <h1 class="page-header">REGISTRATION</h1>
+
+            <div class="socials">
+                <span>REGISTER WITH</span>
+
+                <span>|</span>
+
+                <a>
+                    <img src="/img/icons/vk_dark.svg">
+                </a>
+                <a>
+                    <img src="/img/icons/twitter_dark.svg">
+                </a>
+                <a>
+                    <img src="/img/icons/facebook_dark.svg">
+                </a>
+            </div>
+
+            <p class="subtitle">
+                Введите, пожалуйста, данные необходимые для регистрации.
+            </p>
 
             <dir-form-field field-model="form.firstName"
                             field-label="Name"
                             field-hint=""
                             field-pattern="^([a-z0-9_-]).{3,15}$"
-                            field-error="Имя может содержать только цифры, буквы, подчеркивание и тире. Длина должна быть 3-15 символов.">
+                            field-error="Только цифры и буквы. Длина 3-15 знаков.">
             </dir-form-field>
 
             <dir-form-field field-model="form.email"
                             field-label="Email"
                             field-hint=""
                             field-pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@([a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])$"
-                            field-error="Некорректный адрес электронной почты">
+                            field-error="Некорректный адрес электронной почты.">
             </dir-form-field>
 
-            <!--field-pattern="^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$"-->
+            <div class="fields-row">
+                <dir-form-field field-model="form.password"
+                                field-label="Password"
+                                field-type="password"
+                                field-hint=""
+                                field-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"
+                                field-error="Цифры и буквы, длина 6-20 знаков, хотя бы одна цифра и заглавная буква.">
+                </dir-form-field>
 
-            <dir-form-field field-model="form.password"
-                            field-label="Password"
-                            field-type="password"
-                            field-hint=""
-                            field-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"
-                            field-error="Пароль может содержать только цифры и буквы, быть длиной 6-20 символов и содержать хотя бы одну цифру и заглавную букву">
-            </dir-form-field>
-
-            <dir-form-field field-model="passwordConfirm"
-                            field-label="Password confirm"
-                            field-type="password"
-                            field-hint=""
-                            field-pattern=""
-                            field-error="Пароли должны совпадать"
-                            field-validation="confPassValidation">
-            </dir-form-field>
+                <dir-form-field field-model="passwordConfirm"
+                                field-label="Password confirm"
+                                field-type="password"
+                                field-hint=""
+                                field-pattern=""
+                                field-error="Пароли должны совпадать"
+                                field-validation="confPassValidation">
+                </dir-form-field>
+            </div>
 
             <button class="btn primary">SUBMIT</button>
         </form>
