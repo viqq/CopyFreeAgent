@@ -8,7 +8,9 @@ define(
         'services/registration',
         'services/login',
 
-        'directives/form-field/script'
+        'directives/form-field/script',
+
+        'css!/css/registration.css'
     ],
     function (angularAMD) {
         var controller = [
