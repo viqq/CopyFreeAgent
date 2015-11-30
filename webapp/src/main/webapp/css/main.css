@@ -106,25 +106,25 @@ span {
 
 }
 
-#login {
+#login-link {
     float: right;
 }
 
-#login > * {
+#login-link > * {
     vertical-align: baseline;
 }
 
-#login > img {
+#login-link > img {
     height: 16px;
     margin-right: 7px;
 }
 
-#login > span {
+#login-link > span {
     color: white;
     font-family: RobotoLight;
 }
 
-#login > span:after {
+#login-link > span:after {
     content: '';
     display: block;
     width: 0%;
@@ -134,7 +134,7 @@ span {
     width: 0%;
 }
 
-#login:hover > span:after,
-#login:active > span:after {
+#login-link:hover > span:after,
+#login-link:active > span:after {
     width: 100%;
 }

@@ -10,7 +10,7 @@ body {
     height: 100%;
 }
 
-span {
+#home span {
     color: white;
 }
 
@@ -22,7 +22,7 @@ span {
     z-index: 4;
 }
 
-#home #login > span {
+#home #login-link > span {
     color: white;
 }
 

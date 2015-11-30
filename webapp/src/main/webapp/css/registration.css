@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-#registration #login > span {
+#registration #login-link > span {
     color: black;
 }
 
@@ -67,20 +67,20 @@
     opacity: 0.5;
 }
 
-#registration .fields-row {
+#registration .row-wrapper {
     display: table;
 }
 
-#registration .fields-row .form-field {
+#registration .row-wrapper .form-field {
     display: table-cell;
     width: 50%;
 }
 
-#registration .fields-row .form-field:first-child {
+#registration .row-wrapper .form-field:first-child {
     padding-right: 3%;
 }
 
-#registration .fields-row .form-field:last-child {
+#registration .row-wrapper .form-field:last-child {
     padding-left: 3%;
 }
 

@@ -10,9 +10,9 @@ define([], function() {
                 'link_logout': 'Logout'
             },
             login: {
-                'placeholder_login': 'enter your login',
-                'placeholder_password': 'password',
-                'button_login': 'LOGIN',
+                'placeholder_login': 'Login',
+                'placeholder_password': 'Password',
+                'button_login': 'SUBMIT',
                 'link_forgot': 'Forgot your password?',
                 'link_registration': 'Have no profile? Register it!'
             },

@@ -1,73 +1,107 @@
-#login .container {
-    width: 490px;
-    height: 315px;
-    background-color: #1A1A1A;
-    opacity: 0.8;
-    border-radius: 10px;
-    margin: 150px auto;
-    padding: 30px;
+#login {
+    padding: 40px;
+    height: 100%;
+    box-sizing: border-box;
 }
 
-#login input,
-#login button {
-    outline: none;
-    display: block;
-    font-family: Raleway, "Helvetica Neue", Helvetica,Arial,sans-serif;
-    border: none;
-}
-
-#login .main-wrapper {
-    padding: 100px;
-}
-
-#login #form_login {
-    max-width: 250px;
-    margin: auto;
-    padding-top: 30px;
-}
-
-#login input {
-    color: white;
-    background-color: transparent;
-    width: 100%;
-}
-
-#login #btn_login {
-    background-color: #00A99D;
+#login #login-link > span {
     color: black;
-    font-size: 16px;
-    padding: 10px 0px;
-    border-radius: 5px;
-    min-width: 200px;
-    margin: 30px auto 0px;
 }
 
-#login .line {
-    height: 1px;
+#login #form-wrapper {
+    padding: 45px;
+    border: 1px lightgray solid;
+    border-radius: 6px;
     width: 100%;
-    background-color: #00A99D;
-    margin: 10px auto;
+    max-width: 465px;
+    box-sizing: border-box;
+    margin: auto;
+    margin-top: 20px;
 }
 
-#login .link_forgot,
-#login .link_registration {
-    display: block;
+#login h1.page-header {
+    color: #fa2044;
+    font-family: norwester;
+    font-size: 2.25em;
+    line-height: 0.85em;
+    letter-spacing: 5px;
     text-align: center;
-    color: white;
-    font-size: 12px;
-    text-decoration: underline;
-    margin: 10px auto;
+    margin-top: 0px;
+    margin-bottom: 45px;
+}
+
+#login p.subtitle {
+    color: #999999;
+    font-size: 0.8em;
+    letter-spacing: initial;
+    margin-top: 0px;
+    margin-bottom: 25px;
+    text-align: center;
 }
 
 #login .socials {
+    cursor: default;
+    color: black;
+    overflow: hidden;
     text-align: center;
-    margin: 20px auto;
+    margin-bottom: 45px;
 }
 
-#login .error {
-    color: red;
-    text-align: center;
-    margin: 30px;
-    font-weight: bold;
+#login .socials > * {
+    vertical-align: middle;
+    margin-right: 16px;
+    line-height: 1;
 }
 
+#login .socials > a {
+    cursor: pointer;
+    transition: all linear 0.2s;
+    display: inline-block;
+}
+
+#login .socials > a > img {
+    height: 1em;
+}
+
+#login .socials > a:hover {
+    opacity: 0.5;
+}
+
+#login .row-wrapper {
+    display: table;
+}
+
+#login .row-wrapper > * {
+    display: table-cell;
+    width: 50%;
+}
+
+#login .row-wrapper > *:first-child {
+    padding-right: 3%;
+}
+
+#login .row-wrapper > *:last-child {
+    padding-left: 3%;
+}
+
+#login button.btn.primary {
+    display: block;
+    margin: auto;
+    margin-top: 25px;
+}
+
+#login .login-links {
+    margin-top: 45px;
+    width: 100%;
+}
+
+#login .login-links a {
+    color: #139cb5;
+    font-size: 0.75em;
+    font-family: RobotoMedium;
+    letter-spacing: normal;
+}
+
+#login .login-links > a:last-child {
+    text-align:right;
+}
