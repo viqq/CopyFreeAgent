@@ -8,7 +8,9 @@ define(
         'directives/form-field/script',
 
         'services/login',
-        'css!/css/login.css'
+
+        'css!/css/login.css',
+        'css!/css/form-primary.css'
     ],
     function (angularAMD, uiTranslations) {
         var controller =  [

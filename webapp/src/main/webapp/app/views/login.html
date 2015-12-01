@@ -40,7 +40,7 @@
                             field-label="{{uiTranslations.placeholder_login}}"
                             field-hint=""
                             field-pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@([a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])$"
-                            field-error="Цифры и буквы, длина 3-15 знаков.">
+                            field-error="Некорректный адрес электронной почты.">
             </dir-form-field>
 
             <dir-form-field field-model="loginData.j_password"
@@ -62,7 +62,7 @@
 
             <div class="row-wrapper login-links">
 
-                <a class="link_forgot">{{uiTranslations.link_forgot}}</a>
+                <a class="link_forgot" href="/reset-password">{{uiTranslations.link_forgot}}</a>
                 <a class="link_registration" href="/registration">{{uiTranslations.link_registration}}</a>
 
             </div>

@@ -10,7 +10,8 @@ define(
 
         'directives/form-field/script',
 
-        'css!/css/registration.css'
+        'css!/css/registration.css',
+        'css!/css/form-primary.css'
     ],
     function (angularAMD) {
         var controller = [

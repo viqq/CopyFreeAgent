@@ -12,7 +12,7 @@
 }
 
 .view.ng-leave {
-    transition: all 0.5s ease-in-out;
+    transition: all 1s ease-in-out;
     z-index: 100;
 }
 
@@ -170,6 +170,6 @@
 }
 
 .view.ng-leave.ng-leave-active #animation-helper .middle {
-    width: 0%;
-    height: 0%;
+    width: 0.1%;
+    height: 0.1%;
 }

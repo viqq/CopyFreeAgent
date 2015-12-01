@@ -29,6 +29,11 @@ define(
                         controller: 'RegistrationCtrl',
                         controllerUrl: 'controllers/registration'
                     }))
+                    .when('/reset-password', angularAMD.route({
+                        templateUrl: 'app/views/password-reset.html',
+                        controller: 'PasswordResetCtrl',
+                        controllerUrl: 'controllers/password-reset'
+                    }))
                     .when('/login', angularAMD.route({
                         templateUrl: 'app/views/login.html',
                         controller: 'LoginCtrl',
