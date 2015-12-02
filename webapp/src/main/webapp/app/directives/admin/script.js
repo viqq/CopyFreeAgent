@@ -29,7 +29,7 @@ define(
 
                 $scope.form = $element.find('form');
 
-                $scope.formData = {
+                $scope.form = {
                     name: ''
                 };
 
@@ -50,7 +50,7 @@ define(
                 };
 
                 $scope.submitHandler = function () {
-                    var data = $scope.$root.toolkit.serialize($scope.formData);
+                    var data = $scope.$root.toolkit.serialize($scope.form);
                     addSport(data).success(function () {
                         updateSports();
                     })

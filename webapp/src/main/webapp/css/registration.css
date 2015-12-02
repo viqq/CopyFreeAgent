@@ -1,9 +1,13 @@
-#registration {
-    padding: 40px;
-    height: 100%;
-    box-sizing: border-box;
+#registration .row-wrapper .form-field:first-child {
+    padding-right: 3%;
 }
 
-#registration #login > span {
-    color: black;
+#registration .row-wrapper .form-field:last-child {
+    padding-left: 3%;
+}
+
+#registration button.btn.primary {
+    display: block;
+    margin: auto;
+    margin-top: 25px;
 }

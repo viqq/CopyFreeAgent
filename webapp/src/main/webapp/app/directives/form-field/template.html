@@ -1,0 +1,29 @@
+<div class="form-field" ng-class="{'invalid': !isValid, 'not-empty': value, 'focused': isFocused }">
+
+    <input ng-model="value" type="{{ type || 'text' }}">
+
+    <label>
+        {{ label }}
+    </label>
+
+    <div class="underline"></div>
+
+    <div class="error">
+
+        <div class="icon">
+            <img src="/img/icons/alarm.svg">
+        </div>
+
+        <div class="text">
+            <span>
+                {{ error }}
+            </span>
+        </div>
+
+    </div>
+
+    <div class="hint">
+        {{ hint }}
+    </div>
+
+</div>

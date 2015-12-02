@@ -4,54 +4,71 @@
             <img src="/img/icon-logo.svg">
         </a>
 
-        <a id="login" href="/login" class="">
+        <a id="login-link" href="/login" class="">
             <img src="/img/icons/user_dark.svg">
             <span>LOGIN</span>
         </a>
     </div>
-    <form id="reg-form">
-        <md-input-container>
-            <label>Email</label>
-            <input ng-model="formData.email">
-        </md-input-container>
 
+    <div id="form-wrapper">
+        <form id="reg-form" ng-submit="registrationHandler()">
+            <h1 class="page-header">REGISTRATION</h1>
 
-        <p class="error">{{ error }}</p>
+            <div class="socials">
+                <span>REGISTER WITH</span>
 
-        <div class="form-field" ng-class="{}">
-            <input ng-model="formData.email" class="">
-            <label>
-                Email
-            </label>
-            <div class="underline"></div>
-            <span class="error">error</span>
-        </div>
+                <span>|</span>
 
+                <a>
+                    <img src="/img/icons/vk_dark.svg">
+                </a>
+                <a>
+                    <img src="/img/icons/twitter_dark.svg">
+                </a>
+                <a>
+                    <img src="/img/icons/facebook_dark.svg">
+                </a>
+            </div>
 
+            <p class="subtitle">
+                Введите, пожалуйста, данные необходимые для регистрации.
+            </p>
 
+            <dir-form-field field-model="form.firstName"
+                            field-label="Name"
+                            field-hint=""
+                            field-pattern="^([a-z0-9_-]).{3,15}$"
+                            field-error="Цифры и буквы, длина 3-15 знаков.">
+            </dir-form-field>
 
-        <input
-                type="password"
-                placeholder="{{uiTranslations.placeholder_password}}"
-                name="password"
-                id="passwordInput"
-                ng-model="formData.password"/>
+            <dir-form-field field-model="form.email"
+                            field-label="Email"
+                            field-hint=""
+                            field-pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@([a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])$"
+                            field-error="Некорректный адрес электронной почты.">
+            </dir-form-field>
 
-        <input
-                type="password"
-                placeholder="{{uiTranslations.placeholder_password}}"
-                name="password"
-                id="confirmPassInput"
-                ng-model="confirmPass"/>
+            <div class="row-wrapper">
+                <dir-form-field field-model="form.password"
+                                field-label="Password"
+                                field-type="password"
+                                field-hint=""
+                                field-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"
+                                field-error="Цифры и буквы, длина 6-20 знаков, хотя бы одна цифра и заглавная буква.">
+                </dir-form-field>
 
-        <input
-                placeholder="{{uiTranslations.placeholder_first_name}}"
-                name="firstName"
-                id="firstNameInput"
-                ng-model="formData.firstName"/>
+                <dir-form-field field-model="passwordConfirm"
+                                field-label="Password confirm"
+                                field-type="password"
+                                field-hint=""
+                                field-pattern=""
+                                field-error="Пароли должны совпадать"
+                                field-validation="confPassValidation">
+                </dir-form-field>
+            </div>
 
-        <!--here we should select sports-->
-        <button>SUBMIT</button>
-    </form>
+            <button class="btn primary">SUBMIT</button>
+        </form>
+    </div>
+
 </div>
-<link rel="stylesheet" href="/css/registration.css"/>

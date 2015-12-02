@@ -32,12 +32,12 @@ define([
 
                 $scope.uiTranslations = uiTranslations[$scope.language].registration;
 
-                $scope.formData = angular.copy($scope.currUserInfo);
+                $scope.form = angular.copy($scope.currUserInfo);
 
                 $scope.error = '';
 
                 $scope.submitHandler = function () {
-                    var data = $scope.$root.toolkit.serialize($scope.formData);
+                    var data = $scope.$root.toolkit.serialize($scope.form);
                     $scope.error = '';
 
                     editUserInfo(data, $scope.currUserInfo.id)

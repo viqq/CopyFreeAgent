@@ -6,21 +6,18 @@ define(
         'angularAMD',
         'angular-route',
         'angular-animate',
-        'angular-aria',
-        'angular-material',
 
         'jquery',
 
         'controllers/main'
     ],
     function (angularAMD) {
-        var app = angular.module('app', ['ngRoute', 'ngMaterial', 'ngAnimate']);
+        var app = angular.module('app', ['ngRoute','ngAnimate']);
 
         app.config([
             '$routeProvider',
-            '$mdThemingProvider',
             '$locationProvider',
-            function ($routeProvider, $mdThemingProvider, $locationProvider) {
+            function ($routeProvider, $locationProvider) {
                 $routeProvider
                     .when('/', angularAMD.route({
                         templateUrl: 'app/views/home.html',
@@ -31,6 +28,11 @@ define(
                         templateUrl: 'app/views/registration.html',
                         controller: 'RegistrationCtrl',
                         controllerUrl: 'controllers/registration'
+                    }))
+                    .when('/reset-password', angularAMD.route({
+                        templateUrl: 'app/views/password-reset.html',
+                        controller: 'PasswordResetCtrl',
+                        controllerUrl: 'controllers/password-reset'
                     }))
                     .when('/login', angularAMD.route({
                         templateUrl: 'app/views/login.html',
