@@ -3,8 +3,16 @@
         <img src="/img/icon-logo.svg">
     </a>
 
-    <a id="login-link" href="/login" class="">
+    <a class="link" href="/login" class="" ng-hide="isLoggedIn">
         <div class="icon"></div>
         <span>LOGIN</span>
+    </a>
+    <a class="link"
+       href=""
+       class=""
+       ng-show="isLoggedIn"
+       ng-click="logoutHandler()">
+        <div class="icon"></div>
+        <span>LOGOUT</span>
     </a>
 </div>

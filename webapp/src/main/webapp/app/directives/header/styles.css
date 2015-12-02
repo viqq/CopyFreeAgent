@@ -2,38 +2,38 @@
     padding: 40px 40px 0px;
 }
 
-#logo  > img:hover {
+#header #logo  > img:hover {
     opacity: 0.8;
 }
 
-#logo > img {
+#header #logo > img {
     height: 48px;
     transition: opacity linear 0.2s;
-
 }
 
-#login-link {
+#header .link {
     float: right;
 }
 
-#login-link > * {
-    vertical-align: middle;
+#header .link > * {
+    vertical-align: baseline;
 }
 
-#login-link .icon {
-    height: 1em;
+#header .link .icon {
+    height: .75em;
     width: 1em;
     display: inline-block;
     background-image: url(/img/icons/user_dark.svg);
+    background-repeat: no-repeat;
     margin-right: 7px;
 }
 
-#login-link > span {
+#header .link > span {
     color: black;
     font-family: RobotoLight;
 }
 
-#login-link > span:after {
+#header .link > span:after {
     content: '';
     display: block;
     width: 0%;
@@ -43,7 +43,7 @@
     width: 0%;
 }
 
-#login-link:hover > span:after,
-#login-link:active > span:after {
+#header .link:hover > span:after,
+#header .link:active > span:after {
     width: 100%;
 }
