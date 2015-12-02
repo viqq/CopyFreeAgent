@@ -5,6 +5,8 @@ define(
     [
         'angularAMD',
         'resources/ui-translations',
+
+        'directives/header/script',
         'directives/form-field/script',
 
         'services/login',

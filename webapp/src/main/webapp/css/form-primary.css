@@ -1,10 +1,4 @@
-.view > div {
-    padding: 40px;
-    height: 100%;
-    box-sizing: border-box;
-}
-
-#form-wrapper {
+.form-wrapper {
     padding: 45px;
     border: 1px lightgray solid;
     border-radius: 6px;
@@ -15,7 +9,7 @@
     margin-top: 20px;
 }
 
-#form-wrapper h1.page-header {
+.form-wrapper h1.page-header {
     color: #fa2044;
     font-family: norwester;
     font-size: 2.25em;
@@ -26,7 +20,7 @@
     margin-bottom: 45px;
 }
 
-#form-wrapper p.subtitle {
+.form-wrapper p.subtitle {
     color: #999999;
     font-size: 0.8em;
     letter-spacing: initial;
@@ -35,7 +29,7 @@
     text-align: center;
 }
 
-#form-wrapper .socials {
+.form-wrapper .socials {
     cursor: default;
     color: black;
     overflow: hidden;
@@ -43,36 +37,36 @@
     margin-bottom: 45px;
 }
 
-#form-wrapper .socials > * {
+.form-wrapper .socials > * {
     vertical-align: middle;
     margin-right: 16px;
     line-height: 1;
 }
 
-#form-wrapper .socials > a {
+.form-wrapper .socials > a {
     cursor: pointer;
     transition: all linear 0.2s;
     display: inline-block;
 }
 
-#form-wrapper .socials > a > img {
+.form-wrapper .socials > a > img {
     height: 1em;
 }
 
-#form-wrapper .socials > a:hover {
+.form-wrapper .socials > a:hover {
     opacity: 0.5;
 }
 
-#form-wrapper .row-wrapper {
+.form-wrapper .row-wrapper {
     display: table;
 }
 
-#form-wrapper .row-wrapper > * {
+.form-wrapper .row-wrapper > * {
     display: table-cell;
     width: 50%;
 }
 
-#form-wrapper button.btn.primary {
+.form-wrapper button.btn.primary {
     display: block;
     margin: auto;
     margin-top: 25px;

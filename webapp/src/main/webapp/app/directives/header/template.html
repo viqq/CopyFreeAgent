@@ -1,27 +1,18 @@
 <div id="header">
-    <link rel="stylesheet" href="css/header.css"/>
-    <div class="main-wrapper">
-        <div class="logo-wrapper valign-container">
-            <a class="logo" href="/">
-                <img ng-src="img/logo.png">
-            </a>
-        </div>
-        <div class="links-wrapper valign-container">
-            <div class="loggedout" ng-hide="isLoggedIn">
-                <a class="login-link" href="/login">
-                    {{ uiTranslations.link_login }}
-                </a>
-            </div>
-            <div class="loggedin" ng-show="isLoggedIn">
-                <a class="profile-link" href="/profile">
-                    <img class="userpic" ng-src="{{ userPicUrl }}"><!--
-                    --><span>{{ 'Profile: ' + currUserData.firstName }}
-                    </span>
-                </a>
-                <a class="logout-link" ng-click="logoutHandler()">
-                    <span>{{ uiTranslations.link_logout }}</span>
-                </a>
-            </div>
-        </div>
-    </div>
+    <a id="logo" href="/" class="">
+        <img src="/img/icon-logo.svg">
+    </a>
+
+    <a class="link" href="/login" class="" ng-hide="isLoggedIn">
+        <div class="icon"></div>
+        <span>LOGIN</span>
+    </a>
+    <a class="link"
+       href=""
+       class=""
+       ng-show="isLoggedIn"
+       ng-click="logoutHandler()">
+        <div class="icon"></div>
+        <span>LOGOUT</span>
+    </a>
 </div>

@@ -8,6 +8,7 @@ define(
         'services/registration',
         'services/login',
 
+        'directives/header/script',
         'directives/form-field/script',
 
         'css!/css/registration.css',
