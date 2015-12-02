@@ -2,6 +2,7 @@ package com.free.agent.controller;
 
 
 import com.free.agent.Response;
+import com.free.agent.Token;
 import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
@@ -10,7 +11,17 @@ import com.free.agent.service.dto.UserRegistrationDto;
 import com.free.agent.service.exception.EmailAlreadyUsedException;
 import com.free.agent.service.exception.WrongLinkException;
 import com.free.agent.utils.HttpRequestUtil;
+import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
+import com.google.gson.Gson;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -166,6 +177,31 @@ public class UserController {
         } catch (Exception e) {
             return Response.error(SAVE_IMAGE_ERROR);
         }
+    }
+
+    @RequestMapping(value = "/api/gglogin", method = RequestMethod.GET)
+    @ResponseBody
+    public String googleLogin(String code) throws IOException {
+
+        HttpClient httpclient = HttpClientBuilder.create().build();
+        HttpPost httppost = new HttpPost("https://www.googleapis.com/oauth2/v3/token");
+
+        httppost.addHeader("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+        httppost.setEntity(new UrlEncodedFormEntity(Lists.newArrayList(
+                new BasicNameValuePair("code", code),
+                new BasicNameValuePair("client_id", "984084695751-v075768i8b3torl2t0evijuj63t4sfrc.apps.googleusercontent.com"),
+                new BasicNameValuePair("client_secret", "ycRT8Y45rNwOFIt4d5f9bLNF"),
+                new BasicNameValuePair("redirect_uri", "http://localhost:8080/api/gglogin"),
+                new BasicNameValuePair("grant_type", "authorization_code")
+        )));
+
+        HttpResponse response = httpclient.execute(httppost);
+        Token token = new Gson().fromJson(EntityUtils.toString(response.getEntity()), Token.class);
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpGet get = new HttpGet("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.getAccess_token());
+        response = client.execute(get);
+
+        return EntityUtils.toString(response.getEntity());
     }
 
 }
