@@ -1,0 +1,175 @@
+/*General animation styles*/
+.view.ng-enter,
+.view.ng-leave {
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+}
+
+.view.ng-enter {
+    transition: all 1s ease-in-out 1s;
+}
+
+.view.ng-leave {
+    transition: all 1s ease-in-out;
+    z-index: 100;
+}
+
+/*General enter styles*/
+
+.view.ng-enter > div {
+    transition:
+    opacity 0.5s ease-in-out 1s,
+    transform 0.5s ease-in-out 1s;
+
+    transform: translate(0px, 50px);
+    opacity: 0;
+}
+
+.view.ng-enter.ng-enter-active > div {
+    transform: translate(0px, 0px);
+    opacity: 1;
+}
+
+/*Home page enter overriding*/
+.view.ng-enter > #home {
+    transition: initial;
+}
+
+/*Home inner frame*/
+/*.view.ng-enter #home > .inner-frame {*/
+    /*transition:*/
+    /*transform 0.5s ease-in-out 0.7s,*/
+    /*width 0.5s ease-in-out 1.2s;*/
+
+    /*display: block;*/
+    /*margin: auto;*/
+    /*position: relative;*/
+
+    /*transform: translate(0px, 100%);*/
+    /*width: 10%;*/
+/*}*/
+
+/*.view.ng-enter.ng-enter-active #home > .inner-frame {*/
+    /*width: 100%;*/
+    /*transform: translate(0px, 0px);*/
+/*}*/
+
+/*Fade in rules*/
+/*.view.ng-enter .fade-in {*/
+    /*transition:*/
+    /*opacity 0.5s ease-in-out,*/
+    /*transform 0.5s ease-in-out;*/
+    /*transform: translate(0px, 50px);*/
+    /*opacity: 0;*/
+/*}*/
+
+/*.view.ng-enter.ng-enter-active .fade-in {*/
+    /*transform: translate(0px, 0px);*/
+    /*opacity: 1;*/
+/*}*/
+
+
+/*.view.ng-enter .fade-in.fade-in-order-1 {*/
+    /*transition-delay: 1s;*/
+/*}*/
+
+/*.view.ng-enter .fade-in.fade-in-order-2 {*/
+    /*transition-delay: 1.2s;*/
+/*}*/
+
+/*.view.ng-enter .fade-in.fade-in-order-3 {*/
+    /*transition-delay: 1.4s;*/
+/*}*/
+
+/*.view.ng-enter .fade-in.fade-in-order-4 {*/
+    /*transition-delay: 1.6s;*/
+/*}*/
+
+/*.view.ng-enter .fade-in.fade-in-order-5 {*/
+    /*transition-delay: 1.8s;*/
+/*}*/
+
+/*.view.ng-enter .fade-in.fade-in-order-6 {*/
+    /*transition-delay: 2s;*/
+/*}*/
+
+/*.view.ng-enter .fade-in.fade-in-order-7 {*/
+    /*transition-delay: 2.2s;*/
+/*}*/
+
+/*.view.ng-enter .fade-in.fade-in-order-8 {*/
+    /*transition-delay: 2.4s;*/
+/*}*/
+
+/*Fixes*/
+/*.view.ng-enter #home > .title-group,*/
+/*.view.ng-leave #home > .title-group {*/
+    /*top: 0%;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+/*}*/
+
+/**/
+#animation-helper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    display: none;
+    top:0px;
+    z-index: 101;
+}
+
+#animation-helper .middle {
+    background-color: transparent;
+}
+
+#animation-helper td {
+    background-color: white;
+    padding: 0;
+}
+
+.view.ng-enter #animation-helper,
+.view.ng-leave #animation-helper {
+    display: table;
+}
+.view.ng-enter #animation-helper .middle,
+.view.ng-leave #animation-helper .middle {
+    transition:
+    width 1s ease-in-out,
+    height 1s ease-in-out;
+
+    /*transition:*/
+    /*width 0.5s linear 100s,*/
+    /*height 0.5s linear 100s;*/
+}
+
+.view.ng-enter #animation-helper .middle {
+    transition-delay: 1s;
+
+    /*transition:*/
+    /*width 0.5s linear 100s,*/
+    /*height 0.5s linear 100s;*/
+}
+
+.view.ng-enter #animation-helper .middle {
+    width: 0.1%;
+    height: 0.1%;
+}
+
+.view.ng-enter.ng-enter-active #animation-helper .middle {
+    width: 100%;
+    height: 100%;
+}
+
+.view.ng-leave #animation-helper .middle {
+    width: 100%;
+    height: 100%;
+}
+
+.view.ng-leave.ng-leave-active #animation-helper .middle {
+    width: 0.1%;
+    height: 0.1%;
+}

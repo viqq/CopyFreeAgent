@@ -1,10 +1,10 @@
 <div id="home">
     <div id="header">
-        <a id="logo" href="/">
+        <a id="logo" href="/" class="fade-in fade-in-order-7">
             <img src="/img/icon-logo.svg">
         </a>
 
-        <a id="login" href="/login">
+        <a id="login-link" href="/login" class="fade-in fade-in-order-7">
             <img src="/img/icon-user.svg">
             <span>LOGIN</span>
         </a>
@@ -12,7 +12,7 @@
 
     <div class="inner-frame">
         <div>
-            <div id="socials">
+            <div id="socials" class="fade-in fade-in-order-8">
                 <span>SHARE</span>
                 <span>|</span>
                 <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri=http://localhost:8080/api/gglogin&response_type=code&client_id=984084695751-v075768i8b3torl2t0evijuj63t4sfrc.apps.googleusercontent.com&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile"><img
@@ -23,7 +23,7 @@
                 <img src="/img/icon-facebook.svg">
             </div>
 
-            <div id="copyright">
+            <div id="copyright" class="fade-in fade-in-order-8">
                 <span>© FREE AGENT 2015</span>
             </div>
         </div>
@@ -31,16 +31,21 @@
 
     <div class="title-group">
         <div>
-            <div class="player" parallax-layer="3"></div>
-            <div class="ball" parallax-layer="4"></div>
+            <div class="player fade-in fade-in-order-1" parallax-layer="3"></div>
+            <div class="ball fade-in fade-in-order-2" parallax-layer="6"></div>
             <div>
-                <p class="text-free" parallax-layer="2">FREE</p>
-                <p class="text-agent" parallax-layer="6">AGENT</p>
+                <p class="text-free fade-in fade-in-order-4" parallax-layer="2">FREE</p>
+
+                <p class="text-agent fade-in fade-in-order-5" parallax-layer="5">AGENT</p>
             </div>
         </div>
     </div>
 
-    <div class="subtitle-group">
+    <div class="net-group fade-in fade-in-order-3" parallax-layer="1">
+        <div></div>
+    </div>
+
+    <div class="subtitle-group fade-in fade-in-order-6">
         <div>
             <div class="mobile-title">
                 <span class="text-free">FREE</span>
@@ -59,7 +64,25 @@
             </div>
         </div>
     </div>
-
+    <table id="animation-helper">
+        <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="middle"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
-<link rel="stylesheet" href="css/home.css"/>
+<!--<link rel="stylesheet" href="/css/home.css"/>-->

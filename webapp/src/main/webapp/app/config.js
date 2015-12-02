@@ -9,12 +9,12 @@ require.config({
         'angular': 'libs/angular.min',
         'angular-route': 'libs/angular-route.min',
         'angular-animate': 'libs/angular-animate.min',
-        'angular-aria': 'libs/angular-aria.min',
 
         'angularAMD': 'libs/angularAMD',
-        'angular-material': 'libs/angular-material',
 
-        'jquery': 'libs/jquery.min'
+        'jquery': 'libs/jquery.min',
+
+        'css': 'libs/require-css.min'
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -27,5 +27,5 @@ require.config({
     },
 
     // kick start application
-    deps: ['app']
+    deps: ['css', 'app']
 });

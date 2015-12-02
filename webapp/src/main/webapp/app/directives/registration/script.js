@@ -27,12 +27,12 @@ define([
 
             $scope.uiTranslations = uiTranslations[$scope.language].registration;
 
-            $scope.formData = {};
+            $scope.form = {};
 
             $scope.error = '';
 
             $scope.registrationHandler = function() {
-                var data = $scope.$root.toolkit.serialize($scope.formData);
+                var data = $scope.$root.toolkit.serialize($scope.form);
                 $scope.error = '';
 
                 registration(data)
@@ -56,8 +56,8 @@ define([
 
             $scope.loginAfterReg = function() {
                 var data = $scope.$root.toolkit.serialize({
-                    'j_username': $scope.formData.email,
-                    'j_password': $scope.formData.password,
+                    'j_username': $scope.form.email,
+                    'j_password': $scope.form.password,
                     'submit': 'Login'
                 });
 

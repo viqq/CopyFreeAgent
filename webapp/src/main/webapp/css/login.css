@@ -1,73 +1,15 @@
-#login .container {
-    width: 490px;
-    height: 315px;
-    background-color: #1A1A1A;
-    opacity: 0.8;
-    border-radius: 10px;
-    margin: 150px auto;
-    padding: 30px;
-}
-
-#login input,
-#login button {
-    outline: none;
-    display: block;
-    font-family: Raleway, "Helvetica Neue", Helvetica,Arial,sans-serif;
-    border: none;
-}
-
-#login .main-wrapper {
-    padding: 100px;
-}
-
-#login #form_login {
-    max-width: 250px;
-    margin: auto;
-    padding-top: 30px;
-}
-
-#login input {
-    color: white;
-    background-color: transparent;
+#login .login-links {
+    margin-top: 45px;
     width: 100%;
 }
 
-#login #btn_login {
-    background-color: #00A99D;
-    color: black;
-    font-size: 16px;
-    padding: 10px 0px;
-    border-radius: 5px;
-    min-width: 200px;
-    margin: 30px auto 0px;
+#login .login-links a {
+    color: #139cb5;
+    font-size: 0.75em;
+    font-family: RobotoMedium;
+    letter-spacing: normal;
 }
 
-#login .line {
-    height: 1px;
-    width: 100%;
-    background-color: #00A99D;
-    margin: 10px auto;
+#login .login-links > a:last-child {
+    text-align:right;
 }
-
-#login .link_forgot,
-#login .link_registration {
-    display: block;
-    text-align: center;
-    color: white;
-    font-size: 12px;
-    text-decoration: underline;
-    margin: 10px auto;
-}
-
-#login .socials {
-    text-align: center;
-    margin: 20px auto;
-}
-
-#login .error {
-    color: red;
-    text-align: center;
-    margin: 30px;
-    font-weight: bold;
-}
-
