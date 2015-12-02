@@ -73,8 +73,8 @@ define(
                                 }, TIME_GAP)
                             };
 
-
-                        setTimeout(init, 4000);
+                        init();
+                        //setTimeout(init, 4000);
                     }
                 ]
             };

@@ -1,0 +1,49 @@
+#header {
+    padding: 40px 40px 0px;
+}
+
+#logo  > img:hover {
+    opacity: 0.8;
+}
+
+#logo > img {
+    height: 48px;
+    transition: opacity linear 0.2s;
+
+}
+
+#login-link {
+    float: right;
+}
+
+#login-link > * {
+    vertical-align: middle;
+}
+
+#login-link .icon {
+    height: 1em;
+    width: 1em;
+    display: inline-block;
+    background-image: url(/img/icons/user_dark.svg);
+    margin-right: 7px;
+}
+
+#login-link > span {
+    color: black;
+    font-family: RobotoLight;
+}
+
+#login-link > span:after {
+    content: '';
+    display: block;
+    width: 0%;
+    height: 1px;
+    background-color: #fa2044;
+    transition: width 0.1s linear 0.1s;
+    width: 0%;
+}
+
+#login-link:hover > span:after,
+#login-link:active > span:after {
+    width: 100%;
+}

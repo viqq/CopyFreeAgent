@@ -27,6 +27,10 @@ body {
     color: white;
 }
 
+#home #login-link .icon {
+    background-image: url(/img/icons/user.svg);
+}
+
 #socials {
     position: absolute;
     bottom: 60px;
