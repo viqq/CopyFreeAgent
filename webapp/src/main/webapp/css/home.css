@@ -23,8 +23,12 @@ body {
     z-index: 4;
 }
 
-#home #login-link > span {
+#home #header .link > span {
     color: white;
+}
+
+#home #header .link .icon {
+    background-image: url(/img/icons/user.svg);
 }
 
 #socials {

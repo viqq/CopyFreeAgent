@@ -6,7 +6,9 @@ define(
         'angularAMD',
         'resources/ui-translations',
 
-        'services/logout'
+        'services/logout',
+
+        'css!/app/directives/header/styles.css'
     ],
     function (angularAMD, uiTranslations) {
         var dirHeader = function () {

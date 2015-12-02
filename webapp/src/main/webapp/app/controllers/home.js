@@ -5,7 +5,9 @@ define(
     [
         'angularAMD',
 
+        'directives/header/script',
         'directives/parallax/script',
+
         'css!/css/home.css'
     ],
     function (angularAMD) {

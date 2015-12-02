@@ -1,0 +1,49 @@
+#header {
+    padding: 40px 40px 0px;
+}
+
+#header #logo  > img:hover {
+    opacity: 0.8;
+}
+
+#header #logo > img {
+    height: 48px;
+    transition: opacity linear 0.2s;
+}
+
+#header .link {
+    float: right;
+}
+
+#header .link > * {
+    vertical-align: baseline;
+}
+
+#header .link .icon {
+    height: .75em;
+    width: 1em;
+    display: inline-block;
+    background-image: url(/img/icons/user_dark.svg);
+    background-repeat: no-repeat;
+    margin-right: 7px;
+}
+
+#header .link > span {
+    color: black;
+    font-family: RobotoLight;
+}
+
+#header .link > span:after {
+    content: '';
+    display: block;
+    width: 0%;
+    height: 1px;
+    background-color: #fa2044;
+    transition: width 0.1s linear 0.1s;
+    width: 0%;
+}
+
+#header .link:hover > span:after,
+#header .link:active > span:after {
+    width: 100%;
+}

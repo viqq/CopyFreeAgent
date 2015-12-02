@@ -96,45 +96,45 @@ span {
 
 /*Header*/
 
-#logo  > img:hover {
-    opacity: 0.8;
-}
+/*#logo  > img:hover {*/
+    /*opacity: 0.8;*/
+/*}*/
 
-#logo > img {
-    height: 48px;
-    transition: opacity linear 0.2s;
+/*#logo > img {*/
+    /*height: 48px;*/
+    /*transition: opacity linear 0.2s;*/
 
-}
+/*}*/
 
-#login-link {
-    float: right;
-}
+/*#login-link {*/
+    /*float: right;*/
+/*}*/
 
-#login-link > * {
-    vertical-align: baseline;
-}
+/*#login-link > * {*/
+    /*vertical-align: baseline;*/
+/*}*/
 
-#login-link > img {
-    height: 16px;
-    margin-right: 7px;
-}
+/*#login-link > img {*/
+    /*height: 16px;*/
+    /*margin-right: 7px;*/
+/*}*/
 
-#login-link > span {
-    color: black;
-    font-family: RobotoLight;
-}
+/*#login-link > span {*/
+    /*color: black;*/
+    /*font-family: RobotoLight;*/
+/*}*/
 
-#login-link > span:after {
-    content: '';
-    display: block;
-    width: 0%;
-    height: 1px;
-    background-color: #fa2044;
-    transition: width 0.1s linear 0.1s;
-    width: 0%;
-}
+/*#login-link > span:after {*/
+    /*content: '';*/
+    /*display: block;*/
+    /*width: 0%;*/
+    /*height: 1px;*/
+    /*background-color: #fa2044;*/
+    /*transition: width 0.1s linear 0.1s;*/
+    /*width: 0%;*/
+/*}*/
 
-#login-link:hover > span:after,
-#login-link:active > span:after {
-    width: 100%;
-}
+/*#login-link:hover > span:after,*/
+/*#login-link:active > span:after {*/
+    /*width: 100%;*/
+/*}*/
