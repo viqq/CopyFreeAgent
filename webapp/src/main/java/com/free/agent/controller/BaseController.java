@@ -1,7 +1,7 @@
 package com.free.agent.controller;
 
-import com.free.agent.FreeAgentAPI;
 import com.free.agent.Response;
+import com.free.agent.service.FreeAgentAPI;
 import org.apache.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ControllerAdvice;

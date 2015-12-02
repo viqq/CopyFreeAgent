@@ -1,5 +1,6 @@
 package com.free.agent;
 
+import com.free.agent.service.FreeAgentAPI;
 import com.google.gson.Gson;
 
 /**
@@ -8,24 +9,34 @@ import com.google.gson.Gson;
 public final class Response<T> {
     private final T payload;
     private final Boolean error;
-    private final Integer status;
+    private final Integer[] status;
 
-    private Response(T payload, Boolean error, Integer status) {
+    private Response(T payload) {
         this.payload = payload;
-        this.error = error;
+        this.error = false;
+        this.status = null;
+    }
+
+    private Response(Integer... status) {
+        this.payload = null;
+        this.error = true;
         this.status = status;
     }
 
-    public static <T> String ok() {
+    public static String ok() {
         return ok(FreeAgentAPI.OK);
     }
 
     public static <T> String ok(T payload) {
-        return new Response<>(payload, false, null).toJSON();
+        return new Response<>(payload).toJSON();
     }
 
-    public static <T> String error(Integer status) {
-        return new Response<>(null, true, status).toJSON();
+    public static String error(Integer status) {
+        return new Response<>(status).toJSON();
+    }
+
+    public static String error(Integer... status) {
+        return new Response<>(status).toJSON();
     }
 
     public T getPayload() {
@@ -36,7 +47,7 @@ public final class Response<T> {
         return error;
     }
 
-    public Integer getStatus() {
+    public Integer[] getStatus() {
         return status;
     }
 

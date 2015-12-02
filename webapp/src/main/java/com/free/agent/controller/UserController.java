@@ -11,6 +11,8 @@ import com.free.agent.service.dto.UserRegistrationDto;
 import com.free.agent.service.exception.EmailAlreadyUsedException;
 import com.free.agent.service.exception.WrongLinkException;
 import com.free.agent.utils.HttpRequestUtil;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
@@ -26,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +41,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.Principal;
 
-import static com.free.agent.FreeAgentAPI.*;
+import static com.free.agent.service.FreeAgentAPI.*;
 
 
 /**
@@ -75,7 +78,7 @@ public class UserController {
     @ResponseBody
     String saveUser(@Valid UserRegistrationDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return Response.error(VALIDATION_ERROR);
+            return Response.error(getAllErrors(bindingResult));
         }
         try {
             userService.save(userDto);
@@ -202,6 +205,16 @@ public class UserController {
         response = client.execute(get);
 
         return EntityUtils.toString(response.getEntity());
+    }
+
+    private Integer[] getAllErrors(BindingResult bindingResult) {
+        return Collections2.transform(bindingResult.getAllErrors(), new Function<ObjectError, Integer>() {
+            @Override
+            public Integer apply(ObjectError input) {
+                return Integer.valueOf(input.getDefaultMessage());
+            }
+        }).toArray(new Integer[bindingResult.getErrorCount()]);
+
     }
 
 }

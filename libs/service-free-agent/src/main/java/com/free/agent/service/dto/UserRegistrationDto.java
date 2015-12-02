@@ -1,7 +1,8 @@
 package com.free.agent.service.dto;
 
+import com.free.agent.service.annotation.Email;
 import com.free.agent.service.annotation.Password;
-import org.hibernate.validator.constraints.Email;
+import com.free.agent.service.annotation.User;
 
 /**
  * Created by antonPC on 25.09.15.
@@ -12,6 +13,7 @@ public class UserRegistrationDto {
     private String email;
     @Password
     private String password;
+    @User
     private String firstName;
 
     public Long getId() {
