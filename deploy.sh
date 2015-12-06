@@ -5,7 +5,7 @@ echo "Deploying..."
 
 cd /Projects/FreeAgent/
 git pull
-mvn clean install -Dmaven.test.skip=true -Dprofile.active=prod
+mvn clean install -Dmaven.test.skip=true
 if [ -d /var/lib/tomcat7/webapps/ROOT/ ]; then
    rm -r /var/lib/tomcat7/webapps/ROOT/
 fi
