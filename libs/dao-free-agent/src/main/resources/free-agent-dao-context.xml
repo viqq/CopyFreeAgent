@@ -8,8 +8,11 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
        <context:annotation-config/>
-       <import resource="classpath*:free-agent-db-context.xml"/>
        <context:component-scan base-package="com.free.agent"/>
+       <import resource="classpath*:free-agent-db-context-dev.xml"/>
+       <import resource="classpath*:free-agent-db-context-prod.xml"/>
+       <import resource="classpath*:free-agent-db-context-test.xml"/>
+
 </beans>
 
 

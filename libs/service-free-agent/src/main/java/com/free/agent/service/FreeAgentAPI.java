@@ -38,4 +38,6 @@ public final class FreeAgentAPI {
     public static final String ACTIVATE_USER = "/activate";
     public static final String RESET_PASSWORD = "/api/password/{email}";
     public static final String GET_POSTPONE_EMAIL = "/api/postpone";
+
+    public static String host;
 }

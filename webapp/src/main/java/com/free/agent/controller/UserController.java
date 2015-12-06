@@ -186,6 +186,7 @@ public class UserController {
     @ResponseBody
     public String googleLogin(String code) throws IOException {
 
+
         HttpClient httpclient = HttpClientBuilder.create().build();
         HttpPost httppost = new HttpPost("https://www.googleapis.com/oauth2/v3/token");
 
@@ -194,7 +195,7 @@ public class UserController {
                 new BasicNameValuePair("code", code),
                 new BasicNameValuePair("client_id", "984084695751-v075768i8b3torl2t0evijuj63t4sfrc.apps.googleusercontent.com"),
                 new BasicNameValuePair("client_secret", "ycRT8Y45rNwOFIt4d5f9bLNF"),
-                new BasicNameValuePair("redirect_uri", "http://localhost:8080/api/gglogin"),
+                new BasicNameValuePair("redirect_uri", host + "/api/gglogin"),
                 new BasicNameValuePair("grant_type", "authorization_code")
         )));
 

@@ -2,9 +2,6 @@ package com.free.agent.dao;
 
 import com.free.agent.Filter;
 import com.free.agent.config.FreeAgentConstant;
-import com.free.agent.dao.mock.MessageDaoMock;
-import com.free.agent.dao.mock.SportDaoMock;
-import com.free.agent.dao.mock.UserDaoMock;
 import com.free.agent.model.Message;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
@@ -14,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,14 +26,15 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml"})
-@Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
+@Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+@ActiveProfiles("test")
 public class UserDaoImplTest extends TestCase {
     @Autowired
-    private SportDaoMock sportDao;
+    private SportDao sportDao;
     @Autowired
-    private UserDaoMock userDao;
+    private UserDao userDao;
     @Autowired
-    private MessageDaoMock messageDao;
+    private MessageDao messageDao;
     private Sport s1, s2;
     private User u1, u2;
     private Message m1, m2;

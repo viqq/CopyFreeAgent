@@ -1,13 +1,13 @@
 package com.free.agent.dao;
 
 import com.free.agent.config.FreeAgentConstant;
-import com.free.agent.dao.mock.SportDaoMock;
 import com.free.agent.model.Sport;
 import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,10 +19,11 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml"})
-@Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
+@Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+@ActiveProfiles("test")
 public class SportDaoImplTest extends TestCase {
     @Autowired
-    private SportDaoMock sportDao;
+    private SportDao sportDao;
 
     @Test
     public void findByName() throws Exception {
