@@ -50,6 +50,7 @@ define(
                 });
 
                 $scope.$root.$on('validate-form', function(evt) {
+                    $scope.isChanged = true;
                     validate();
                     evt.targetScope.validationResults.push($scope.isValid.toString());
                 });

@@ -92,7 +92,7 @@ define(
                             errorClient: 'Пароли должны совпадать.',
                             serverError: '',
                             validation: function () {
-                                return $scope.fields.password.value === $scope.fields.confirmPassword.value;
+                                return $scope.fields.password.value === $scope.fields.confirmPassword.value && $scope.fields.confirmPassword.value;
                             }
                         }
                     },
