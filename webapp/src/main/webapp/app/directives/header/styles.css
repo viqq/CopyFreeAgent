@@ -49,40 +49,40 @@
 }
 
 /**/
-.view.ng-enter,
-.view.ng-leave {
-    overflow: hidden;
-    position: absolute;
-    top: 0px;
-    width: 100%;
-}
+/*.view.ng-enter,*/
+/*.view.ng-leave {*/
+    /*overflow: hidden;*/
+    /*position: absolute;*/
+    /*top: 0px;*/
+    /*width: 100%;*/
+/*}*/
 
-.view.ng-enter {
-    transition: all 1s ease-in-out;
-}
+/*.view.ng-enter {*/
+    /*transition: all 1s ease-in-out;*/
+/*}*/
 
-.view.ng-leave {
-    transition: all 1s ease-in-out;
-    z-index: 100;
-}
+/*.view.ng-leave {*/
+    /*transition: all 1s ease-in-out;*/
+    /*z-index: 100;*/
+/*}*/
 /**/
-.view.ng-enter #header,
-.view.ng-leave #header {
-    transition: all 1s ease-in-out 1s;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
+/*.view.ng-enter #header,*/
+/*.view.ng-leave #header {*/
+    /*transition: all 1s ease-in-out 1s;*/
+    /*position: absolute;*/
+    /*top: 0px;*/
+    /*left: 0px;*/
+/*}*/
 
-.view.ng-enter #header {
-    padding: 40px 40px 0px;
-}
+/*.view.ng-enter #header {*/
+    /*padding: 40px 40px 0px;*/
+/*}*/
 
-.view.ng-enter.ng-enter-active #header {
-}
+/*.view.ng-enter.ng-enter-active #header {*/
+/*}*/
 
-.view.ng-leave #header {
-}
+/*.view.ng-leave #header {*/
+/*}*/
 
-.view.ng-leave.ng-leave-active #header {
-}
+/*.view.ng-leave.ng-leave-active #header {*/
+/*}*/

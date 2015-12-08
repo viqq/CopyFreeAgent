@@ -64,7 +64,7 @@
     visibility: hidden;
 }
 
-.form-field.invalid .error {
+.form-field.invalid.changed .error {
     visibility: visible;
 }
 

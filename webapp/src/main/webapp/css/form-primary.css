@@ -64,6 +64,7 @@
 .form-wrapper .row-wrapper > * {
     display: table-cell;
     width: 50%;
+    vertical-align: top;
 }
 
 .form-wrapper button.btn.primary {

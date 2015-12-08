@@ -13,17 +13,17 @@ define(
             '$attrs',
             '$element',
             function ($scope, $attrs, $element) {
-                var validRegex = new RegExp($scope.pattern);
+                var validRegex = new RegExp($scope.config.pattern);
                 var validate = function() {
                     var isPatternValid = true;
                     var isFunctionValid = true;
 
-                    if ($scope.pattern) {
-                        isPatternValid = validRegex.test($scope.value || '');
+                    if ($scope.config.pattern) {
+                        isPatternValid = validRegex.test($scope.config.value || '');
                     }
 
-                    if (typeof $scope.validation === 'function') {
-                        isFunctionValid = $scope.validation();
+                    if (typeof $scope.config.validation === 'function') {
+                        isFunctionValid = $scope.config.validation();
                     }
 
                     $scope.isValid = isFunctionValid && isPatternValid;
@@ -45,6 +45,8 @@ define(
                     $scope.isFocused = false;
                     validate();
                     $scope.$apply();
+                }).on('change', function() {
+                    $scope.isChanged = true;
                 });
 
                 $scope.$root.$on('validate-form', function(evt) {
@@ -60,13 +62,7 @@ define(
                 templateUrl: 'app/directives/form-field/template.html',
                 replace: true,
                 scope: {
-                    value: '=fieldModel',
-                    label: '@fieldLabel',
-                    error: '@fieldError',
-                    hint: '@fieldHint',
-                    pattern: '@fieldPattern',
-                    validation: '=fieldValidation',
-                    type: '@fieldType'
+                    config: '=fieldConfig'
                 },
                 controller: ctrl
             };
