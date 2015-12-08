@@ -34,8 +34,8 @@ define(
 
                 var loginAftReg = function () {
                     var data = $scope.$root.toolkit.serialize({
-                        'j_username': $scope.form.email,
-                        'j_password': $scope.form.password,
+                        'j_username': $scope.fields.email.value,
+                        'j_password': $scope.fields.password.value,
                         'submit': 'Login'
                     });
 
@@ -92,7 +92,8 @@ define(
                             errorClient: 'Пароли должны совпадать.',
                             serverError: '',
                             validation: function () {
-                                return $scope.fields.password.value === $scope.fields.confirmPassword.value && $scope.fields.confirmPassword.value;
+                                return $scope.fields.password.value === $scope.fields.confirmPassword.value
+                                    && $scope.fields.confirmPassword.value;
                             }
                         }
                     },
