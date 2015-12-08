@@ -19,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,8 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml", "classpath*:free-agent-services-context.xml"})
-@Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
+@Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+@ActiveProfiles("test")
 public class UserServiceImplTest extends TestCase {
     private static final String FOOTBALL = "FOOTBALL";
 

@@ -1,8 +1,6 @@
 package com.free.agent.dao;
 
 import com.free.agent.config.FreeAgentConstant;
-import com.free.agent.dao.mock.MessageDaoMock;
-import com.free.agent.dao.mock.UserDaoMock;
 import com.free.agent.model.Message;
 import com.free.agent.model.User;
 import com.google.common.collect.Lists;
@@ -12,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,15 +25,16 @@ import java.util.Set;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml"})
-@Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER_TEST)
+@Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+@ActiveProfiles("test")
 public class MessageDaoImplTest extends TestCase {
     private User u1, u2;
     private Message m1, m2, m3;
 
     @Autowired
-    private MessageDaoMock messageDao;
+    private MessageDao messageDao;
     @Autowired
-    private UserDaoMock userDao;
+    private UserDao userDao;
 
     @Before
     public void init() {

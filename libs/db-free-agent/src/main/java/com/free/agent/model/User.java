@@ -80,6 +80,9 @@ public class User extends AbstractTable<Long> {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Message> messages = Lists.newArrayList();
 
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Schedule> schedules = Lists.newArrayList();
+
     public User(String email, String password, String phone) {
         this.email = email;
         this.password = password;
@@ -229,5 +232,13 @@ public class User extends AbstractTable<Long> {
 
     public void setLastActivity(Date lastActivity) {
         this.lastActivity = lastActivity;
+    }
+
+    public List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 }

@@ -1,5 +1,7 @@
 package com.free.agent.service.annotation;
 
+import com.free.agent.service.FreeAgentAPI;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
@@ -12,7 +14,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Password {
-    String message() default "{Password}";
+    String message() default FreeAgentAPI.PASSWORD_INVALID;
 
     Class<?>[] groups() default {};
 

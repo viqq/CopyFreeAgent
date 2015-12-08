@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 
-import static com.free.agent.FreeAgentAPI.*;
+import static com.free.agent.service.FreeAgentAPI.*;
 
 /**
  * Created by antonPC on 31.07.15.

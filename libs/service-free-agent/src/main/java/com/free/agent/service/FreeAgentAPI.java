@@ -1,4 +1,4 @@
-package com.free.agent;
+package com.free.agent.service;
 
 /**
  * Created by antonPC on 18.08.15.
@@ -13,6 +13,10 @@ public final class FreeAgentAPI {
     public static final int ACTIVATED_ERROR = 465;
     public static final int EDIT_PROFILE_ERROR = 466;
     public static final int UNEXPECTED_ERROR = 499;
+
+    public static final String EMAIL_INVALID = "430";
+    public static final String PASSWORD_INVALID = "431";
+    public static final String FIRST_NAME_INVALID = "432";
 
     public static final String SAVE_USER = "/api/user"; //POST
     public static final String EDIT_USER = "/api/user/{id}"; //POST
@@ -34,4 +38,6 @@ public final class FreeAgentAPI {
     public static final String ACTIVATE_USER = "/activate";
     public static final String RESET_PASSWORD = "/api/password/{email}";
     public static final String GET_POSTPONE_EMAIL = "/api/postpone";
+
+    public static String host;
 }
