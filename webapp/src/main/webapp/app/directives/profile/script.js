@@ -19,7 +19,6 @@ define(
             function ($scope, $element, $location, checkUserState, uploadUserPic) {
                 var executors = {
                     'initImages' : function() {
-                        console.log( $element.find('input'));
                         $scope.imageInput = $element.find('#userpic input[type="file"]');
 
                         $scope.uploadImage = function () {

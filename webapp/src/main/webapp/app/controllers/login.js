@@ -25,44 +25,59 @@ define(
                     return;
                 }
 
-                $scope.uiTranslations = uiTranslations[$scope.language].login;
-
-                $scope.loginData = {
-                    j_username: '',
-                    j_password: '',
-                    submit: 'Login'
-                };
-
-                $scope.error = '';
-
-                $scope.loginHandler = function () {
-                    var data = $scope.$root.toolkit.serialize($scope.loginData);
-
-                    console.log(data);
-
-                    login(data)
-                        .then(function (data) {
-
-                            if (typeof data !== 'object') {
-                                $scope.error = 'Something went wrong';
-                                console.error('login: something wrong with response');
-                                return;
-                            }
-
-                            if (data.error === true || data.code) {
-                                $scope.error = 'Login error. Code: ' + data.code;
-                                console.error('login: request error code', data.code);
-                                return;
-                            }
-
-                            return $scope.$root.updateUserInfo();
-                        })
-                        .then(function() {
-                            $location.path('/profile');
-                        }, function (err) {
-                            throw err;
+                angular.extend($scope, {
+                    fields: {
+                        email: {
+                            value: '',
+                            label: 'Email',
+                            pattern: '^[-a-z0-9!#$%&\'*+/=?^_`{|}~]+(?:\\.[-a-z0-9!#$%&\'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$',
+                            errorClient: 'Цифры и буквы, длина 3-15 знаков.',
+                            serverError: ''
+                        },
+                        password: {
+                            value: '',
+                            label: 'Password',
+                            type: 'password',
+                            pattern: '((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})',
+                            errorClient: 'Цифры и буквы, длина 6-20 знаков, хоть одна цифра и заглавная буква.',
+                            serverError: ''
+                        }
+                    },
+                    error: '',
+                    loginHandler: function () {
+                        var data = $scope.$root.toolkit.serialize({
+                            'j_username': $scope.fields.email.value,
+                            'j_password': $scope.fields.password.value,
+                            'submit': 'Login'
                         });
-                }
+
+                        console.log(data);
+
+                        login(data)
+                            .then(function (data) {
+
+                                if (typeof data !== 'object') {
+                                    $scope.error = 'Something went wrong';
+                                    console.error('login: something wrong with response');
+                                    return;
+                                }
+
+                                if (data.error === true || data.code) {
+                                    $scope.error = 'Login error. Code: ' + data.code;
+                                    console.error('login: request error code', data.code);
+                                    return;
+                                }
+
+                                return $scope.$root.updateUserInfo();
+                            })
+                            .then(function() {
+                                $location.path('/profile');
+                            }, function (err) {
+                                throw err;
+                            });
+                    },
+                    uiTranslations: uiTranslations[$scope.language].login
+                });
             }
         ];
 

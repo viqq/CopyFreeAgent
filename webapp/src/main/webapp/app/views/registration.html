@@ -2,7 +2,7 @@
     <dir-header></dir-header>
 
     <div class="form-wrapper">
-        <form id="reg-form" ng-submit="registrationHandler()">
+        <form id="reg-form" ng-submit="sumbitForm()">
             <h1 class="page-header">REGISTRATION</h1>
 
             <div class="socials">
@@ -25,37 +25,12 @@
                 Введите, пожалуйста, данные необходимые для регистрации.
             </p>
 
-            <dir-form-field field-model="form.firstName"
-                            field-label="Name"
-                            field-hint=""
-                            field-pattern="^([a-z0-9_-]).{3,15}$"
-                            field-error="Цифры и буквы, длина 3-15 знаков.">
-            </dir-form-field>
-
-            <dir-form-field field-model="form.email"
-                            field-label="Email"
-                            field-hint=""
-                            field-pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@([a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])$"
-                            field-error="Некорректный адрес электронной почты.">
-            </dir-form-field>
+            <dir-form-field field-config="fields.name"></dir-form-field>
+            <dir-form-field field-config="fields.email"></dir-form-field>
 
             <div class="row-wrapper">
-                <dir-form-field field-model="form.password"
-                                field-label="Password"
-                                field-type="password"
-                                field-hint=""
-                                field-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"
-                                field-error="Цифры и буквы, длина 6-20 знаков, хотя бы одна цифра и заглавная буква.">
-                </dir-form-field>
-
-                <dir-form-field field-model="passwordConfirm"
-                                field-label="Password confirm"
-                                field-type="password"
-                                field-hint=""
-                                field-pattern=""
-                                field-error="Пароли должны совпадать"
-                                field-validation="confPassValidation">
-                </dir-form-field>
+                <dir-form-field field-config="fields.password"></dir-form-field>
+                <dir-form-field field-config="fields.confirmPassword"></dir-form-field>
             </div>
 
             <button class="btn primary">SUBMIT</button>

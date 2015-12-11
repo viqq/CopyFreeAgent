@@ -26,27 +26,90 @@ define(
                     return;
                 }
 
-                var validateForm = function() {
+                var validateForm = function () {
                     $scope.validationResults = [];
                     $scope.$emit('validate-form');
                     return $scope.validationResults.indexOf('false') === -1;
                 };
 
+                var loginAftReg = function () {
+                    var data = $scope.$root.toolkit.serialize({
+                        'j_username': $scope.fields.email.value,
+                        'j_password': $scope.fields.password.value,
+                        'submit': 'Login'
+                    });
+
+                    login(data).then(function (data) {
+
+                        if (typeof data !== 'object') {
+                            console.error('login: something wrong with response');
+                            return;
+                        }
+
+                        if (data.data.error === true || data.data.status) {
+                            console.error('login after reg: request error code', data.data.status);
+                            return;
+                        }
+
+                        return $scope.$root.updateUserInfo();
+                    }).then(function () {
+                        $location.path('/profile');
+                    }, function (err) {
+                        throw err;
+                    });
+                };
+
                 angular.extend($scope, {
-                    form: {},
+                    fields: {
+                        name: {
+                            value: '',
+                            label: 'Name',
+                            hint: '',
+                            pattern: '^([a-z0-9_-]).{3,15}$',
+                            errorClient: 'Цифры и буквы, длина 3-15 знаков.',
+                            serverError: ''
+                        },
+                        email: {
+                            value: '',
+                            label: 'Email',
+                            pattern: '^[-a-z0-9!#$%&\'*+/=?^_`{|}~]+(?:\\.[-a-z0-9!#$%&\'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$',
+                            errorClient: 'Цифры и буквы, длина 3-15 знаков.',
+                            serverError: ''
+                        },
+                        password: {
+                            value: '',
+                            label: 'Password',
+                            type: 'password',
+                            pattern: '((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})',
+                            errorClient: 'Цифры и буквы, длина 6-20 знаков, хоть одна цифра и заглавная буква.',
+                            serverError: ''
+                        },
+                        confirmPassword: {
+                            value: '',
+                            label: 'Password confirm',
+                            type: 'password',
+                            pattern: '',
+                            errorClient: 'Пароли должны совпадать.',
+                            serverError: '',
+                            validation: function () {
+                                return $scope.fields.password.value === $scope.fields.confirmPassword.value
+                                    && $scope.fields.confirmPassword.value;
+                            }
+                        }
+                    },
                     error: '',
                     validationResults: [],
-                    passwordConfirm: '',
-                    passwordsMatch: false,
-                    confPassValidation: function () {
-                        return $scope.form.password === $scope.passwordConfirm;
-                    },
-                    registrationHandler: function () {
+                    sumbitForm: function () {
                         if (!validateForm()) {
                             return;
                         }
 
-                        var data = $scope.$root.toolkit.serialize($scope.form);
+                        var data = $scope.$root.toolkit.serialize({
+                            firstName: $scope.fields.name.value,
+                            email: $scope.fields.email.value,
+                            password: $scope.fields.password.value
+                        });
+
                         $scope.error = '';
 
                         registration(data).success(function (data) {
@@ -60,36 +123,10 @@ define(
                                 return;
                             }
 
-                            $scope.loginAfterReg();
+                            loginAftReg();
                         }).error(function (err) {
                             $scope.error = 'Request failed';
                         })
-                    },
-                    loginAfterReg: function () {
-                        var data = $scope.$root.toolkit.serialize({
-                            'j_username': $scope.form.email,
-                            'j_password': $scope.form.password,
-                            'submit': 'Login'
-                        });
-
-                        login(data).then(function (data) {
-
-                            if (typeof data !== 'object') {
-                                console.error('login: something wrong with response');
-                                return;
-                            }
-
-                            if (data.data.error === true || data.data.status) {
-                                console.error('login after reg: request error code', data.data.status);
-                                return;
-                            }
-
-                            return $scope.$root.updateUserInfo();
-                        }).then(function () {
-                            $location.path('/profile');
-                        }, function (err) {
-                            throw err;
-                        });
                     }
                 });
             }

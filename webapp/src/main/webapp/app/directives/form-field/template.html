@@ -1,9 +1,9 @@
-<div class="form-field" ng-class="{'invalid': !isValid, 'not-empty': value, 'focused': isFocused }">
+<div class="form-field" ng-class="{'invalid': !isValid, 'not-empty': config.value, 'focused': isFocused, 'changed': isChanged }">
 
-    <input ng-model="value" type="{{ type || 'text' }}">
+    <input ng-model="config.value" type="{{ config.type || 'text' }}">
 
     <label>
-        {{ label }}
+        {{ config.label }}
     </label>
 
     <div class="underline"></div>
@@ -16,14 +16,12 @@
 
         <div class="text">
             <span>
-                {{ error }}
+                {{ config.errorClient }}
             </span>
         </div>
-
     </div>
 
     <div class="hint">
-        {{ hint }}
+        {{ config.hint }}
     </div>
-
 </div>

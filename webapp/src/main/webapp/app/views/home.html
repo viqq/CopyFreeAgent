@@ -6,14 +6,19 @@
             <div id="socials" class="fade-in fade-in-order-8">
                 <span>SHARE</span>
                 <span>|</span>
-                <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri=http://localhost:8080/api/gglogin&response_type=code&client_id=984084695751-v075768i8b3torl2t0evijuj63t4sfrc.apps.googleusercontent.com&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile">
-                    <img src="/img/icon-google.svg"></a>
 
+                <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri=http://localhost:8080/api/gglogin&amp;response_type=code&amp;client_id=984084695751-v075768i8b3torl2t0evijuj63t4sfrc.apps.googleusercontent.com&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile">
+                    <img src="/img/icon-google.svg">
+                </a>
 
-                <img src="/img/icon-twitter.svg">
-                <img src="/img/icon-facebook.svg">
+                <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri=http://localhost:8080/api/gglogin&amp;response_type=code&amp;client_id=984084695751-v075768i8b3torl2t0evijuj63t4sfrc.apps.googleusercontent.com&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile">
+                    <img src="/img/icon-twitter.svg">
+                </a>
+
+                <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri=http://localhost:8080/api/gglogin&amp;response_type=code&amp;client_id=984084695751-v075768i8b3torl2t0evijuj63t4sfrc.apps.googleusercontent.com&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile">
+                    <img src="/img/icon-facebook.svg">
+                </a>
             </div>
-
             <div id="copyright" class="fade-in fade-in-order-8">
                 <span>© FREE AGENT 2015</span>
             </div>
@@ -50,7 +55,7 @@
 
             <div>
                 <a id="find" href="/search">НАЙТИ FREE AGENT</a>
-                <a id="register" href="/registration">Я С ВАМИ!</a>
+                <a id="register" href="/registration" ng-hide="isLoggedIn">Я С ВАМИ!</a>
             </div>
         </div>
     </div>

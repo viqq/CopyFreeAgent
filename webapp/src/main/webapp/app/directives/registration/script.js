@@ -31,7 +31,7 @@ define([
 
             $scope.error = '';
 
-            $scope.registrationHandler = function() {
+            $scope.sumbitForm = function() {
                 var data = $scope.$root.toolkit.serialize($scope.form);
                 $scope.error = '';
 
@@ -47,14 +47,14 @@ define([
                             return;
                         }
 
-                        $scope.loginAfterReg();
+                        $scope.login();
                     })
                     .error(function(err) {
                         $scope.error = 'Request failed';
                     })
             };
 
-            $scope.loginAfterReg = function() {
+            $scope.login = function() {
                 var data = $scope.$root.toolkit.serialize({
                     'j_username': $scope.form.email,
                     'j_password': $scope.form.password,
