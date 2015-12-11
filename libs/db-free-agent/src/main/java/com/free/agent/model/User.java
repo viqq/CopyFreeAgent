@@ -81,6 +81,9 @@ public class User extends AbstractTable<Long> {
     private List<Message> messages = Lists.newArrayList();
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Favorite> favorites = Lists.newArrayList();
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Schedule> schedules = Lists.newArrayList();
 
     public User(String email, String password, String phone) {
@@ -240,5 +243,13 @@ public class User extends AbstractTable<Long> {
 
     public void setSchedules(List<Schedule> schedules) {
         this.schedules = schedules;
+    }
+
+    public List<Favorite> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(List<Favorite> favorites) {
+        this.favorites = favorites;
     }
 }

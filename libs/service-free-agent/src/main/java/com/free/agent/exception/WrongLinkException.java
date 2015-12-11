@@ -1,4 +1,4 @@
-package com.free.agent.service.exception;
+package com.free.agent.exception;
 
 /**
  * Created by antonPC on 09.10.15.

@@ -1,4 +1,4 @@
-package com.free.agent.service.dto;
+package com.free.agent.dto;
 
 import java.util.List;
 

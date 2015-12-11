@@ -39,10 +39,9 @@ public class ScheduleDaoImpl extends GenericDaoImpl<Schedule, Long> implements S
     public List<Schedule> findAllByUserId(Long id) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Schedule> query = cb.createQuery(Schedule.class);
-        Root<Schedule> fromMessage = query.from(Schedule.class);
-        Join<Schedule, User> fromUser = fromMessage.join(Schedule_.user);
+        Root<Schedule> fromSchedule = query.from(Schedule.class);
+        Join<Schedule, User> fromUser = fromSchedule.join(Schedule_.user);
         query.where(cb.equal(fromUser.get(User_.id), id));
         return getEntityManager().createQuery(query).getResultList();
-
     }
 }

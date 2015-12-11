@@ -1,13 +1,13 @@
-package com.free.agent.service.util;
+package com.free.agent.util;
 
+import com.free.agent.dto.MessageUIDto;
+import com.free.agent.dto.SportUIDto;
+import com.free.agent.dto.UserRegistrationDto;
+import com.free.agent.dto.UserWithSportUIDto;
 import com.free.agent.field.Role;
 import com.free.agent.model.Message;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
-import com.free.agent.service.dto.MessageUIDto;
-import com.free.agent.service.dto.SportUIDto;
-import com.free.agent.service.dto.UserRegistrationDto;
-import com.free.agent.service.dto.UserWithSportUIDto;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 

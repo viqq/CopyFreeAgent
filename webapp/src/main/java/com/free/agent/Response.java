@@ -1,6 +1,5 @@
 package com.free.agent;
 
-import com.free.agent.service.FreeAgentAPI;
 import com.google.gson.Gson;
 
 /**

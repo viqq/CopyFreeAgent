@@ -1,6 +1,6 @@
-package com.free.agent.service.annotation;
+package com.free.agent.annotation;
 
-import com.free.agent.service.FreeAgentAPI;
+import com.free.agent.FreeAgentAPI;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

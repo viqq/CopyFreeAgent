@@ -1,4 +1,4 @@
-package com.free.agent.service.util;
+package com.free.agent.util;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;

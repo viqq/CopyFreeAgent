@@ -1,8 +1,8 @@
-package com.free.agent.service.dto;
+package com.free.agent.dto;
 
-import com.free.agent.service.annotation.Email;
-import com.free.agent.service.annotation.Password;
-import com.free.agent.service.annotation.User;
+import com.free.agent.annotation.Email;
+import com.free.agent.annotation.Password;
+import com.free.agent.annotation.User;
 
 /**
  * Created by antonPC on 25.09.15.

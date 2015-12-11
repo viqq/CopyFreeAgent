@@ -1,6 +1,6 @@
-package com.free.agent.service.dto;
+package com.free.agent.dto;
 
-import com.free.agent.service.annotation.Phone;
+import com.free.agent.annotation.Phone;
 
 
 /**

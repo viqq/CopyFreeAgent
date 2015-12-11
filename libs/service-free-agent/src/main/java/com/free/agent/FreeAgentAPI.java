@@ -1,4 +1,4 @@
-package com.free.agent.service;
+package com.free.agent;
 
 /**
  * Created by antonPC on 18.08.15.
@@ -38,6 +38,9 @@ public final class FreeAgentAPI {
     public static final String ACTIVATE_USER = "/activate";
     public static final String RESET_PASSWORD = "/api/password/{email}";
     public static final String GET_POSTPONE_EMAIL = "/api/postpone";
+    public static final String GET_ALL_FAVORITES = "/favorite";
+    public static final String SAVE_FAVORITE = "/favorite/{id}"; //POST
+    public static final String DELETE_FAVORITE = "/favorite/{id}"; //DELETE
 
     public static String host;
 }

@@ -1,18 +1,18 @@
-package com.free.agent;
+package com.free.agent.config;
 
 
 /**
  * Created by antonPC on 06.12.15.
  */
 
-import com.free.agent.service.FreeAgentAPI;
+import com.free.agent.FreeAgentAPI;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 public class ContextListenerImpl implements ServletContextListener {
-    private final String PROD = "prod";
+    private static final String PROD = "prod";
 
     public ContextListenerImpl() {
     }

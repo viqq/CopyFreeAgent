@@ -3,12 +3,12 @@ package com.free.agent.service;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
 import com.free.agent.dao.UserDao;
+import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
-import com.free.agent.service.dto.UserRegistrationDto;
 import com.free.agent.service.impl.UserServiceImpl;
-import com.free.agent.service.util.EncryptionUtils;
-import com.free.agent.service.util.ExtractFunction;
+import com.free.agent.util.EncryptionUtils;
+import com.free.agent.util.ExtractFunction;
 import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.junit.Assert;
@@ -30,7 +30,8 @@ import java.util.Set;
  * Created by antonPC on 28.06.15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml", "classpath*:free-agent-services-context.xml"})
+@ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml",
+        "classpath*:free-agent-services-context.xml"})
 @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
 @ActiveProfiles("test")
 public class UserServiceImplTest extends TestCase {

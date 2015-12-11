@@ -1,9 +1,9 @@
 package com.free.agent.controller;
 
 import com.free.agent.Response;
+import com.free.agent.dto.MessageDto;
+import com.free.agent.exception.EmailAlreadyUsedException;
 import com.free.agent.service.MessageService;
-import com.free.agent.service.dto.MessageDto;
-import com.free.agent.service.exception.EmailAlreadyUsedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 
-import static com.free.agent.service.FreeAgentAPI.*;
+import static com.free.agent.FreeAgentAPI.*;
 
 /**
  * Created by antonPC on 31.07.15.

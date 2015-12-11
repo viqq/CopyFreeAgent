@@ -1,6 +1,6 @@
-package com.free.agent.service.util;
+package com.free.agent.util;
 
-import com.free.agent.service.FreeAgentAPI;
+import com.free.agent.FreeAgentAPI;
 
 /**
  * Created by antonPC on 03.11.15.

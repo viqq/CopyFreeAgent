@@ -1,4 +1,4 @@
-package com.free.agent.service.dto;
+package com.free.agent.dto;
 
 /**
  * Created by antonPC on 15.09.15.

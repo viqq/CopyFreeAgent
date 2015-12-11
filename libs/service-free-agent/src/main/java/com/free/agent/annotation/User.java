@@ -1,6 +1,6 @@
-package com.free.agent.service.annotation;
+package com.free.agent.annotation;
 
-import com.free.agent.service.FreeAgentAPI;
+import com.free.agent.FreeAgentAPI;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -10,11 +10,11 @@ import java.lang.annotation.*;
  * Created by antonPC on 11.07.15.
  */
 @Documented
-@Constraint(validatedBy = PasswordConstraintValidator.class)
+@Constraint(validatedBy = UserConstraintValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Password {
-    String message() default FreeAgentAPI.PASSWORD_INVALID;
+public @interface User {
+    String message() default FreeAgentAPI.FIRST_NAME_INVALID;
 
     Class<?>[] groups() default {};
 

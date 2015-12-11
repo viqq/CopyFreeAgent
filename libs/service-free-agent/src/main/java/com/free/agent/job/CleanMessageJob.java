@@ -1,4 +1,4 @@
-package com.free.agent.service.job;
+package com.free.agent.job;
 
 import com.free.agent.service.MessageService;
 import org.apache.log4j.Logger;

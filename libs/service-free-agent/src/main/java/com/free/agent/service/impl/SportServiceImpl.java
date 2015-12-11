@@ -2,10 +2,10 @@ package com.free.agent.service.impl;
 
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
+import com.free.agent.dto.SportUIDto;
 import com.free.agent.model.Sport;
 import com.free.agent.service.SportService;
-import com.free.agent.service.dto.SportUIDto;
-import com.free.agent.service.util.ExtractFunction;
+import com.free.agent.util.ExtractFunction;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

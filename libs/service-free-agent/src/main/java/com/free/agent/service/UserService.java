@@ -1,12 +1,12 @@
 package com.free.agent.service;
 
 import com.free.agent.Filter;
+import com.free.agent.dto.UserDto;
+import com.free.agent.dto.UserRegistrationDto;
+import com.free.agent.dto.UserWithSportUIDto;
+import com.free.agent.exception.EmailAlreadyUsedException;
+import com.free.agent.exception.WrongLinkException;
 import com.free.agent.model.User;
-import com.free.agent.service.dto.UserDto;
-import com.free.agent.service.dto.UserRegistrationDto;
-import com.free.agent.service.dto.UserWithSportUIDto;
-import com.free.agent.service.exception.EmailAlreadyUsedException;
-import com.free.agent.service.exception.WrongLinkException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;

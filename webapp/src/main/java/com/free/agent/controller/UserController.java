@@ -3,13 +3,13 @@ package com.free.agent.controller;
 
 import com.free.agent.Response;
 import com.free.agent.Token;
+import com.free.agent.dto.UserDto;
+import com.free.agent.dto.UserRegistrationDto;
+import com.free.agent.exception.EmailAlreadyUsedException;
+import com.free.agent.exception.WrongLinkException;
 import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
-import com.free.agent.service.dto.UserDto;
-import com.free.agent.service.dto.UserRegistrationDto;
-import com.free.agent.service.exception.EmailAlreadyUsedException;
-import com.free.agent.service.exception.WrongLinkException;
 import com.free.agent.utils.HttpRequestUtil;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -41,7 +41,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.Principal;
 
-import static com.free.agent.service.FreeAgentAPI.*;
+import static com.free.agent.FreeAgentAPI.*;
 
 
 /**

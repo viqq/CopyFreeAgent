@@ -1,9 +1,9 @@
 package com.free.agent.controller;
 
 import com.free.agent.Filter;
+import com.free.agent.FreeAgentAPI;
 import com.free.agent.Response;
 import com.free.agent.model.User;
-import com.free.agent.service.FreeAgentAPI;
 import com.free.agent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

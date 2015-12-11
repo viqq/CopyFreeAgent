@@ -1,4 +1,4 @@
-package com.free.agent.service.annotation;
+package com.free.agent.annotation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

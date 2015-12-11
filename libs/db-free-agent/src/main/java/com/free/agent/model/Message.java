@@ -17,6 +17,7 @@ public class Message extends AbstractTable<Long> {
     @Column(name = "MESSAGE_ID")
     private Long id;
 
+    //todo join -> long to user
     @Column(name = "AUTHOR_ID")
     private Long authorId;
 

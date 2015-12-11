@@ -1,9 +1,9 @@
 package com.free.agent.service;
 
+import com.free.agent.dto.MessageDto;
+import com.free.agent.dto.MessageUIDto;
+import com.free.agent.exception.EmailAlreadyUsedException;
 import com.free.agent.model.Message;
-import com.free.agent.service.dto.MessageDto;
-import com.free.agent.service.dto.MessageUIDto;
-import com.free.agent.service.exception.EmailAlreadyUsedException;
 
 import java.security.Principal;
 import java.util.Collection;
