@@ -13,7 +13,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.SetJoin;
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by antonPC on 15.06.15.
@@ -59,5 +61,16 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
         Root<User> from = query.from(User.class);
         query.where(cb.equal(from.get(User_.hash), hash));
         return DaoUtils.getSingleResult(getEntityManager().createQuery(query).getResultList());
+    }
+
+    @Override
+    public Set<User> findFavoritesByUserId(Long userId) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> fromUser = query.from(User.class);
+        SetJoin<User, User> fromFavorites = fromUser.join(User_.favorites);
+        query.where(cb.equal(fromUser.get(User_.id), userId));
+        query.select(fromFavorites);
+        return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
 }

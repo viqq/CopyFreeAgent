@@ -67,31 +67,28 @@ public class UserController {
     }
 
     @RequestMapping(value = IS_AUTHENTICATION, method = RequestMethod.GET)
-    public
     @ResponseBody
-    String isAuthentication(Principal principal) {
+    public String isAuthentication(Principal principal) {
         return principal == null ? Response.ok(false) : Response.ok(true);
     }
 
     @RequestMapping(value = SAVE_USER, method = RequestMethod.POST)
-    public
     @ResponseBody
-    String saveUser(@Valid UserRegistrationDto userDto, BindingResult bindingResult) {
+    public String saveUser(@Valid UserRegistrationDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return Response.error(getAllErrors(bindingResult));
         }
         try {
             userService.save(userDto);
         } catch (EmailAlreadyUsedException e) {
-            Response.error(EMAIL_REGISTERED_ERROR);
+            return Response.error(EMAIL_REGISTERED_ERROR);
         }
         return Response.ok();
     }
 
     @RequestMapping(value = GET_POSTPONE_EMAIL, method = RequestMethod.POST)
-    public
     @ResponseBody
-    String getPostponeEmail(String hash, String key) {
+    public String getPostponeEmail(String hash, String key) {
         try {
             return Response.ok(userService.getPostponeEmail(hash, key));
         } catch (WrongLinkException e) {
@@ -100,9 +97,8 @@ public class UserController {
     }
 
     @RequestMapping(value = ACTIVATE_USER, method = RequestMethod.GET)
-    public
     @ResponseBody
-    String activateUser(String hash, String key) {
+    public String activateUser(String hash, String key) {
         try {
             return Response.ok(userService.activateUser(hash, key));
         } catch (WrongLinkException e) {
@@ -111,9 +107,8 @@ public class UserController {
     }
 
     @RequestMapping(value = RESET_PASSWORD, method = RequestMethod.GET)
-    public
     @ResponseBody
-    String resetPassword(@PathVariable(value = "email") String email) {
+    public String resetPassword(@PathVariable(value = "email") String email) {
         try {
             userService.resetPassword(email);
             return Response.ok();
@@ -125,17 +120,15 @@ public class UserController {
 
     //todo only for admin
     @RequestMapping(value = DELETE_USER, method = RequestMethod.DELETE, produces = BaseController.PRODUCES)
-    public
     @ResponseBody
-    String deleteUser(@PathVariable(value = "id") Long id) {
+    public String deleteUser(@PathVariable(value = "id") Long id) {
         userService.deleteUser(id);
         return Response.ok();
     }
 
     @RequestMapping(value = EDIT_USER, method = RequestMethod.POST, produces = BaseController.PRODUCES)
-    public
     @ResponseBody
-    String editUser(@PathVariable(value = "id") Long id, Principal principal, UserDto userDto, HttpServletRequest request) {
+    public String editUser(@PathVariable(value = "id") Long id, Principal principal, UserDto userDto, HttpServletRequest request) {
         if (!userService.findById(id).getEmail().equals(principal.getName())) {
             return Response.error(EDIT_PROFILE_ERROR);
         }
@@ -144,16 +137,14 @@ public class UserController {
     }
 
     @RequestMapping(value = INFO_ABOUT_USER, method = RequestMethod.GET, produces = BaseController.PRODUCES)
-    public
     @ResponseBody
-    String getInfoAboutUser(Principal principal) {
+    public String getInfoAboutUser(Principal principal) {
         return Response.ok(userService.getInfoAboutUser(principal.getName()));
     }
 
     @RequestMapping(value = GET_USER_BY_ID, method = RequestMethod.GET, produces = BaseController.PRODUCES)
-    public
     @ResponseBody
-    String getUserById(@PathVariable(value = "id") Long id) {
+    public String getUserById(@PathVariable(value = "id") Long id) {
         return Response.ok(userService.getInfoAboutUserById(id));
 
     }

@@ -1,9 +1,10 @@
 package com.free.agent.dao;
 
 import com.free.agent.config.FreeAgentConstant;
-import com.free.agent.model.Favorite;
 import com.free.agent.model.User;
-import com.google.common.collect.Lists;
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by antonPC on 06.12.15.
@@ -24,16 +25,20 @@ import java.util.List;
 @ContextConfiguration(locations = {"classpath*:free-agent-dao-context.xml"})
 @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
 @ActiveProfiles("test")
-public class FavoriteDaoImplTest extends TestCase {
+public class UserFavoriteDaoImplTest extends TestCase {
 
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private FavoriteDao favoriteDao;
+    private final Function<User, Long> getId = new Function<User, Long>() {
+        @Override
+        public Long apply(User input) {
+            return input.getId();
+        }
+    };
 
     private User u1, u2, u3, u4, u5;
-    private Favorite f12, f13, f15, f32, f34, f35, f31, f51;
+    private Set<User> set1, set3, set5;
 
     @Before
     public void init() {
@@ -62,28 +67,14 @@ public class FavoriteDaoImplTest extends TestCase {
         u5.setLastName("Ribina");
         u5.setDateOfBirth(new GregorianCalendar(1995, 4, 3).getTime());
 
-        f12 = new Favorite(u1, u2, "best friend1");
-        f13 = new Favorite(u1, u3, "best friend2");
-        f15 = new Favorite(u1, u5, "best friend3");
-        u1.setFavorites(Lists.newArrayList(f12, f13, f15));
-
-        f32 = new Favorite(u3, u2, "best friend11");
-        f34 = new Favorite(u3, u4, "best friend12");
-        f35 = new Favorite(u3, u5, "best friend13");
-        f31 = new Favorite(u3, u1, "best friend13");
-        u3.setFavorites(Lists.newArrayList(f31, f32, f34, f35));
-
-        f51 = new Favorite(u5, u1, "best friend23");
-        u5.setFavorites(Lists.newArrayList(f51));
+        set1 = Sets.newHashSet(u2, u3, u5);
+        u1.setFavorites(set1);
+        set3 = Sets.newHashSet(u2, u4, u5, u1);
+        u3.setFavorites(set3);
+        set5 = Sets.newHashSet(u1);
+        u5.setFavorites(set5);
 
         createAllUsers(u1, u2, u3, u4, u5);
-        createAllFavorites(f12, f13, f15, f32, f34, f35, f31, f51);
-    }
-
-    private void createAllFavorites(Favorite... favorite) {
-        for (Favorite f : favorite) {
-            favoriteDao.create(f);
-        }
     }
 
     private void createAllUsers(User... user) {
@@ -94,34 +85,28 @@ public class FavoriteDaoImplTest extends TestCase {
 
     @Test
     public void createReadUpdateDeleteTest() {
-        assertEquals(8, favoriteDao.findAll().size());
         assertEquals(5, userDao.findAll().size());
         assertEquals(3, userDao.findByEmail(u1.getEmail()).getFavorites().size());
-        assertTrue(userDao.findByEmail(u1.getEmail()).getFavorites().contains(f12));
-        assertTrue(userDao.findByEmail(u1.getEmail()).getFavorites().contains(f13));
-        assertTrue(userDao.findByEmail(u1.getEmail()).getFavorites().contains(f15));
         assertEquals(4, userDao.findByEmail(u3.getEmail()).getFavorites().size());
         assertEquals(1, userDao.findByEmail(u5.getEmail()).getFavorites().size());
-        assertEquals(u1, userDao.findByEmail(u5.getEmail()).getFavorites().iterator().next().getFavoriteUser());
         assertEquals(0, userDao.findByEmail(u2.getEmail()).getFavorites().size());
+        assertSetEquals(userDao.find(u1.getId()).getFavorites(), set1);
+        assertSetEquals(userDao.find(u3.getId()).getFavorites(), set3);
+        assertSetEquals(userDao.find(u5.getId()).getFavorites(), set5);
     }
 
     @Test
     public void findAllByUserId() {
-        assertEquals(u1, favoriteDao.findAllByUserId(u5.getId()).iterator().next().getFavoriteUser());
-        assertEquals(u5, favoriteDao.findAllByUserId(u5.getId()).iterator().next().getUser());
-        List<User> favorites = Lists.newArrayList(u2, u3, u5);
-        for (Favorite favorite : favoriteDao.findAllByUserId(u1.getId())) {
-            assertTrue(favorites.contains(favorite.getFavoriteUser()));
-        }
+        assertSetEquals(userDao.findFavoritesByUserId(u1.getId()), set1);
+        assertSetEquals(userDao.findFavoritesByUserId(u3.getId()), set3);
+        assertSetEquals(userDao.findFavoritesByUserId(u5.getId()), set5);
+
     }
 
-    @Test
-    public void findAllByUserAndFollower() {
-        assertEquals(f51, favoriteDao.findAllByUserAndFollower(u5.getId(), u1.getId()));
-        assertEquals(f12, favoriteDao.findAllByUserAndFollower(u1.getId(), u2.getId()));
-        assertEquals(f13, favoriteDao.findAllByUserAndFollower(u1.getId(), u3.getId()));
-        assertEquals(f15, favoriteDao.findAllByUserAndFollower(u1.getId(), u5.getId()));
+    private void assertSetEquals(Set<User> favorites, Set<User> user) {
+        Set<Long> favoritesIds = FluentIterable.from(favorites).transform(getId).toSet();
+        Set<Long> userIds = FluentIterable.from(user).transform(getId).toSet();
+        assertEquals(0, Sets.difference(favoritesIds, userIds).size());
     }
 
 }

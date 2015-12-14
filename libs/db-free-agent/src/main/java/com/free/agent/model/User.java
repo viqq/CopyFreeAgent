@@ -4,11 +4,11 @@ package com.free.agent.model;
 import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,11 +33,11 @@ public class User extends AbstractTable<Long> {
     @Column(name = "CITY")
     private String city;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(name = "USER_SPORT",
             joinColumns = {@JoinColumn(name = "USER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "SPORT_ID")})
-    private Set<Sport> sports = new HashSet<Sport>();
+    private Set<Sport> sports = Sets.newHashSet();
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLE")
@@ -80,8 +80,14 @@ public class User extends AbstractTable<Long> {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Message> messages = Lists.newArrayList();
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Favorite> favorites = Lists.newArrayList();
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinTable(name = "USER_FAVORITE",
+            joinColumns = {@JoinColumn(name = "USER_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "FAVORITE_ID")})
+    private Set<User> favorites = Sets.newHashSet();
+
+    @ManyToMany(mappedBy = "favorites")
+    private Set<User> followers = Sets.newHashSet();
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Schedule> schedules = Lists.newArrayList();
@@ -245,11 +251,19 @@ public class User extends AbstractTable<Long> {
         this.schedules = schedules;
     }
 
-    public List<Favorite> getFavorites() {
+    public Set<User> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(List<Favorite> favorites) {
+    public void setFavorites(Set<User> favorites) {
         this.favorites = favorites;
+    }
+
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
     }
 }

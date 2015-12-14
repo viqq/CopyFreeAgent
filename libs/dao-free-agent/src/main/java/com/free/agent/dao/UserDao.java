@@ -4,6 +4,7 @@ import com.free.agent.Filter;
 import com.free.agent.model.User;
 
 import java.util.Collection;
+import java.util.Set;
 
 
 /**
@@ -16,5 +17,7 @@ public interface UserDao extends GenericDao<User,Long> {
     Collection<User> findByFilter(Filter filter);
 
     User findByHash(String hash);
+
+    Set<User> findFavoritesByUserId(Long userId);
 
 }

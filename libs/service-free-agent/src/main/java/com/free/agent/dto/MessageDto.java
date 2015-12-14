@@ -4,10 +4,10 @@ package com.free.agent.dto;
  * Created by antonPC on 11.09.15.
  */
 public class MessageDto {
-    public Long id;
-    public String title;
-    public String text;
-    public String email;
+    private Long id;
+    private String title;
+    private String text;
+    private String email;
 
     public Long getId() {
         return id;

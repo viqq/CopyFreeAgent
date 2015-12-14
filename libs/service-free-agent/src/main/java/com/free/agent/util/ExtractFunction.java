@@ -1,9 +1,6 @@
 package com.free.agent.util;
 
-import com.free.agent.dto.MessageUIDto;
-import com.free.agent.dto.SportUIDto;
-import com.free.agent.dto.UserRegistrationDto;
-import com.free.agent.dto.UserWithSportUIDto;
+import com.free.agent.dto.*;
 import com.free.agent.field.Role;
 import com.free.agent.model.Message;
 import com.free.agent.model.Sport;
@@ -43,6 +40,16 @@ public final class ExtractFunction {
         }
     };
 
+    public static final Function<User, FavoriteDto> FAVORITE_INVOKE = new Function<User, FavoriteDto>() {
+        @Override
+        public FavoriteDto apply(User input) {
+            FavoriteDto dto = new FavoriteDto();
+            dto.setUserId(input.getId());
+            dto.setUserEmail(input.getEmail());
+            return dto;
+        }
+    };
+
     public static UserWithSportUIDto getUserForUI(User user) {
         UserWithSportUIDto userDto = new UserWithSportUIDto();
         userDto.setId(user.getId());
@@ -56,7 +63,7 @@ public final class ExtractFunction {
         userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
         userDto.setGender(user.getGender().name());
         userDto.setRole(user.getRole().name());
-        userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), ExtractFunction.SPORT_NAME_INVOKE));
+        userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), SPORT_NAME_INVOKE));
         return userDto;
     }
 

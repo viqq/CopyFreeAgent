@@ -24,44 +24,38 @@ public class MessageController {
     private MessageService messageService;
 
     @RequestMapping(value = GET_UNREAD_MESSAGES, method = RequestMethod.GET)
-    public
     @ResponseBody
-    String getUnreadMessages(Principal principal) {
+    public String getUnreadMessages(Principal principal) {
         return Response.ok(messageService.countUnreadMessages(principal.getName()));
     }
 
     @RequestMapping(value = GET_ALL_MESSAGES, method = RequestMethod.GET)
-    public
     @ResponseBody
-    String getAllMessages(Principal principal) {
+    public String getAllMessages(Principal principal) {
         return Response.ok(messageService.findAllByReceiver(principal.getName()));
     }
 
     @RequestMapping(value = GET_SENT_MESSAGES, method = RequestMethod.GET)
-    public
     @ResponseBody
-    String getSentMessages(Principal principal) {
+    public String getSentMessages(Principal principal) {
         return Response.ok(messageService.findAllByAuthor(principal.getName()));
     }
 
     @RequestMapping(value = GET_HISTORY, method = RequestMethod.GET)
-    public
     @ResponseBody
-    String getHistory(Principal principal, @PathVariable("id") Long id) {
+    public String getHistory(Principal principal, @PathVariable("id") Long id) {
         return Response.ok(messageService.getHistory(id, principal.getName()));
     }
 
     @RequestMapping(value = GET_ALL_PARTICIPANTS, method = RequestMethod.GET)
-    public
     @ResponseBody
-    String getParticipants(Principal principal) {
+    public String getParticipants(Principal principal) {
         return Response.ok(messageService.getParticipants(principal.getName()));
     }
 
     @RequestMapping(value = SAVE_MESSAGES, method = RequestMethod.POST)
-    public
     @ResponseBody
-    String saveMessage(MessageDto dto, String email, Principal principal) {
+    public String saveMessage(MessageDto dto, String email, Principal principal) {
         try {
             messageService.save(dto, email, principal);
         } catch (EmailAlreadyUsedException e) {
@@ -72,9 +66,8 @@ public class MessageController {
 
     //todo how is it work??? is it used?
     @RequestMapping(value = GET_MESSAGE_BY_ID, method = RequestMethod.POST)
-    public
     @ResponseBody
-    String getMessageById(@PathVariable("id") Long id, Principal principal) {
+    public String getMessageById(@PathVariable("id") Long id, Principal principal) {
         messageService.updateMessageStatus(id, principal.getName());
         return Response.ok();
     }
