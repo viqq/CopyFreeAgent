@@ -26,6 +26,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -176,8 +178,6 @@ public class UserController {
     @RequestMapping(value = "/api/gglogin", method = RequestMethod.GET)
     @ResponseBody
     public String googleLogin(String code) throws IOException {
-
-
         HttpClient httpclient = HttpClientBuilder.create().build();
         HttpPost httppost = new HttpPost("https://www.googleapis.com/oauth2/v3/token");
 
@@ -193,8 +193,55 @@ public class UserController {
         HttpResponse response = httpclient.execute(httppost);
         Token token = new Gson().fromJson(EntityUtils.toString(response.getEntity()), Token.class);
         HttpClient client = HttpClientBuilder.create().build();
+
         HttpGet get = new HttpGet("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.getAccess_token());
         response = client.execute(get);
+
+        return EntityUtils.toString(response.getEntity());
+    }
+
+    @RequestMapping(value = "/api/fblogin", method = RequestMethod.GET)
+    @ResponseBody
+    public String facebookLogin(String code) throws IOException {
+        HttpResponse response;
+
+        HttpGet get1 = new HttpGet("https://graph.facebook.com/oauth/access_token?" +
+                "client_id=1496696780635384&" +
+                "redirect_uri=http://localhost:8080/api/fblogin&" +
+                "client_secret=87e2c1eb544ca56976eb133e772a4f0d&" +
+                "code=" + code);
+        HttpClient client = HttpClientBuilder.create().build();
+        response = client.execute(get1);
+        String result = EntityUtils.toString(response.getEntity());
+        String token = result.split("&")[0].split("=")[1];
+        Facebook facebook = new FacebookTemplate(token);
+        org.springframework.social.facebook.api.User profile = facebook.userOperations().getUserProfile();
+
+        return Response.ok(profile);
+    }
+
+
+    @RequestMapping(value = "/api/vklogin", method = RequestMethod.GET)
+    @ResponseBody
+    public String vkloginLogin(String code) throws IOException {
+        HttpClient httpclient = HttpClientBuilder.create().build();
+        HttpGet httppost = new HttpGet("https://oauth.vk.com/access_token?" +
+                "client_id=5191126&" +
+                "redirect_uri=http://localhost:8080/api/vklogin&" +
+                "client_secret=hNuiDLBB4RyMeCxlhK3a&" +
+                "code=" + code);
+
+        HttpResponse response = httpclient.execute(httppost);
+        Token token = new Gson().fromJson(EntityUtils.toString(response.getEntity()), Token.class);
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpGet get = new HttpGet("https://api.vk.com/method/users.get?" +
+                "uids=" + token.getUser_id() + "&" +
+                "fields=uid,first_name,last_name,nickname,screen_name,sex,bdate,city,country,timezone,photo&" +
+                "access_token=" + token.getAccess_token());
+        response = client.execute(get);
+
+        //todo http://api.vk.com/method/database.getCitiesById?city_ids=650 - city
+        //todo http://api.vk.com/method/database.getCountriesById?country_ids=2 - country
 
         return EntityUtils.toString(response.getEntity());
     }
