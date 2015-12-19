@@ -20,9 +20,32 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <context:property-placeholder location="classpath:networks/*.properties"/>
+
     <cache:annotation-driven/>
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehcache"/>
     <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
           p:configLocation="classpath:ehcache.xml" p:shared="true"/>
+
+    <bean id="vk" class="com.free.agent.SocialNetworkProperty">
+        <constructor-arg name="client_id" value="${vk.client.id}"/>
+        <constructor-arg name="client_secret" value="${vk.client.secret}"/>
+        <constructor-arg name="profile_url" value="${vk.profile.url}"/>
+        <constructor-arg name="token_url" value="${vk.token.url}"/>
+    </bean>
+
+    <bean id="facebook" class="com.free.agent.SocialNetworkProperty">
+        <constructor-arg name="client_id" value="${facebook.client.id}"/>
+        <constructor-arg name="client_secret" value="${facebook.client.secret}"/>
+        <constructor-arg name="profile_url" value="${facebook.profile.url}"/>
+        <constructor-arg name="token_url" value="${facebook.token.url}"/>
+    </bean>
+
+    <bean id="google" class="com.free.agent.SocialNetworkProperty">
+        <constructor-arg name="client_id" value="${google.client.id}"/>
+        <constructor-arg name="client_secret" value="${google.client.secret}"/>
+        <constructor-arg name="profile_url" value="${google.profile.url}"/>
+        <constructor-arg name="token_url" value="${google.token.url}"/>
+    </bean>
 
 </beans>

@@ -39,9 +39,12 @@ public final class FreeAgentAPI {
     public static final String ACTIVATE_USER = "/activate";
     public static final String RESET_PASSWORD = "/api/password/{email}";
     public static final String GET_POSTPONE_EMAIL = "/api/postpone";
-    public static final String GET_ALL_FAVORITES = "/favorite";
-    public static final String SAVE_FAVORITE = "/favorite/{id}"; //POST
-    public static final String DELETE_FAVORITE = "/favorite/{id}"; //DELETE
+    public static final String GET_ALL_FAVORITES = "/api/favorite";
+    public static final String SAVE_FAVORITE = "/api/favorite/{id}"; //POST
+    public static final String DELETE_FAVORITE = "/api/favorite/{id}"; //DELETE
+    public static final String LOGIN_WITH_VK = "/api/vklogin";
+    public static final String LOGIN_WITH_GOOGLE = "/api/gglogin";
+    public static final String LOGIN_WITH_FACEBOOK = "/api/fblogin";
 
     public static String host;
 }
