@@ -11,6 +11,7 @@ public class Token implements Serializable {
     public String expires_in;
     public String id_token;
     public String user_id;
+    public String email;
 
     public String getAccess_token() {
         return access_token;
@@ -50,5 +51,13 @@ public class Token implements Serializable {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

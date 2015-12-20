@@ -7,7 +7,9 @@ import com.free.agent.dao.UserDao;
 import com.free.agent.dto.UserDto;
 import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.UserWithSportUIDto;
+import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
+import com.free.agent.exception.EmailIsNotDetectedException;
 import com.free.agent.exception.WrongLinkException;
 import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
@@ -73,6 +75,26 @@ public class UserServiceImpl implements UserService {
         User createdUser = userDao.create(ExtractFunction.getUser(userDto));
         sendLinkForConfirm(createdUser.getEmail(), createdUser.getHash());
         LOGGER.info("New user " + userDto.getEmail() + "was added ");
+        return createdUser;
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+    public User save(SocialProfile profile) throws EmailAlreadyUsedException, EmailIsNotDetectedException {
+        User user = userDao.findByEmail(profile.getEmail());
+        if (user != null) {
+            LOGGER.error("User with " + profile.getEmail() + " has registered already");
+            throw new EmailAlreadyUsedException("User with " + profile.getEmail() + " has registered already");
+        }
+        user = ExtractFunction.getUser(profile);
+        if (user.getEmail() == null) {
+            throw new EmailIsNotDetectedException("You didn't detected email in " + profile.getType());
+        }
+        User createdUser = userDao.create(user);
+        if (!profile.isVerified()) {
+            sendLinkForConfirm(createdUser.getEmail(), createdUser.getHash());
+        }
+        LOGGER.info("New user " + profile.getEmail() + "was added from " + profile.getType());
         return createdUser;
     }
 
@@ -192,6 +214,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(userDto.getPhone());
         user.setDescription(userDto.getDescription());
         user.setCity(userDto.getCity());
+        user.setCountry(userDto.getCountry());
         user.setDateOfBirth(userDto.getDateOfBirth() == null ? null : new Date(userDto.getDateOfBirth()));
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());

@@ -13,6 +13,7 @@ public final class FreeAgentAPI {
     public static final int ACTIVATED_ERROR = 465;
     public static final int EDIT_PROFILE_ERROR = 466;
     public static final int USER_IS_NOT_FAVORITE_ERROR = 467;
+    public static final int EMAIL_IS_NOT_DETECTED_ERROR = 468;
     public static final int UNEXPECTED_ERROR = 499;
 
     public static final String EMAIL_INVALID = "430";

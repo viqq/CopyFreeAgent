@@ -33,11 +33,8 @@ public class User extends AbstractTable<Long> {
     @Column(name = "CITY")
     private String city;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinTable(name = "USER_SPORT",
-            joinColumns = {@JoinColumn(name = "USER_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "SPORT_ID")})
-    private Set<Sport> sports = Sets.newHashSet();
+    @Column(name = "COUNTRY")
+    private String country;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLE")
@@ -66,6 +63,15 @@ public class User extends AbstractTable<Long> {
     @Column(name = "IMAGE")
     private String image;
 
+    @Column(name = "VK_ID")
+    private Long vkId;
+
+    @Column(name = "FACEBOOK_ID")
+    private Long facebookId;
+
+    @Column(name = "GOOGLE_ID")
+    private Long googleId;
+
     @Column(name = "HASH")
     private String hash;
 
@@ -77,8 +83,11 @@ public class User extends AbstractTable<Long> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastActivity;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Message> messages = Lists.newArrayList();
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinTable(name = "USER_SPORT",
+            joinColumns = {@JoinColumn(name = "USER_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SPORT_ID")})
+    private Set<Sport> sports = Sets.newHashSet();
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(name = "USER_FAVORITE",
@@ -91,6 +100,10 @@ public class User extends AbstractTable<Long> {
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Schedule> schedules = Lists.newArrayList();
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Message> messages = Lists.newArrayList();
+
 
     public User(String email, String password, String phone) {
         this.email = email;
@@ -265,5 +278,37 @@ public class User extends AbstractTable<Long> {
 
     public void setFollowers(Set<User> followers) {
         this.followers = followers;
+    }
+
+    public Long getVkId() {
+        return vkId;
+    }
+
+    public void setVkId(Long vkId) {
+        this.vkId = vkId;
+    }
+
+    public Long getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(Long facebookId) {
+        this.facebookId = facebookId;
+    }
+
+    public Long getGoogleId() {
+        return googleId;
+    }
+
+    public void setGoogleId(Long googleId) {
+        this.googleId = googleId;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

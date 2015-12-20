@@ -6,7 +6,12 @@ import com.free.agent.SocialNetworkProperty;
 import com.free.agent.Token;
 import com.free.agent.dto.UserDto;
 import com.free.agent.dto.UserRegistrationDto;
+import com.free.agent.dto.network.FacebookProfile;
+import com.free.agent.dto.network.GoogleProfile;
+import com.free.agent.dto.network.SocialProfile;
+import com.free.agent.dto.network.VkProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
+import com.free.agent.exception.EmailIsNotDetectedException;
 import com.free.agent.exception.WrongLinkException;
 import com.free.agent.model.User;
 import com.free.agent.service.SportService;
@@ -27,7 +32,6 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
-import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -40,8 +44,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 
 import static com.free.agent.FreeAgentAPI.*;
@@ -167,9 +173,13 @@ public class UserController {
     @RequestMapping(value = GET_IMAGE, method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public void getImage(HttpServletResponse response, @PathVariable(value = "id") Long id) throws IOException {
         User user = userService.findById(id);
-        FileInputStream fis;
+        InputStream fis;
         if (user.getImage() != null) {
-            fis = new FileInputStream(userService.findById(id).getImage() + ".jpg");
+            if (user.getImage().startsWith("http")) {
+                fis = new ByteArrayInputStream(user.getImage().getBytes());
+            } else {
+                fis = new FileInputStream(userService.findById(id).getImage() + ".jpg");
+            }
         } else {
             fis = new FileInputStream(UserController.class.getClassLoader().getResource("images/freeagent.jpg").getFile());
         }
@@ -205,7 +215,7 @@ public class UserController {
         response = HttpClientBuilder.create().build().execute(new HttpGet(googleProperty.getProfile_url() +
                 "access_token=" + token.getAccess_token()));
 
-        return EntityUtils.toString(response.getEntity());
+        return saveProfile(new GoogleProfile(response.getEntity()));
     }
 
     @RequestMapping(value = LOGIN_WITH_FACEBOOK, method = RequestMethod.GET)
@@ -217,28 +227,52 @@ public class UserController {
                 "client_secret=" + facebookProperty.getClient_secret() + "&" +
                 "code=" + code));
         String token = EntityUtils.toString(response.getEntity()).split("&")[0].split("=")[1];
-        Facebook facebook = new FacebookTemplate(token);
-        org.springframework.social.facebook.api.User profile = facebook.userOperations().getUserProfile();
 
-        return Response.ok(profile);
+        return saveProfile(new FacebookProfile(new FacebookTemplate(token)));
     }
 
     @RequestMapping(value = LOGIN_WITH_VK, method = RequestMethod.GET)
     @ResponseBody
-    public String vkloginLogin(String code) throws IOException {
+    public String vkLogin(String code) throws IOException {
         HttpResponse response = HttpClientBuilder.create().build().execute(new HttpGet(vkProperty.getToken_url() +
                 "client_id=" + vkProperty.getClient_id() + "&" +
                 "redirect_uri=" + host + LOGIN_WITH_VK + "&" +
                 "client_secret=" + vkProperty.getClient_secret() + "&" +
-                "code=" + code));
+                "code=" + code + "&" +
+                "scope=email"));
         Token token = new Gson().fromJson(EntityUtils.toString(response.getEntity()), Token.class);
         response = HttpClientBuilder.create().build().execute(new HttpGet(vkProperty.getProfile_url() +
                 "uids=" + token.getUser_id() + "&" +
-                "fields=uid,first_name,last_name,nickname,screen_name,sex,bdate,city,country,timezone,photo&" +
+                "fields=uid,first_name,last_name,nickname,screen_name,sex,bdate,city,country,verified,photo&" +
                 "access_token=" + token.getAccess_token()));
+        VkProfile profile = new VkProfile(response.getEntity());
+        profile.setCity(getCityById(profile.getCityId()));
+        profile.setCountry(getCountryById(profile.getCountryId()));
+        profile.setEmail(token.getEmail());
 
-        //todo http://api.vk.com/method/database.getCitiesById?city_ids=650 - city
-        //todo http://api.vk.com/method/database.getCountriesById?country_ids=2 - country
+        return saveProfile(profile);
+    }
+
+    private String saveProfile(SocialProfile profile) {
+        try {
+            userService.save(profile);
+            return Response.ok();
+        } catch (EmailAlreadyUsedException e) {
+            return Response.error(EMAIL_REGISTERED_ERROR);
+        } catch (EmailIsNotDetectedException e1) {
+            return Response.error(EMAIL_IS_NOT_DETECTED_ERROR);
+        }
+    }
+
+    private String getCountryById(String countryId) throws IOException {
+        HttpResponse response = HttpClientBuilder.create().build().execute(
+                new HttpGet("http://api.vk.com/method/database.getCountriesById?country_ids=" + countryId));
+        return EntityUtils.toString(response.getEntity());
+    }
+
+    private String getCityById(String cityId) throws IOException {
+        HttpResponse response = HttpClientBuilder.create().build().execute(
+                new HttpGet("http://api.vk.com/method/database.getCitiesById?city_ids=" + cityId));
         return EntityUtils.toString(response.getEntity());
     }
 

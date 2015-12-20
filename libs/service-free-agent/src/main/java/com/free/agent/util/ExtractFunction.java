@@ -1,6 +1,8 @@
 package com.free.agent.util;
 
 import com.free.agent.dto.*;
+import com.free.agent.dto.network.SocialProfile;
+import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
 import com.free.agent.model.Message;
 import com.free.agent.model.Sport;
@@ -57,11 +59,12 @@ public final class ExtractFunction {
         userDto.setPhone(user.getPhone());
         userDto.setDescription(user.getDescription());
         userDto.setCity(user.getCity());
+        userDto.setCountry(user.getCountry());
         userDto.setDateOfBirth(getTime(user.getDateOfBirth()));
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
-        userDto.setGender(user.getGender().name());
+        userDto.setGender(getGender(user.getGender()));
         userDto.setRole(user.getRole().name());
         userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), SPORT_NAME_INVOKE));
         return userDto;
@@ -77,8 +80,54 @@ public final class ExtractFunction {
         return user;
     }
 
+    public static User getUser(SocialProfile profile) {
+        User user = new User();
+        user.setEmail(profile.getEmail());
+        user.setFirstName(profile.getFirstName());
+        user.setDateOfRegistration(new Date());
+        user.setLastActivity(new Date());
+        user.setCity(profile.getCity());
+        user.setCountry(profile.getCountry());
+        user.setImage(profile.getImage());
+        user.setLastName(profile.getLastName());
+        user.setGender(profile.getGender());
+        user.setDateOfBirth(profile.getBirthday());
+        setType(user, profile);
+        setRole(user, profile.isVerified());
+        return user;
+    }
+
+    private static void setRole(User user, boolean verified) {
+        if (verified) {
+            user.setRole(Role.ROLE_MODERATOR);
+        } else {
+            user.setRole(Role.ROLE_NOT_CONFIRMED);
+            user.setHash(EncryptionUtils.getRandomString());
+        }
+    }
+
+    private static void setType(User user, SocialProfile profile) {
+        switch (profile.getType()) {
+            case GOOGLE: {
+                user.setGoogleId(profile.getId());
+                break;
+            }
+            case VK: {
+                user.setVkId(profile.getId());
+                break;
+            }
+            case FACEBOOK: {
+                user.setFacebookId(profile.getId());
+                break;
+            }
+        }
+    }
+
+    private static String getGender(Gender gender) {
+        return gender == null ? null : gender.name();
+    }
+
     private static Long getTime(Date dateOfBirth) {
         return dateOfBirth == null ? null : dateOfBirth.getTime();
     }
-
 }

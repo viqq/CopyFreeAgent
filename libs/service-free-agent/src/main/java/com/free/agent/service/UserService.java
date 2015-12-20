@@ -4,7 +4,9 @@ import com.free.agent.Filter;
 import com.free.agent.dto.UserDto;
 import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.UserWithSportUIDto;
+import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
+import com.free.agent.exception.EmailIsNotDetectedException;
 import com.free.agent.exception.WrongLinkException;
 import com.free.agent.model.User;
 
@@ -16,7 +18,10 @@ import java.util.Set;
  * Created by antonPC on 21.06.15.
  */
 public interface UserService {
+
     User save(UserRegistrationDto userDto) throws EmailAlreadyUsedException;
+
+    User save(SocialProfile profile) throws EmailAlreadyUsedException, EmailIsNotDetectedException;
 
     void addImage(String email, HttpServletRequest request) throws Exception;
 

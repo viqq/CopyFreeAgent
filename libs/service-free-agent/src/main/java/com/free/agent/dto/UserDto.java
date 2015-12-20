@@ -9,6 +9,7 @@ import com.free.agent.annotation.Phone;
 
 public class UserDto extends UserRegistrationDto {
     private String city;
+    private String country;
     private String description;
     private String lastName;
     private Long dateOfBirth;
@@ -62,5 +63,13 @@ public class UserDto extends UserRegistrationDto {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
