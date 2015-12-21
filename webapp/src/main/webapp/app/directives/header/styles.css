@@ -2,7 +2,7 @@
     padding: 40px 40px 0px;
 }
 
-#header #logo  > img:hover {
+#header #logo > img:hover {
     opacity: 0.8;
 }
 
@@ -12,6 +12,8 @@
 }
 
 #header .link {
+    display: inline-block;
+    vertical-align: middle;
     float: right;
 }
 
@@ -20,7 +22,7 @@
 }
 
 #header .link .icon {
-    height: .75em;
+    height: 1em;
     width: 1em;
     display: inline-block;
     background-image: url(/img/icons/user_dark.svg);
@@ -48,41 +50,32 @@
     width: 100%;
 }
 
-/**/
-/*.view.ng-enter,*/
-/*.view.ng-leave {*/
-    /*overflow: hidden;*/
-    /*position: absolute;*/
-    /*top: 0px;*/
-    /*width: 100%;*/
-/*}*/
+@media (max-width: 1366px) {
+    #home #header {
+        padding: 40px 40px 0px;
+    }
+}
 
-/*.view.ng-enter {*/
-    /*transition: all 1s ease-in-out;*/
-/*}*/
+@media (max-width: 1023px) {
+    #home #header {
+        font-size: 1em;
+    }
+    
+    #logo > img {
+        height: 38px
+    }
+}
 
-/*.view.ng-leave {*/
-    /*transition: all 1s ease-in-out;*/
-    /*z-index: 100;*/
-/*}*/
-/**/
-/*.view.ng-enter #header,*/
-/*.view.ng-leave #header {*/
-    /*transition: all 1s ease-in-out 1s;*/
-    /*position: absolute;*/
-    /*top: 0px;*/
-    /*left: 0px;*/
-/*}*/
+@media (max-width: 768px) {
+    #home #header {
+        padding: 20px 15px 0px;
+    }
+    
+    #header .link .icon {
+        height: 1em;
+    }
+}
 
-/*.view.ng-enter #header {*/
-    /*padding: 40px 40px 0px;*/
-/*}*/
+@media (max-width: 320px) {
 
-/*.view.ng-enter.ng-enter-active #header {*/
-/*}*/
-
-/*.view.ng-leave #header {*/
-/*}*/
-
-/*.view.ng-leave.ng-leave-active #header {*/
-/*}*/
+}
