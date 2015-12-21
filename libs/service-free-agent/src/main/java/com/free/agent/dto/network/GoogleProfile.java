@@ -2,6 +2,7 @@ package com.free.agent.dto.network;
 
 
 import com.free.agent.field.Gender;
+import com.free.agent.model.User;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
@@ -74,5 +75,10 @@ public class GoogleProfile implements SocialProfile {
     @Override
     public SocialNetwork getType() {
         return SocialNetwork.GOOGLE;
+    }
+
+    @Override
+    public boolean isAuthentication(User user) {
+        return (user.getEmail().equals(getEmail()) && user.getGoogleId().equals(getId()));
     }
 }

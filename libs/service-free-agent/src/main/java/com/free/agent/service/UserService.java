@@ -6,9 +6,11 @@ import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.UserWithSportUIDto;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
+import com.free.agent.exception.EmailDidNotRegistredException;
 import com.free.agent.exception.EmailIsNotDetectedException;
 import com.free.agent.exception.WrongLinkException;
 import com.free.agent.model.User;
+import org.springframework.security.authentication.BadCredentialsException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -41,7 +43,9 @@ public interface UserService {
 
     UserWithSportUIDto activateUser(String hash, String key) throws WrongLinkException;
 
-    void resetPassword(String email) throws IllegalArgumentException;
+    void resetPassword(String email) throws EmailDidNotRegistredException;
 
     String getPostponeEmail(String hash, String key);
+
+    void authentication(SocialProfile profile, HttpServletRequest httpServletRequest) throws EmailDidNotRegistredException, BadCredentialsException;
 }

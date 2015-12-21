@@ -11,6 +11,7 @@ import com.free.agent.dto.network.GoogleProfile;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.dto.network.VkProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
+import com.free.agent.exception.EmailDidNotRegistredException;
 import com.free.agent.exception.EmailIsNotDetectedException;
 import com.free.agent.exception.WrongLinkException;
 import com.free.agent.model.User;
@@ -32,6 +33,7 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -133,11 +135,10 @@ public class UserController {
         try {
             userService.resetPassword(email);
             return Response.ok();
-        } catch (IllegalArgumentException e) {
+        } catch (EmailDidNotRegistredException e) {
             return Response.error(EMAIL_DID_NOT_REGISTERED_ERROR);
         }
     }
-
 
     //todo only for admin
     @RequestMapping(value = DELETE_USER, method = RequestMethod.DELETE, produces = BaseController.PRODUCES)
@@ -184,7 +185,6 @@ public class UserController {
             fis = new FileInputStream(UserController.class.getClassLoader().getResource("images/freeagent.jpg").getFile());
         }
         ByteStreams.copy(fis, response.getOutputStream());
-
     }
 
     @RequestMapping(value = SAVE_IMAGE, method = RequestMethod.POST, produces = BaseController.PRODUCES)
@@ -200,7 +200,7 @@ public class UserController {
 
     @RequestMapping(value = LOGIN_WITH_GOOGLE, method = RequestMethod.GET)
     @ResponseBody
-    public String googleLogin(String code) throws IOException {
+    public String googleLogin(String code, HttpServletRequest request) throws IOException {
         HttpPost httppost = new HttpPost(googleProperty.getToken_url());
         httppost.addHeader("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
         httppost.setEntity(new UrlEncodedFormEntity(Lists.newArrayList(
@@ -215,15 +215,47 @@ public class UserController {
         response = HttpClientBuilder.create().build().execute(new HttpGet(googleProperty.getProfile_url() +
                 "access_token=" + token.getAccess_token()));
 
+        return authentication(new GoogleProfile(response.getEntity()), request);
+    }
+
+    @RequestMapping(value = REGISTRATION_WITH_GOOGLE, method = RequestMethod.GET)
+    @ResponseBody
+    public String googleRegistration(String code) throws IOException {
+        HttpPost httppost = new HttpPost(googleProperty.getToken_url());
+        httppost.addHeader("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+        httppost.setEntity(new UrlEncodedFormEntity(Lists.newArrayList(
+                new BasicNameValuePair("code", code),
+                new BasicNameValuePair("client_id", googleProperty.getClient_id()),
+                new BasicNameValuePair("client_secret", googleProperty.getClient_secret()),
+                new BasicNameValuePair("redirect_uri", host + REGISTRATION_WITH_GOOGLE),
+                new BasicNameValuePair("grant_type", "authorization_code")
+        )));
+        HttpResponse response = HttpClientBuilder.create().build().execute(httppost);
+        Token token = new Gson().fromJson(EntityUtils.toString(response.getEntity()), Token.class);
+        response = HttpClientBuilder.create().build().execute(new HttpGet(googleProperty.getProfile_url() +
+                "access_token=" + token.getAccess_token()));
+
         return saveProfile(new GoogleProfile(response.getEntity()));
     }
 
     @RequestMapping(value = LOGIN_WITH_FACEBOOK, method = RequestMethod.GET)
     @ResponseBody
-    public String facebookLogin(String code) throws IOException {
+    public String facebookLogin(String code, HttpServletRequest request) throws IOException {
         HttpResponse response = HttpClientBuilder.create().build().execute(new HttpGet(facebookProperty.getToken_url() +
                 "client_id=" + facebookProperty.getClient_id() + "&" +
                 "redirect_uri=" + host + LOGIN_WITH_FACEBOOK + "&" +
+                "client_secret=" + facebookProperty.getClient_secret() + "&" +
+                "code=" + code));
+        String token = EntityUtils.toString(response.getEntity()).split("&")[0].split("=")[1];
+        return authentication(new FacebookProfile(new FacebookTemplate(token)), request);
+    }
+
+    @RequestMapping(value = REGISTRATION_WITH_FACEBOOK, method = RequestMethod.GET)
+    @ResponseBody
+    public String facebookRegistration(String code) throws IOException {
+        HttpResponse response = HttpClientBuilder.create().build().execute(new HttpGet(facebookProperty.getToken_url() +
+                "client_id=" + facebookProperty.getClient_id() + "&" +
+                "redirect_uri=" + host + REGISTRATION_WITH_FACEBOOK + "&" +
                 "client_secret=" + facebookProperty.getClient_secret() + "&" +
                 "code=" + code));
         String token = EntityUtils.toString(response.getEntity()).split("&")[0].split("=")[1];
@@ -233,10 +265,29 @@ public class UserController {
 
     @RequestMapping(value = LOGIN_WITH_VK, method = RequestMethod.GET)
     @ResponseBody
-    public String vkLogin(String code) throws IOException {
+    public String vkLogin(String code, HttpServletRequest httpServletRequest) throws IOException {
         HttpResponse response = HttpClientBuilder.create().build().execute(new HttpGet(vkProperty.getToken_url() +
                 "client_id=" + vkProperty.getClient_id() + "&" +
                 "redirect_uri=" + host + LOGIN_WITH_VK + "&" +
+                "client_secret=" + vkProperty.getClient_secret() + "&" +
+                "code=" + code + "&" +
+                "scope=email"));
+        Token token = new Gson().fromJson(EntityUtils.toString(response.getEntity()), Token.class);
+        response = HttpClientBuilder.create().build().execute(new HttpGet(vkProperty.getProfile_url() +
+                "uids=" + token.getUser_id() + "&" +
+                "fields=uid&" +
+                "access_token=" + token.getAccess_token()));
+        VkProfile profile = new VkProfile(response.getEntity());
+        profile.setEmail(token.getEmail());
+        return authentication(profile, httpServletRequest);
+    }
+
+    @RequestMapping(value = REGISTRATION_WITH_VK, method = RequestMethod.GET)
+    @ResponseBody
+    public String vkRegistration(String code) throws IOException {
+        HttpResponse response = HttpClientBuilder.create().build().execute(new HttpGet(vkProperty.getToken_url() +
+                "client_id=" + vkProperty.getClient_id() + "&" +
+                "redirect_uri=" + host + REGISTRATION_WITH_VK + "&" +
                 "client_secret=" + vkProperty.getClient_secret() + "&" +
                 "code=" + code + "&" +
                 "scope=email"));
@@ -253,6 +304,7 @@ public class UserController {
         return saveProfile(profile);
     }
 
+
     private String saveProfile(SocialProfile profile) {
         try {
             userService.save(profile);
@@ -261,6 +313,17 @@ public class UserController {
             return Response.error(EMAIL_REGISTERED_ERROR);
         } catch (EmailIsNotDetectedException e1) {
             return Response.error(EMAIL_IS_NOT_DETECTED_ERROR);
+        }
+    }
+
+    private String authentication(SocialProfile profile, HttpServletRequest request) {
+        try {
+            userService.authentication(profile, request);
+            return Response.ok();
+        } catch (BadCredentialsException e) {
+            return Response.error(LOGIN_ERROR);
+        } catch (EmailDidNotRegistredException e1) {
+            return Response.error(EMAIL_DID_NOT_REGISTERED_ERROR);
         }
     }
 
