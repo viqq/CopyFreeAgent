@@ -1,6 +1,7 @@
 package com.free.agent.dto.network;
 
 import com.free.agent.field.Gender;
+import com.free.agent.model.User;
 
 import java.util.Date;
 
@@ -30,5 +31,7 @@ public interface SocialProfile {
     Gender getGender();
 
     SocialNetwork getType();
+
+    boolean isAuthentication(User user);
 
 }

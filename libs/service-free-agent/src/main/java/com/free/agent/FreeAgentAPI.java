@@ -43,6 +43,9 @@ public final class FreeAgentAPI {
     public static final String GET_ALL_FAVORITES = "/api/favorite";
     public static final String SAVE_FAVORITE = "/api/favorite/{id}"; //POST
     public static final String DELETE_FAVORITE = "/api/favorite/{id}"; //DELETE
+    public static final String REGISTRATION_WITH_VK = "/api/vkregistration";
+    public static final String REGISTRATION_WITH_GOOGLE = "/api/ggregistration";
+    public static final String REGISTRATION_WITH_FACEBOOK = "/api/fbregistration";
     public static final String LOGIN_WITH_VK = "/api/vklogin";
     public static final String LOGIN_WITH_GOOGLE = "/api/gglogin";
     public static final String LOGIN_WITH_FACEBOOK = "/api/fblogin";

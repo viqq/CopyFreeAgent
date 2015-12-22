@@ -6,12 +6,12 @@ import java.io.Serializable;
  * Created by antonPC on 22.11.15.
  */
 public class Token implements Serializable {
-    public String access_token;
-    public String token_type;
-    public String expires_in;
-    public String id_token;
-    public String user_id;
-    public String email;
+    private String access_token;
+    private String token_type;
+    private String expires_in;
+    private String id_token;
+    private String user_id;
+    private String email;
 
     public String getAccess_token() {
         return access_token;

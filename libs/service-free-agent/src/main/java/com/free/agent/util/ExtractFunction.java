@@ -9,8 +9,12 @@ import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by antonPC on 19.08.15.
@@ -129,5 +133,42 @@ public final class ExtractFunction {
 
     private static Long getTime(Date dateOfBirth) {
         return dateOfBirth == null ? null : dateOfBirth.getTime();
+    }
+
+    public static Collection<? extends GrantedAuthority> getAuthorities(Role role) {
+        return getGrantedAuthorities(getRoles(role));
+    }
+
+    private static List<String> getRoles(Role role) {
+        List<String> roles = Lists.newArrayList();
+        switch (role) {
+            case ROLE_ADMIN: {
+                roles.add(Role.ROLE_ADMIN.name());
+                roles.add(Role.ROLE_MODERATOR.name());
+                roles.add(Role.ROLE_NOT_CONFIRMED.name());
+                roles.add(Role.ROLE_NOT_ACTIVATED.name());
+            }
+            case ROLE_MODERATOR: {
+                roles.add(Role.ROLE_MODERATOR.name());
+                roles.add(Role.ROLE_NOT_CONFIRMED.name());
+                roles.add(Role.ROLE_NOT_ACTIVATED.name());
+            }
+            case ROLE_NOT_CONFIRMED: {
+                roles.add(Role.ROLE_NOT_CONFIRMED.name());
+                roles.add(Role.ROLE_NOT_ACTIVATED.name());
+            }
+            default: {
+                roles.add(Role.ROLE_NOT_ACTIVATED.name());
+            }
+        }
+        return roles;
+    }
+
+    private static List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
+        List<GrantedAuthority> authorities = Lists.newArrayList();
+        for (String role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
+        return authorities;
     }
 }

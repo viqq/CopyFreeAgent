@@ -9,6 +9,7 @@ import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.UserWithSportUIDto;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
+import com.free.agent.exception.EmailDidNotRegistredException;
 import com.free.agent.exception.EmailIsNotDetectedException;
 import com.free.agent.exception.WrongLinkException;
 import com.free.agent.field.Gender;
@@ -25,10 +26,18 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.Collection;
 import java.util.Date;
@@ -54,6 +63,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    @Qualifier("socialNetworkAuthenticationManager")
+    private AuthenticationManager authenticationManager;
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
@@ -173,10 +186,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public void resetPassword(String email) throws IllegalArgumentException {
+    public void resetPassword(String email) throws EmailDidNotRegistredException {
         User user = userDao.findByEmail(email);
         if (user == null) {
-            throw new IllegalArgumentException("User with email " + email + " didn't existed");
+            throw new EmailDidNotRegistredException("User with email " + email + " didn't existed");
         }
         String password = EncryptionUtils.getRandomString();
         user.setPassword(EncryptionUtils.encrypt(password));
@@ -188,6 +201,16 @@ public class UserServiceImpl implements UserService {
     public String getPostponeEmail(String hash, String key) {
         User user = findUserByHash(hash, key);
         return user.getEmail();
+    }
+
+    @Override
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
+    public void authentication(SocialProfile profile, HttpServletRequest httpServletRequest) throws EmailDidNotRegistredException, BadCredentialsException {
+        Authentication result = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(profile.getEmail(), profile));
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(result);
+        HttpSession session = httpServletRequest.getSession(true);
+        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
     }
 
     private User findUserByHash(String hash, String key) {

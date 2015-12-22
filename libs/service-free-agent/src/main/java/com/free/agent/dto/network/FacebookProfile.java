@@ -78,4 +78,9 @@ public class FacebookProfile implements SocialProfile {
     public SocialNetwork getType() {
         return SocialNetwork.FACEBOOK;
     }
+
+    @Override
+    public boolean isAuthentication(com.free.agent.model.User user) {
+        return (user.getEmail().equals(getEmail()) && user.getFacebookId().equals(getId()));
+    }
 }
