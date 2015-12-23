@@ -36,9 +36,9 @@ public final class FreeAgentAPI {
     public static final String GET_SENT_MESSAGES = "/api/message/sent";
     public static final String GET_MESSAGE_BY_ID = "/api/message/{id}";
     public static final String GET_HISTORY = "/api/message/history/{id}";
-    public static final String GET_ALL_PARTICIPANTS = "/api/message/participants/";
+    public static final String GET_ALL_PARTICIPANTS = "/api/message/participants";
     public static final String ACTIVATE_USER = "/activate";
-    public static final String RESET_PASSWORD = "/api/password/{email}";
+    public static final String RESET_PASSWORD = "/api/password"; //POST
     public static final String GET_POSTPONE_EMAIL = "/api/postpone";
     public static final String GET_ALL_FAVORITES = "/api/favorite";
     public static final String SAVE_FAVORITE = "/api/favorite/{id}"; //POST

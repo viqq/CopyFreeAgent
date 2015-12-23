@@ -9,6 +9,7 @@ public class UserWithSportUIDto extends UserDto {
     private List<SportUIDto> sports;
     private Long dateOfRegistration;
     private String role;
+    private String link;
 
     public List<SportUIDto> getSports() {
         return sports;
@@ -32,5 +33,13 @@ public class UserWithSportUIDto extends UserDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }
