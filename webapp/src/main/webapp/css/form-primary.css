@@ -89,7 +89,7 @@
         display: table;
     }
     
-    .form-wrapper #reg-form {
+    .form-wrapper > * {
         display: table-cell;
         vertical-align: middle;
     }
@@ -132,5 +132,6 @@
 
     .form-wrapper {
         margin-top: 30px;
+        height: initial;
     }
 }

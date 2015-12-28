@@ -70,7 +70,6 @@ public final class ExtractFunction {
         userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
         userDto.setGender(getGender(user.getGender()));
         userDto.setRole(user.getRole().name());
-        userDto.setLink(user.getImage().startsWith("http") ? user.getImage() : null); //todo
         userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), SPORT_NAME_INVOKE));
         return userDto;
     }
