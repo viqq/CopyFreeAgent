@@ -4,6 +4,7 @@ package com.free.agent.controller;
 import com.free.agent.Response;
 import com.free.agent.SocialNetworkProperty;
 import com.free.agent.Token;
+import com.free.agent.dto.EmailDto;
 import com.free.agent.dto.UserDto;
 import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.network.FacebookProfile;
@@ -129,11 +130,14 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = RESET_PASSWORD, method = RequestMethod.GET)
+    @RequestMapping(value = RESET_PASSWORD, method = RequestMethod.POST)
     @ResponseBody
-    public String resetPassword(@PathVariable(value = "email") String email) {
+    public String resetPassword(@Valid EmailDto emailDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return Response.error(getAllErrors(bindingResult));
+        }
         try {
-            userService.resetPassword(email);
+            userService.resetPassword(emailDto.getEmail());
             return Response.ok();
         } catch (EmailDidNotRegistredException e) {
             return Response.error(EMAIL_DID_NOT_REGISTERED_ERROR);
@@ -176,7 +180,7 @@ public class UserController {
         User user = userService.findById(id);
         InputStream fis;
         if (user.getImage() != null) {
-            if (user.getImage().startsWith("http")) {
+            if (user.getImage().startsWith("http")) { //todo
                 fis = new ByteArrayInputStream(user.getImage().getBytes());
             } else {
                 fis = new FileInputStream(userService.findById(id).getImage() + ".jpg");
