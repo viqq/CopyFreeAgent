@@ -1,7 +1,14 @@
 html,
 body,
-.view {
+.view,
+.view > div {
     height: 100%;
+
+}
+
+html,
+body,
+.view {
     min-width: 320px;
     min-height: 480px;
 }

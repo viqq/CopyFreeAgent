@@ -65,7 +65,7 @@ define(
                             value: '',
                             label: 'Name',
                             hint: '',
-                            pattern: '^([a-z0-9_-]).{3,15}$',
+                            pattern: '^([a-z0-9_-]){3,15}$',
                             errorClient: 'Цифры и буквы, длина 3-15 знаков.',
                             serverError: ''
                         },
@@ -73,7 +73,7 @@ define(
                             value: '',
                             label: 'Email',
                             pattern: '^[-a-z0-9!#$%&\'*+/=?^_`{|}~]+(?:\\.[-a-z0-9!#$%&\'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$',
-                            errorClient: 'Цифры и буквы, длина 3-15 знаков.',
+                            errorClient: 'Некорректный формат адреса.',
                             serverError: ''
                         },
                         password: {

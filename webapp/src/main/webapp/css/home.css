@@ -13,9 +13,6 @@
 
 #home #header {
     position: absolute;
-    padding: 60px 60px 0px;
-    width: 100%;
-    box-sizing: border-box;
     z-index: 4;
 }
 
@@ -265,11 +262,7 @@
     }
 }
 
-@media (max-width: 1023px) {
-
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     #home .inner-frame {
         padding: 0px;
     }
@@ -343,7 +336,6 @@
         display: none;
     }
 
-
     #home .net-group {
         padding: 0px;
     }
@@ -351,16 +343,5 @@
     #home .net-group > div {
         background-size: cover;
     }
-
-
 }
-
-@media (max-width: 320px) {
-}
-
-/*@media (max-height: 767px) {*/
-/*.subtitle-group > div {*/
-/*vertical-align: bottom;*/
-/*}*/
-/*}*/
 

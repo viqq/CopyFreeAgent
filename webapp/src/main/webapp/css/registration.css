@@ -9,5 +9,19 @@
 #registration button.btn.primary {
     display: block;
     margin: auto;
-    margin-top: 25px;
+    margin-top: 20px;
+}
+
+@media (max-width: 1024px) {
+    #registration .row-wrapper .form-field:first-child {
+        padding-right: 0%;
+    }
+
+    #registration .row-wrapper .form-field:last-child {
+        padding-left: 0%;
+    }
+
+    #registration button.btn.primary {
+        margin-top: 45px;
+    }
 }

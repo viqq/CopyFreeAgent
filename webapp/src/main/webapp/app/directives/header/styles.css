@@ -1,5 +1,8 @@
 #header {
-    padding: 40px 40px 0px;
+    padding: 60px 60px 0px;
+    width: 100%;
+    box-sizing: border-box;
+    height: initial;
 }
 
 #header #logo > img:hover {
@@ -51,26 +54,21 @@
 }
 
 @media (max-width: 1366px) {
-    #home #header {
+    #header {
         padding: 40px 40px 0px;
     }
 }
 
-@media (max-width: 1023px) {
-    #home #header {
+@media (max-width: 1024px) {
+    #header {
+        padding: 20px 15px 0px;
         font-size: 1em;
     }
-    
-    #logo > img {
+
+    #header #logo > img {
         height: 38px
     }
-}
 
-@media (max-width: 768px) {
-    #home #header {
-        padding: 20px 15px 0px;
-    }
-    
     #header .link .icon {
         height: 1em;
     }
