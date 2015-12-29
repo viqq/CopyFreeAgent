@@ -13,8 +13,8 @@ define([], function() {
                 'placeholder_login': 'Email',
                 'placeholder_password': 'Password',
                 'button_login': 'SUBMIT',
-                'link_forgot': 'Forgot your password?',
-                'link_registration': 'Have no profile? Register it!'
+                'link_forgot': 'Reset password',
+                'link_registration': 'Create account'
             },
             registration: {
                 'header_main': 'REGISTRATION',

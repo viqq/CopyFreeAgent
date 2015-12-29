@@ -16,6 +16,12 @@ public final class Response<T> {
         this.status = null;
     }
 
+    private Response(T payload, Boolean error) {
+        this.payload = payload;
+        this.error = error;
+        this.status = null;
+    }
+
     private Response(Integer... status) {
         this.payload = null;
         this.error = true;
@@ -31,7 +37,7 @@ public final class Response<T> {
     }
 
     public static String error(Integer status) {
-        return new Response<>(status).toJSON();
+        return new Response<>(status,true).toJSON();
     }
 
     public static String error(Integer... status) {
@@ -54,4 +60,3 @@ public final class Response<T> {
         return new Gson().toJson(this);
     }
 }
-

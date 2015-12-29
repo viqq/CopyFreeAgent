@@ -98,11 +98,11 @@
         margin-bottom: 25px
     }  
     
-    .form-wrapper .row-wrapper {
+    #registration .form-wrapper .row-wrapper {
         display: block;
     }
 
-    .form-wrapper .row-wrapper > * {
+    #registration .form-wrapper .row-wrapper > * {
         display:block;
         width: 100%;
     }

@@ -66,31 +66,38 @@ define(
                             label: 'Name',
                             hint: '',
                             pattern: '^([a-z0-9_-]){3,15}$',
-                            errorClient: 'Цифры и буквы, длина 3-15 знаков.',
-                            serverError: ''
+                            clientError: 'Цифры и буквы, длина 3-15 знаков.',
+                            serverErrors: {
+                                '432': 'Цифры и буквы, длина 3-15 знаков.'
+                            }
                         },
                         email: {
                             value: '',
                             label: 'Email',
                             pattern: '^[-a-z0-9!#$%&\'*+/=?^_`{|}~]+(?:\\.[-a-z0-9!#$%&\'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$',
-                            errorClient: 'Некорректный формат адреса.',
-                            serverError: ''
+                            clientError: 'Некорректный формат адреса.',
+                            serverErrors: {
+                                '430': 'Некорректный формат адреса.',
+                                '463': 'Адерс уже занят'
+                            }
                         },
                         password: {
                             value: '',
                             label: 'Password',
                             type: 'password',
                             pattern: '((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})',
-                            errorClient: 'Цифры и буквы, длина 6-20 знаков, хоть одна цифра и заглавная буква.',
-                            serverError: ''
+                            clientError: 'Цифры и буквы, длина 6-20 знаков, хоть одна цифра и заглавная буква.',
+                            serverErrors: {
+                                '431': 'Цифры и буквы, длина 6-20 знаков, хоть одна цифра и заглавная буква.'
+                            }
                         },
                         confirmPassword: {
                             value: '',
                             label: 'Password confirm',
                             type: 'password',
                             pattern: '',
-                            errorClient: 'Пароли должны совпадать.',
-                            serverError: '',
+                            clientError: 'Пароли должны совпадать.',
+                            serverErrors: {},
                             validation: function () {
                                 return $scope.fields.password.value === $scope.fields.confirmPassword.value
                                     && $scope.fields.confirmPassword.value;
@@ -119,7 +126,10 @@ define(
                             }
 
                             if (data.error === true) {
-                                $scope.error = 'Registration error. Code: ' + data.status;
+                                $scope.$emit('server-error', {
+                                    code: data.payload
+                                });
+
                                 return;
                             }
 

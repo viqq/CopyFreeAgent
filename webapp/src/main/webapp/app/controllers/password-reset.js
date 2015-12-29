@@ -11,7 +11,8 @@ define(
 
         'services/password-reset',
 
-        'css!/css/form-primary.css'
+        'css!/css/form-primary.css',
+        'css!/css/password-reset.css'
     ],
     function (angularAMD) {
         var controller = ['$scope', 'passwordReset', function ($scope, passwordReset) {
@@ -21,8 +22,8 @@ define(
                         value: '',
                         label: 'Email',
                         pattern: '^[-a-z0-9!#$%&\'*+/=?^_`{|}~]+(?:\\.[-a-z0-9!#$%&\'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$',
-                        errorClient: 'Цифры и буквы, длина 3-15 знаков.',
-                        serverError: ''
+                        clientError: 'Цифры и буквы, длина 3-15 знаков.',
+                        serverErrors: {}
                     }
                 },
                 submit: function() {

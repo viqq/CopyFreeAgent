@@ -18,63 +18,70 @@ define(
                     '$element',
                     '$attrs',
                     function ($scope, $document, $element, $attrs) {
-                        var X_COEF = 0.013,
-                            Y_COEF = 0.01,
-                            W_COEF = 0.5,
-                            H_COEF = 0.5,
-                            TIME_GAP = 200,
 
-                            layerNum = parseInt($attrs.parallaxLayer, 10),
-                            transitionDuration = TIME_GAP / 2 / 1000,
-                            lastTimestamp = 0,
+                        if ($scope.toolkit.isTouch()) {
+                            return;
+                        }
 
-                            init = function() {
-                                $document
-                                    .on('mousemove', parallaxTransformation)
-                                    .on('mouseleave', addTransition)
-                                    .on('mouseenter', removeTransition);
+                        var X_COEF = 0.013;
+                        var Y_COEF = 0.01;
+                        var W_COEF = 0.5;
+                        var H_COEF = 0.5;
+                        var TIME_GAP = 200;
 
-                                addTransition();
-                                removeTransition();
-                            },
-                            parallaxTransformation = function(event) {
-                                if (event.timestamp - lastTimestamp < (TIME_GAP + 1) * 2) {
-                                    return;
-                                }
+                        var layerNum = parseInt($attrs.parallaxLayer, 10);
+                        var transitionDuration = TIME_GAP / 2 / 1000;
+                        var lastTimestamp = 0;
 
-                                lastTimestamp = event.timestamp;
+                        var init = function () {
+                            $document
+                                .on('mousemove', parallaxTransformation)
+                                .on('mouseleave', addTransition)
+                                .on('mouseenter', removeTransition);
 
-                                var deltaX = X_COEF * layerNum * (event.clientX - window.innerWidth * W_COEF),
-                                    deltaY = Y_COEF * layerNum * (event.clientY - window.innerHeight * H_COEF),
-                                    cssString;
+                            addTransition();
+                            removeTransition();
+                        };
 
-                                deltaX = Math.round(deltaX);
-                                deltaY = Math.round(deltaY);
+                        var parallaxTransformation = function (event) {
+                            if (event.timestamp - lastTimestamp < (TIME_GAP + 1) * 2) {
+                                return;
+                            }
 
-                                cssString = 'translate(' + Math.round(deltaX) + 'px, ' + Math.round(deltaY) + 'px)';
+                            lastTimestamp = event.timestamp;
 
+                            var deltaX = X_COEF * layerNum * (event.clientX - window.innerWidth * W_COEF),
+                                deltaY = Y_COEF * layerNum * (event.clientY - window.innerHeight * H_COEF),
+                                cssString;
+
+                            deltaX = Math.round(deltaX);
+                            deltaY = Math.round(deltaY);
+
+                            cssString = 'translate(' + Math.round(deltaX) + 'px, ' + Math.round(deltaY) + 'px)';
+
+                            $element.css({
+                                'transform': cssString,
+                                '-webkit-transform': cssString,
+                                '-ms-transform': cssString,
+                                '-moz-transform': cssString
+                            });
+                        };
+
+                        var addTransition = function () {
+                            $element.css({
+                                'transition': 'transform ' + transitionDuration + 's linear'
+                            })
+                        };
+
+                        var removeTransition = function () {
+                            setTimeout(function () {
                                 $element.css({
-                                    'transform': cssString,
-                                    '-webkit-transform': cssString,
-                                    '-ms-transform': cssString,
-                                    '-moz-transform': cssString
-                                });
-                            },
-                            addTransition = function() {
-                                $element.css({
-                                    'transition': 'transform ' + transitionDuration + 's linear'
+                                    'transition': 'initial'
                                 })
-                            },
-                            removeTransition = function() {
-                                setTimeout(function() {
-                                    $element.css({
-                                        'transition': 'initial'
-                                    })
-                                }, TIME_GAP)
-                            };
+                            }, TIME_GAP)
+                        };
 
                         init();
-                        //setTimeout(init, 4000);
                     }
                 ]
             };
