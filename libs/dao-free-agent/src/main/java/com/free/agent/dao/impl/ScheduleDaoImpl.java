@@ -44,4 +44,14 @@ public class ScheduleDaoImpl extends GenericDaoImpl<Schedule, Long> implements S
         query.where(cb.equal(fromUser.get(User_.id), id));
         return getEntityManager().createQuery(query).getResultList();
     }
+
+    @Override
+    public List<Schedule> findAllByUserEmail(String email) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Schedule> query = cb.createQuery(Schedule.class);
+        Root<Schedule> fromSchedule = query.from(Schedule.class);
+        Join<Schedule, User> fromUser = fromSchedule.join(Schedule_.user);
+        query.where(cb.equal(fromUser.get(User_.email), email));
+        return getEntityManager().createQuery(query).getResultList();
+    }
 }

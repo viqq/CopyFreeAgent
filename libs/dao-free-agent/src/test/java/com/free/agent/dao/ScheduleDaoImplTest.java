@@ -1,9 +1,12 @@
 package com.free.agent.dao;
 
 import com.free.agent.config.FreeAgentConstant;
+import com.free.agent.field.Weekday;
+import com.free.agent.model.Day;
 import com.free.agent.model.Schedule;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
+import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,11 +32,14 @@ public class ScheduleDaoImplTest extends TestCase {
     @Autowired
     private UserDao userDao;
     @Autowired
+    private DayDao dayDao;
+    @Autowired
     private ScheduleDao scheduleDao;
 
     private Sport s1, s2;
     private User u1, u2;
     private Schedule sch1, sch2;
+    private Day day1, day2, day3;
 
     @Before
     public void init() {
@@ -55,14 +61,25 @@ public class ScheduleDaoImplTest extends TestCase {
         u2.getSports().add(s1);
 
         sch1 = new Schedule();
-        sch1.setName("sch1");
+        sch2 = new Schedule();
+
+        day1 = new Day(sch1, new GregorianCalendar(2016, 5, 5, 10, 10, 10).getTime(), Weekday.SATURDAY);
+        day2 = new Day(sch1, new GregorianCalendar(2016, 5, 6, 10, 10, 10).getTime(), Weekday.THURSDAY);
+        day3 = new Day(sch2, new GregorianCalendar(2016, 5, 7, 10, 10, 10).getTime(), Weekday.TUESDAY);
+
         sch1.setUser(u1);
         sch1.setSport(s1);
+        sch1.setWeekdays(Sets.newHashSet(Weekday.FRIDAY, Weekday.MONDAY));
+        sch1.setStartTime(new GregorianCalendar(2016, 5, 5, 10, 10, 10).getTime());
+        sch1.setEndTime(new GregorianCalendar(2016, 5, 5, 20, 10, 10).getTime());
+        sch1.setDays(Sets.newHashSet(day1, day2));
 
-        sch2 = new Schedule();
-        sch2.setName("sch2");
         sch2.setUser(u1);
         sch2.setSport(s2);
+        sch2.setWeekdays(Sets.newHashSet(Weekday.WEDNESDAY));
+        sch2.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
+        sch2.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
+        sch2.setDays(Sets.newHashSet(day3));
 
         u1.getSchedules().add(sch1);
         u1.getSchedules().add(sch2);
@@ -71,6 +88,9 @@ public class ScheduleDaoImplTest extends TestCase {
         userDao.create(u2);
         sportDao.create(s1);
         sportDao.create(s2);
+        dayDao.create(day1);
+        dayDao.create(day2);
+        dayDao.create(day3);
         scheduleDao.create(sch1);
         scheduleDao.create(sch2);
     }
@@ -78,9 +98,22 @@ public class ScheduleDaoImplTest extends TestCase {
     @Test
     public void createReadUpdateDeleteTest() {
         assertEquals(2, userDao.findAll().size());
-        for (Schedule s : userDao.findByEmail(u1.getEmail()).getSchedules()) {
+        User user = userDao.findByEmail(u1.getEmail());
+        for (Schedule s : user.getSchedules()) {
             assertTrue(s.getSport().getName().equals(s1.getName()) || s.getSport().getName().equals(s2.getName()));
         }
+        assertEquals(2, user.getSchedules().size());
+        assertEquals(2, scheduleDao.findAll().size());
+        assertEquals(3, dayDao.findAll().size());
+        user.getSchedules().remove(sch1);
+        sch1.setSport(null);
+        sch1.setUser(null);
+        userDao.update(user);
+        scheduleDao.delete(sch1);
+        assertEquals(1, user.getSchedules().size());
+        assertEquals(1, scheduleDao.findAll().size());
+        assertEquals(1, dayDao.findAll().size());
+
     }
 
     @Test

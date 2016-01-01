@@ -48,6 +48,15 @@ public class SportDaoImpl extends GenericDaoImpl<Sport, Long> implements SportDa
     }
 
     @Override
+    public Sport findByName(String sport) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Sport> query = cb.createQuery(Sport.class);
+        Root<Sport> from = query.from(Sport.class);
+        query.where(cb.equal(from.get(Sport_.name), sport));
+        return DaoUtils.getSingleResult(getEntityManager().createQuery(query).getResultList());
+    }
+
+    @Override
     @Cacheable(value = "sportCache")
     public List<Sport> findAll() {
         return super.findAll();

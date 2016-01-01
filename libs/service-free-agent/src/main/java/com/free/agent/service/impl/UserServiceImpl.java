@@ -9,7 +9,7 @@ import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.UserWithSportUIDto;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
-import com.free.agent.exception.EmailDidNotRegistredException;
+import com.free.agent.exception.EmailDidNotRegisteredException;
 import com.free.agent.exception.EmailIsNotDetectedException;
 import com.free.agent.exception.WrongLinkException;
 import com.free.agent.field.Gender;
@@ -186,10 +186,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public void resetPassword(String email) throws EmailDidNotRegistredException {
+    public void resetPassword(String email) throws EmailDidNotRegisteredException {
         User user = userDao.findByEmail(email);
         if (user == null) {
-            throw new EmailDidNotRegistredException("User with email " + email + " didn't existed");
+            throw new EmailDidNotRegisteredException("User with email " + email + " didn't existed");
         }
         String password = EncryptionUtils.getRandomString();
         user.setPassword(EncryptionUtils.encrypt(password));
@@ -205,7 +205,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public void authentication(SocialProfile profile, HttpServletRequest httpServletRequest) throws EmailDidNotRegistredException, BadCredentialsException {
+    public void authentication(SocialProfile profile, HttpServletRequest httpServletRequest) throws EmailDidNotRegisteredException, BadCredentialsException {
         Authentication result = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(profile.getEmail(), profile));
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(result);

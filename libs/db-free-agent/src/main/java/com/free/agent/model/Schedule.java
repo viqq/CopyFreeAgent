@@ -1,8 +1,12 @@
 package com.free.agent.model;
 
-import com.free.agent.field.Day;
+import com.free.agent.field.Weekday;
+import com.google.common.collect.Sets;
+import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by antonPC on 05.12.15.
@@ -25,11 +29,21 @@ public class Schedule extends AbstractTable<Long> {
     private Sport sport;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "DAY")
-    private Day day;
+    @ElementCollection(targetClass = Weekday.class, fetch = FetchType.LAZY)
+    @CollectionTable(name = "SCHEDULE_WEEKDAY", joinColumns = @JoinColumn(name = "SCHEDULE_ID"))
+    @Column(name = "WEEKDAY", nullable = false)
+    private Set<Weekday> weekdays = Sets.newHashSet();
 
-    @Column(name = "NAME")
-    private String name;
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "schedule")
+    private Set<Day> days;
+
+    @Column(name = "START_TIME")
+    @Temporal(TemporalType.TIME)
+    private Date startTime;
+
+    @Column(name = "END_TIME")
+    @Temporal(TemporalType.TIME)
+    private Date endTime;
 
     public Long getId() {
         return id;
@@ -55,19 +69,35 @@ public class Schedule extends AbstractTable<Long> {
         this.sport = sport;
     }
 
-    public Day getDay() {
-        return day;
+    public Set<Weekday> getWeekdays() {
+        return weekdays;
     }
 
-    public void setDay(Day day) {
-        this.day = day;
+    public void setWeekdays(Set<Weekday> weekdays) {
+        this.weekdays = weekdays;
     }
 
-    public String getName() {
-        return name;
+    public Set<Day> getDays() {
+        return days;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDays(Set<Day> days) {
+        this.days = days;
+    }
+
+    public Date getStartTime() {
+        return ObjectUtils.clone(startTime);
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = ObjectUtils.clone(startTime);
+    }
+
+    public Date getEndTime() {
+        return ObjectUtils.clone(endTime);
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = ObjectUtils.clone(endTime);
     }
 }

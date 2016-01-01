@@ -249,11 +249,11 @@ public class User extends AbstractTable<Long> {
     }
 
     public Date getLastActivity() {
-        return lastActivity;
+        return ObjectUtils.clone(lastActivity);
     }
 
     public void setLastActivity(Date lastActivity) {
-        this.lastActivity = lastActivity;
+        this.lastActivity = ObjectUtils.clone(lastActivity);
     }
 
     public List<Schedule> getSchedules() {

@@ -1,7 +1,8 @@
 package com.free.agent.model;
 
+import com.google.common.collect.Sets;
+
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,7 +24,7 @@ public class Sport extends AbstractTable<Long> {
     private String image;
 
     @ManyToMany(mappedBy = "sports", fetch = FetchType.LAZY)
-    private Set<User> users = new HashSet<User>();
+    private Set<User> users = Sets.newHashSet();
 
     public Sport(String name) {
         this.name = name;

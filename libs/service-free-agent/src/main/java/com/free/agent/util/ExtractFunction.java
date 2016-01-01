@@ -5,6 +5,7 @@ import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
 import com.free.agent.model.Message;
+import com.free.agent.model.Schedule;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.google.common.base.Function;
@@ -70,7 +71,6 @@ public final class ExtractFunction {
         userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
         userDto.setGender(getGender(user.getGender()));
         userDto.setRole(user.getRole().name());
-        userDto.setLink(user.getImage().startsWith("http") ? user.getImage() : null); //todo
         userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), SPORT_NAME_INVOKE));
         return userDto;
     }
@@ -100,6 +100,18 @@ public final class ExtractFunction {
         setType(user, profile);
         setRole(user, profile.isVerified());
         return user;
+    }
+
+    public static Schedule getSchedule(ScheduleDto scheduleDto) {
+        Schedule schedule = new Schedule();
+        schedule.setStartTime(scheduleDto.getStartTime());
+        schedule.setEndTime(scheduleDto.getEndTime());
+        schedule.setWeekdays(scheduleDto.getWeekdays());
+        return schedule;
+    }
+
+    public static Collection<? extends GrantedAuthority> getAuthorities(Role role) {
+        return getGrantedAuthorities(getRoles(role));
     }
 
     private static void setRole(User user, boolean verified) {
@@ -134,10 +146,6 @@ public final class ExtractFunction {
 
     private static Long getTime(Date dateOfBirth) {
         return dateOfBirth == null ? null : dateOfBirth.getTime();
-    }
-
-    public static Collection<? extends GrantedAuthority> getAuthorities(Role role) {
-        return getGrantedAuthorities(getRoles(role));
     }
 
     private static List<String> getRoles(Role role) {

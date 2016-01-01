@@ -12,7 +12,7 @@ import com.free.agent.dto.network.GoogleProfile;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.dto.network.VkProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
-import com.free.agent.exception.EmailDidNotRegistredException;
+import com.free.agent.exception.EmailDidNotRegisteredException;
 import com.free.agent.exception.EmailIsNotDetectedException;
 import com.free.agent.exception.WrongLinkException;
 import com.free.agent.model.User;
@@ -139,7 +139,7 @@ public class UserController {
         try {
             userService.resetPassword(emailDto.getEmail());
             return Response.ok();
-        } catch (EmailDidNotRegistredException e) {
+        } catch (EmailDidNotRegisteredException e) {
             return Response.error(EMAIL_DID_NOT_REGISTERED_ERROR);
         }
     }
@@ -326,7 +326,7 @@ public class UserController {
             return Response.ok();
         } catch (BadCredentialsException e) {
             return Response.error(LOGIN_ERROR);
-        } catch (EmailDidNotRegistredException e1) {
+        } catch (EmailDidNotRegisteredException e1) {
             return Response.error(EMAIL_DID_NOT_REGISTERED_ERROR);
         }
     }

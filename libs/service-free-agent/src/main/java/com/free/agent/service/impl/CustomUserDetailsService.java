@@ -2,6 +2,7 @@ package com.free.agent.service.impl;
 
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.UserDao;
+import com.free.agent.exception.EmailDidNotRegisteredException;
 import com.free.agent.util.EncryptionUtils;
 import com.free.agent.util.ExtractFunction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +23,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
         com.free.agent.model.User domainUser = userDao.findByEmail(email);
+        if (domainUser == null) {
+            throw new EmailDidNotRegisteredException(email + " didn't register yet");
+        }
         domainUser.setLastActivity(new Date());
         userDao.update(domainUser);
-        boolean enabled = true;
-        boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
 
-        return new User(domainUser.getEmail(), EncryptionUtils.decrypt(domainUser.getPassword()), enabled, //
-                accountNonExpired, credentialsNonExpired, accountNonLocked, ExtractFunction.getAuthorities(domainUser.getRole()));
+        return new User(domainUser.getEmail(), EncryptionUtils.decrypt(domainUser.getPassword()),
+                ExtractFunction.getAuthorities(domainUser.getRole()));
     }
 
 }

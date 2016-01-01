@@ -6,7 +6,7 @@ import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.UserWithSportUIDto;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
-import com.free.agent.exception.EmailDidNotRegistredException;
+import com.free.agent.exception.EmailDidNotRegisteredException;
 import com.free.agent.exception.EmailIsNotDetectedException;
 import com.free.agent.exception.WrongLinkException;
 import com.free.agent.model.User;
@@ -43,9 +43,9 @@ public interface UserService {
 
     UserWithSportUIDto activateUser(String hash, String key) throws WrongLinkException;
 
-    void resetPassword(String email) throws EmailDidNotRegistredException;
+    void resetPassword(String email) throws EmailDidNotRegisteredException;
 
     String getPostponeEmail(String hash, String key);
 
-    void authentication(SocialProfile profile, HttpServletRequest httpServletRequest) throws EmailDidNotRegistredException, BadCredentialsException;
+    void authentication(SocialProfile profile, HttpServletRequest httpServletRequest) throws EmailDidNotRegisteredException, BadCredentialsException;
 }

@@ -3,6 +3,7 @@ package com.free.agent.dao;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public interface GenericDao<T, PK extends Serializable> {
     T create(T t);
@@ -18,4 +19,6 @@ public interface GenericDao<T, PK extends Serializable> {
     void deleteAll();
 
     void delete(Collection<T> ts);
+
+    Set<T> saveAll(Collection<T> ts);
 }

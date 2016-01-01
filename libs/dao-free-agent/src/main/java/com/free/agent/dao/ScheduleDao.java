@@ -10,4 +10,6 @@ import java.util.List;
 public interface ScheduleDao extends GenericDao<Schedule, Long> {
 
     List<Schedule> findAllByUserId(Long id);
+
+    List<Schedule> findAllByUserEmail(String email);
 }

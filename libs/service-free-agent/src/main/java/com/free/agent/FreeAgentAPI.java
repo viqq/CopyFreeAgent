@@ -49,6 +49,10 @@ public final class FreeAgentAPI {
     public static final String LOGIN_WITH_VK = "/api/vklogin";
     public static final String LOGIN_WITH_GOOGLE = "/api/gglogin";
     public static final String LOGIN_WITH_FACEBOOK = "/api/fblogin";
+    public static final String SAVE_SCHEDULE = "/api/schedule"; //POST
+    public static final String GET_ALL_SCHEDULE = "/api/schedule/{id}";
+    public static final String EDIT_SCHEDULE = "/api/schedule/{id}"; //POST
+    public static final String DELETE_SCHEDULE = "/api/schedule/{id}"; //DELETE
 
     public static String host;
 }
