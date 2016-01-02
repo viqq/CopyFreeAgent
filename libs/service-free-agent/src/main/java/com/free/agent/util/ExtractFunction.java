@@ -4,18 +4,18 @@ import com.free.agent.dto.*;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
-import com.free.agent.model.Message;
-import com.free.agent.model.Schedule;
-import com.free.agent.model.Sport;
-import com.free.agent.model.User;
+import com.free.agent.field.Weekday;
+import com.free.agent.model.*;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by antonPC on 19.08.15.
@@ -54,6 +54,15 @@ public final class ExtractFunction {
             dto.setUserId(input.getId());
             dto.setUserEmail(input.getEmail());
             return dto;
+        }
+    };
+
+    public static final Function<Long, Day> DAY_INVOKE = new Function<Long, Day>() {
+        @Override
+        public Day apply(Long input) {
+            DateTime dateTime = new DateTime((long) input);
+            String dayOfWeek = new DateTime().dayOfWeek().getAsText(Locale.ENGLISH).toUpperCase();
+            return new Day(dateTime.toDate(), Weekday.valueOf(dayOfWeek));
         }
     };
 

@@ -14,6 +14,7 @@ import com.free.agent.service.ScheduleService;
 import com.free.agent.util.ExtractFunction;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void save(String email, ScheduleDto scheduleDto) {
         User user = userDao.findByEmail(email);
         Schedule schedule = ExtractFunction.getSchedule(scheduleDto);
-        Set<Day> days = dayDao.saveAll(scheduleDto.getDays());
+        Set<Day> days = dayDao.saveAll(Collections2.transform(scheduleDto.getDays(), ExtractFunction.DAY_INVOKE));
         schedule.setDays(days);
         Sport sport = sportDao.findByName(scheduleDto.getSport());
         if (!user.getSports().contains(sport)) {

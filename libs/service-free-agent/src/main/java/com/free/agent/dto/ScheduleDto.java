@@ -1,7 +1,6 @@
 package com.free.agent.dto;
 
 import com.free.agent.field.Weekday;
-import com.free.agent.model.Day;
 
 import java.util.Date;
 import java.util.Set;
@@ -12,7 +11,7 @@ import java.util.Set;
 public class ScheduleDto {
     private Long id;
     private Set<Weekday> weekdays;
-    private Set<Day> days;
+    private Set<Long> days;
     private String sport;
     private Date startTime;
     private Date endTime;
@@ -33,11 +32,11 @@ public class ScheduleDto {
         this.weekdays = weekdays;
     }
 
-    public Set<Day> getDays() {
+    public Set<Long> getDays() {
         return days;
     }
 
-    public void setDays(Set<Day> days) {
+    public void setDays(Set<Long> days) {
         this.days = days;
     }
 
