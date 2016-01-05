@@ -6,7 +6,7 @@
     max-width: 465px;
     box-sizing: border-box;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 60px;
 }
 
 .form-wrapper h1.page-header {
@@ -71,4 +71,67 @@
     display: block;
     margin: auto;
     margin-top: 25px;
+}
+
+@media (max-width: 1366px) {
+    .form-wrapper {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .form-wrapper {
+        padding: 15px;
+        border: none;
+        margin-top: 0px;
+        max-width: 320px;
+        height: 100%;
+        display: table;
+    }
+    
+    .form-wrapper > * {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .form-wrapper h1.page-header {
+        margin-bottom: 25px
+    }  
+    
+    #registration .form-wrapper .row-wrapper {
+        display: block;
+    }
+
+    #registration .form-wrapper .row-wrapper > * {
+        display:block;
+        width: 100%;
+    }
+
+    .form-wrapper button.btn.primary {
+        width: 100%;
+    }
+
+    .form-wrapper p.subtitle {
+        display: none;
+    }
+
+    #header {
+        position:absolute;
+    }
+}
+
+@media (max-height: 767px) {
+    #header {
+        position:static;
+    }
+
+    .form-wrapper #reg-form {
+        display: table-cell;
+        vertical-align: top;
+    }
+
+    .form-wrapper {
+        margin-top: 30px;
+        height: initial;
+    }
 }

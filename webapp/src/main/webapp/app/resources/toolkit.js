@@ -19,5 +19,9 @@ define([], function () {
         return  paramsStr.join('&')
     };
 
+    toolkit.isTouch = function () {
+        return Boolean(('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+    };
+
     return toolkit
 });

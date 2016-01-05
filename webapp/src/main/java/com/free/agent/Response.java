@@ -37,6 +37,7 @@ public final class Response<T> {
     }
 
     public static String error(Integer status) {
+        return new Response<>(status,true).toJSON();
         return new Response<>(status, true).toJSON();
     }
 
@@ -60,4 +61,3 @@ public final class Response<T> {
         return new Gson().toJson(this);
     }
 }
-

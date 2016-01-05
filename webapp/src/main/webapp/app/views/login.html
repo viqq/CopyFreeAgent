@@ -11,7 +11,7 @@
                 <span>|</span>
 
                 <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri=http://localhost:8080/api/gglogin&amp;response_type=code&amp;client_id=984084695751-v075768i8b3torl2t0evijuj63t4sfrc.apps.googleusercontent.com&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.login+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile">
-                    <img src="/img/icon-google.svg" style="background-color: black;">
+                    <img src="/img/icons/google_dark.svg">
                 </a>
 
                 <a href="http://oauth.vk.com/authorize?client_id=5191126&redirect_uri=http://localhost:8080/api/vklogin&response_type=code&scope=email">
@@ -29,26 +29,6 @@
 
             <dir-form-field field-config="fields.email"></dir-form-field>
             <dir-form-field field-config="fields.password"></dir-form-field>
-
-            <!--<dir-form-field field-model="loginData.j_username"-->
-                            <!--field-label="{{uiTranslations.placeholder_login}}"-->
-                            <!--field-hint=""-->
-                            <!--field-pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@([a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])$"-->
-                            <!--field-error="Некорректный адрес электронной почты.">-->
-            <!--</dir-form-field>-->
-
-            <!--<dir-form-field field-model="loginData.j_password"-->
-                            <!--field-label="{{uiTranslations.placeholder_password}}"-->
-                            <!--field-type="password"-->
-                            <!--field-hint=""-->
-                            <!--field-pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"-->
-                            <!--field-error="Цифры и буквы, длина 6-20 знаков, хотя бы одна цифра и заглавная буква.">-->
-            <!--</dir-form-field>-->
-
-            <!--<input ng-model="loginData.submit"-->
-                   <!--name="submit"-->
-                   <!--value="Login"-->
-                   <!--type="hidden">-->
 
             <div class="error">{{error}}</div>
 

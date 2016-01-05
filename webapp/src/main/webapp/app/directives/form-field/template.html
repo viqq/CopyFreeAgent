@@ -16,7 +16,7 @@
 
         <div class="text">
             <span>
-                {{ config.errorClient }}
+                {{ errorCode && config.serverErrors[errorCode] || config.clientError }}
             </span>
         </div>
     </div>

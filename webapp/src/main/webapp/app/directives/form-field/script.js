@@ -14,9 +14,11 @@ define(
             '$element',
             function ($scope, $attrs, $element) {
                 var validRegex = new RegExp($scope.config.pattern);
+
                 var validate = function() {
                     var isPatternValid = true;
                     var isFunctionValid = true;
+
 
                     if ($scope.config.pattern) {
                         isPatternValid = validRegex.test($scope.config.value || '');
@@ -35,7 +37,9 @@ define(
 
                 angular.extend($scope, {
                     isValid: true,
-                    isFocused: false
+                    isFocused: false,
+                    isChanged: false,
+                    errorCode: null
                 });
 
                 $element.find('input').on('focus', function() {
@@ -43,10 +47,12 @@ define(
                     $scope.$apply();
                 }).on('blur', function() {
                     $scope.isFocused = false;
-                    validate();
                     $scope.$apply();
                 }).on('change', function() {
+                    $scope.errorCode = null;
                     $scope.isChanged = true;
+                    validate();
+                    $scope.$apply();
                 });
 
                 $scope.$root.$on('validate-form', function(evt) {
@@ -54,6 +60,17 @@ define(
                     validate();
                     evt.targetScope.validationResults.push($scope.isValid.toString());
                 });
+
+                $scope.$root.$on('server-error', function(evt, data) {
+                    var errorCode = data.code.toString();
+
+                    if (Object.keys($scope.config.serverErrors).indexOf(errorCode) === -1) {
+                        return;
+                    }
+
+                    $scope.errorCode = errorCode;
+                    $scope.isValid = false;
+                })
             }
         ];
 
