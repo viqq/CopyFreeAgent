@@ -1,0 +1,9 @@
+<div class="datepicker">
+    <table>
+        <tr ng-repeat="week in month track by $index">
+            <td ng-repeat="date in week track by $index" style="text-align: center">
+                {{ date && date.getDate() || ''}}
+            </td>
+        </tr>
+    </table>
+</div>

@@ -6,6 +6,7 @@ define(
         'angularAMD',
         'resources/ui-translations',
 
+        'directives/datepicker/script',
         'services/check-user-state',
         'services/upload-user-pic'
     ],

@@ -62,9 +62,9 @@ define(
                                     return;
                                 }
 
-                                if (data.error === true || data.code) {
-                                    $scope.error = 'Login error. Code: ' + data.code;
-                                    console.error('login: request error code', data.code);
+                                if (data.error === true) {
+                                    $scope.error = 'Login error. Code: ' + data.payload;
+                                    console.error('login: request error code', data.payload);
                                     return;
                                 }
 
