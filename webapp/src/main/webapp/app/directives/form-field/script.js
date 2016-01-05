@@ -55,13 +55,13 @@ define(
                     $scope.$apply();
                 });
 
-                $scope.$root.$on('validate-form', function(evt) {
+                $scope.$on('validate-form', function(evt) {
                     $scope.isChanged = true;
                     validate();
                     evt.targetScope.validationResults.push($scope.isValid.toString());
                 });
 
-                $scope.$root.$on('server-error', function(evt, data) {
+                $scope.$on('server-error', function(evt, data) {
                     var errorCode = data.code.toString();
 
                     if (Object.keys($scope.config.serverErrors).indexOf(errorCode) === -1) {

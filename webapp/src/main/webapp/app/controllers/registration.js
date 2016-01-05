@@ -28,7 +28,7 @@ define(
 
                 var validateForm = function () {
                     $scope.validationResults = [];
-                    $scope.$emit('validate-form');
+                    $scope.$broadcast('validate-form');
                     return $scope.validationResults.indexOf('false') === -1;
                 };
 
@@ -126,7 +126,7 @@ define(
                             }
 
                             if (data.error === true) {
-                                $scope.$emit('server-error', {
+                                $scope.$broadcast('server-error', {
                                     code: data.payload
                                 });
 
