@@ -1,6 +1,7 @@
 package com.free.agent.service;
 
 import com.free.agent.Filter;
+import com.free.agent.FilterNew;
 import com.free.agent.dto.UserDto;
 import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.UserWithSportUIDto;
@@ -32,6 +33,8 @@ public interface UserService {
     User findById(Long id);
 
     Collection<UserWithSportUIDto> findByFilter(Filter filter);
+
+    Collection<UserWithSportUIDto> findByFilter(FilterNew filter);
 
     void deleteUser(Long id);
 

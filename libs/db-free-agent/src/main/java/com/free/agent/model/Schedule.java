@@ -31,7 +31,7 @@ public class Schedule extends AbstractTable<Long> {
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Weekday.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "SCHEDULE_WEEKDAY", joinColumns = @JoinColumn(name = "SCHEDULE_ID"))
-    @Column(name = "WEEKDAY", nullable = false)
+    @Column(name = "WEEKDAY", nullable = true)
     private Set<Weekday> weekdays = Sets.newHashSet();
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "schedule")

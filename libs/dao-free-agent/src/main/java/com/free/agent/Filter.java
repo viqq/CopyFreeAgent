@@ -28,7 +28,7 @@ public final class Filter {
         Predicate predicate = null;
         if (validValue(sport) != null) {
             SetJoin<User, Sport> sportName = fromUser.join(User_.sports);
-            predicate = cb.equal(sportName.get(Sport_.name), getSport());
+            predicate = cb.equal(sportName.get(Sport_.name), sport);
         }
         return new PredicateBuilder(cb)
                 .addEqualsPredicate(cb, fromUser.get(User_.firstName), validValue(firstName))

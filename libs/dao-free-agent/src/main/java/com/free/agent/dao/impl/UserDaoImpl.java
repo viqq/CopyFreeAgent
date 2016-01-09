@@ -1,6 +1,7 @@
 package com.free.agent.dao.impl;
 
 import com.free.agent.Filter;
+import com.free.agent.FilterNew;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.UserDao;
 import com.free.agent.model.User;
@@ -48,6 +49,14 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 
     @Override
     public Collection<User> findByFilter(Filter filter) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        query.where(filter.getPredicate(cb, query));
+        return getEntityManager().createQuery(query).getResultList();
+    }
+
+    @Override
+    public Collection<User> findByFilter(FilterNew filter) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
         query.where(filter.getPredicate(cb, query));

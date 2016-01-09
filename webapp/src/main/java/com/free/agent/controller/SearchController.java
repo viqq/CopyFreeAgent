@@ -1,6 +1,7 @@
 package com.free.agent.controller;
 
 import com.free.agent.Filter;
+import com.free.agent.FilterNew;
 import com.free.agent.FreeAgentAPI;
 import com.free.agent.Response;
 import com.free.agent.model.User;
@@ -37,5 +38,12 @@ public class SearchController {
     public String findUserByFilter(Filter filter) {
         return Response.ok(userService.findByFilter(filter));
     }
+
+    @RequestMapping(value = "/test/filter", method = RequestMethod.POST, produces = BaseController.PRODUCES)
+    @ResponseBody
+    public String findUserByFilterTest(FilterNew filter) {
+        return Response.ok(userService.findByFilter(filter));
+    }
+
 
 }

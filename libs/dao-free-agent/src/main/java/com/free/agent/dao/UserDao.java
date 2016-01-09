@@ -1,6 +1,7 @@
 package com.free.agent.dao;
 
 import com.free.agent.Filter;
+import com.free.agent.FilterNew;
 import com.free.agent.model.User;
 
 import java.util.Collection;
@@ -15,6 +16,8 @@ public interface UserDao extends GenericDao<User,Long> {
     User findByEmail(String email);
 
     Collection<User> findByFilter(Filter filter);
+
+    Collection<User> findByFilter(FilterNew filter);
 
     User findByHash(String hash);
 
