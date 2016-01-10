@@ -1,15 +1,17 @@
 package com.free.agent;
 
-import com.free.agent.field.Weekday;
+import com.free.agent.field.DayOfWeek;
 import com.free.agent.model.*;
 import com.free.agent.utils.PredicateBuilder;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
 import org.apache.commons.collections.CollectionUtils;
+import org.joda.time.DateTime;
 
 import javax.persistence.criteria.*;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -28,33 +30,45 @@ public final class FilterNew {
     private Long fromTime;
     private Long endTime;
 
+    private final Function<Long, Date> DATE_INVOKE_FROM_TIME = new Function<Long, Date>() {
+        @Override
+        public Date apply(Long input) {
+            return new DateTime(input).toDate();
+        }
+    };
+
+    private final Function<Long, DayOfWeek> DAY_INVOKE_FROM_TIME = new Function<Long, DayOfWeek>() {
+        @Override
+        public DayOfWeek apply(Long input) {
+            return DayOfWeek.valueOf(new DateTime(input).dayOfWeek().getAsText(Locale.ENGLISH).toUpperCase());
+        }
+    };
+
+    private final Function<String, DayOfWeek> DAY_INVOKE_FROM_NAME = new Function<String, DayOfWeek>() {
+        @Override
+        public DayOfWeek apply(String input) {
+            return DayOfWeek.valueOf(input);
+        }
+    };
 
     public Predicate getPredicate(CriteriaBuilder cb, CriteriaQuery<User> query) {
         Root<User> fromUser = query.from(User.class);
         Predicate predicate = null;
-        SetJoin<User, Sport> fromSport = fromUser.join(User_.sports);
-        ListJoin<User, Schedule> fromSchedule = fromUser.join(User_.schedules);
-        SetJoin<Schedule, Day> fromDay = fromSchedule.join(Schedule_.days);
-        SetJoin<Schedule, Weekday> fromWeekday = fromSchedule.joinSet("weekdays");
+        SetJoin<User, Sport> fromSport = fromUser.join(User_.sports, JoinType.LEFT);
+        ListJoin<User, Schedule> fromSchedule = fromUser.join(User_.schedules, JoinType.LEFT);
+        SetJoin<Schedule, Day> fromDay = fromSchedule.join(Schedule_.days, JoinType.LEFT);
+        SetJoin<Schedule, Weekday> fromWeekday = fromSchedule.join(Schedule_.weekdays, JoinType.LEFT);
 
         if (!CollectionUtils.isEmpty(days)) {
-            predicate = cb.or(fromDay.get(Day_.date).in(Collections2.transform(days, new Function<Long, Date>() {
-                @Override
-                public Date apply(Long input) {
-                    return new Date(input);
-                }
-            }))); //todo
+            predicate = cb.or(
+                    fromDay.get(Day_.date).in(Collections2.transform(days, DATE_INVOKE_FROM_TIME)),
+                    fromWeekday.get(Weekday_.dayOfWeek).in(Collections2.transform(days, DAY_INVOKE_FROM_TIME)));
         }
         if (!CollectionUtils.isEmpty(weekdays)) {
-            Set<Weekday> weekdaySet = FluentIterable.from(weekdays).transform(new Function<String, Weekday>() {
-                @Override
-                public Weekday apply(String input) {
-                    return Weekday.valueOf(input);
-                }
-            }).toSet();
+            Set<DayOfWeek> dayOfWeekSet = FluentIterable.from(weekdays).transform(DAY_INVOKE_FROM_NAME).toSet();
             predicate = cb.or(
-                    fromDay.get(Day_.weekday).in(weekdaySet),
-                    fromSchedule.get(Schedule_.weekdays).in(weekdaySet));
+                    fromDay.get(Day_.dayOfWeek).in(dayOfWeekSet),
+                    fromWeekday.get(Weekday_.dayOfWeek).in(dayOfWeekSet));
         }
 
         return new PredicateBuilder(cb)

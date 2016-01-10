@@ -1,20 +1,18 @@
 package com.free.agent.model;
 
 import com.free.agent.field.DayOfWeek;
-import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
- * Created by antonPC on 29.12.15.
+ * Created by antonPC on 09.01.16.
  */
 @Entity
-@Table(name = "DAY")
-public class Day extends AbstractTable<Long> {
+@Table(name = "WEEKDAY")
+public class Weekday extends AbstractTable<Long> {
 
     @Id
-    @Column(name = "DAY_ID")
+    @Column(name = "WEEKDAY_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -22,26 +20,20 @@ public class Day extends AbstractTable<Long> {
     @JoinColumn(name = "SCHEDULE_ID")
     private Schedule schedule;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "DATE")
-    private Date date;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "DAY_OF_WEEK")
     private DayOfWeek dayOfWeek;
 
-    public Day() {
-    }
-
-    public Day(Date date, DayOfWeek dayOfWeek) {
-        this.date = date;
+    public Weekday(DayOfWeek dayOfWeek, Schedule schedule) {
         this.dayOfWeek = dayOfWeek;
-    }
-
-    public Day(Schedule schedule, Date date, DayOfWeek dayOfWeek) {
         this.schedule = schedule;
-        this.date = date;
+    }
+
+    public Weekday(DayOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public Weekday() {
     }
 
     @Override
@@ -59,14 +51,6 @@ public class Day extends AbstractTable<Long> {
 
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
-    }
-
-    public Date getDate() {
-        return ObjectUtils.clone(date);
-    }
-
-    public void setDate(Date date) {
-        this.date = ObjectUtils.clone(date);
     }
 
     public DayOfWeek getDayOfWeek() {

@@ -60,6 +60,7 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
         query.where(filter.getPredicate(cb, query));
+        query.distinct(true);
         return getEntityManager().createQuery(query).getResultList();
     }
 

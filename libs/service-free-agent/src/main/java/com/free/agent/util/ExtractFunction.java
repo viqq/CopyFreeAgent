@@ -2,9 +2,9 @@ package com.free.agent.util;
 
 import com.free.agent.dto.*;
 import com.free.agent.dto.network.SocialProfile;
+import com.free.agent.field.DayOfWeek;
 import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
-import com.free.agent.field.Weekday;
 import com.free.agent.model.*;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -62,7 +62,7 @@ public final class ExtractFunction {
         public Day apply(Long input) {
             DateTime dateTime = new DateTime((long) input);
             String dayOfWeek = new DateTime().dayOfWeek().getAsText(Locale.ENGLISH).toUpperCase();
-            return new Day(dateTime.toDate(), Weekday.valueOf(dayOfWeek));
+            return new Day(dateTime.toDate(), DayOfWeek.valueOf(dayOfWeek));
         }
     };
 
@@ -115,7 +115,7 @@ public final class ExtractFunction {
         Schedule schedule = new Schedule();
         schedule.setStartTime(scheduleDto.getStartTime());
         schedule.setEndTime(scheduleDto.getEndTime());
-        schedule.setWeekdays(scheduleDto.getWeekdays());
+        //schedule.setDayOfWeeks(scheduleDto.getDayOfWeeks());// todo
         return schedule;
     }
 

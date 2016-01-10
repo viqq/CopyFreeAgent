@@ -2,15 +2,13 @@ package com.free.agent.dao;
 
 import com.free.agent.FilterNew;
 import com.free.agent.config.FreeAgentConstant;
-import com.free.agent.field.Weekday;
-import com.free.agent.model.Day;
-import com.free.agent.model.Schedule;
-import com.free.agent.model.Sport;
-import com.free.agent.model.User;
+import com.free.agent.field.DayOfWeek;
+import com.free.agent.model.*;
 import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.joda.time.DateTime;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Set;
 
-import static com.free.agent.field.Weekday.*;
+import static com.free.agent.field.DayOfWeek.*;
 
 /**
  * Created by antonPC on 07.01.16.
@@ -38,6 +37,8 @@ public class FilerTest extends TestCase {
     private UserDao userDao;
     @Autowired
     private DayDao dayDao;
+    @Autowired
+    private WeekdayDao weekdayDao;
     @Autowired
     private ScheduleDao scheduleDao;
 
@@ -75,8 +76,17 @@ public class FilerTest extends TestCase {
 
         u1.getSports().add(s1);
         u1.getSports().add(s2);
-        u2.getSports().add(s1);
-        //todo
+        u2.getSports().add(s2);
+        u2.getSports().add(s3);
+        u2.getSports().add(s4);
+        u3.getSports().add(s3);
+
+        s1.getUsers().add(u1);
+        s2.getUsers().add(u1);
+        s2.getUsers().add(u2);
+        s3.getUsers().add(u2);
+        s3.getUsers().add(u3);
+        s4.getUsers().add(u2);
 
         sch1 = new Schedule();
         sch2 = new Schedule();
@@ -85,37 +95,43 @@ public class FilerTest extends TestCase {
         sch5 = new Schedule();
         sch6 = new Schedule();
 
-        day1 = createDay(2016, 5, 6);
-        day2 = createDay(2016, 5, 7);
-        day3 = createDay(2016, 5, 8);
-        day4 = createDay(2016, 5, 10);
-        day5 = createDay(2016, 5, 12);
-        day6 = createDay(2016, 5, 20);
+        day1 = createDay(2016, 5, 6); //FRIDAY
+        day1.setSchedule(sch1);
+        day2 = createDay(2016, 5, 7); //SATURDAY
+        day2.setSchedule(sch1);
+        day3 = createDay(2016, 5, 8); //SUNDAY
+        day3.setSchedule(sch2);
+        day4 = createDay(2016, 5, 10); //TUESDAY
+        day4.setSchedule(sch3);
+        day5 = createDay(2016, 5, 12); //THURSDAY
+        day5.setSchedule(sch3);
+        day6 = createDay(2016, 5, 20); //FRIDAY
+        day6.setSchedule(sch5);
 
         sch1.setUser(u1);
         sch1.setSport(s1);
-        sch1.setWeekdays(Sets.newHashSet(FRIDAY, MONDAY));
+        sch1.setWeekdays(getWeekday(sch1, FRIDAY, MONDAY));
         sch1.setStartTime(new GregorianCalendar(2016, 5, 5, 10, 10, 10).getTime());
         sch1.setEndTime(new GregorianCalendar(2016, 5, 5, 20, 10, 10).getTime());
         sch1.setDays(Sets.newHashSet(day1, day2));
 
         sch2.setUser(u1);
         sch2.setSport(s2);
-        sch2.setWeekdays(Sets.newHashSet(WEDNESDAY));
+        sch2.setWeekdays(getWeekday(sch2, WEDNESDAY));
         sch2.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
         sch2.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
         sch2.setDays(Sets.newHashSet(day3));
 
         sch3.setUser(u2);
         sch3.setSport(s3);
-        sch3.setWeekdays(Sets.newHashSet(SATURDAY, SUNDAY, WEDNESDAY));
+        sch3.setWeekdays(getWeekday(sch3, SATURDAY, SUNDAY, WEDNESDAY));
         sch3.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
         sch3.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
-        sch3.setDays(Sets.newHashSet(day3, day4, day5));
+        sch3.setDays(Sets.newHashSet(day4, day5));
 
         sch4.setUser(u2);
         sch4.setSport(s4);
-        sch4.setWeekdays(Sets.newHashSet(MONDAY, THURSDAY));
+        sch4.setWeekdays(getWeekday(sch4, MONDAY, THURSDAY));
         sch4.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
         sch4.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
         sch4.setDays(Sets.<Day>newHashSet());
@@ -129,11 +145,10 @@ public class FilerTest extends TestCase {
 
         sch6.setUser(u3);
         sch6.setSport(s3);
-        sch6.setWeekdays(Sets.newHashSet(THURSDAY, TUESDAY, FRIDAY, SATURDAY));
+        sch6.setWeekdays(getWeekday(sch6, THURSDAY, TUESDAY, FRIDAY, SATURDAY));
         sch6.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
         sch6.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
-        sch6.setDays(Sets.newHashSet(day3));
-
+        sch6.setDays(Sets.<Day>newHashSet());
 
         u1.getSchedules().add(sch1);
         u1.getSchedules().add(sch2);
@@ -156,6 +171,7 @@ public class FilerTest extends TestCase {
         dayDao.create(day4);
         dayDao.create(day5);
         dayDao.create(day6);
+
         scheduleDao.create(sch1);
         scheduleDao.create(sch2);
         scheduleDao.create(sch3);
@@ -164,19 +180,31 @@ public class FilerTest extends TestCase {
         scheduleDao.create(sch6);
     }
 
+    @Ignore(/*todo*/)
     @Test
     public void createReadUpdateDeleteTest() {
         assertEquals(6, scheduleDao.findAll().size());
         FilterNew filterNew = new FilterNew();
-        filterNew.setSports(Sets.newHashSet(s1.getName()));
+        filterNew.setFirstName("Yana");
+        filterNew.setSports(Sets.newHashSet(s1.getName(), s2.getName()));
         filterNew.setWeekdays(Sets.newHashSet(FRIDAY.name()));
         userDao.findByFilter(filterNew);
-
     }
 
     private Day createDay(int year, int month, int day) {
         DateTime dateTime = new DateTime(year, month, day, 10, 10);
-        Weekday weekday = Weekday.valueOf(dateTime.dayOfWeek().getAsText(Locale.ENGLISH).toUpperCase());
-        return new Day(dateTime.toDate(), weekday);
+        DayOfWeek dayOfWeek = DayOfWeek.valueOf(dateTime.dayOfWeek().getAsText(Locale.ENGLISH).toUpperCase());
+        return new Day(dateTime.toDate(), dayOfWeek);
+    }
+
+    private Set<Weekday> getWeekday(Schedule schedule, DayOfWeek... dayOfWeeks) {
+        Set<Weekday> set = Sets.newHashSet();
+        for (DayOfWeek dayOfWeek : dayOfWeeks) {
+            Weekday weekday = new Weekday(dayOfWeek, schedule);
+            weekdayDao.create(weekday);
+            set.add(weekday);
+        }
+        return set;
+
     }
 }

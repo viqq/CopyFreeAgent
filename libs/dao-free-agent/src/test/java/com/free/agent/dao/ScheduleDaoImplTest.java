@@ -1,11 +1,8 @@
 package com.free.agent.dao;
 
 import com.free.agent.config.FreeAgentConstant;
-import com.free.agent.field.Weekday;
-import com.free.agent.model.Day;
-import com.free.agent.model.Schedule;
-import com.free.agent.model.Sport;
-import com.free.agent.model.User;
+import com.free.agent.field.DayOfWeek;
+import com.free.agent.model.*;
 import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.junit.Before;
@@ -18,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.GregorianCalendar;
+import java.util.Set;
 
 /**
  * Created by antonPC on 05.12.15.
@@ -33,6 +31,8 @@ public class ScheduleDaoImplTest extends TestCase {
     private UserDao userDao;
     @Autowired
     private DayDao dayDao;
+    @Autowired
+    private WeekdayDao weekdayDao;
     @Autowired
     private ScheduleDao scheduleDao;
 
@@ -63,20 +63,20 @@ public class ScheduleDaoImplTest extends TestCase {
         sch1 = new Schedule();
         sch2 = new Schedule();
 
-        day1 = new Day(sch1, new GregorianCalendar(2016, 5, 5, 10, 10, 10).getTime(), Weekday.SATURDAY);
-        day2 = new Day(sch1, new GregorianCalendar(2016, 5, 6, 10, 10, 10).getTime(), Weekday.THURSDAY);
-        day3 = new Day(sch2, new GregorianCalendar(2016, 5, 7, 10, 10, 10).getTime(), Weekday.TUESDAY);
+        day1 = new Day(sch1, new GregorianCalendar(2016, 5, 5, 10, 10, 10).getTime(), DayOfWeek.SATURDAY);
+        day2 = new Day(sch1, new GregorianCalendar(2016, 5, 6, 10, 10, 10).getTime(), DayOfWeek.THURSDAY);
+        day3 = new Day(sch2, new GregorianCalendar(2016, 5, 7, 10, 10, 10).getTime(), DayOfWeek.TUESDAY);
 
         sch1.setUser(u1);
         sch1.setSport(s1);
-        sch1.setWeekdays(Sets.newHashSet(Weekday.FRIDAY, Weekday.MONDAY));
+        sch1.setWeekdays(getWeekday(sch1, DayOfWeek.FRIDAY, DayOfWeek.MONDAY));
         sch1.setStartTime(new GregorianCalendar(2016, 5, 5, 10, 10, 10).getTime());
         sch1.setEndTime(new GregorianCalendar(2016, 5, 5, 20, 10, 10).getTime());
         sch1.setDays(Sets.newHashSet(day1, day2));
 
         sch2.setUser(u1);
         sch2.setSport(s2);
-        sch2.setWeekdays(Sets.newHashSet(Weekday.WEDNESDAY));
+        sch2.setWeekdays(getWeekday(sch2, DayOfWeek.WEDNESDAY));
         sch2.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
         sch2.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
         sch2.setDays(Sets.newHashSet(day3));
@@ -120,5 +120,16 @@ public class ScheduleDaoImplTest extends TestCase {
     public void findAllByUserId() {
         assertEquals(2, scheduleDao.findAllByUserId(u1.getId()).size());
         assertEquals(0, scheduleDao.findAllByUserId(u2.getId()).size());
+    }
+
+    private Set<Weekday> getWeekday(Schedule schedule, DayOfWeek... dayOfWeeks) {
+        Set<Weekday> set = Sets.newHashSet();
+        for (DayOfWeek dayOfWeek : dayOfWeeks) {
+            Weekday weekday = new Weekday(dayOfWeek, schedule);
+            weekdayDao.create(weekday);
+            set.add(weekday);
+        }
+        return set;
+
     }
 }

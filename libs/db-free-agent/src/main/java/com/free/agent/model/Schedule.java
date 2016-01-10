@@ -1,7 +1,5 @@
 package com.free.agent.model;
 
-import com.free.agent.field.Weekday;
-import com.google.common.collect.Sets;
 import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
@@ -28,11 +26,8 @@ public class Schedule extends AbstractTable<Long> {
     @JoinColumn(name = "SPORT_ID")
     private Sport sport;
 
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = Weekday.class, fetch = FetchType.LAZY)
-    @CollectionTable(name = "SCHEDULE_WEEKDAY", joinColumns = @JoinColumn(name = "SCHEDULE_ID"))
-    @Column(name = "WEEKDAY", nullable = true)
-    private Set<Weekday> weekdays = Sets.newHashSet();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "schedule")
+    private Set<Weekday> weekdays;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "schedule")
     private Set<Day> days;
