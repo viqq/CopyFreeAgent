@@ -9,7 +9,10 @@ import com.free.agent.dto.UserDto;
 import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.UserWithSportUIDto;
 import com.free.agent.dto.network.SocialProfile;
-import com.free.agent.exception.*;
+import com.free.agent.exception.EmailAlreadyUsedException;
+import com.free.agent.exception.EmailDidNotRegisteredException;
+import com.free.agent.exception.EmailIsNotDetectedException;
+import com.free.agent.exception.WrongLinkException;
 import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
 import com.free.agent.model.User;
@@ -148,9 +151,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Collection<UserWithSportUIDto> findByFilter(FilterNew filter) {
-        if (filter.getDays() != null && filter.getWeekdays() != null) {
-            throw new InvalidFilterDataException();//todo
-        }
+        //todo sorting
         List<UserWithSportUIDto> list = Lists.newArrayList();
         for (User user : userDao.findByFilter(filter)) {
             list.add(ExtractFunction.getUserForUI(user));

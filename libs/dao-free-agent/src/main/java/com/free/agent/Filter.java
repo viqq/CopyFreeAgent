@@ -13,8 +13,8 @@ import java.util.Date;
 /**
  * Created by antonPC on 03.07.15.
  */
+//todo remove
 public final class Filter {
-    //todo add ability to many sports
     private String sport;
     private String firstName;
     private String lastName;

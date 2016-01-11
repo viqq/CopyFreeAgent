@@ -53,22 +53,30 @@ public final class FilterNew {
 
     public Predicate getPredicate(CriteriaBuilder cb, CriteriaQuery<User> query) {
         Root<User> fromUser = query.from(User.class);
-        Predicate predicate = null;
+        Predicate dayPredicate = null;
+        Predicate weekdayPredicate = null;
+        Predicate sportPredicate;
         SetJoin<User, Sport> fromSport = fromUser.join(User_.sports, JoinType.LEFT);
         ListJoin<User, Schedule> fromSchedule = fromUser.join(User_.schedules, JoinType.LEFT);
         SetJoin<Schedule, Day> fromDay = fromSchedule.join(Schedule_.days, JoinType.LEFT);
         SetJoin<Schedule, Weekday> fromWeekday = fromSchedule.join(Schedule_.weekdays, JoinType.LEFT);
 
         if (!CollectionUtils.isEmpty(days)) {
-            predicate = cb.or(
+            dayPredicate = cb.or(
                     fromDay.get(Day_.date).in(Collections2.transform(days, DATE_INVOKE_FROM_TIME)),
                     fromWeekday.get(Weekday_.dayOfWeek).in(Collections2.transform(days, DAY_INVOKE_FROM_TIME)));
         }
         if (!CollectionUtils.isEmpty(weekdays)) {
             Set<DayOfWeek> dayOfWeekSet = FluentIterable.from(weekdays).transform(DAY_INVOKE_FROM_NAME).toSet();
-            predicate = cb.or(
+            weekdayPredicate = cb.or(
                     fromDay.get(Day_.dayOfWeek).in(dayOfWeekSet),
                     fromWeekday.get(Weekday_.dayOfWeek).in(dayOfWeekSet));
+        }
+
+        if (isFindFreeAgent()) {
+            sportPredicate = fromSchedule.get(Schedule_.sport).get(Sport_.name).in(sports);
+        } else {
+            sportPredicate = fromSport.get(Sport_.name).in(sports);
         }
 
         return new PredicateBuilder(cb)
@@ -77,13 +85,22 @@ public final class FilterNew {
                 .addEqualsPredicate(cb, fromUser.get(User_.firstName), validValue(firstName))
                 .addEqualsPredicate(cb, fromUser.get(User_.lastName), validValue(lastName))
                 .addRangePredicate(cb, fromUser.get(User_.dateOfBirth), validValue(dateOfBirthFrom), validValue(dateOfBirthTo))
-                .addInPredicate(fromSport.get(Sport_.name), sports)
-                .add(predicate)
+                .add(sportPredicate)
+                .add(dayPredicate)
+                .add(weekdayPredicate)
                 .buildWithAndConjunction();
+    }
+
+    private boolean isFindFreeAgent() {
+        return !CollectionUtils.isEmpty(days) || !CollectionUtils.isEmpty(weekdays) || fromTime != null || endTime != null;
     }
 
     private Date validValue(Long dateOfBirthFrom) {
         return dateOfBirthFrom == null ? null : new Date(dateOfBirthFrom);
+    }
+
+    private String validValue(String value) {
+        return value == null ? null : value.equals("") ? null : value;
     }
 
 
@@ -173,10 +190,6 @@ public final class FilterNew {
 
     public void setEndTime(Long endTime) {
         this.endTime = endTime;
-    }
-
-    public String validValue(String value) {
-        return value == null ? null : value.equals("") ? null : value;
     }
 
 }
