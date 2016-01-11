@@ -11,37 +11,43 @@ define(
         var dirHeader = function () {
             var ctrl = ['$scope', '$location', function ($scope, $location) {
                 var currDate = new Date();
-                var getMonthDays = function(month, year, isMondayFirst) {
+                var currYear = currDate.getFullYear();
+                var getMonthDays = function (month, year, isMondayFirst) {
                     var result = new Array(5);
-                    var day = 1;
-                    var firstWeekDay = (new Date(year,month,1)).getDay();
-                    var dayToAdd;
+                    var day;
+                    var firstWeekDay = (new Date(year, month, 1)).getDay();
 
                     if (isMondayFirst) {
                         firstWeekDay--;
                         firstWeekDay = firstWeekDay < 0 ? 7 : firstWeekDay
                     }
 
+                    day = 1 - firstWeekDay;
+
+                    /**
+                     * Chosen month days
+                     */
                     for (var week = 0; week < result.length; week++) {
                         result[week] = new Array(7);
-                        for (var weekDay = firstWeekDay; weekDay < result[week].length; weekDay++) {
-                            dayToAdd = new Date(year,month,day);
 
-                            if (dayToAdd.getMonth() !== month) {
-                                break;
-                            }
-
-                            result[week][weekDay] = dayToAdd;
-                            day++
+                        for (var weekDay = 0; weekDay < result[week].length; weekDay++) {
+                            result[week][weekDay] = new Date(year, month, day);
+                            day++;
                         }
-
-                        firstWeekDay = 0;
                     }
+
+                    console.log(result);
 
                     return result;
                 };
 
-                $scope.month = getMonthDays(currDate.getMonth() + 1, currDate.getFullYear(), true);
+                $scope.changeMonth = function(newMonth) {
+                    $scope.monthNum = newMonth;
+                    $scope.month = getMonthDays($scope.monthNum, currYear, true);
+                };
+
+                $scope.monthNum = currDate.getMonth();
+                $scope.month = getMonthDays($scope.monthNum, currYear, true);
             }];
 
             return {

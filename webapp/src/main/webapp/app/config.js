@@ -9,6 +9,9 @@ require.config({
         'angular': 'libs/angular.min',
         'angular-route': 'libs/angular-route.min',
         'angular-animate': 'libs/angular-animate.min',
+        'angular-locale_en-us': 'libs/angular-locale_en-us',
+        'angular-locale_ru-ru': 'libs/angular-locale_ru-ru',
+        'angular-locale_uk-ua': 'libs/angular-locale_uk-ua',
 
         'angularAMD': 'libs/angularAMD',
 
@@ -23,7 +26,9 @@ require.config({
         'angular-route': ['angular'],
         'angular-animate': ['angular'],
         'angular-aria': ['angular'],
-        'angular-material': ['angular']
+        'angular-locale_en-us': ['angular'],
+        'angular-locale_ru-ru': ['angular'],
+        'angular-locale_uk-ua': ['angular']
     },
 
     // kick start application

@@ -6,13 +6,16 @@ define(
         'angularAMD',
         'angular-route',
         'angular-animate',
+        'angular-locale_en-us',
+        'angular-locale_ru-ru',
+        'angular-locale_uk-ua',
 
         'jquery',
 
         'controllers/main'
     ],
     function (angularAMD) {
-        var app = angular.module('app', ['ngRoute','ngAnimate']);
+        var app = angular.module('app', ['ngRoute','ngAnimate', 'ngLocale']);
 
         app.config([
             '$routeProvider',

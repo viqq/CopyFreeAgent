@@ -1,9 +1,31 @@
 <div class="datepicker">
-    <table>
-        <tr ng-repeat="week in month track by $index">
-            <td ng-repeat="date in week track by $index" style="text-align: center">
-                {{ date && date.getDate() || ''}}
-            </td>
-        </tr>
-    </table>
+    <div class="field"></div>
+    <div class="calendar">
+        <div ng-click="changeMonth(monthNum - 1)"><</div>
+        <div>
+            {{ month[1][0] | date :'MMMM' }}
+        </div>
+        <div ng-click="changeMonth(monthNum + 1)">></div>
+
+        <div class="month">
+            <div class="row week-days">
+                <div class="col" ng-repeat="day in month[0]">
+                    <div>
+                        <div class="valing-wrapper">
+                            {{ day | date :'EEE'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-repeat="week in month track by $index">
+                <div class="col" ng-repeat="date in week track by $index">
+                    <div>
+                        <div class="valing-wrapper">
+                            {{ date && date.getDate() || ''}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

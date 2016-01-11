@@ -16,9 +16,11 @@ define(
             '$q',
             '$route',
             '$location',
+            '$locale',
             'getUserInfo',
             'checkUserState',
-            function ($scope, $q, $route, $location, getUserInfo, checkUserState) {
+            function ($scope, $q, $route, $location, $locale, getUserInfo, checkUserState) {
+                $locale.id = 'ru-ru';
 
                 $scope.$root.$on("$routeChangeStart", function (event, next, current) {
                     console.log('start', 'nex:' + next.originalPath, 'curr:' + (current && current.originalPath))

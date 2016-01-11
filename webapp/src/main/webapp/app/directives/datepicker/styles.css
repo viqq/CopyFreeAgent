@@ -1,0 +1,47 @@
+.calendar {
+    padding-left: 30px;
+}
+
+.datepicker .col {
+    display: inline-block;
+    padding: 5px 0px;
+    margin: 0px 10px;
+}
+
+/*.datepicker .week-days .col {*/
+/*padding: 5px 0px;*/
+/*margin: 0px 5px;*/
+/*}*/
+
+.datepicker .week-days .col {
+    padding-top: 0px;
+}
+
+/*.datepicker .col > div {*/
+/*width: 30px;*/
+/*height: 30px;*/
+/*display: inline-table;*/
+/*text-align: center;*/
+/*}*/
+
+.datepicker .col > div {
+    width: 40px;
+    height: 40px;
+    display: inline-table;
+    text-align: center;
+    cursor: pointer;
+}
+
+.datepicker .week-days .col > div {
+    width: 40px;
+    height: 40px;
+    border: 1px #cccccc solid;
+    box-sizing: border-box;
+    border-radius: 50%;
+    text-transform: lowercase;
+}
+
+.datepicker .col > div .valing-wrapper {
+    vertical-align: middle;
+    display: table-cell;
+}
