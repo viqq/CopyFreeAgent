@@ -1,27 +1,37 @@
 <div class="datepicker">
     <div class="field"></div>
     <div class="calendar">
-        <div ng-click="changeMonth(monthNum - 1)"><</div>
-        <div>
-            {{ month[1][0] | date :'MMMM' }}
+        <div class="nav">
+            <div class="prev" ng-click="changeMonth(monthNum - 1)">
+                <img src="/img/datepicker/arrow-left.png">
+            </div>
+            <div class="curr">
+                {{ month[0][1].date | date :'MMM' }}, {{ month[0][1].date | date :'yyyy' }}
+            </div>
+            <div class="next" ng-click="changeMonth(monthNum + 1)">
+                <img src="/img/datepicker/arrow-right.png">
+            </div>
         </div>
-        <div ng-click="changeMonth(monthNum + 1)">></div>
-
         <div class="month">
-            <div class="row week-days">
-                <div class="col" ng-repeat="day in month[0]">
+            <div class="col" ng-repeat="weekDays in month track by $index">
+                <div class="row weekday">
                     <div>
-                        <div class="valing-wrapper">
-                            {{ day | date :'EEE'}}
+                        <div>
+                            <div class="valing-wrapper">
+                                {{ weekDays[0].date | date :'EEE'}}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row" ng-repeat="week in month track by $index">
-                <div class="col" ng-repeat="date in week track by $index">
+                <div class="row"
+                     ng-repeat="day in weekDays track by $index">
                     <div>
-                        <div class="valing-wrapper">
-                            {{ date && date.getDate() || ''}}
+                        <div>
+                            <div class="valing-wrapper"
+                                 ng-class="{'wrong-month': day.wrongMonth}">
+
+                                {{ day.date && day.date.getDate() || ''}}
+                            </div>
                         </div>
                     </div>
                 </div>

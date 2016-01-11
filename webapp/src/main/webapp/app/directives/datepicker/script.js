@@ -19,7 +19,7 @@ define(
 
                     if (isMondayFirst) {
                         firstWeekDay--;
-                        firstWeekDay = firstWeekDay < 0 ? 7 : firstWeekDay
+                        firstWeekDay = firstWeekDay < 0 ? 6 : firstWeekDay
                     }
 
                     day = 1 - firstWeekDay;
@@ -31,7 +31,12 @@ define(
                         result[week] = new Array(7);
 
                         for (var weekDay = 0; weekDay < result[week].length; weekDay++) {
-                            result[week][weekDay] = new Date(year, month, day);
+                            var date = new Date(year, month, day);
+
+                            result[week][weekDay] = {
+                                date: date,
+                                wrongMonth: date.getMonth() !== month
+                            };
                             day++;
                         }
                     }
@@ -40,14 +45,27 @@ define(
 
                     return result;
                 };
+                var convertMonth = function(month) {
+                    var result = Array(7);
+
+                    for (var weekDay = 0; weekDay < 7; weekDay++) {
+                        result[weekDay] = new Array(5);
+
+                        for (var week = 0; week < 5; week++) {
+                            result[weekDay][week] = month[week][weekDay];
+                        }
+                    }
+
+                    return result;
+                };
 
                 $scope.changeMonth = function(newMonth) {
                     $scope.monthNum = newMonth;
-                    $scope.month = getMonthDays($scope.monthNum, currYear, true);
+                    $scope.month = convertMonth( getMonthDays($scope.monthNum, currYear, true) );
                 };
 
                 $scope.monthNum = currDate.getMonth();
-                $scope.month = getMonthDays($scope.monthNum, currYear, true);
+                $scope.month = convertMonth( getMonthDays($scope.monthNum, currYear, true) );
             }];
 
             return {

@@ -1,47 +1,183 @@
+.datepicker {
+    font-size: .875em;
+    font-family: RobotoMedium;
+}
+
+.datepicker
 .calendar {
-    padding-left: 30px;
-}
-
-.datepicker .col {
+    margin-left: 30px;
     display: inline-block;
-    padding: 5px 0px;
-    margin: 0px 10px;
+    -webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
 }
 
-/*.datepicker .week-days .col {*/
-/*padding: 5px 0px;*/
-/*margin: 0px 5px;*/
-/*}*/
-
-.datepicker .week-days .col {
-    padding-top: 0px;
+.datepicker
+.col {
+    display: inline-block;
 }
 
-/*.datepicker .col > div {*/
-/*width: 30px;*/
-/*height: 30px;*/
-/*display: inline-table;*/
-/*text-align: center;*/
-/*}*/
+.datepicker
+.col:first-child {
+    margin-left: 0px;
+}
 
-.datepicker .col > div {
-    width: 40px;
-    height: 40px;
-    display: inline-table;
+.datepicker
+.col:last-child {
+    margin-right: 0px;
+}
+
+.datepicker
+.row > div {
+    display: block;
+    padding: 5px;
+}
+.datepicker
+.selected .row > div {
+    background: #ffa1b3;
+}
+
+.datepicker
+.selected .row:last-child > div {
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.datepicker
+.selected.row > div > div {
+    background: #ff1342;
+    color: white;
+}
+
+.datepicker
+.row > div > div {
+    width: 30px;
+    height: 30px;
     text-align: center;
-    cursor: pointer;
+    display: table;
 }
 
-.datepicker .week-days .col > div {
+.datepicker
+.row.weekday > div {
+    padding: 0px;
+}
+
+.datepicker
+.selected .row.weekday > div {
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    position: relative;
+}
+
+.datepicker
+.selected .row.weekday > div > div {
+    background-color: #ff1342;
+    border: none;
+    color: white;
+}
+
+.datepicker
+.row.weekday > div > div {
     width: 40px;
     height: 40px;
-    border: 1px #cccccc solid;
+    border: 2px #cccccc solid;
     box-sizing: border-box;
     border-radius: 50%;
     text-transform: lowercase;
 }
 
-.datepicker .col > div .valing-wrapper {
-    vertical-align: middle;
+.datepicker
+.valing-wrapper {
     display: table-cell;
+    vertical-align: middle;
 }
+
+.datepicker
+.wrong-month {
+    color: #cccccc;
+}
+
+.datepicker
+.col:first-child .row {
+    padding-left: 20px
+}
+
+.datepicker
+.col:last-child .row {
+    padding-right: 20px
+}
+
+.datepicker
+.row {
+    padding: 0px 5px;
+    cursor: pointer;
+}
+
+.datepicker
+.row.weekday {
+    border-bottom: 1px #cccccc solid;
+}
+
+.datepicker
+.row.weekday > div {
+    padding: 0px;
+    padding-bottom: 10px;
+}
+
+.datepicker
+.selected .row.weekday > div:after {
+    content: '';
+    height: 1px;
+    width: 100%;
+    display: block;
+    position: absolute;
+    background: #f596a9;
+    bottom: -1px;
+}
+
+.datepicker
+.month {
+    padding-top: 10px;
+    border-top: 1px #cccccc solid;
+}
+
+.datepicker
+.nav {
+    padding: 20px;
+    position: relative;
+    display: table;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.datepicker
+.nav > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.datepicker
+.nav .curr {
+    text-transform: capitalize;
+    font-size: 120%;
+    text-align: center;
+}
+
+.datepicker
+.nav .prev,
+.datepicker
+.nav .next {
+    width: 10px;
+    cursor: pointer;
+}
+
+.datepicker
+.nav .prev img,
+.datepicker
+.nav .next img {
+    width: 100%;
+    display: block;
+}
+
+
+
