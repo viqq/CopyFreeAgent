@@ -6,15 +6,19 @@
                 <img src="/img/datepicker/arrow-left.png">
             </div>
             <div class="curr">
-                {{ month[0][1].date | date :'MMM' }}, {{ month[0][1].date | date :'yyyy' }}
+                {{ month[0][1].date | date :'MMM' }} {{ month[0][1].date | date :'yyyy' }}
             </div>
             <div class="next" ng-click="changeMonth(monthNum + 1)">
                 <img src="/img/datepicker/arrow-right.png">
             </div>
+            <div class="legend">Всегда по</div>
         </div>
         <div class="month">
-            <div class="col" ng-repeat="weekDays in month track by $index">
-                <div class="row weekday">
+            <div class="col"
+                 ng-repeat="weekDays in month track by $index"
+                 ng-class="{'selected': weekDays[0].date.weekPicked}">
+                <div class="row weekday"
+                     ng-click="pickWeek(weekDays)">
                     <div>
                         <div>
                             <div class="valing-wrapper">
@@ -24,11 +28,12 @@
                     </div>
                 </div>
                 <div class="row"
-                     ng-repeat="day in weekDays track by $index">
+                     ng-class="{'selected': day.dayPicked, 'wrong-month': day.wrongMonth}"
+                     ng-repeat="day in weekDays track by $index"
+                     ng-click="pickDay(day)">
                     <div>
                         <div>
-                            <div class="valing-wrapper"
-                                 ng-class="{'wrong-month': day.wrongMonth}">
+                            <div class="valing-wrapper">
 
                                 {{ day.date && day.date.getDate() || ''}}
                             </div>

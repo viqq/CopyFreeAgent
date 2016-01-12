@@ -179,5 +179,16 @@
     display: block;
 }
 
-
+.datepicker
+.legend {
+    position: absolute;
+    bottom: -0.625em;
+    background: white;
+    left: 20px;
+    padding: 0px 5px;
+    z-index: 1;
+    color: #666666;
+    font-size: 80%;
+    letter-spacing: normal;
+}
 

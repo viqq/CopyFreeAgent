@@ -35,7 +35,9 @@ define(
 
                             result[week][weekDay] = {
                                 date: date,
-                                wrongMonth: date.getMonth() !== month
+                                wrongMonth: date.getMonth() !== (new Date(year, month)).getMonth(),
+                                dayPicked: false,
+                                weekPicked: false
                             };
                             day++;
                         }
@@ -59,13 +61,21 @@ define(
                     return result;
                 };
 
-                $scope.changeMonth = function(newMonth) {
-                    $scope.monthNum = newMonth;
-                    $scope.month = convertMonth( getMonthDays($scope.monthNum, currYear, true) );
-                };
+                angular.extend($scope, {
+                    monthNum: currDate.getMonth(),
+                    changeMonth: function(newMonth) {
+                        $scope.monthNum = newMonth;
+                        $scope.month = convertMonth( getMonthDays($scope.monthNum, currYear, true) );
+                    },
+                    pickDay: function(day) {
+                        day.dayPicked = !day.dayPicked;
+                    },
+                    pickWeek: function(weekDay) {
+                        weekDay[0].date.weekPicked = !weekDay[0].date.weekPicked;
+                    }
+                });
 
-                $scope.monthNum = currDate.getMonth();
-                $scope.month = convertMonth( getMonthDays($scope.monthNum, currYear, true) );
+                $scope.changeMonth($scope.monthNum, currYear, true);
             }];
 
             return {
