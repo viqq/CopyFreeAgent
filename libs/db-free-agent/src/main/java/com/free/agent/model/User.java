@@ -102,6 +102,9 @@ public class User extends AbstractTable<Long> {
     private List<Schedule> schedules = Lists.newArrayList();
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Skill> skills = Sets.newHashSet();
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Message> messages = Lists.newArrayList();
 
 
@@ -310,5 +313,13 @@ public class User extends AbstractTable<Long> {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Set<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
     }
 }

@@ -8,7 +8,6 @@ import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.joda.time.DateTime;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,7 @@ public class FilerTest extends TestCase {
     @Autowired
     private ScheduleDao scheduleDao;
 
+    private FilterNew filterNew;
     private Sport s1, s2, s3, s4;
     private User u1, u2, u3, u4;
     private Schedule sch1, sch2, sch3, sch4, sch5, sch6;
@@ -180,15 +180,20 @@ public class FilerTest extends TestCase {
         scheduleDao.create(sch6);
     }
 
-    @Ignore(/*todo*/)
     @Test
     public void createReadUpdateDeleteTest() {
         assertEquals(6, scheduleDao.findAll().size());
-        FilterNew filterNew = new FilterNew();
+        filterNew = new FilterNew();
         filterNew.setFirstName("Yana");
+        assertEquals(1, userDao.findByFilter(filterNew).size());
+
+        filterNew = new FilterNew();
         filterNew.setSports(Sets.newHashSet(s1.getName(), s2.getName()));
+        assertEquals(2, userDao.findByFilter(filterNew).size());
+
+        filterNew = new FilterNew();
         filterNew.setWeekdays(Sets.newHashSet(FRIDAY.name()));
-        userDao.findByFilter(filterNew);
+        assertEquals(3, userDao.findByFilter(filterNew).size());
     }
 
     private Day createDay(int year, int month, int day) {

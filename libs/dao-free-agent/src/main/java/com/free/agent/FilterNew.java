@@ -55,7 +55,7 @@ public final class FilterNew {
         Root<User> fromUser = query.from(User.class);
         Predicate dayPredicate = null;
         Predicate weekdayPredicate = null;
-        Predicate sportPredicate;
+        Predicate sportPredicate = null;
         SetJoin<User, Sport> fromSport = fromUser.join(User_.sports, JoinType.LEFT);
         ListJoin<User, Schedule> fromSchedule = fromUser.join(User_.schedules, JoinType.LEFT);
         SetJoin<Schedule, Day> fromDay = fromSchedule.join(Schedule_.days, JoinType.LEFT);
@@ -72,11 +72,12 @@ public final class FilterNew {
                     fromDay.get(Day_.dayOfWeek).in(dayOfWeekSet),
                     fromWeekday.get(Weekday_.dayOfWeek).in(dayOfWeekSet));
         }
-
-        if (isFindFreeAgent()) {
-            sportPredicate = fromSchedule.get(Schedule_.sport).get(Sport_.name).in(sports);
-        } else {
-            sportPredicate = fromSport.get(Sport_.name).in(sports);
+        if (!CollectionUtils.isEmpty(sports)) {
+            if (isFindFreeAgent()) {
+                sportPredicate = fromSchedule.get(Schedule_.sport).get(Sport_.name).in(sports);
+            } else {
+                sportPredicate = fromSport.get(Sport_.name).in(sports);
+            }
         }
 
         return new PredicateBuilder(cb)
