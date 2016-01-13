@@ -46,7 +46,12 @@ define(
 
                 angular.forEach(executors, function(value, key) {
                     value();
-                })
+                });
+
+                $scope.datePickerData = {
+                    pickedDates: [1452204000000],
+                    pickedWeekDays: [1, 2]
+                }
             }
         ];
 

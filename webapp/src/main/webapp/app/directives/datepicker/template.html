@@ -3,32 +3,32 @@
     <div class="calendar">
         <div class="nav">
             <div class="prev" ng-click="changeMonth(monthNum - 1)">
-                <img src="/img/datepicker/arrow-left.png">
+                <img src="/img/datepicker/arrow_left.png">
             </div>
             <div class="curr">
                 {{ month[0][1].date | date :'MMM' }} {{ month[0][1].date | date :'yyyy' }}
             </div>
             <div class="next" ng-click="changeMonth(monthNum + 1)">
-                <img src="/img/datepicker/arrow-right.png">
+                <img src="/img/datepicker/arrow_right.png">
             </div>
             <div class="legend">Всегда по</div>
         </div>
         <div class="month">
             <div class="col"
                  ng-repeat="weekDays in month track by $index"
-                 ng-class="{'selected': weekDays[0].date.weekPicked}">
+                 ng-class="{'selected': week[$index].isPicked}">
                 <div class="row weekday"
-                     ng-click="pickWeek(weekDays)">
+                     ng-click="pickWeek(week[$index])">
                     <div>
                         <div>
                             <div class="valing-wrapper">
-                                {{ weekDays[0].date | date :'EEE'}}
+                                {{ week[$index].date | date :'EEE'}}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row"
-                     ng-class="{'selected': day.dayPicked, 'wrong-month': day.wrongMonth}"
+                     ng-class="{'selected': day.isPicked, 'wrong-month': day.wrongMonth}"
                      ng-repeat="day in weekDays track by $index"
                      ng-click="pickDay(day)">
                     <div>
@@ -41,6 +41,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="action-btns">
+            <div class="btn primary">Принять</div>
+            <div class="btn">Сбросить</div>
         </div>
     </div>
 </div>

@@ -10,6 +10,10 @@ define(
         'directives/footer/script'
     ],
     function (angularAMD) {
-        angularAMD.controller('ProfileCtrl', function() {});
+        var ctrl = ['$scope', function($scope) {
+
+        }];
+
+        angularAMD.controller('ProfileCtrl', ctrl);
     }
 );
