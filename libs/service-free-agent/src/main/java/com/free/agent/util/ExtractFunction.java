@@ -66,6 +66,13 @@ public final class ExtractFunction {
         }
     };
 
+    public static final Function<String, Weekday> WEEKDAY_INVOKE = new Function<String, Weekday>() {
+        @Override
+        public Weekday apply(String input) {
+            return new Weekday(DayOfWeek.valueOf(input));
+        }
+    };
+
     public static UserWithSportUIDto getUserForUI(User user) {
         UserWithSportUIDto userDto = new UserWithSportUIDto();
         userDto.setId(user.getId());
@@ -115,7 +122,6 @@ public final class ExtractFunction {
         Schedule schedule = new Schedule();
         schedule.setStartTime(scheduleDto.getStartTime());
         schedule.setEndTime(scheduleDto.getEndTime());
-        //schedule.setDayOfWeeks(scheduleDto.getDayOfWeeks());// todo
         return schedule;
     }
 

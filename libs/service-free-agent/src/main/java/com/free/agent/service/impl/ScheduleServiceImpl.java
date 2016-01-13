@@ -1,20 +1,13 @@
 package com.free.agent.service.impl;
 
 import com.free.agent.config.FreeAgentConstant;
-import com.free.agent.dao.DayDao;
-import com.free.agent.dao.ScheduleDao;
-import com.free.agent.dao.SportDao;
-import com.free.agent.dao.UserDao;
+import com.free.agent.dao.*;
 import com.free.agent.dto.ScheduleDto;
-import com.free.agent.model.Day;
-import com.free.agent.model.Schedule;
-import com.free.agent.model.Sport;
-import com.free.agent.model.User;
+import com.free.agent.exception.ScheduleNotFoundException;
+import com.free.agent.model.*;
 import com.free.agent.service.ScheduleService;
-import com.free.agent.util.ExtractFunction;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+
+import static com.free.agent.util.ExtractFunction.*;
 
 /**
  * Created by antonPC on 05.12.15.
@@ -43,6 +38,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private DayDao dayDao;
 
+    @Autowired
+    private WeekdayDao weekdayDao;
+
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public List<Schedule> findAllByUserId(Long id) {
@@ -59,9 +57,19 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void save(String email, ScheduleDto scheduleDto) {
         User user = userDao.findByEmail(email);
-        Schedule schedule = ExtractFunction.getSchedule(scheduleDto);
-        Set<Day> days = dayDao.saveAll(Collections2.transform(scheduleDto.getDays(), ExtractFunction.DAY_INVOKE));
+        Schedule schedule = getSchedule(scheduleDto);
+        Set<Day> days = FluentIterable.from(scheduleDto.getDays()).transform(DAY_INVOKE).toSet();
+        for (Day day : days) {
+            day.setSchedule(schedule);
+        }
+        dayDao.saveAll(days);
         schedule.setDays(days);
+        Set<Weekday> weekdays = FluentIterable.from(scheduleDto.getDayOfWeeks()).transform(WEEKDAY_INVOKE).toSet();
+        for (Weekday weekday : weekdays) {
+            weekday.setSchedule(schedule);
+        }
+        weekdayDao.saveAll(weekdays);
+        schedule.setWeekdays(weekdays);
         Sport sport = sportDao.findByName(scheduleDto.getSport());
         if (!user.getSports().contains(sport)) {
             //todo
@@ -91,7 +99,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             }
         });
         if (!scheduleOptional.isPresent()) {
-            //todo
+            throw new ScheduleNotFoundException("Schedule with id " + id + " is not found");
         }
         Schedule schedule = scheduleOptional.get();
         user.getSchedules().remove(schedule);

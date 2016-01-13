@@ -1,7 +1,5 @@
 package com.free.agent.dto;
 
-import com.free.agent.field.DayOfWeek;
-
 import java.util.Date;
 import java.util.Set;
 
@@ -10,7 +8,7 @@ import java.util.Set;
  */
 public class ScheduleDto {
     private Long id;
-    private Set<DayOfWeek> dayOfWeeks; //todo String?
+    private Set<String> dayOfWeeks;
     private Set<Long> days;
     private String sport;
     private Date startTime;
@@ -24,11 +22,11 @@ public class ScheduleDto {
         this.id = id;
     }
 
-    public Set<DayOfWeek> getDayOfWeeks() {
+    public Set<String> getDayOfWeeks() {
         return dayOfWeeks;
     }
 
-    public void setDayOfWeeks(Set<DayOfWeek> dayOfWeeks) {
+    public void setDayOfWeeks(Set<String> dayOfWeeks) {
         this.dayOfWeeks = dayOfWeeks;
     }
 

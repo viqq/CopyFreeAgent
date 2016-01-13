@@ -22,6 +22,7 @@ import com.free.agent.util.EncryptionUtils;
 import com.free.agent.util.ExtractFunction;
 import com.free.agent.util.LinkUtils;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -152,10 +153,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Collection<UserWithSportUIDto> findByFilter(FilterNew filter) {
         //todo sorting
-        List<UserWithSportUIDto> list = Lists.newArrayList();
+        Set<UserWithSportUIDto> list = Sets.newHashSet();
         for (User user : userDao.findByFilter(filter)) {
             list.add(ExtractFunction.getUserForUI(user));
         }
+
         return list;
 
     }
