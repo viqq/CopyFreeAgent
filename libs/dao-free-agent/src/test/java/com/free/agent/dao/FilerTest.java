@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Time;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Set;
@@ -111,43 +112,43 @@ public class FilerTest extends TestCase {
         sch1.setUser(u1);
         sch1.setSport(s1);
         sch1.setWeekdays(getWeekday(sch1, FRIDAY, MONDAY));
-        sch1.setStartTime(new GregorianCalendar(2016, 5, 5, 10, 10, 10).getTime());
-        sch1.setEndTime(new GregorianCalendar(2016, 5, 5, 20, 10, 10).getTime());
+        sch1.setStartTime(Time.valueOf("10:10:00"));
+        sch1.setEndTime(Time.valueOf("11:10:00"));
         sch1.setDays(Sets.newHashSet(day1, day2));
 
         sch2.setUser(u1);
         sch2.setSport(s2);
         sch2.setWeekdays(getWeekday(sch2, WEDNESDAY));
-        sch2.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
-        sch2.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
+        sch2.setStartTime(Time.valueOf("10:10:00"));
+        sch2.setEndTime(Time.valueOf("12:10:00"));
         sch2.setDays(Sets.newHashSet(day3));
 
         sch3.setUser(u2);
         sch3.setSport(s3);
         sch3.setWeekdays(getWeekday(sch3, SATURDAY, SUNDAY, WEDNESDAY));
-        sch3.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
-        sch3.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
+        sch3.setStartTime(Time.valueOf("10:10:00"));
+        sch3.setEndTime(Time.valueOf("13:10:00"));
         sch3.setDays(Sets.newHashSet(day4, day5));
 
         sch4.setUser(u2);
         sch4.setSport(s4);
         sch4.setWeekdays(getWeekday(sch4, MONDAY, THURSDAY));
-        sch4.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
-        sch4.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
+        sch4.setStartTime(Time.valueOf("10:10:00"));
+        sch4.setEndTime(Time.valueOf("14:10:00"));
         sch4.setDays(Sets.<Day>newHashSet());
 
         sch5.setUser(u2);
         sch5.setSport(s2);
         sch5.setWeekdays(Sets.<Weekday>newHashSet());
-        sch5.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
-        sch5.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
+        sch5.setStartTime(Time.valueOf("10:10:00"));
+        sch5.setEndTime(Time.valueOf("15:10:00"));
         sch5.setDays(Sets.newHashSet(day6));
 
         sch6.setUser(u3);
         sch6.setSport(s3);
         sch6.setWeekdays(getWeekday(sch6, THURSDAY, TUESDAY, FRIDAY, SATURDAY));
-        sch6.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
-        sch6.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
+        sch6.setStartTime(Time.valueOf("10:10:00"));
+        sch6.setEndTime(Time.valueOf("16:10:00"));
         sch6.setDays(Sets.<Day>newHashSet());
 
         u1.getSchedules().add(sch1);

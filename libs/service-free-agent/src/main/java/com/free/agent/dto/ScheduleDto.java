@@ -1,6 +1,5 @@
 package com.free.agent.dto;
 
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -11,8 +10,8 @@ public class ScheduleDto {
     private Set<String> dayOfWeeks;
     private Set<Long> days;
     private String sport;
-    private Date startTime;
-    private Date endTime;
+    private Long startTime;
+    private Long endTime;
 
     public Long getId() {
         return id;
@@ -46,19 +45,19 @@ public class ScheduleDto {
         this.sport = sport;
     }
 
-    public Date getStartTime() {
+    public Long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Long startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Long endTime) {
         this.endTime = endTime;
     }
 }

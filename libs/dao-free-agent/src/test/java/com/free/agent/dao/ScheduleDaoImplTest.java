@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Time;
 import java.util.GregorianCalendar;
 import java.util.Set;
 
@@ -70,15 +71,15 @@ public class ScheduleDaoImplTest extends TestCase {
         sch1.setUser(u1);
         sch1.setSport(s1);
         sch1.setWeekdays(getWeekday(sch1, DayOfWeek.FRIDAY, DayOfWeek.MONDAY));
-        sch1.setStartTime(new GregorianCalendar(2016, 5, 5, 10, 10, 10).getTime());
-        sch1.setEndTime(new GregorianCalendar(2016, 5, 5, 20, 10, 10).getTime());
+        sch1.setStartTime(Time.valueOf("10:10:00"));
+        sch1.setEndTime(Time.valueOf("10:10:00"));
         sch1.setDays(Sets.newHashSet(day1, day2));
 
         sch2.setUser(u1);
         sch2.setSport(s2);
         sch2.setWeekdays(getWeekday(sch2, DayOfWeek.WEDNESDAY));
-        sch2.setStartTime(new GregorianCalendar(2016, 6, 5, 10, 10, 10).getTime());
-        sch2.setEndTime(new GregorianCalendar(2016, 6, 5, 20, 10, 10).getTime());
+        sch2.setStartTime(Time.valueOf("10:10:00"));
+        sch2.setEndTime(Time.valueOf("10:10:00"));
         sch2.setDays(Sets.newHashSet(day3));
 
         u1.getSchedules().add(sch1);

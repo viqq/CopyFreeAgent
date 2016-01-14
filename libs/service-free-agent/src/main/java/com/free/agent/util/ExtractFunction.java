@@ -12,6 +12,7 @@ import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.sql.Time;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -120,8 +121,8 @@ public final class ExtractFunction {
 
     public static Schedule getSchedule(ScheduleDto scheduleDto) {
         Schedule schedule = new Schedule();
-        schedule.setStartTime(scheduleDto.getStartTime());
-        schedule.setEndTime(scheduleDto.getEndTime());
+        schedule.setStartTime(new Time(scheduleDto.getStartTime()));
+        schedule.setEndTime(new Time(scheduleDto.getEndTime()));
         return schedule;
     }
 
