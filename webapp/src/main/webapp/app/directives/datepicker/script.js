@@ -9,7 +9,7 @@ define(
     ],
     function (angularAMD) {
         var dirHeader = function () {
-            var ctrl = ['$scope', function ($scope) {
+            var ctrl = ['$scope', '$element', '$document', function ($scope, $element, $document) {
                 var currDate = new Date();
                 var currYear = currDate.getFullYear();
                 var getMonthDays = function (month, year, isMondayFirst) {
@@ -62,6 +62,7 @@ define(
                     pickedDates: $scope.config.pickedDates || [],
                     pickedWeekDays: $scope.config.pickedWeekDays || [],
                     monthNum: currDate.getMonth(),
+                    isVisisble: false,
                     changeMonth: function(newMonth) {
                         $scope.monthNum = newMonth;
                         $scope.month = convertMonth( getMonthDays($scope.monthNum, currYear, true) );
@@ -89,6 +90,16 @@ define(
                         } else if (!weekDay.isPicked && dayIndex !== -1) {
                             $scope.pickedWeekDays.splice(dayIndex, 1);
                         }
+                    },
+                    openCalendar: function() {
+                        $scope.isVisisble = true;
+                    },
+                    submit: function() {
+                        $scope.isVisisble = false;
+
+                    },
+                    reset: function() {
+                        $scope.isVisisble = false;
                     }
                 });
 

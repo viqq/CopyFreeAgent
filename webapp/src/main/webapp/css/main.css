@@ -2,16 +2,19 @@ html,
 body,
 .view,
 .view > div {
-    height: 100%;
-
+    min-height: 100%;
 }
 
-html,
-body,
-.view {
-    min-width: 320px;
-    min-height: 480px;
+@media (max-height: 481px) or (max-width: 321px) {
+    html,
+    body,
+    .view {
+        min-width: 320px;
+        min-height: 480px;
+    }
 }
+
+
 
 body {
     font-family: RobotoLight, "Helvetica Neue", Helvetica, Arial, sans-serif;

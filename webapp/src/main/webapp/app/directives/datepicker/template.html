@@ -1,6 +1,19 @@
 <div class="datepicker">
-    <div class="field"></div>
-    <div class="calendar">
+    <div class="field" ng-click="openCalendar()">
+        <div class="icon">
+            <div class="rect"></div>
+            <div class="sqare left top"></div>
+            <div class="sqare top"></div>
+            <div class="sqare left"></div>
+            <div class="sqare "></div>
+        </div>
+        <div class="label">
+            {{ config.label }}
+            {{isVisible.toString()}}
+        </div>
+        <div class="small-arrow"></div>
+    </div>
+    <div class="calendar" ng-hide="!isVisible">
         <div class="nav">
             <div class="prev" ng-click="changeMonth(monthNum - 1)">
                 <img src="/img/datepicker/arrow_left.png">
@@ -43,8 +56,8 @@
             </div>
         </div>
         <div class="action-btns">
-            <div class="btn primary">Принять</div>
-            <div class="btn">Сбросить</div>
+            <div class="btn primary" ng-click="submit()">Принять</div>
+            <div class="btn" ng-click="reset()">Сбросить</div>
         </div>
     </div>
 </div>

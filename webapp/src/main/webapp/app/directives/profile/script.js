@@ -49,6 +49,7 @@ define(
                 });
 
                 $scope.datePickerData = {
+                    label: 'Число',
                     pickedDates: [1452204000000],
                     pickedWeekDays: [1, 2]
                 }

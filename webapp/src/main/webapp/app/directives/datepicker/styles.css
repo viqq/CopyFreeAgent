@@ -1,4 +1,10 @@
 .datepicker {
+    outline: none;
+    border: none;
+    background: none;
+
+    position: relative;
+
     font-size: .875em;
     font-family: RobotoMedium;
 }
@@ -6,7 +12,6 @@
 .datepicker
 .calendar {
     margin-left: 30px;
-    display: inline-block;
     -webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
@@ -211,3 +216,62 @@
     float: right;
 }
 
+.datepicker .field {
+    outline: none;
+    border: none;
+    background: none;
+    color: #b0b0b0;
+}
+
+.datepicker .field
+> div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.datepicker .field .icon {
+    width: 12px;
+    height: 16px;
+    overflow: hidden;
+}
+.datepicker .field .icon
+.rect {
+    height: 12.5%;
+    width: 100%;
+    margin-bottom: 25%;
+}
+
+.datepicker .field .icon
+.sqare,
+
+.datepicker .field .icon
+.rect {
+    background-color: #b0b0b0;
+}
+
+.datepicker .field .icon
+.sqare {
+    display: inline-block;
+    width: 33.33%;
+    height: 25%;
+    float: left;
+}
+
+.datepicker .field .icon
+.sqare.left {
+    margin-right: 33.33%;
+}
+
+.datepicker .field .icon
+.sqare.top {
+    margin-bottom: 25%;
+}
+
+.datepicker .field
+.small-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 4.5px 0 4.5px;
+    border-color: #b0b0b0 transparent transparent transparent;
+}
