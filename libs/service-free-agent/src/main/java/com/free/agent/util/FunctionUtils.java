@@ -7,6 +7,7 @@ import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
 import com.free.agent.model.*;
 import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
@@ -71,19 +72,62 @@ public final class FunctionUtils {
         }
     };
 
-    public static final Function<User, UserWithSportUIDto> USER_WITH_SPORT_INVOKE = new Function<User, UserWithSportUIDto>() {
+    public static final Function<User, UserWithScheduleUIDto> USER_WITH_SCHEDULES_INVOKE = new Function<User, UserWithScheduleUIDto>() {
         @Override
-        public UserWithSportUIDto apply(User input) {
-            return getUserForUI(input);
+        public UserWithScheduleUIDto apply(User input) {
+            return getUserWithScheduleForUI(input);
         }
     };
 
-    public static final Comparator<UserWithSportUIDto> USER_WITH_SPORT_COMPORATOR = new Comparator<UserWithSportUIDto>() {
+    public static final Comparator<UserWithScheduleUIDto> USER_WITH_SCHEDULES_COMPARATOR = new Comparator<UserWithScheduleUIDto>() {
         @Override
-        public int compare(UserWithSportUIDto o1, UserWithSportUIDto o2) {
+        public int compare(UserWithScheduleUIDto u1, UserWithScheduleUIDto u2) {
             return 0; //todo
         }
     };
+
+    private static final Function<Schedule, ScheduleDto> SCHEDULE_INVOKE = new Function<Schedule, ScheduleDto>() {
+        @Override
+        public ScheduleDto apply(Schedule input) {
+            ScheduleDto dto = new ScheduleDto();
+            dto.setId(input.getId());
+            dto.setSport(input.getSport().getName());
+            dto.setStartTime(input.getStartTime().getTime());
+            dto.setEndTime(input.getEndTime().getTime());
+            dto.setDayOfWeeks(FluentIterable.from(input.getWeekdays()).transform(new Function<Weekday, String>() {
+                @Override
+                public String apply(Weekday input) {
+                    return input.getDayOfWeek().name();
+                }
+            }).toSet());
+            dto.setDays(FluentIterable.from(input.getDays()).transform(new Function<Day, Long>() {
+                @Override
+                public Long apply(Day input) {
+                    return input.getDate().getTime();
+                }
+            }).toSet());
+            return null;
+        }
+    };
+
+    public static UserWithScheduleUIDto getUserWithScheduleForUI(User user) {
+        UserWithScheduleUIDto userDto = new UserWithScheduleUIDto();
+        userDto.setId(user.getId());
+        userDto.setEmail(user.getEmail());
+        userDto.setPhone(user.getPhone());
+        userDto.setDescription(user.getDescription());
+        userDto.setCity(user.getCity());
+        userDto.setCountry(user.getCountry());
+        userDto.setDateOfBirth(getTime(user.getDateOfBirth()));
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
+        userDto.setGender(getGender(user.getGender()));
+        userDto.setRole(user.getRole().name());
+        userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), SPORT_NAME_INVOKE));
+        userDto.setSchedules(Lists.transform(Lists.newArrayList(user.getSchedules()), SCHEDULE_INVOKE));
+        return userDto;
+    }
 
     public static UserWithSportUIDto getUserForUI(User user) {
         UserWithSportUIDto userDto = new UserWithSportUIDto();

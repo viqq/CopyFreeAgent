@@ -7,6 +7,7 @@ import com.free.agent.dao.SportDao;
 import com.free.agent.dao.UserDao;
 import com.free.agent.dto.UserDto;
 import com.free.agent.dto.UserRegistrationDto;
+import com.free.agent.dto.UserWithScheduleUIDto;
 import com.free.agent.dto.UserWithSportUIDto;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
@@ -155,23 +156,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public Collection<UserWithSportUIDto> findByFilter(FilterNew filter, Integer startIndex, String email) {
-        List<UserWithSportUIDto> result;
+    public Collection<UserWithScheduleUIDto> findByFilter(FilterNew filter, Integer startIndex, String email) {
+        List<UserWithScheduleUIDto> result;
         Collection<User> userMatch = userDao.findByFilter(filter);
         if (userMatch.size() > startIndex + BATCH_SIZE) {
             return FluentIterable.from(userMatch)
-                    .transform(FunctionUtils.USER_WITH_SPORT_INVOKE)
-                    .toSortedList(FunctionUtils.USER_WITH_SPORT_COMPORATOR)
+                    .transform(FunctionUtils.USER_WITH_SCHEDULES_INVOKE)
+                    .toSortedList(FunctionUtils.USER_WITH_SCHEDULES_COMPARATOR)
                     .subList(startIndex, startIndex + BATCH_SIZE);
         } else if (userMatch.size() > startIndex && userMatch.size() < startIndex + BATCH_SIZE) {
             User user = userDao.findByEmail(email);
-            List<UserWithSportUIDto> match = FluentIterable.from(userMatch)
-                    .transform(FunctionUtils.USER_WITH_SPORT_INVOKE)
-                    .toSortedList(FunctionUtils.USER_WITH_SPORT_COMPORATOR)
+            List<UserWithScheduleUIDto> match = FluentIterable.from(userMatch)
+                    .transform(FunctionUtils.USER_WITH_SCHEDULES_INVOKE)
+                    .toSortedList(FunctionUtils.USER_WITH_SCHEDULES_COMPARATOR)
                     .subList(startIndex, userMatch.size()); //is last element include?
 
-            List<UserWithSportUIDto> notMatch = FluentIterable.from(userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex))
-                    .transform(FunctionUtils.USER_WITH_SPORT_INVOKE)
+            List<UserWithScheduleUIDto> notMatch = FluentIterable.from(userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex))
+                    .transform(FunctionUtils.USER_WITH_SCHEDULES_INVOKE)
                     .toList()
                     .subList(match.size(), BATCH_SIZE - match.size());
 
@@ -181,7 +182,7 @@ public class UserServiceImpl implements UserService {
         } else {
             User user = userDao.findByEmail(email);
             return FluentIterable.from(userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex))
-                    .transform(FunctionUtils.USER_WITH_SPORT_INVOKE)
+                    .transform(FunctionUtils.USER_WITH_SCHEDULES_INVOKE)
                     .toList();
         }
     }

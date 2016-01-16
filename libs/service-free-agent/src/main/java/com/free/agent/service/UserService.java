@@ -4,6 +4,7 @@ import com.free.agent.Filter;
 import com.free.agent.FilterNew;
 import com.free.agent.dto.UserDto;
 import com.free.agent.dto.UserRegistrationDto;
+import com.free.agent.dto.UserWithScheduleUIDto;
 import com.free.agent.dto.UserWithSportUIDto;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
@@ -34,7 +35,7 @@ public interface UserService {
 
     Collection<UserWithSportUIDto> findByFilter(Filter filter);
 
-    Collection<UserWithSportUIDto> findByFilter(FilterNew filter, Integer startIndex, String name);
+    Collection<UserWithScheduleUIDto> findByFilter(FilterNew filter, Integer startIndex, String name);
 
     void deleteUser(Long id);
 
