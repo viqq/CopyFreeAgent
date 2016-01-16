@@ -8,7 +8,7 @@ import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.service.impl.UserServiceImpl;
 import com.free.agent.util.EncryptionUtils;
-import com.free.agent.util.ExtractFunction;
+import com.free.agent.util.FunctionUtils;
 import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.junit.Assert;
@@ -58,7 +58,7 @@ public class UserServiceImplTest extends TestCase {
     public void saveUserTest() {
         UserRegistrationDto user = new UserRegistrationDto();
         Mockito.when(sportDao.findByNames(Sets.newHashSet(FOOTBALL))).thenReturn(sports());
-        Mockito.when(userDao.create(ExtractFunction.getUser(user))).thenReturn(user());
+        Mockito.when(userDao.create(FunctionUtils.getUser(user))).thenReturn(user());
         User savedUser = service.save(user);
         Assert.assertEquals(1, savedUser.getSports().size());
         Assert.assertEquals(FOOTBALL, savedUser.getSports().iterator().next().getName());

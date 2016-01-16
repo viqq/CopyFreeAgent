@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
 import java.util.Collection;
 
 /**
@@ -41,8 +42,8 @@ public class SearchController {
 
     @RequestMapping(value = "/test/filter", method = RequestMethod.POST, produces = BaseController.PRODUCES)
     @ResponseBody
-    public String findUserByFilterTest(FilterNew filter) {
-        return Response.ok(userService.findByFilter(filter));
+    public String findUserByFilterTest(Principal principal, FilterNew filter, Integer startIndex) {
+        return Response.ok(userService.findByFilter(filter, startIndex, principal.getName()));
     }
 
 

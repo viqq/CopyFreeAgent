@@ -12,7 +12,7 @@ import com.free.agent.model.User;
 import com.free.agent.service.MailService;
 import com.free.agent.service.MessageService;
 import com.free.agent.util.EncryptionUtils;
-import com.free.agent.util.ExtractFunction;
+import com.free.agent.util.FunctionUtils;
 import com.free.agent.util.LinkUtils;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
@@ -54,7 +54,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public Collection<MessageUIDto> findAllByReceiver(String email) {
-        return Collections2.transform(messageDao.findAllByReceiver(email), ExtractFunction.MESSAGE_INVOKE);
+        return Collections2.transform(messageDao.findAllByReceiver(email), FunctionUtils.MESSAGE_INVOKE);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class MessageServiceImpl implements MessageService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public Collection<MessageUIDto> getHistory(Long id, String email) {
         User user = userDao.findByEmail(email);
-        return Collections2.transform(messageDao.getHistory(id, user.getId()), ExtractFunction.MESSAGE_INVOKE);
+        return Collections2.transform(messageDao.getHistory(id, user.getId()), FunctionUtils.MESSAGE_INVOKE);
     }
 
     @Override

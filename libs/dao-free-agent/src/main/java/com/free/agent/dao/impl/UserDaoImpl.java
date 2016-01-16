@@ -23,6 +23,7 @@ import java.util.Set;
  */
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
+    public static final int BATCH_SIZE = 20;
 
     @PersistenceContext(unitName = FreeAgentConstant.PERSISTENCE_CONTEXT)
     protected EntityManager entityManager;
@@ -63,6 +64,21 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
         query.distinct(true);
         return getEntityManager().createQuery(query).getResultList();
     }
+
+    @Override
+    public Collection<User> findByNotFilter(FilterNew filter, String city, String country, Integer startIndex) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> fromUser = query.from(User.class);
+        query.where(cb.not(filter.getPredicate(cb, query)));
+        query.distinct(true);
+        query.orderBy(
+                cb.asc(cb.selectCase().when(cb.equal(fromUser.get(User_.city), city), 0).otherwise(1)),
+                cb.asc(cb.selectCase().when(cb.equal(fromUser.get(User_.country), country), 0).otherwise(1)),
+                cb.asc(fromUser.get(User_.lastActivity)));
+        return getEntityManager().createQuery(query).setFirstResult(startIndex).setMaxResults(BATCH_SIZE).getResultList();
+    }
+
 
     @Override
     public User findByHash(String hash) {

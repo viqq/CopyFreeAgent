@@ -13,15 +13,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.sql.Time;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Created by antonPC on 19.08.15.
  */
-public final class ExtractFunction {
+public final class FunctionUtils {
 
     public static final Function<Sport, SportUIDto> SPORT_NAME_INVOKE = new Function<Sport, SportUIDto>() {
         @Override
@@ -71,6 +68,20 @@ public final class ExtractFunction {
         @Override
         public Weekday apply(String input) {
             return new Weekday(DayOfWeek.valueOf(input));
+        }
+    };
+
+    public static final Function<User, UserWithSportUIDto> USER_WITH_SPORT_INVOKE = new Function<User, UserWithSportUIDto>() {
+        @Override
+        public UserWithSportUIDto apply(User input) {
+            return getUserForUI(input);
+        }
+    };
+
+    public static final Comparator<UserWithSportUIDto> USER_WITH_SPORT_COMPORATOR = new Comparator<UserWithSportUIDto>() {
+        @Override
+        public int compare(UserWithSportUIDto o1, UserWithSportUIDto o2) {
+            return 0; //todo
         }
     };
 

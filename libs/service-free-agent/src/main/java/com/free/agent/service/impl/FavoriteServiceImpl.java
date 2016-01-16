@@ -6,7 +6,7 @@ import com.free.agent.dto.FavoriteDto;
 import com.free.agent.exception.UserIsNotFavoriteException;
 import com.free.agent.model.User;
 import com.free.agent.service.FavoriteService;
-import com.free.agent.util.ExtractFunction;
+import com.free.agent.util.FunctionUtils;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
@@ -33,7 +33,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public Collection<FavoriteDto> findAllByUserEmail(String email) {
         return Collections2.transform(userDao.findFavoritesByUserId(userDao.findByEmail(email).getId()),
-                ExtractFunction.FAVORITE_INVOKE);
+                FunctionUtils.FAVORITE_INVOKE);
     }
 
     @Override

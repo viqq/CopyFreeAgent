@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
-import static com.free.agent.util.ExtractFunction.*;
+import static com.free.agent.util.FunctionUtils.*;
 
 /**
  * Created by antonPC on 05.12.15.

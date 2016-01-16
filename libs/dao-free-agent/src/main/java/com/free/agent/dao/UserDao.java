@@ -19,8 +19,11 @@ public interface UserDao extends GenericDao<User,Long> {
 
     Collection<User> findByFilter(FilterNew filter);
 
+    Collection<User> findByNotFilter(FilterNew filter, String city, String country, Integer startIndex);
+
     User findByHash(String hash);
 
     Set<User> findFavoritesByUserId(Long userId);
+
 
 }

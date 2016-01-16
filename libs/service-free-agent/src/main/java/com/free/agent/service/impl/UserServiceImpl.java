@@ -19,10 +19,10 @@ import com.free.agent.model.User;
 import com.free.agent.service.MailService;
 import com.free.agent.service.UserService;
 import com.free.agent.util.EncryptionUtils;
-import com.free.agent.util.ExtractFunction;
+import com.free.agent.util.FunctionUtils;
 import com.free.agent.util.LinkUtils;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -46,6 +46,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import static com.free.agent.dao.impl.UserDaoImpl.BATCH_SIZE;
+
 /**
  * Created by antonPC on 21.06.15.
  */
@@ -56,6 +58,7 @@ public class UserServiceImpl implements UserService {
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 30; // 30MB
+
 
     @Autowired
     private UserDao userDao;
@@ -79,7 +82,7 @@ public class UserServiceImpl implements UserService {
                 LOGGER.error("User with " + userDto.getEmail() + " has registered already");
                 throw new EmailAlreadyUsedException("User with " + userDto.getEmail() + " has registered already");
             } else {
-                User newUser = ExtractFunction.getUser(userDto);
+                User newUser = FunctionUtils.getUser(userDto);
                 newUser.setId(user.getId());
                 userDao.update(newUser);
                 sendLinkForConfirm(newUser.getEmail(), newUser.getHash());
@@ -87,7 +90,7 @@ public class UserServiceImpl implements UserService {
                 return newUser;
             }
         }
-        User createdUser = userDao.create(ExtractFunction.getUser(userDto));
+        User createdUser = userDao.create(FunctionUtils.getUser(userDto));
         sendLinkForConfirm(createdUser.getEmail(), createdUser.getHash());
         LOGGER.info("New user " + userDto.getEmail() + "was added ");
         return createdUser;
@@ -101,7 +104,7 @@ public class UserServiceImpl implements UserService {
             LOGGER.error("User with " + profile.getEmail() + " has registered already");
             throw new EmailAlreadyUsedException("User with " + profile.getEmail() + " has registered already");
         }
-        user = ExtractFunction.getUser(profile);
+        user = FunctionUtils.getUser(profile);
         if (user.getEmail() == null) {
             throw new EmailIsNotDetectedException("You didn't detected email in " + profile.getType());
         }
@@ -145,21 +148,42 @@ public class UserServiceImpl implements UserService {
     public Collection<UserWithSportUIDto> findByFilter(Filter filter) {
         List<UserWithSportUIDto> list = Lists.newArrayList();
         for (User user : userDao.findByFilter(filter)) {
-            list.add(ExtractFunction.getUserForUI(user));
+            list.add(FunctionUtils.getUserForUI(user));
         }
         return list;
     }
 
     @Override
-    public Collection<UserWithSportUIDto> findByFilter(FilterNew filter) {
-        //todo sorting
-        Set<UserWithSportUIDto> list = Sets.newHashSet();
-        for (User user : userDao.findByFilter(filter)) {
-            list.add(ExtractFunction.getUserForUI(user));
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
+    public Collection<UserWithSportUIDto> findByFilter(FilterNew filter, Integer startIndex, String email) {
+        List<UserWithSportUIDto> result;
+        Collection<User> userMatch = userDao.findByFilter(filter);
+        if (userMatch.size() > startIndex + BATCH_SIZE) {
+            return FluentIterable.from(userMatch)
+                    .transform(FunctionUtils.USER_WITH_SPORT_INVOKE)
+                    .toSortedList(FunctionUtils.USER_WITH_SPORT_COMPORATOR)
+                    .subList(startIndex, startIndex + BATCH_SIZE);
+        } else if (userMatch.size() > startIndex && userMatch.size() < startIndex + BATCH_SIZE) {
+            User user = userDao.findByEmail(email);
+            List<UserWithSportUIDto> match = FluentIterable.from(userMatch)
+                    .transform(FunctionUtils.USER_WITH_SPORT_INVOKE)
+                    .toSortedList(FunctionUtils.USER_WITH_SPORT_COMPORATOR)
+                    .subList(startIndex, userMatch.size()); //is last element include?
+
+            List<UserWithSportUIDto> notMatch = FluentIterable.from(userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex))
+                    .transform(FunctionUtils.USER_WITH_SPORT_INVOKE)
+                    .toList()
+                    .subList(match.size(), BATCH_SIZE - match.size());
+
+            result = Lists.newArrayList(match);
+            result.addAll(notMatch);
+            return result;
+        } else {
+            User user = userDao.findByEmail(email);
+            return FluentIterable.from(userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex))
+                    .transform(FunctionUtils.USER_WITH_SPORT_INVOKE)
+                    .toList();
         }
-
-        return list;
-
     }
 
     @Override
@@ -181,13 +205,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public UserWithSportUIDto getInfoAboutUser(String email) {
-        return ExtractFunction.getUserForUI(userDao.findByEmail(email));
+        return FunctionUtils.getUserForUI(userDao.findByEmail(email));
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public UserWithSportUIDto getInfoAboutUserById(Long id) {
-        return ExtractFunction.getUserForUI(userDao.find(id));
+        return FunctionUtils.getUserForUI(userDao.find(id));
     }
 
     @Override
@@ -195,7 +219,7 @@ public class UserServiceImpl implements UserService {
     public UserWithSportUIDto activateUser(String hash, String key) throws WrongLinkException {
         User user = findUserByHash(hash, key);
         user.setRole(Role.ROLE_MODERATOR);
-        return ExtractFunction.getUserForUI(userDao.update(user));
+        return FunctionUtils.getUserForUI(userDao.update(user));
     }
 
     @Override

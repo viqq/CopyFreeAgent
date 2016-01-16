@@ -34,7 +34,7 @@ public interface UserService {
 
     Collection<UserWithSportUIDto> findByFilter(Filter filter);
 
-    Collection<UserWithSportUIDto> findByFilter(FilterNew filter);
+    Collection<UserWithSportUIDto> findByFilter(FilterNew filter, Integer startIndex, String name);
 
     void deleteUser(Long id);
 

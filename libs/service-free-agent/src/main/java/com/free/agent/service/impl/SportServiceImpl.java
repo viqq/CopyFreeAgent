@@ -5,7 +5,7 @@ import com.free.agent.dao.SportDao;
 import com.free.agent.dto.SportUIDto;
 import com.free.agent.model.Sport;
 import com.free.agent.service.SportService;
-import com.free.agent.util.ExtractFunction;
+import com.free.agent.util.FunctionUtils;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,6 @@ public class SportServiceImpl implements SportService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public Collection<SportUIDto> getAllSports() {
-        return Collections2.transform(sportDao.findAll(), ExtractFunction.SPORT_NAME_INVOKE);
+        return Collections2.transform(sportDao.findAll(), FunctionUtils.SPORT_NAME_INVOKE);
     }
 }

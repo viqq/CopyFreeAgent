@@ -5,7 +5,7 @@ import com.free.agent.dao.UserDao;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.exception.EmailDidNotRegisteredException;
 import com.free.agent.model.User;
-import com.free.agent.util.ExtractFunction;
+import com.free.agent.util.FunctionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -33,7 +33,7 @@ public class SocialNetworkAuthenticationManager implements AuthenticationManager
         }
         if (profile.isAuthentication(user)) {
             return new UsernamePasswordAuthenticationToken(auth.getName(),
-                    auth.getCredentials(), ExtractFunction.getAuthorities(user.getRole()));
+                    auth.getCredentials(), FunctionUtils.getAuthorities(user.getRole()));
         }
         throw new BadCredentialsException("Bad Credentials");
     }
