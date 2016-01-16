@@ -27,8 +27,6 @@ import java.util.Set;
 @ActiveProfiles("test")
 public class ScheduleDaoImplTest extends TestCase {
     @Autowired
-    private SportDao sportDao;
-    @Autowired
     private UserDao userDao;
     @Autowired
     private DayDao dayDao;
@@ -87,13 +85,6 @@ public class ScheduleDaoImplTest extends TestCase {
 
         userDao.create(u1);
         userDao.create(u2);
-        sportDao.create(s1);
-        sportDao.create(s2);
-        dayDao.create(day1);
-        dayDao.create(day2);
-        dayDao.create(day3);
-        scheduleDao.create(sch1);
-        scheduleDao.create(sch2);
     }
 
     @Test

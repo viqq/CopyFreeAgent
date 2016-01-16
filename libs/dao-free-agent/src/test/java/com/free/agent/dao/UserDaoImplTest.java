@@ -67,11 +67,6 @@ public class UserDaoImplTest extends TestCase {
 
         userDao.create(u1);
         userDao.create(u2);
-        sportDao.create(s1);
-        sportDao.create(s2);
-
-        messageDao.create(m1);
-        messageDao.create(m2);
     }
 
     @Test

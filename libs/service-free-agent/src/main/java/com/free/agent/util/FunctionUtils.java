@@ -86,7 +86,7 @@ public final class FunctionUtils {
         }
     };
 
-    private static final Function<Schedule, ScheduleDto> SCHEDULE_INVOKE = new Function<Schedule, ScheduleDto>() {
+    public static final Function<Schedule, ScheduleDto> SCHEDULE_INVOKE = new Function<Schedule, ScheduleDto>() {
         @Override
         public ScheduleDto apply(Schedule input) {
             ScheduleDto dto = new ScheduleDto();
@@ -106,7 +106,7 @@ public final class FunctionUtils {
                     return input.getDate().getTime();
                 }
             }).toSet());
-            return null;
+            return dto;
         }
     };
 

@@ -162,23 +162,6 @@ public class FilerTest extends TestCase {
         userDao.create(u2);
         userDao.create(u3);
         userDao.create(u4);
-        sportDao.create(s1);
-        sportDao.create(s2);
-        sportDao.create(s3);
-        sportDao.create(s4);
-        dayDao.create(day1);
-        dayDao.create(day2);
-        dayDao.create(day3);
-        dayDao.create(day4);
-        dayDao.create(day5);
-        dayDao.create(day6);
-
-        scheduleDao.create(sch1);
-        scheduleDao.create(sch2);
-        scheduleDao.create(sch3);
-        scheduleDao.create(sch4);
-        scheduleDao.create(sch5);
-        scheduleDao.create(sch6);
     }
 
     @Test
@@ -207,7 +190,6 @@ public class FilerTest extends TestCase {
         Set<Weekday> set = Sets.newHashSet();
         for (DayOfWeek dayOfWeek : dayOfWeeks) {
             Weekday weekday = new Weekday(dayOfWeek, schedule);
-            weekdayDao.create(weekday);
             set.add(weekday);
         }
         return set;

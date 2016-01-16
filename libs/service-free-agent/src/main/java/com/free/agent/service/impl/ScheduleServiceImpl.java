@@ -4,12 +4,15 @@ import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.*;
 import com.free.agent.dto.ScheduleDto;
 import com.free.agent.exception.ScheduleNotFoundException;
+import com.free.agent.exception.SportNotSupportedException;
 import com.free.agent.model.*;
 import com.free.agent.service.ScheduleService;
+import com.free.agent.util.FunctionUtils;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +59,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void save(String email, ScheduleDto scheduleDto) {
+        //todo cascade type
         User user = userDao.findByEmail(email);
         Schedule schedule = getSchedule(scheduleDto);
         Set<Day> days = FluentIterable.from(scheduleDto.getDays()).transform(DAY_INVOKE).toSet();
@@ -72,7 +76,8 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setWeekdays(weekdays);
         Sport sport = sportDao.findByName(scheduleDto.getSport());
         if (!user.getSports().contains(sport)) {
-            //todo
+            LOGGER.error("You can not select sport " + sport + " for your schedule");
+            throw new SportNotSupportedException("You can not select sport " + sport + " for your schedule");
         }
         schedule.setSport(sportDao.findByName(scheduleDto.getSport()));
         schedule.setUser(user);
@@ -84,7 +89,13 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void editSchedule(Long id, ScheduleDto dto) {
-        //todo
+        Schedule schedule = scheduleDao.find(id);
+        schedule.setSport(sportDao.findByName(dto.getSport()));
+        schedule.setStartTime(new DateTime(dto.getStartTime()).toDate());
+        schedule.setEndTime(new DateTime(dto.getEndTime()).toDate());
+        schedule.setDays(FluentIterable.from(dto.getDays()).transform(FunctionUtils.DAY_INVOKE).toSet());
+        schedule.setWeekdays(FluentIterable.from(dto.getDayOfWeeks()).transform(FunctionUtils.WEEKDAY_INVOKE).toSet());
+        scheduleDao.update(schedule);
     }
 
     @Override

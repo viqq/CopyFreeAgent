@@ -64,11 +64,6 @@ public class MessageDaoImplTest extends TestCase {
 
         userDao.create(u1);
         userDao.create(u2);
-
-        messageDao.create(m1);
-        messageDao.create(m2);
-        messageDao.create(m3);
-
     }
 
     @Test

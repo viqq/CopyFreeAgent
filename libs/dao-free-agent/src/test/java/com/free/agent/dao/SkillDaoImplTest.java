@@ -27,8 +27,6 @@ import static com.free.agent.field.SkillLevel.*;
 @ActiveProfiles("test")
 public class SkillDaoImplTest extends TestCase {
     @Autowired
-    private SportDao sportDao;
-    @Autowired
     private UserDao userDao;
     @Autowired
     private SkillDao skillDao;
@@ -64,11 +62,6 @@ public class SkillDaoImplTest extends TestCase {
 
         userDao.create(u1);
         userDao.create(u2);
-        sportDao.create(s1);
-        sportDao.create(s2);
-        skillDao.create(sk1);
-        skillDao.create(sk2);
-        skillDao.create(sk3);
     }
 
     @Test
