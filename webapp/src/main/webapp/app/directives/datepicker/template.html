@@ -9,8 +9,8 @@
             <div class="sqare "></div>
         </div>
         <div class="label">
-            <div ng-show="output.weekDays.length || output.dates.length">
-                <span>
+            <div>
+                <span ng-show="output.weekDays[0]">
                     Всегда по
                 </span>
                 <span class="weekday first"
@@ -38,6 +38,9 @@
                 </span>
                 <span ng-show="(output.weekDays[0] && output.dates[1]) || (!output.weekDays[0] && output.dates[2])">
                     , ...
+                </span>
+                <span ng-show="!output.weekDays[0] && !output.dates[0]">
+                    {{config.label}}
                 </span>
             </div>
 
@@ -87,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <div class="action-btns">
+        <div class="action-btns" ng-show="config.editable">
             <div class="btn primary" ng-click="submit()">Принять</div>
             <div class="btn" ng-click="reset()">Сбросить</div>
         </div>

@@ -88,6 +88,10 @@ define(
                         $scope.month = convertMonth( getMonthDays($scope.monthNum, currYear, $scope.config.isMonFirst) );
                     },
                     pickDay: function (day) {
+                        if (!$scope.config.editable) {
+                            return;
+                        }
+
                         day.isPicked = !day.isPicked;
 
                         var time = day.date.getTime();
@@ -100,6 +104,10 @@ define(
                         }
                     },
                     pickWeek: function (weekDay) {
+                        if (!$scope.config.editable) {
+                            return;
+                        }
+
                         weekDay.isPicked = !weekDay.isPicked;
 
                         var day = weekDay.date.getDay();
@@ -144,24 +152,6 @@ define(
             };
         };
 
-        var filter = function () {
-            return function (input, placeholder) {
-                if (!input.dates || !input.weekDays) {
-                    return '<span>' + placeholder + '</span>';
-                }
-
-                if (!input.dates.length && !input.weekDays.length) {
-                    return '<span>' + placeholder + '</span>';
-                    //return placeholder;
-                }
-
-                return input;
-            }
-
-
-        };
-
-        angularAMD.filter('datepicker', filter);
         angularAMD.directive('dirDatepicker', directive);
     }
 );

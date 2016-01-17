@@ -152,6 +152,7 @@
 .datepicker
 .month {
     padding-top: 10px;
+    padding-bottom: 20px;
     border-top: 1px #cccccc solid;
 }
 
@@ -212,6 +213,7 @@
 .action-btns {
     text-align: center;
     padding: 20px;
+    padding-top: 0px;
     overflow: hidden;
 }
 

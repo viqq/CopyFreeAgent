@@ -52,7 +52,8 @@ define(
                     label: 'Число',
                     pickedDates: [1452204000000],
                     pickedWeekDays: [1, 2],
-                    isMonFirst: true
+                    isMonFirst: true,
+                    editable: true
                 }
             }
         ];
