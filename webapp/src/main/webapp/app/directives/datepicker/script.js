@@ -8,7 +8,7 @@ define(
         'css!/app/directives/datepicker/styles.css'
     ],
     function (angularAMD) {
-        var dirHeader = function () {
+        var directive = function () {
             var ctrl = ['$scope', '$element', '$document', function ($scope, $element, $document) {
                 var currDate = new Date();
                 var currYear = currDate.getFullYear();
@@ -35,7 +35,7 @@ define(
                                 wrongMonth: date.getMonth() !== (new Date(year, month)).getMonth()
                             };
 
-                            result[week][weekDay].isPicked = $scope.pickedDates.indexOf(date.getTime()) !== -1;
+                            result[week][weekDay].isPicked = $scope.output.dates.indexOf(date.getTime()) !== -1;
 
                             day++;
                         }
@@ -43,7 +43,8 @@ define(
 
                     return result;
                 };
-                var convertMonth = function(month) {
+
+                var convertMonth = function (month) {
                     var result = Array(7);
 
                     for (var weekDay = 0; weekDay < 7; weekDay++) {
@@ -56,62 +57,80 @@ define(
 
                     return result;
                 };
+                var buildWeek = function () {
+                    for (var i = 0; i < $scope.week.length; i++) {
+                        $scope.week[i] = {
+                            date: new Date($scope.month[i][0].date.getTime())
+                        };
+
+                        $scope.week[i].isPicked = $scope.output.weekDays.indexOf($scope.week[i].date.getDay()) !== -1
+                    }
+                };
+
+                var updateDatesInField = function() {
+                    $scope.output.dates.forEach(function(val, i) {
+                        $scope.datesInField[i] = new Date(val);
+                    })
+                };
 
                 angular.extend($scope, {
-                    week: Array(7),
-                    pickedDates: $scope.config.pickedDates || [],
-                    pickedWeekDays: $scope.config.pickedWeekDays || [],
-                    monthNum: currDate.getMonth(),
-                    isVisisble: false,
-                    changeMonth: function(newMonth) {
-                        $scope.monthNum = newMonth;
-                        $scope.month = convertMonth( getMonthDays($scope.monthNum, currYear, true) );
+                    month: new Array(7),
+                    week: new Array(7),
+                    output: {
+                        dates: $scope.config.pickedDates || [],
+                        weekDays: $scope.config.pickedWeekDays || []
                     },
-                    pickDay: function(day) {
+                    datesInField: [],
+                    monthNum: currDate.getMonth(),
+                    isVisible: false,
+                    changeMonth: function (newMonth) {
+                        $scope.monthNum = newMonth;
+                        $scope.month = convertMonth( getMonthDays($scope.monthNum, currYear, $scope.config.isMonFirst) );
+                    },
+                    pickDay: function (day) {
                         day.isPicked = !day.isPicked;
 
                         var time = day.date.getTime();
-                        var dateIndex = $scope.pickedDates.indexOf(time);
+                        var dateIndex = $scope.output.dates.indexOf(time);
 
                         if (day.isPicked && dateIndex === -1) {
-                            $scope.pickedDates.push(time);
+                            $scope.output.dates.push(time);
                         } else if (!day.isPicked && dateIndex !== -1) {
-                            $scope.pickedDates.splice(dateIndex, 1);
+                            $scope.output.dates.splice(dateIndex, 1);
                         }
                     },
-                    pickWeek: function(weekDay) {
+                    pickWeek: function (weekDay) {
                         weekDay.isPicked = !weekDay.isPicked;
 
                         var day = weekDay.date.getDay();
-                        var dayIndex = $scope.pickedWeekDays.indexOf(day);
+                        var dayIndex = $scope.output.weekDays.indexOf(day);
 
                         if (weekDay.isPicked && dayIndex === -1) {
-                            $scope.pickedWeekDays.push(day);
+                            $scope.output.weekDays.push(day);
                         } else if (!weekDay.isPicked && dayIndex !== -1) {
-                            $scope.pickedWeekDays.splice(dayIndex, 1);
+                            $scope.output.weekDays.splice(dayIndex, 1);
                         }
                     },
-                    openCalendar: function() {
-                        $scope.isVisisble = true;
+                    openCalendar: function () {
+                        $scope.changeMonth($scope.monthNum);
+                        buildWeek();
+                        $scope.isVisible = true;
                     },
-                    submit: function() {
-                        $scope.isVisisble = false;
-
+                    submit: function () {
+                        updateDatesInField();
+                        $scope.isVisible = false;
                     },
-                    reset: function() {
-                        $scope.isVisisble = false;
+                    reset: function () {
+                        $scope.output.dates = [];
+                        $scope.output.weekDays = [];
+                        updateDatesInField();
+                        $scope.changeMonth($scope.monthNum);
+                        buildWeek();
                     }
                 });
 
-                $scope.changeMonth($scope.monthNum, currYear, true);
-
-                for (var i = 0; i < $scope.week.length; i ++) {
-                    $scope.week[i] = {
-                        date: new Date( $scope.month[i][0].date.getTime() )
-                    };
-
-                    $scope.week[i].isPicked = $scope.pickedWeekDays.indexOf( $scope.week[i].date.getDay() ) !== -1
-                }
+                $scope.month = convertMonth(getMonthDays($scope.monthNum, currYear, $scope.config.isMonFirst));
+                updateDatesInField();
             }];
 
             return {
@@ -125,6 +144,24 @@ define(
             };
         };
 
-        angularAMD.directive('dirDatepicker', dirHeader);
+        var filter = function () {
+            return function (input, placeholder) {
+                if (!input.dates || !input.weekDays) {
+                    return '<span>' + placeholder + '</span>';
+                }
+
+                if (!input.dates.length && !input.weekDays.length) {
+                    return '<span>' + placeholder + '</span>';
+                    //return placeholder;
+                }
+
+                return input;
+            }
+
+
+        };
+
+        angularAMD.filter('datepicker', filter);
+        angularAMD.directive('dirDatepicker', directive);
     }
 );

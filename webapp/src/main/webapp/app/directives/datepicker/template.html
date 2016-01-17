@@ -1,4 +1,5 @@
 <div class="datepicker">
+    <div class="overlay" ng-show="isVisible" ng-click="submit()"></div>
     <div class="field" ng-click="openCalendar()">
         <div class="icon">
             <div class="rect"></div>
@@ -8,12 +9,43 @@
             <div class="sqare "></div>
         </div>
         <div class="label">
-            {{ config.label }}
-            {{isVisible.toString()}}
+            <div ng-show="output.weekDays.length || output.dates.length">
+                <span>
+                    Всегда по
+                </span>
+                <span class="weekday first"
+                      ng-show="output.weekDays[0]">
+                    {{ (month[ output.weekDays[0] - 1 < 0 ? 6 : output.weekDays[0] - 1 ][0].date | date :'EEE') }}
+                </span>
+                <span class="weekday"
+                      ng-show="output.weekDays[1] && !output.dates[0]">
+                    {{ ', ' + (month[ output.weekDays[1] - 1 < 0 ? 6 : output.weekDays[1] - 1 ][0].date | date :'EEE') }}
+                </span>
+                <span ng-show="(output.weekDays[1] && output.dates[0]) || (output.weekDays[2] && !output.dates[0])">
+                    , ...
+                </span>
+                <span class="ampersand"
+                      ng-show="output.weekDays[0] && output.dates[0]">
+                    &
+                </span>
+                <span class="day first"
+                      ng-show="output.dates[0]">
+                    {{ datesInField[0] | date : 'shortDate' }}
+                </span>
+                <span class="day"
+                      ng-show="!output.weekDays[0] && output.dates[1]">
+                    {{ ', ' + (datesInField[1] | date : 'shortDate') }}
+                </span>
+                <span ng-show="(output.weekDays[0] && output.dates[1]) || (!output.weekDays[0] && output.dates[2])">
+                    , ...
+                </span>
+            </div>
+
+            <!--{{ output | datepicker: config.label }}-->
         </div>
         <div class="small-arrow"></div>
     </div>
-    <div class="calendar" ng-hide="!isVisible">
+    <div class="calendar" ng-class="{'visible': isVisible}">
         <div class="nav">
             <div class="prev" ng-click="changeMonth(monthNum - 1)">
                 <img src="/img/datepicker/arrow_left.png">

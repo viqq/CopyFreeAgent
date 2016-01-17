@@ -11,10 +11,19 @@
 
 .datepicker
 .calendar {
-    margin-left: 30px;
+    background: white;
+    position: absolute;
+    top: 0px;
+    left: 15px;
     -webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
+    display: none;
+}
+
+.datepicker
+.calendar.visible {
+    display: inline-block;
 }
 
 .datepicker
@@ -217,9 +226,7 @@
 }
 
 .datepicker .field {
-    outline: none;
-    border: none;
-    background: none;
+    cursor: pointer;
     color: #b0b0b0;
 }
 
@@ -274,4 +281,45 @@
     border-style: solid;
     border-width: 8px 4.5px 0 4.5px;
     border-color: #b0b0b0 transparent transparent transparent;
+}
+
+.datepicker .field
+.label > div > span {
+    float: left;
+    display: block;
+}
+
+.datepicker .field
+.label > div {
+    display: block;
+    overflow: hidden;
+}
+
+.datepicker
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+.datepicker .field
+.weekday.first,
+
+.datepicker .field
+.day.first {
+    margin-left: .5em;
+}
+
+.datepicker .field
+.ampersand {
+    font-weight: bold;
+    color: #ff1342;
+    margin-left: .5em;
+}
+
+.datepicker .field
+.weekday {
+    text-transform: uppercase;
 }
