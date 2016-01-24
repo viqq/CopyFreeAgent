@@ -18,43 +18,6 @@ define(
             'checkUserState',
             'uploadUserPic',
             function ($scope, $element, $location, checkUserState, uploadUserPic) {
-                var executors = {
-                    'initImages' : function() {
-                        $scope.imageInput = $element.find('#userpic input[type="file"]');
-
-                        $scope.uploadImage = function () {
-                            var data = $scope.imageInput[0].files[0];
-
-                            if (!data) {
-                                return;
-                            }
-
-                            uploadUserPic(data)
-                        };
-                    },
-                    'initUserInfo' : function() {
-                        $scope.userInfo = {};
-
-                        if (!$scope.isLoggedIn) {
-                            $location.path('/login');
-                            return;
-                        }
-
-                        $scope.userInfo = $scope.$root.currUserInfo;
-                    }
-                };
-
-                angular.forEach(executors, function(value, key) {
-                    value();
-                });
-
-                $scope.datePickerData = {
-                    label: 'Число',
-                    pickedDates: [1452204000000],
-                    pickedWeekDays: [1, 2],
-                    isMonFirst: true,
-                    editable: true
-                }
             }
         ];
 

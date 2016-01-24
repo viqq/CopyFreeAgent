@@ -80,6 +80,35 @@ define(
                 });
 
                 $scope.$root.updateUserInfo();
+
+                /**
+                 * Mock user object
+                 * @type {{}}
+                 */
+                $scope.$root.user = {
+                    info: {
+                        name: 'Тит Коваленко',
+                        email: 't.a.kvlnk@gmail.com',
+                        phone: '095-350-83-35',
+                        age: 25,
+                        sports: [
+                            {
+                                name: 'Плавание',
+                                level: 'Pro'
+                            },
+                            {
+                                name: 'Виндсерфинг',
+                                level: 'Middle'
+                            },
+                            {
+                                name: 'Скайдайвинг',
+                                level: 'Beginner'
+                            }
+                        ],
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dolores nemo voluptas voluptates. Commodi corporis deleniti impedit labore neque non possimus, repudiandae. Accusantium, enim eos nemo rerum similique tempore veniam.',
+                        address: 'Днепропетровск, Днепропетровская область, Украина'
+                    }
+                }
             }
         ]);
     }

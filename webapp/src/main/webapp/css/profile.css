@@ -1,20 +1,196 @@
-#profile img.userpic  {
-    width: 250px;
-    float: right;
+#profile
+.header {
+    background-color: #181b1f;
+    height: auto;
 }
 
-#profile > div {
-    padding: 30px;
+#profile
+.header img {
+    height: 100%;
+    display: block;
 }
 
-#profile form {
-    margin-top: 20px;
+#profile
+.header .logo img {
+    display: block;
 }
 
-#profile form input {
+#profile
+.header {
+    display: flex;
+    padding: 0px 60px;
+    justify-content: space-between;
+    position: relative;
+    height: 60px;
+    align-items: center;
+}
+
+#profile
+.header .right-group {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+#profile
+.header .email {
+    color: white;
+}
+
+#profile
+.header .right-group .userbar {
+    display: flex;
+    align-items: center;
+    padding-left: 0px;
+}
+
+#profile
+.header .userbar .userpic {
+    padding: 0px 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#profile
+.header .userbar .userpic > div {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(/api/user/getImage/1);
+}
+
+#profile
+.header .right-group > * {
+    padding: 0px 20px;
+    height: 100%;
+    display: flex;
+}
+
+#profile
+.header .right-group .logout {
+    padding-right: 0px;
+}
+
+#profile
+.header .selected {
+    position: relative;
+}
+
+#profile
+.header .selected:after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    border-bottom: 4px #ff1342 solid;
+    box-sizing: border-box;
+}
+
+#profile .main
+.cover {
+    background-color: #484848;
+    background-image: url(http://1.bp.blogspot.com/-NYGL8rPRMeA/Ua3FFPY5baI/AAAAAAAAAKE/Fx5TmmmFxm0/s1600/facebook-cover-photo-8.jpg);
+    padding-top: 20%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+#profile .main
+.info {
+    padding: 0 60px;
+    min-height: 240px;
+    max-width: 1060px;
+    margin: auto;
+    margin-top: -40px;
+    position: relative;
+}
+
+#profile {
+    background-color: #eeeeee;
+}
+
+#profile .main .info
+.userpic {
+    border: 1px #e0e0e0 solid;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(/api/user/getImage/1);
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+    margin-right: 40px;
+}
+#profile .main .info
+.top-row {
+    padding: 40px;
+    background-color: white;
+    display: flex;
+}
+
+#profile .main .info
+.heading {
+    font-size: 1.25em;
+    font-family: RobotoMedium;
     margin-bottom: 20px;
 }
 
-#profile h1  {
-    margin-top: 0;
+#profile .main .info
+.sports {
+    display: flex;
+    margin-bottom: 20px;
+    font-family: RobotoMedium;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+#profile .main .info
+.sports > div {
+    margin-right: 10px;
+}
+
+#profile .main .info
+.sports > div:last-child {
+    margin-right: 0px;
+}
+
+#profile .main .info
+.edit-btn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    background: #f0f0f0 url(/img/profile/edit_grey.svg) no-repeat center;
+    background-size: 20px;
+    border: 1px #e0e0e0 solid;
+    border-radius: 50%;
+    margin-left: 40px;
+}
+
+#profile .main .info
+.bot-row {
+    border-top: 1px #f0f0f0 solid;
+    background-color: white;
+    font-size: 0.75em;
+    display: flex;
+    color: #999999;
+    line-height: 3;
+    padding: 0 40px;
+}
+
+#profile .main .info
+.bot-row > * {
+    margin-right: 20px;
+}
+
+#profile .main .info
+.bot-row > *:last-child {
+    margin-right: 0px;
 }

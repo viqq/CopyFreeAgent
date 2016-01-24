@@ -1,2 +1,75 @@
-<dir-header></dir-header>
+<div id="profile">
+    <div class="header">
+        <div class="logo">
+            <img src="/img/logo.svg" width="25px">
+        </div>
+        <div class="right-group">
+            <a class="search" href="/search">
+                <img src="/img/profile/search_fa_white.svg" width="20px">
+
+            </a>
+            <a class="followed" href="/followings">
+                <img src="/img/profile/folow_white.svg" width="25px">
+            </a>
+            <a class="messages" href="/messages">
+                <img src="/img/profile/mail_white.svg" width="20px">
+            </a>
+            <div class="userbar">
+                <div class="userpic">
+                    <div></div>
+                </div>
+                <div class="email">
+                    {{ userInfo.email }}
+                </div>
+            </div>
+            <a class="logout" ng-click="">
+                <img src="/img/profile/logout_white.svg" width="18px">
+            </a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="cover">
+            <div style="
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0px;
+                display: block;
+            "></div>
+        </div>
+        <div class="info">
+            <div class="top-row">
+                <div class="userpic">
+
+                </div>
+                <div class="text-group">
+                    <div class="heading">
+                        {{user.info.name + ', ' + user.info.age}}
+                    </div>
+                    <div class="sports">
+                        <div ng-repeat="sport in user.info.sports">
+                            <span>{{sport.name + ' /'}}</span>
+                            <span>{{sport.level + (!$last ? ',' : '')}}</span>
+                        </div>
+                    </div>
+                    <div class="descr">
+                        {{user.info.description}}
+                    </div>
+                </div>
+                <div class="edit-btn"></div>
+            </div>
+            <div class="bot-row">
+                <div>
+                    {{user.info.address}}
+                </div>
+                <div>
+                    {{user.info.email}}
+                </div>
+                <div>
+                    {{user.info.phone}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <dir-profile></dir-profile>

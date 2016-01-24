@@ -51,6 +51,10 @@ span {
     letter-spacing: 0.1em;
 }
 
+img[src*=".svg"] {
+    height: 100%;
+}
+
 .view {
     position:relative;
     background-color: white;
