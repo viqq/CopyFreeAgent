@@ -19,6 +19,7 @@
     -moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
     display: none;
+    z-index: 200;
 }
 
 .datepicker
@@ -304,6 +305,7 @@
     height: 100%;
     top: 0px;
     left: 0px;
+    z-index: 100;
 }
 
 .datepicker .field

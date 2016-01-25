@@ -107,7 +107,44 @@ define(
                         ],
                         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dolores nemo voluptas voluptates. Commodi corporis deleniti impedit labore neque non possimus, repudiandae. Accusantium, enim eos nemo rerum similique tempore veniam.',
                         address: 'Днепропетровск, Днепропетровская область, Украина'
-                    }
+                    },
+                    claims: [
+                        {
+                            calendar: {
+                                dates: [1452204000000],
+                                weekDays: [1, 2]
+                            },
+                            startHour: 10,
+                            endHour: 18,
+                            sport: 'Плавание'
+                        },
+                        {
+                            calendar: {
+                                dates: [1452204000000],
+                                weekDays: [1, 2]
+                            },
+                            startHour: 10,
+                            endHour: 18,
+                            sport: 'Плавание'
+                        },
+                        {
+                            calendar: {
+                                dates: [1452204000000],
+                                weekDays: [1, 2]
+                            },
+                            startHour: 10,
+                            endHour: 18,
+                            sport: 'Плавание'
+                        }
+                    ]
+                };
+
+                $scope.datePickerData = {
+                    label: 'Число',
+                    pickedDates: [1452204000000],
+                    pickedWeekDays: [1, 2],
+                    isMonFirst: true,
+                    editable: false
                 }
             }
         ]);
