@@ -46,13 +46,19 @@ define(
                     value();
                 });
 
-                $scope.datePickerData = {
+                $scope.datePickersConfig = {
                     label: 'Число',
-                    pickedDates: [1452204000000],
-                    pickedWeekDays: [1, 2],
                     isMonFirst: true,
                     editable: true
-                }
+                };
+
+                //$scope.datePickerData = {
+                //    label: 'Число',
+                //    pickedDates: [1452204000000],
+                //    pickedWeekDays: [1, 2],
+                //    isMonFirst: true,
+                //    editable: true
+                //}
             }
         ];
 

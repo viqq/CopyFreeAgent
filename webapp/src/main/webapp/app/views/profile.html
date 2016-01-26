@@ -39,55 +39,51 @@
             "></div>
         </div>
         <div class="main">
-            <div class="column">
-                <div class="info">
-                    <div class="userpic">
+            <div class="column-wrapper">
+                <div class="column">
+                    <div class="info">
+                        <div class="userpic">
 
-                    </div>
-                    <div class="text-group">
-                        <div class="heading">
-                            {{user.info.name + ', ' + user.info.age}}
                         </div>
-                        <div class="sports">
-                            <div ng-repeat="sport in user.info.sports">
-                                <span>{{sport.name + ' /'}}</span>
-                                <span>{{sport.level + (!$last ? ',' : '')}}</span>
+                        <div class="text-group">
+                            <div class="heading">
+                                {{user.info.name + ', ' + user.info.age}}
                             </div>
-                        </div>
-                        <div class="descr">
-                            {{user.info.description}}
-                        </div>
-                    </div>
-                    <div class="edit-btn"></div>
-                </div>
-                <div class="contacts">
-                    <div>
-                        {{'Address: ' + user.info.address}}
-                    </div>
-                    <div>
-                        {{'Email: ' + user.info.email}}
-                    </div>
-                    <div>
-                        {{'Phone: ' + user.info.phone}}
-                    </div>
-                </div>
-                <div class="claims">
-                    <div class="title-wrapper">
-                        <div class="title">
-                            <div class="fa-text"><span>I'm Free</span> Agent</div>
-                            <div class="divider">/</div>
-                            <div class="hint">Заполние форму, чтобы показать когда вы свободны</div>
+                            <div class="sports">
+                                <div ng-repeat="sport in user.info.sports">
+                                    <span>{{sport.name + ' /'}}</span>
+                                    <span>{{sport.level + (!$last ? ',' : '')}}</span>
+                                </div>
+                            </div>
+                            <div class="descr">
+                                {{user.info.description}}
+                            </div>
                         </div>
                         <div class="edit-btn"></div>
                     </div>
-                    <div ng-repeat="claim in user.claims">
-                        <dir-datepicker
-                                config="{
-                                    label: 'Число',
-                                    pickedDates: claim.calendar.dates,
-                                    pickedWeekDays: claim.calendar.weekDays,
-                                    isMonFirst: true,
-                                    editable: false}"></dir-datepicker>
+                    <div class="contacts">
+                        <div>
+                            {{'Address: ' + user.info.address}}
+                        </div>
+                        <div>
+                            {{'Email: ' + user.info.email}}
+                        </div>
+                        <div>
+                            {{'Phone: ' + user.info.phone}}
+                        </div>
+                    </div>
+                    <div class="claims">
+                        <div class="title-wrapper">
+                            <div class="title">
+                                <div class="fa-text"><span>I'm Free</span> Agent</div>
+                                <div class="divider">/</div>
+                                <div class="hint">Заполние форму, чтобы показать когда вы свободны</div>
+                            </div>
+                            <div class="edit-btn"></div>
+                        </div>
+                        <div ng-repeat="claim in user.claims">
+                            <dir-datepicker config="datePickersConfig" picked="claim.calendar"></dir-datepicker>
+                        </div>
                     </div>
                 </div>
             </div>

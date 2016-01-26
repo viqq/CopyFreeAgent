@@ -1,3 +1,7 @@
+#profile {
+    background-color: #eeeeee;
+}
+
 #profile
 .header {
     background-color: #181b1f;
@@ -102,8 +106,9 @@
     background-size: cover;
     position: relative;
 }
+
 #profile .content
-.column {
+.column-wrapper {
     padding: 0 60px;
     min-height: 240px;
     max-width: 1060px;
@@ -112,11 +117,13 @@
     position: relative;
 }
 
-#profile {
-    background-color: #eeeeee;
+#profile .content
+.column {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
 }
-
-#profile .content .column
+#profile .content .column-wrapper
 .userpic {
     border: 1px #e0e0e0 solid;
     border-radius: 50%;
@@ -130,26 +137,26 @@
     margin-right: 40px;
 }
 
-#profile .content .column
-.column {
+#profile .content .column-wrapper
+.column-wrapper {
     background-color: white;
 }
 
-#profile .content .column
+#profile .content .column-wrapper
 .info {
     padding: 40px;
     background-color: white;
     display: flex;
 }
 
-#profile .content .column
+#profile .content .column-wrapper
 .heading {
     font-size: 1.25em;
     font-family: RobotoMedium;
     margin-bottom: 20px;
 }
 
-#profile .content .column
+#profile .content .column-wrapper
 .sports {
     display: flex;
     margin-bottom: 20px;
@@ -158,17 +165,17 @@
     font-size: 0.8em;
 }
 
-#profile .content .column
+#profile .content .column-wrapper
 .sports > div {
     margin-right: 10px;
 }
 
-#profile .content .column
+#profile .content .column-wrapper
 .sports > div:last-child {
     margin-right: 0px;
 }
 
-#profile .content .column
+#profile .content .column-wrapper
 .edit-btn {
     width: 36px;
     height: 36px;
@@ -181,7 +188,7 @@
     cursor: pointer;
 }
 
-#profile .content .column
+#profile .content .column-wrapper
 .contacts {
     border-top: 1px #f0f0f0 solid;
     background-color: white;
@@ -193,28 +200,28 @@
     font-weight: bold;
 }
 
-#profile .content .column
+#profile .content .column-wrapper
 .contacts > * {
     margin-right: 60px;
 }
 
-#profile .content .column
+#profile .content .column-wrapper
 .contacts > *:last-child {
     margin-right: 0px;
 }
 
-#profile .content .column .claims {
+#profile .content .column-wrapper .claims {
     padding: 20px 40px;
     background-color: #2b3035;
 }
 
-#profile .content .column .claims
+#profile .content .column-wrapper .claims
 .title {
     display: flex;
     align-items: center;
 }
 
-#profile .content .column .claims
+#profile .content .column-wrapper .claims
 .fa-text {
     font-family: norwester;
     color: white;
@@ -222,31 +229,31 @@
     font-size: 1.25em;
 }
 
-#profile .content .column .claims
+#profile .content .column-wrapper .claims
 .fa-text span {
     font-family: norwester;
     color: #fa2044;
 }
 
-#profile .content .column .claims
+#profile .content .column-wrapper .claims
 .divider, .hint {
     color: #51565b;
     font-size: .75em;
     font-family: RobotoMedium;
 }
 
-#profile .content .column .claims
+#profile .content .column-wrapper .claims
 .divider {
     margin: 0px 20px;
 }
 
-#profile .content .column .claims
+#profile .content .column-wrapper .claims
 .title-wrapper {
     display: flex;
     justify-content: space-between;
 }
 
-#profile .content .column .claims
+#profile .content .column-wrapper .claims
 .edit-btn {
     margin-left: 0px;
     background-color: #3b444f;

@@ -76,10 +76,7 @@ define(
                 angular.extend($scope, {
                     month: new Array(7),
                     week: new Array(7),
-                    output: {
-                        dates: $scope.config.pickedDates || [],
-                        weekDays: $scope.config.pickedWeekDays || []
-                    },
+                    output: $scope.picked,
                     datesInField: [],
                     monthNum: currDate.getMonth(),
                     isVisible: false,
@@ -146,7 +143,8 @@ define(
                 templateUrl: 'app/directives/datepicker/template.html',
                 replace: true,
                 scope: {
-                    config: '=config'
+                    config: '=config',
+                    picked: '=picked'
                 },
                 controller: ctrl
             };

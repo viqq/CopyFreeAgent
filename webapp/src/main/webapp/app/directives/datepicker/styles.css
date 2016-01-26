@@ -12,7 +12,6 @@
 .calendar {
     background: white;
     position: absolute;
-    top: 0px;
     left: 15px;
     -webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
@@ -250,7 +249,6 @@
 .datepicker
 .field .border-wrapper {
     border-bottom: 1px #b0b0b0 solid;
-    padding-bottom: 5px;
 }
 
 .datepicker .field .border-wrapper > * {
@@ -299,7 +297,7 @@
 }
 
 .datepicker .field
-.ampersand {
+.label span.ampersand {
     font-weight: bold;
     color: #ff1342 !important;
     margin-left: .5em;
