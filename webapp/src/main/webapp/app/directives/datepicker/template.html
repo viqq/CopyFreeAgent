@@ -1,15 +1,9 @@
 <div class="datepicker">
     <div class="overlay" ng-show="isVisible" ng-click="submit()"></div>
     <div class="field" ng-click="openCalendar()">
-        <div class="icon">
-            <div class="rect"></div>
-            <div class="sqare left top"></div>
-            <div class="sqare top"></div>
-            <div class="sqare left"></div>
-            <div class="sqare "></div>
-        </div>
-        <div class="label">
-            <div>
+        <img class="icon" src="/img/datepicker/calendar.svg" width="12px">
+        <div class="border-wrapper">
+            <div class="label">
                 <span ng-show="output.weekDays[0]">
                     Всегда по
                 </span>
@@ -43,10 +37,8 @@
                     {{config.label}}
                 </span>
             </div>
-
-            <!--{{ output | datepicker: config.label }}-->
+            <div class="small-arrow"></div>
         </div>
-        <div class="small-arrow"></div>
     </div>
     <div class="calendar" ng-class="{'visible': isVisible}">
         <div class="nav">

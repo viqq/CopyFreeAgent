@@ -2,11 +2,10 @@
     outline: none;
     border: none;
     background: none;
-
     position: relative;
-
     font-size: .875em;
     font-family: RobotoMedium;
+    display: inline-block;
 }
 
 .datepicker
@@ -155,6 +154,7 @@
     padding-top: 10px;
     padding-bottom: 20px;
     border-top: 1px #cccccc solid;
+    white-space: nowrap;
 }
 
 .datepicker
@@ -228,53 +228,33 @@
     float: right;
 }
 
-.datepicker .field {
+.datepicker
+.field {
     cursor: pointer;
     color: #b0b0b0;
+    display: flex;
+    align-items: flex-start;
 }
 
-.datepicker .field
-> div {
-    display: inline-block;
-    vertical-align: middle;
+.datepicker
+.field > * {
+    display: flex;
+    align-items: center;
 }
 
-.datepicker .field .icon {
-    width: 12px;
-    height: 16px;
-    overflow: hidden;
-}
-.datepicker .field .icon
-.rect {
-    height: 12.5%;
-    width: 100%;
-    margin-bottom: 25%;
+.datepicker
+.field .icon {
+    margin-right: 15px;
 }
 
-.datepicker .field .icon
-.sqare,
-
-.datepicker .field .icon
-.rect {
-    background-color: #b0b0b0;
+.datepicker
+.field .border-wrapper {
+    border-bottom: 1px #b0b0b0 solid;
+    padding-bottom: 5px;
 }
 
-.datepicker .field .icon
-.sqare {
-    display: inline-block;
-    width: 33.33%;
-    height: 25%;
-    float: left;
-}
-
-.datepicker .field .icon
-.sqare.left {
-    margin-right: 33.33%;
-}
-
-.datepicker .field .icon
-.sqare.top {
-    margin-bottom: 25%;
+.datepicker .field .border-wrapper > * {
+    display: flex;
 }
 
 .datepicker .field
@@ -284,6 +264,8 @@
     border-style: solid;
     border-width: 8px 4.5px 0 4.5px;
     border-color: #b0b0b0 transparent transparent transparent;
+
+    margin-left: 30px;
 }
 
 .datepicker .field
@@ -319,7 +301,7 @@
 .datepicker .field
 .ampersand {
     font-weight: bold;
-    color: #ff1342;
+    color: #ff1342 !important;
     margin-left: .5em;
 }
 

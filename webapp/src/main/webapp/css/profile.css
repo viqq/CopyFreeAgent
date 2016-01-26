@@ -253,3 +253,7 @@
     background-image: url(/img/profile/edit_white.svg);
     border: none;
 }
+
+#profile .claims .datepicker .field span {
+    color: white;
+}
