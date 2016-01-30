@@ -46,12 +46,6 @@ public class Message extends AbstractTable<Long> {
         this.text = text;
     }
 
-    public Message(Long authorId, String title, String text) {
-        this.authorId = authorId;
-        this.title = title;
-        this.text = text;
-    }
-
     @Override
     public Long getId() {
         return id;

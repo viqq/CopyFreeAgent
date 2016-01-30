@@ -107,13 +107,6 @@ public class User extends AbstractTable<Long> {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Message> messages = Lists.newArrayList();
 
-
-    public User(String email, String password, String phone) {
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-    }
-
     public User(String email, String password) {
         this.email = email;
         this.password = password;

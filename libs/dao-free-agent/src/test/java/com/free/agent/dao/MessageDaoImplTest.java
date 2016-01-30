@@ -67,7 +67,8 @@ public class MessageDaoImplTest extends TestCase {
     public void createReadUpdateDeleteTest() {
         messageDao.deleteAll();
         assertEquals(0, messageDao.findAll().size());
-        messageDao.create(new Message(5l, "Title", "Text"));
+        messageDao.create(new EntityTemplate<>(new Message()).onProperties(authorId, title, text)
+                .createOne(5l, "Title", "Text"));
         assertEquals(1, messageDao.findAll().size());
         Message m = messageDao.findAll().get(0);
         m.setText("Text2");
