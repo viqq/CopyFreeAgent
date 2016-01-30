@@ -28,15 +28,6 @@ public class Skill extends AbstractTable<Long> {
     @Enumerated(value = EnumType.STRING)
     private SkillLevel skillLevel = SkillLevel.BEGINNER;
 
-    public Skill() {
-    }
-
-    public Skill(User user, Sport sport, SkillLevel skillLevel) {
-        this.user = user;
-        this.sport = sport;
-        this.skillLevel = skillLevel;
-    }
-
     @Override
     public Long getId() {
         return id;

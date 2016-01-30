@@ -2,9 +2,13 @@ package com.free.agent.dao;
 
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.model.Skill;
+import com.free.agent.model.Skill_;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
+import com.free.agent.utils.AssertCollectionContains;
+import com.free.agent.utils.EntityTemplate;
 import junit.framework.TestCase;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +18,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.GregorianCalendar;
+import java.util.List;
 
 import static com.free.agent.field.SkillLevel.*;
+import static com.free.agent.model.Sport_.nameEn;
+import static com.free.agent.model.Sport_.nameRu;
+import static com.free.agent.model.User_.*;
 
 /**
  * Created by antonPC on 12.01.16.
@@ -30,46 +37,62 @@ public class SkillDaoImplTest extends TestCase {
     private UserDao userDao;
     @Autowired
     private SkillDao skillDao;
-    private Sport s1, s2;
-    private User u1, u2;
-    private Skill sk1, sk2, sk3;
-
+    private List<User> u;
 
     @Before
     public void init() {
-        s1 = new Sport("Football");
-        s2 = new Sport("Basketball");
+        List<Sport> s = new EntityTemplate<>(new Sport())
+                .onProperties(nameEn, nameRu)
+                .values("Football", "Футбол")
+                .values("Basketball", "Баскетбол")
+                .create();
 
-        u1 = new User("l1", "p1", "11-22-33");
-        u1.setFirstName("Anton");
-        u1.setLastName("Petrov");
-        u1.setDateOfBirth(new GregorianCalendar(1991, 4, 3).getTime());
-        u2 = new User("l2", "p2", "12-34-45");
-        u2.setFirstName("Alenochka");
-        u2.setLastName("Mosenko");
-        u2.setDateOfBirth(new GregorianCalendar(1992, 4, 3).getTime());
+        u = new EntityTemplate<>(new User())
+                .onProperties(email, password, phone, firstName, lastName, dateOfBirth)
+                .values("l1", "p1", "11-22-33", "Anton", "Petrov", DateTime.parse("1991-04-03").toDate())
+                .values("l2", "p2", "12-34-45", "Alenochka", "Mosenko", DateTime.parse("1992-04-03").toDate())
+                .create();
 
-        u1.getSports().add(s1);
-        u1.getSports().add(s2);
-        u2.getSports().add(s1);
+        u.get(0).getSports().add(s.get(0));
+        u.get(0).getSports().add(s.get(1));
+        u.get(1).getSports().add(s.get(0));
 
-        sk1 = new Skill(u1, s1, BEGINNER);
-        u1.getSkills().add(sk1);
-        sk2 = new Skill(u1, s2, PRO);
-        u1.getSkills().add(sk2);
-        sk3 = new Skill(u2, s1, MIDDLE);
-        u2.getSkills().add(sk3);
+        List<Skill> sk = new EntityTemplate<>(new Skill())
+                .onProperties(Skill_.user, Skill_.sport, Skill_.skillLevel)
+                .values(u.get(0), s.get(0), BEGINNER)
+                .values(u.get(0), s.get(1), PRO)
+                .values(u.get(1), s.get(0), MIDDLE)
+                .create();
 
-        userDao.create(u1);
-        userDao.create(u2);
+        u.get(0).getSkills().add(sk.get(0));
+        u.get(0).getSkills().add(sk.get(1));
+        u.get(1).getSkills().add(sk.get(2));
+
+        userDao.saveAll(u);
     }
 
     @Test
     public void createReadUpdateDeleteTest() {
         assertEquals(3, skillDao.findAll().size());
-        assertEquals(2, userDao.find(u1.getId()).getSkills().size());
-        assertEquals(1, userDao.find(u2.getId()).getSkills().size());
-        assertEquals(MIDDLE, userDao.find(u2.getId()).getSkills().iterator().next().getSkillLevel());
+        assertEquals(2, userDao.find(u.get(0).getId()).getSkills().size());
+        assertEquals(1, userDao.find(u.get(1).getId()).getSkills().size());
 
+        AssertCollectionContains.with(skillDao.findAll())
+                .onProperties("user.firstName", "sport.nameEn", "sport.nameRu", "skillLevel")
+                .values("Anton", "Football", "Футбол", BEGINNER)
+                .values("Anton", "Basketball", "Баскетбол", PRO)
+                .values("Alenochka", "Football", "Футбол", MIDDLE)
+                .assertEquals();
+
+        AssertCollectionContains.with(userDao.find(u.get(0).getId()).getSkills())
+                .onProperties("user.firstName", "sport.nameEn", "sport.nameRu", "skillLevel")
+                .values("Anton", "Football", "Футбол", BEGINNER)
+                .values("Anton", "Basketball", "Баскетбол", PRO)
+                .assertEquals();
+
+        AssertCollectionContains.with(userDao.find(u.get(1).getId()).getSkills())
+                .onProperties("user.firstName", "sport.nameEn", "sport.nameRu", "skillLevel")
+                .values("Alenochka", "Football", "Футбол", MIDDLE)
+                .assertEquals();
     }
 }

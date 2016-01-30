@@ -9,7 +9,7 @@ public class ScheduleDto {
     private Long id;
     private Set<String> dayOfWeeks;
     private Set<Long> days;
-    private String sport;
+    private Long sportId;
     private Long startTime;
     private Long endTime;
 
@@ -37,12 +37,12 @@ public class ScheduleDto {
         this.days = days;
     }
 
-    public String getSport() {
-        return sport;
+    public Long getSportId() {
+        return sportId;
     }
 
-    public void setSport(String sport) {
-        this.sport = sport;
+    public void setSportId(Long sportId) {
+        this.sportId = sportId;
     }
 
     public Long getStartTime() {

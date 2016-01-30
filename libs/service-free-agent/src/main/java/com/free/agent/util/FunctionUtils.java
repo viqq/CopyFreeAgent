@@ -26,8 +26,8 @@ public final class FunctionUtils {
         public SportUIDto apply(Sport input) {
             SportUIDto dto = new SportUIDto();
             dto.setId(input.getId());
-            dto.setImage(input.getImage());
-            dto.setName(input.getName());
+            dto.setNameEn(input.getNameEn());
+            dto.setNameRu(input.getNameRu());
             return dto;
         }
     };
@@ -91,7 +91,7 @@ public final class FunctionUtils {
         public ScheduleDto apply(Schedule input) {
             ScheduleDto dto = new ScheduleDto();
             dto.setId(input.getId());
-            dto.setSport(input.getSport().getName());
+            //dto.setSport(input.getSport().getName()); todo
             dto.setStartTime(input.getStartTime().getTime());
             dto.setEndTime(input.getEndTime().getTime());
             dto.setDayOfWeeks(FluentIterable.from(input.getWeekdays()).transform(new Function<Weekday, String>() {

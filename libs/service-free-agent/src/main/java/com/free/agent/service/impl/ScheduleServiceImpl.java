@@ -74,12 +74,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
         weekdayDao.saveAll(weekdays);
         schedule.setWeekdays(weekdays);
-        Sport sport = sportDao.findByName(scheduleDto.getSport());
+        Sport sport = sportDao.find(scheduleDto.getSportId());
         if (!user.getSports().contains(sport)) {
             LOGGER.error("You can not select sport " + sport + " for your schedule");
             throw new SportNotSupportedException("You can not select sport " + sport + " for your schedule");
         }
-        schedule.setSport(sportDao.findByName(scheduleDto.getSport()));
+        schedule.setSport(sportDao.find(scheduleDto.getSportId()));
         schedule.setUser(user);
         user.getSchedules().add(schedule);
         userDao.update(user);
@@ -90,7 +90,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void editSchedule(Long id, ScheduleDto dto) {
         Schedule schedule = scheduleDao.find(id);
-        schedule.setSport(sportDao.findByName(dto.getSport()));
+        schedule.setSport(sportDao.find(dto.getSportId()));
         schedule.setStartTime(new DateTime(dto.getStartTime()).toDate());
         schedule.setEndTime(new DateTime(dto.getEndTime()).toDate());
         schedule.setDays(FluentIterable.from(dto.getDays()).transform(FunctionUtils.DAY_INVOKE).toSet());

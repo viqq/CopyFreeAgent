@@ -18,6 +18,7 @@ import java.util.Set;
  * Created by antonPC on 07.01.16.
  */
 public final class FilterNew {
+    //todo only one sport in filter
     private String city;
     private String country;
     private Long dateOfBirthFrom;
@@ -74,9 +75,9 @@ public final class FilterNew {
         }
         if (!CollectionUtils.isEmpty(sports)) {
             if (isFindFreeAgent()) {
-                sportPredicate = fromSchedule.get(Schedule_.sport).get(Sport_.name).in(sports);
+                sportPredicate = fromSchedule.get(Schedule_.sport).get(Sport_.nameEn).in(sports);
             } else {
-                sportPredicate = fromSport.get(Sport_.name).in(sports);
+                sportPredicate = fromSport.get(Sport_.nameEn).in(sports);
             }
         }
 

@@ -1,5 +1,6 @@
 package com.free.agent.service;
 
+import com.free.agent.Language;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
 import com.free.agent.dao.UserDao;
@@ -24,8 +25,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
-
 /**
  * Created by antonPC on 28.06.15.
  */
@@ -35,7 +34,8 @@ import java.util.Set;
 @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
 @ActiveProfiles("test")
 public class UserServiceImplTest extends TestCase {
-    private static final String FOOTBALL = "FOOTBALL";
+    private static final String FOOTBALL_EN = "FOOTBALL";
+    private static final String FOOTBALL_RU = "ФУТБОЛ";
 
     @Mock
     private SportDao sportDao;
@@ -57,24 +57,25 @@ public class UserServiceImplTest extends TestCase {
     @Test
     public void saveUserTest() {
         UserRegistrationDto user = new UserRegistrationDto();
-        Mockito.when(sportDao.findByNames(Sets.newHashSet(FOOTBALL))).thenReturn(sports());
+        Mockito.when(sportDao.findByName(FOOTBALL_EN, Language.ENG)).thenReturn(sports());
         Mockito.when(userDao.create(FunctionUtils.getUser(user))).thenReturn(user());
         User savedUser = service.save(user);
         Assert.assertEquals(1, savedUser.getSports().size());
-        Assert.assertEquals(FOOTBALL, savedUser.getSports().iterator().next().getName());
+        Assert.assertEquals(FOOTBALL_EN, savedUser.getSports().iterator().next().getNameEn());
     }
 
-    private Set<Sport> sports() {
+    private Sport sports() {
         Sport sport = new Sport();
-        sport.setName(FOOTBALL);
-        return Sets.newHashSet(sport);
+        sport.setNameEn(FOOTBALL_EN);
+        sport.setNameRu(FOOTBALL_RU);
+        return sport;
     }
 
     private User user() {
         User user = new User();
         user.setEmail("email@gmail.com");
         user.setPassword(EncryptionUtils.encrypt("12345"));
-        user.setSports(Sets.newHashSet(new Sport(FOOTBALL)));
+        user.setSports(Sets.newHashSet(new Sport(FOOTBALL_EN, FOOTBALL_RU)));
         return user;
     }
 }

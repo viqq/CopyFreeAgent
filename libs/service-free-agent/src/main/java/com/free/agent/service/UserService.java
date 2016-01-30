@@ -39,7 +39,7 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    void editUser(Long id, UserDto userDto, Set<String> sports);
+    void editUser(Long id, UserDto userDto, Set<Long> sportIds);
 
     UserWithSportUIDto getInfoAboutUser(String email);
 

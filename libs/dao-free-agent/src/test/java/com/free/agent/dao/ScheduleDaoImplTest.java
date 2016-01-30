@@ -3,8 +3,11 @@ package com.free.agent.dao;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.field.DayOfWeek;
 import com.free.agent.model.*;
+import com.free.agent.utils.AssertCollectionContains;
+import com.free.agent.utils.EntityTemplate;
 import com.google.common.collect.Sets;
 import junit.framework.TestCase;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +18,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
-import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Set;
+
+import static com.free.agent.field.DayOfWeek.*;
+import static com.free.agent.model.Day_.*;
+import static com.free.agent.model.Sport_.nameEn;
+import static com.free.agent.model.Sport_.nameRu;
+import static com.free.agent.model.User_.*;
 
 /**
  * Created by antonPC on 05.12.15.
@@ -34,69 +43,81 @@ public class ScheduleDaoImplTest extends TestCase {
     private WeekdayDao weekdayDao;
     @Autowired
     private ScheduleDao scheduleDao;
-
-    private Sport s1, s2;
-    private User u1, u2;
     private Schedule sch1, sch2;
-    private Day day1, day2, day3;
+    private List<User> u;
 
     @Before
     public void init() {
-        s1 = new Sport("Football");
-        s2 = new Sport("Basketball");
+        List<Sport> s = new EntityTemplate<>(new Sport())
+                .onProperties(nameEn, nameRu)
+                .values("Football", "Футбол")
+                .values("Basketball", "Баскетбол")
+                .create();
 
-        u1 = new User("l1", "p1", "11-22-33");
-        u1.setFirstName("Anton");
-        u1.setLastName("Petrov");
-        u1.setDateOfBirth(new GregorianCalendar(1991, 4, 3).getTime());
+        u = new EntityTemplate<>(new User())
+                .onProperties(email, password, phone, firstName, lastName, dateOfBirth)
+                .values("l1", "p1", "11-22-33", "Anton", "Petrov", DateTime.parse("1991-04-03").toDate())
+                .values("l2", "p2", "12-34-45", "Alenochka", "Mosenko", DateTime.parse("1992-04-03").toDate())
+                .create();
 
-        u2 = new User("l2", "p2", "12-34-45");
-        u2.setFirstName("Alenochka");
-        u2.setLastName("Mosenko");
-        u2.setDateOfBirth(new GregorianCalendar(1992, 4, 3).getTime());
-
-        u1.getSports().add(s1);
-        u1.getSports().add(s2);
-        u2.getSports().add(s1);
+        u.get(0).getSports().add(s.get(0));
+        u.get(0).getSports().add(s.get(1));
+        u.get(1).getSports().add(s.get(0));
 
         sch1 = new Schedule();
         sch2 = new Schedule();
 
-        day1 = new Day(sch1, new GregorianCalendar(2016, 5, 5, 10, 10, 10).getTime(), DayOfWeek.SATURDAY);
-        day2 = new Day(sch1, new GregorianCalendar(2016, 5, 6, 10, 10, 10).getTime(), DayOfWeek.THURSDAY);
-        day3 = new Day(sch2, new GregorianCalendar(2016, 5, 7, 10, 10, 10).getTime(), DayOfWeek.TUESDAY);
+        List<Day> day = new EntityTemplate<>(new Day())
+                .onProperties(schedule, date, dayOfWeek)
+                .values(sch1, DateTime.parse("2016-05-05T10:10:10").toDate(), THURSDAY)
+                .values(sch1, DateTime.parse("2016-05-06T10:10:10").toDate(), FRIDAY)
+                .values(sch2, DateTime.parse("2016-05-07T10:10:10").toDate(), SATURDAY)
+                .create();
 
-        sch1.setUser(u1);
-        sch1.setSport(s1);
-        sch1.setWeekdays(getWeekday(sch1, DayOfWeek.FRIDAY, DayOfWeek.MONDAY));
+
+        sch1.setUser(u.get(0));
+        sch1.setSport(s.get(0));
+        sch1.setWeekdays(getWeekday(sch1, FRIDAY, MONDAY));
         sch1.setStartTime(Time.valueOf("10:10:00"));
         sch1.setEndTime(Time.valueOf("10:10:00"));
-        sch1.setDays(Sets.newHashSet(day1, day2));
+        sch1.setDays(Sets.newHashSet(day.get(0), day.get(1)));
 
-        sch2.setUser(u1);
-        sch2.setSport(s2);
-        sch2.setWeekdays(getWeekday(sch2, DayOfWeek.WEDNESDAY));
+        sch2.setUser(u.get(0));
+        sch2.setSport(s.get(1));
+        sch2.setWeekdays(getWeekday(sch2, WEDNESDAY));
         sch2.setStartTime(Time.valueOf("10:10:00"));
         sch2.setEndTime(Time.valueOf("10:10:00"));
-        sch2.setDays(Sets.newHashSet(day3));
+        sch2.setDays(Sets.newHashSet(day.get(2)));
 
-        u1.getSchedules().add(sch1);
-        u1.getSchedules().add(sch2);
+        u.get(0).getSchedules().add(sch1);
+        u.get(0).getSchedules().add(sch2);
 
-        userDao.create(u1);
-        userDao.create(u2);
+        userDao.saveAll(u);
+
     }
 
     @Test
     public void createReadUpdateDeleteTest() {
         assertEquals(2, userDao.findAll().size());
-        User user = userDao.findByEmail(u1.getEmail());
-        for (Schedule s : user.getSchedules()) {
-            assertTrue(s.getSport().getName().equals(s1.getName()) || s.getSport().getName().equals(s2.getName()));
-        }
+        User user = userDao.findByEmail(u.get(0).getEmail());
+
         assertEquals(2, user.getSchedules().size());
         assertEquals(2, scheduleDao.findAll().size());
         assertEquals(3, dayDao.findAll().size());
+
+        AssertCollectionContains.with(scheduleDao.findAll())
+                .onProperties("user.firstName", "sport.nameEn", "sport.nameRu")
+                .values("Anton", "Football", "Футбол")
+                .values("Anton", "Basketball", "Баскетбол")
+                .assertEquals();
+
+        AssertCollectionContains.with(dayDao.findAll())
+                .onProperties("schedule.id", "date", "dayOfWeek")
+                .values(sch1.getId(), DateTime.parse("2016-05-05T10:10:10").toDate(), THURSDAY)
+                .values(sch1.getId(), DateTime.parse("2016-05-06T10:10:10").toDate(), FRIDAY)
+                .values(sch2.getId(), DateTime.parse("2016-05-07T10:10:10").toDate(), SATURDAY)
+                .assertEquals();
+
         user.getSchedules().remove(sch1);
         sch1.setSport(null);
         sch1.setUser(null);
@@ -106,12 +127,27 @@ public class ScheduleDaoImplTest extends TestCase {
         assertEquals(1, scheduleDao.findAll().size());
         assertEquals(1, dayDao.findAll().size());
 
+        AssertCollectionContains.with(scheduleDao.findAll())
+                .onProperties("user.firstName", "sport.nameEn", "sport.nameRu")
+                .values("Anton", "Basketball", "Баскетбол")
+                .assertEquals();
+
+        AssertCollectionContains.with(dayDao.findAll())
+                .onProperties("schedule.id", "date", "dayOfWeek")
+                .values(sch2.getId(), DateTime.parse("2016-05-07T10:10:10").toDate(), SATURDAY)
+                .assertEquals();
+
     }
 
     @Test
     public void findAllByUserId() {
-        assertEquals(2, scheduleDao.findAllByUserId(u1.getId()).size());
-        assertEquals(0, scheduleDao.findAllByUserId(u2.getId()).size());
+        assertEquals(2, scheduleDao.findAllByUserId(u.get(0).getId()).size());
+        assertEquals(0, scheduleDao.findAllByUserId(u.get(1).getId()).size());
+        AssertCollectionContains.with(scheduleDao.findAllByUserId(u.get(0).getId()))
+                .onProperties("user.firstName", "sport.nameEn", "sport.nameRu")
+                .values("Anton", "Football", "Футбол")
+                .values("Anton", "Basketball", "Баскетбол")
+                .assertEquals();
     }
 
     private Set<Weekday> getWeekday(Schedule schedule, DayOfWeek... dayOfWeeks) {

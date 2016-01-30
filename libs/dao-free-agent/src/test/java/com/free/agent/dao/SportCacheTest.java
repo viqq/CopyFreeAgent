@@ -26,7 +26,7 @@ public class SportCacheTest extends TestCase {
     @Test
     public void cacheTest() {
         for (int i = 0; i < 1000; i++) {
-            sportDao.create(new Sport(String.valueOf(i)));
+            sportDao.create(new Sport(String.valueOf(i), String.valueOf(i)));
         }
 
         long start = System.nanoTime();

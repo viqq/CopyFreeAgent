@@ -5,8 +5,10 @@ import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.model.Message;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
-import com.google.common.collect.Lists;
+import com.free.agent.utils.AssertCollectionContains;
+import com.free.agent.utils.EntityTemplate;
 import junit.framework.TestCase;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +18,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Set;
+
+import static com.free.agent.model.Message_.*;
+import static com.free.agent.model.Sport_.nameEn;
+import static com.free.agent.model.Sport_.nameRu;
+import static com.free.agent.model.User_.*;
 
 /**
  * Created by antonPC on 15.06.15.
@@ -35,38 +39,37 @@ public class UserDaoImplTest extends TestCase {
     private UserDao userDao;
     @Autowired
     private MessageDao messageDao;
-    private Sport s1, s2;
-    private User u1, u2;
-    private Message m1, m2;
+    private List<User> u;
 
     @Before
     public void init() {
-        s1 = new Sport("Football");
-        s2 = new Sport("Basketball");
+        List<Sport> s = new EntityTemplate<>(new Sport())
+                .onProperties(nameEn, nameRu)
+                .values("Football", "Футбол")
+                .values("Basketball", "Баскетбол")
+                .create();
 
-        m1 = new Message(1L, "Learning", "Hello, I am learning");
-        m2 = new Message(1L, "Play", "I like play");
+        List<Message> m = new EntityTemplate<>(new Message()).onProperties(authorId, title, text)
+                .values(1L, "Learning", "Hello, I am learning")
+                .values(1L, "Play", "I like play")
+                .create();
 
-        u1 = new User("l1", "p1", "11-22-33");
-        u1.setFirstName("Anton");
-        u1.setLastName("Petrov");
-        u1.setDateOfBirth(new GregorianCalendar(1991, 4, 3).getTime());
-        u2 = new User("l2", "p2", "12-34-45");
-        u2.setFirstName("Alenochka");
-        u2.setLastName("Mosenko");
-        u2.setDateOfBirth(new GregorianCalendar(1992, 4, 3).getTime());
+        u = new EntityTemplate<>(new User())
+                .onProperties(email, password, phone, firstName, lastName, dateOfBirth)
+                .values("l1", "p1", "11-22-33", "Anton", "Petrov", DateTime.parse("1991-04-03").toDate())
+                .values("l2", "p2", "12-34-45", "Alenochka", "Mosenko", DateTime.parse("1992-04-03").toDate())
+                .create();
 
-        u1.getSports().add(s1);
-        u1.getSports().add(s2);
-        u2.getSports().add(s1);
+        u.get(0).getSports().add(s.get(0));
+        u.get(0).getSports().add(s.get(1));
+        u.get(1).getSports().add(s.get(0));
 
-        u1.getMessages().add(m1);
-        u1.getMessages().add(m2);
-        m1.setUser(u1);
-        m2.setUser(u1);
+        u.get(0).getMessages().add(m.get(0));
+        u.get(0).getMessages().add(m.get(1));
+        m.get(0).setUser(u.get(0));
+        m.get(1).setUser(u.get(0));
 
-        userDao.create(u1);
-        userDao.create(u2);
+        userDao.saveAll(u);
     }
 
     @Test
@@ -74,13 +77,34 @@ public class UserDaoImplTest extends TestCase {
         assertEquals(2, userDao.findAll().size());
         assertEquals(2, sportDao.findAll().size());
         assertEquals(2, messageDao.findAll().size());
-        assertEquals(2, userDao.findByEmail(u1.getEmail()).getMessages().size());
-        assertEquals(0, userDao.findByEmail(u2.getEmail()).getMessages().size());
-        assertEquals(2, userDao.findByEmail(u1.getEmail()).getSports().size());
-        assertEquals(1, userDao.findByEmail(u2.getEmail()).getSports().size());
-        assertContainsMessage(userDao.findByEmail(u1.getEmail()).getMessages(), Lists.newArrayList(m1.getText(), m2.getText()));
-        assertContainsSport(userDao.findByEmail(u1.getEmail()).getSports(), Lists.newArrayList(s1.getName(), s2.getName()));
-        assertContainsSport(userDao.findByEmail(u2.getEmail()).getSports(), Lists.newArrayList(s1.getName()));
+        assertEquals(2, userDao.findByEmail(u.get(0).getEmail()).getMessages().size());
+        assertEquals(0, userDao.findByEmail(u.get(1).getEmail()).getMessages().size());
+        assertEquals(2, userDao.findByEmail(u.get(0).getEmail()).getSports().size());
+        assertEquals(1, userDao.findByEmail(u.get(1).getEmail()).getSports().size());
+
+        AssertCollectionContains.with(userDao.findAll())
+                .onProperties(email, password, phone, firstName, lastName, dateOfBirth)
+                .values("l1", "p1", "11-22-33", "Anton", "Petrov", "1991-04-03")
+                .values("l2", "p2", "12-34-45", "Alenochka", "Mosenko", "1992-04-03")
+                .assertEquals();
+
+        AssertCollectionContains.with(userDao.findByEmail(u.get(0).getEmail()).getMessages())
+                .onProperties(title, text)
+                .values("Learning", "Hello, I am learning")
+                .values("Play", "I like play")
+                .assertEquals();
+
+        AssertCollectionContains.with(userDao.findByEmail(u.get(0).getEmail()).getSports())
+                .onProperties(nameEn, nameRu)
+                .values("Football", "Футбол")
+                .values("Basketball", "Баскетбол")
+                .assertEquals();
+
+        AssertCollectionContains.with(userDao.findByEmail(u.get(1).getEmail()).getSports())
+                .onProperties(nameEn, nameRu)
+                .values("Football", "Футбол")
+                .assertEquals();
+
         userDao.deleteAll();
         assertEquals(0, userDao.findAll().size());
     }
@@ -111,31 +135,19 @@ public class UserDaoImplTest extends TestCase {
         assertEquals("Petrov", userDao.findByFilter(filter).iterator().next().getLastName());
 
         filter = new Filter();
-        filter.setDateOfBirthFrom(new GregorianCalendar(1992, 4, 2).getTime());
+        filter.setDateOfBirthFrom(DateTime.parse("1992-04-02").toDate());
         assertEquals(1, userDao.findByFilter(filter).size());
         assertEquals("Alenochka", userDao.findByFilter(filter).iterator().next().getFirstName());
 
         filter = new Filter();
-        filter.setDateOfBirthTo(new GregorianCalendar(1992, 4, 2).getTime());
+        filter.setDateOfBirthTo(DateTime.parse("1992-04-02").toDate());
         assertEquals(1, userDao.findByFilter(filter).size());
         assertEquals("Anton", userDao.findByFilter(filter).iterator().next().getFirstName());
 
         filter = new Filter();
-        filter.setDateOfBirthFrom(new GregorianCalendar(1992, 4, 2).getTime());
-        filter.setDateOfBirthTo(new GregorianCalendar(1992, 4, 4).getTime());
+        filter.setDateOfBirthFrom(DateTime.parse("1992-04-02").toDate());
+        filter.setDateOfBirthTo(DateTime.parse("1992-04-04").toDate());
         assertEquals(1, userDao.findByFilter(filter).size());
         assertEquals("Alenochka", userDao.findByFilter(filter).iterator().next().getFirstName());
-    }
-
-    private void assertContainsSport(Set<Sport> usersSports, ArrayList<String> sports) {
-        for (Sport usersSport : usersSports) {
-            assertTrue(sports.contains(usersSport.getName()));
-        }
-    }
-
-    private void assertContainsMessage(List<Message> usersMessages, ArrayList<String> messages) {
-        for (Message usersMessage : usersMessages) {
-            assertTrue(messages.contains(usersMessage.getText()));
-        }
     }
 }

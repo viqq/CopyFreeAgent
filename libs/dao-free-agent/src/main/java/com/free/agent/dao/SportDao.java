@@ -1,5 +1,6 @@
 package com.free.agent.dao;
 
+import com.free.agent.Language;
 import com.free.agent.model.Sport;
 
 import java.util.Set;
@@ -9,7 +10,9 @@ import java.util.Set;
  */
 public interface SportDao extends GenericDao<Sport, Long> {
 
-    Set<Sport> findByNames(Set<String> name);
+    Set<Sport> findByNames(Set<String> name, Language language);
 
-    Sport findByName(String sport);
+    Sport findByName(String sport, Language language);
+
+    Set<Sport> findByIds(Set<Long> sportIds);
 }

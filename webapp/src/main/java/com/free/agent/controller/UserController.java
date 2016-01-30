@@ -18,7 +18,6 @@ import com.free.agent.exception.WrongLinkException;
 import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
-import com.free.agent.utils.HttpRequestUtil;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
@@ -158,7 +157,8 @@ public class UserController {
         if (!userService.findById(id).getEmail().equals(principal.getName())) {
             return Response.error(EDIT_PROFILE_ERROR);
         }
-        userService.editUser(id, userDto, HttpRequestUtil.getParams(request, "select"));
+        //todo userService.editUser(id, userDto, HttpRequestUtil.getParams(request, "select"));
+        userService.editUser(id, userDto, null);
         return Response.ok();
     }
 

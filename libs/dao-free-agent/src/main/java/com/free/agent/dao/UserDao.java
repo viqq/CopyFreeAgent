@@ -15,6 +15,7 @@ public interface UserDao extends GenericDao<User,Long> {
 
     User findByEmail(String email);
 
+    @Deprecated
     Collection<User> findByFilter(Filter filter);
 
     Collection<User> findByFilter(FilterNew filter);

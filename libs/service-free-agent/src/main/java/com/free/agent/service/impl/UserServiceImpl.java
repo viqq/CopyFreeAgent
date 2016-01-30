@@ -198,8 +198,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public void editUser(Long id, UserDto userDto, Set<String> sports) {
-        User editedUser = getUser(userDao.find(id), userDto, sports);
+    public void editUser(Long id, UserDto userDto, Set<Long> sportsId) {
+        User editedUser = getUser(userDao.find(id), userDto, sportsId);
         userDao.update(editedUser);
     }
 
@@ -272,7 +272,7 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("Email was sent for " + email);
     }
 
-    private User getUser(User user, UserDto userDto, Set<String> names) {
+    private User getUser(User user, UserDto userDto, Set<Long> sportIds) {
         user.setPhone(userDto.getPhone());
         user.setDescription(userDto.getDescription());
         user.setCity(userDto.getCity());
@@ -281,7 +281,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setGender(userDto.getGender() == null ? null : Gender.valueOf(userDto.getGender()));
-        user.setSports(sportDao.findByNames(names));
+        user.setSports(sportDao.findByIds(sportIds));
         return user;
     }
 

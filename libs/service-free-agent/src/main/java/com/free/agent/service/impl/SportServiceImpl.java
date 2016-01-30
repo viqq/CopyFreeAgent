@@ -28,7 +28,7 @@ public class SportServiceImpl implements SportService {
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public Sport save(Sport sport) {
         Sport savedSport = sportDao.create(sport);
-        LOGGER.info("New sport " + sport.getName() + " was added");
+        LOGGER.info("New sport " + sport.getNameEn() + " was added");
         return savedSport;
     }
 

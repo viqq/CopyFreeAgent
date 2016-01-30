@@ -13,8 +13,8 @@ import java.util.Date;
 /**
  * Created by antonPC on 03.07.15.
  */
-//todo remove
 public final class Filter {
+    //todo add ability to many sports
     private String sport;
     private String firstName;
     private String lastName;
@@ -28,7 +28,7 @@ public final class Filter {
         Predicate predicate = null;
         if (validValue(sport) != null) {
             SetJoin<User, Sport> sportName = fromUser.join(User_.sports);
-            predicate = cb.equal(sportName.get(Sport_.name), sport);
+            predicate = cb.equal(sportName.get(Sport_.nameEn), getSport());
         }
         return new PredicateBuilder(cb)
                 .addEqualsPredicate(cb, fromUser.get(User_.firstName), validValue(firstName))

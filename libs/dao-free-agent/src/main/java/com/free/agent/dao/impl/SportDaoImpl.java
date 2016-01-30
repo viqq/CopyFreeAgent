@@ -1,5 +1,6 @@
 package com.free.agent.dao.impl;
 
+import com.free.agent.Language;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
 import com.free.agent.model.Sport;
@@ -39,23 +40,42 @@ public class SportDaoImpl extends GenericDaoImpl<Sport, Long> implements SportDa
 
     @Override
     @Cacheable(value = "sportCache")
-    public Set<Sport> findByNames(Set<String> name) {
+    public Set<Sport> findByNames(Set<String> name, Language language) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Sport> query = cb.createQuery(Sport.class);
         Root<Sport> from = query.from(Sport.class);
-        query.where(new PredicateBuilder(cb).addInPredicate(from.get(Sport_.name), name).buildWithAndConjunction());
+        if (language == Language.ENG) {
+            query.where(new PredicateBuilder(cb).addInPredicate(from.get(Sport_.nameEn), name).buildWithAndConjunction());
+        } else {
+            query.where(new PredicateBuilder(cb).addInPredicate(from.get(Sport_.nameRu), name).buildWithAndConjunction());
+        }
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
 
     @Override
     @Cacheable(value = "sportCache")
-    public Sport findByName(String sport) {
+    public Sport findByName(String sport, Language language) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Sport> query = cb.createQuery(Sport.class);
         Root<Sport> from = query.from(Sport.class);
-        query.where(cb.equal(from.get(Sport_.name), sport));
+        if (language == Language.ENG) {
+            query.where(cb.equal(from.get(Sport_.nameEn), sport));
+        } else {
+            query.where(cb.equal(from.get(Sport_.nameRu), sport));
+        }
         return DaoUtils.getSingleResult(getEntityManager().createQuery(query).getResultList());
     }
+
+    @Override
+    @Cacheable(value = "sportCache")
+    public Set<Sport> findByIds(Set<Long> sportIds) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Sport> query = cb.createQuery(Sport.class);
+        Root<Sport> from = query.from(Sport.class);
+        query.where(new PredicateBuilder(cb).addInPredicate(from.get(Sport_.id), sportIds).buildWithAndConjunction());
+        return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
+    }
+
 
     @Override
     @Cacheable(value = "sportCache")

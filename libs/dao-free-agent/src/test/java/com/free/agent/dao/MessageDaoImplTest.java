@@ -3,9 +3,11 @@ package com.free.agent.dao;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.model.Message;
 import com.free.agent.model.User;
-import com.google.common.collect.Lists;
+import com.free.agent.utils.AssertCollectionContains;
+import com.free.agent.utils.EntityTemplate;
 import com.google.common.collect.Sets;
 import junit.framework.TestCase;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,10 +17,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
+
+import static com.free.agent.model.Message_.*;
+import static com.free.agent.model.User_.*;
 
 /**
  * Created by antonPC on 29.07.15.
@@ -28,42 +31,36 @@ import java.util.Set;
 @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
 @ActiveProfiles("test")
 public class MessageDaoImplTest extends TestCase {
-    private User u1, u2;
-    private Message m1, m2, m3;
-
     @Autowired
     private MessageDao messageDao;
     @Autowired
     private UserDao userDao;
+    private List<Message> m;
+    private List<User> u;
 
     @Before
     public void init() {
-        m1 = new Message(1l, "Learning", "Hello, I am learning");
-        m1.setTimeOfCreate(new GregorianCalendar(2000, 1, 1).getTime());
-        m1.setTimeOfRead(new Date());
-        m2 = new Message(2l, "Play", "I like play");
-        m2.setTimeOfCreate(new GregorianCalendar(2000, 1, 2).getTime());
-        m3 = new Message(2l, "Play", "I like play again");
-        m3.setTimeOfCreate(new GregorianCalendar(2000, 1, 3).getTime());
+        m = new EntityTemplate<>(new Message())
+                .onProperties(authorId, title, text, timeOfCreate, timeOfRead)
+                .values(1L, "Learning", "Hello, I am learning", DateTime.parse("2000-01-01").toDate(), DateTime.now().toDate())
+                .values(2L, "Play", "I like play", DateTime.parse("2000-01-02").toDate(), null)
+                .values(2L, "Play", "I like play again", DateTime.parse("2000-01-03").toDate(), null)
+                .create();
 
-        u1 = new User("l1", "p1", "11-22-33");
-        u1.setFirstName("Anton");
-        u1.setLastName("Petrov");
-        u1.setDateOfBirth(new GregorianCalendar(1991, 4, 3).getTime());
-        u2 = new User("l2", "p2", "12-34-45");
-        u2.setFirstName("Alenochka");
-        u2.setLastName("Mosenko");
-        u2.setDateOfBirth(new GregorianCalendar(1992, 4, 3).getTime());
+        u = new EntityTemplate<>(new User())
+                .onProperties(email, password, phone, firstName, lastName, dateOfBirth)
+                .values("l1", "p1", "11-22-33", "Anton", "Petrov", DateTime.parse("1991-04-03").toDate())
+                .values("l2", "p2", "12-34-45", "Alenochka", "Mosenko", DateTime.parse("1992-04-03").toDate())
+                .create();
 
-        u1.getMessages().add(m1);
-        u1.getMessages().add(m2);
-        u1.getMessages().add(m3);
-        m1.setUser(u1);
-        m2.setUser(u1);
-        m3.setUser(u1);
+        u.get(0).getMessages().add(m.get(0));
+        u.get(0).getMessages().add(m.get(1));
+        u.get(0).getMessages().add(m.get(2));
+        m.get(0).setUser(u.get(0));
+        m.get(1).setUser(u.get(0));
+        m.get(2).setUser(u.get(0));
 
-        userDao.create(u1);
-        userDao.create(u2);
+        userDao.saveAll(u);
     }
 
     @Test
@@ -72,9 +69,9 @@ public class MessageDaoImplTest extends TestCase {
         assertEquals(0, messageDao.findAll().size());
         messageDao.create(new Message(5l, "Title", "Text"));
         assertEquals(1, messageDao.findAll().size());
-        Message m1 = messageDao.findAll().get(0);
-        m1.setText("Text2");
-        messageDao.update(m1);
+        Message m = messageDao.findAll().get(0);
+        m.setText("Text2");
+        messageDao.update(m);
         assertEquals("Text2", messageDao.findAll().get(0).getText());
         messageDao.deleteAll();
         assertEquals(0, messageDao.findAll().size());
@@ -82,57 +79,95 @@ public class MessageDaoImplTest extends TestCase {
 
     @Test
     public void findAllByReceiver() {
-        assertEquals(3, messageDao.findAllByReceiver(u1.getEmail()).size());
-        assertContainsMessage(messageDao.findAllByReceiver(u1.getEmail()), Lists.newArrayList(m1.getText(), m2.getText(), m3.getText()));
-        assertEquals(0, messageDao.findAllByReceiver(u2.getEmail()).size());
+        assertEquals(3, messageDao.findAllByReceiver(u.get(0).getEmail()).size());
+        assertEquals(0, messageDao.findAllByReceiver(u.get(1).getEmail()).size());
+
+        AssertCollectionContains.with(messageDao.findAllByReceiver(u.get(0).getEmail()))
+                .onProperties(authorId, title, text)
+                .values(1L, "Learning", "Hello, I am learning")
+                .values(2L, "Play", "I like play")
+                .values(2L, "Play", "I like play again")
+                .assertEquals();
     }
 
     @Test
     public void findAllByAuthor() {
         assertEquals(1, messageDao.findAllByAuthorEmailAndId(1l).size());
         assertEquals(2, messageDao.findAllByAuthorEmailAndId(2l).size());
-        assertContainsMessage(messageDao.findAllByAuthorEmailAndId(2l), Lists.newArrayList(m2.getText(), m3.getText()));
+
+        AssertCollectionContains.with(messageDao.findAllByAuthorEmailAndId(1l))
+                .onProperties(authorId, title, text)
+                .values(1L, "Learning", "Hello, I am learning")
+                .assertEquals();
+
+        AssertCollectionContains.with(messageDao.findAllByAuthorEmailAndId(2l))
+                .onProperties(authorId, title, text)
+                .values(2L, "Play", "I like play")
+                .values(2L, "Play", "I like play again")
+                .assertEquals();
     }
 
     @Test
     public void findAllByReceiverAndAuthor() {
-        assertEquals(1, messageDao.findAllByReceiverAndAuthor(u1.getId(), 1l).size());
-        assertEquals(2, messageDao.findAllByReceiverAndAuthor(u1.getId(), 2l).size());
-        assertContainsMessage(messageDao.findAllByReceiverAndAuthor(u1.getId(), 2l), Lists.newArrayList(m2.getText(), m3.getText()));
-        assertEquals(0, messageDao.findAllByReceiverAndAuthor(u2.getId(), 1l).size());
+        assertEquals(1, messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 1l).size());
+        assertEquals(2, messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 2l).size());
+        assertEquals(0, messageDao.findAllByReceiverAndAuthor(u.get(1).getId(), 1l).size());
+
+        AssertCollectionContains.with(messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 1l))
+                .onProperties(authorId, title, text)
+                .values(1L, "Learning", "Hello, I am learning")
+                .assertEquals();
+
+        AssertCollectionContains.with(messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 2l))
+                .onProperties(authorId, title, text)
+                .values(2L, "Play", "I like play")
+                .values(2L, "Play", "I like play again")
+                .assertEquals();
     }
 
     @Test
     public void findOlderThen() {
-        assertEquals(3, messageDao.findOlderThen(new GregorianCalendar(2000, 1, 4).getTime()).size());
-        assertEquals(3, messageDao.findOlderThen(new GregorianCalendar(2000, 1, 3).getTime()).size());
-        assertEquals(2, messageDao.findOlderThen(new GregorianCalendar(2000, 1, 2).getTime()).size());
-        assertEquals(1, messageDao.findOlderThen(new GregorianCalendar(2000, 1, 1).getTime()).size());
-        assertEquals(0, messageDao.findOlderThen(new GregorianCalendar(1999, 12, 12).getTime()).size());
+        assertEquals(3, messageDao.findOlderThen(DateTime.parse("2000-01-04").toDate()).size());
+        assertEquals(3, messageDao.findOlderThen(DateTime.parse("2000-01-03").toDate()).size());
+        assertEquals(2, messageDao.findOlderThen(DateTime.parse("2000-01-02").toDate()).size());
+        assertEquals(1, messageDao.findOlderThen(DateTime.parse("2000-01-01").toDate()).size());
+        assertEquals(0, messageDao.findOlderThen(DateTime.parse("1999-12-12").toDate()).size());
+
+        AssertCollectionContains.with(messageDao.findOlderThen(DateTime.parse("2000-01-03").toDate()))
+                .onProperties(authorId, title, text)
+                .values(1L, "Learning", "Hello, I am learning")
+                .values(2L, "Play", "I like play")
+                .values(2L, "Play", "I like play again")
+                .assertEquals();
+
+        AssertCollectionContains.with(messageDao.findOlderThen(DateTime.parse("2000-01-02").toDate()))
+                .onProperties(authorId, title, text)
+                .values(1L, "Learning", "Hello, I am learning")
+                .values(2L, "Play", "I like play")
+                .assertEquals();
+
+        AssertCollectionContains.with(messageDao.findOlderThen(DateTime.parse("2000-01-01").toDate()))
+                .onProperties(authorId, title, text)
+                .values(1L, "Learning", "Hello, I am learning")
+                .assertEquals();
     }
 
     @Test
     public void getParticipants() {
-        assertEquals(2, messageDao.getParticipants(u1.getId()).size());
-        assertEquals(0, messageDao.getParticipants(u2.getId()).size());
-        assertContainsMessage(Sets.newHashSet(m1.getAuthorId(), m2.getAuthorId(), m3.getAuthorId()), messageDao.getParticipants(u1.getId()));
+        assertEquals(2, messageDao.getParticipants(u.get(0).getId()).size());
+        assertEquals(0, messageDao.getParticipants(u.get(1).getId()).size());
+        assertContainsMessage(Sets.newHashSet(m.get(0).getAuthorId(), m.get(1).getAuthorId(), m.get(2).getAuthorId()), messageDao.getParticipants(u.get(0).getId()));
     }
 
     @Test
     public void countUnreadMessages() {
-        assertEquals(2, messageDao.countUnreadMessages(u1.getEmail()));
-        assertEquals(0, messageDao.countUnreadMessages(u2.getEmail()));
+        assertEquals(2, messageDao.countUnreadMessages(u.get(0).getEmail()));
+        assertEquals(0, messageDao.countUnreadMessages(u.get(1).getEmail()));
     }
 
     private void assertContainsMessage(Set<Long> users, Set<Long> findParticipants) {
         for (Long participant : findParticipants) {
             assertTrue(users.contains(participant));
-        }
-    }
-
-    private void assertContainsMessage(Set<Message> usersMessages, List<String> messages) {
-        for (Message usersMessage : usersMessages) {
-            assertTrue(messages.contains(usersMessage.getText()));
         }
     }
 

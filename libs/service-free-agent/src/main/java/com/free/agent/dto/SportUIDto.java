@@ -5,7 +5,8 @@ package com.free.agent.dto;
  */
 public class SportUIDto {
     private Long id;
-    private String name;
+    private String nameEn;
+    private String nameRu;
     private String image;
 
     public Long getId() {
@@ -16,12 +17,12 @@ public class SportUIDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNameEn() {
+        return nameEn;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
     }
 
     public String getImage() {
@@ -30,5 +31,13 @@ public class SportUIDto {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getNameRu() {
+        return nameRu;
+    }
+
+    public void setNameRu(String nameRu) {
+        this.nameRu = nameRu;
     }
 }
