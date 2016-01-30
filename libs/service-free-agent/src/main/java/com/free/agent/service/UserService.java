@@ -15,6 +15,7 @@ import com.free.agent.model.User;
 import org.springframework.security.authentication.BadCredentialsException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
 
@@ -25,7 +26,7 @@ public interface UserService {
 
     User save(UserRegistrationDto userDto) throws EmailAlreadyUsedException;
 
-    User save(SocialProfile profile) throws EmailAlreadyUsedException, EmailIsNotDetectedException;
+    User save(SocialProfile profile) throws EmailAlreadyUsedException, EmailIsNotDetectedException, IOException;
 
     void addImage(String email, HttpServletRequest request) throws Exception;
 

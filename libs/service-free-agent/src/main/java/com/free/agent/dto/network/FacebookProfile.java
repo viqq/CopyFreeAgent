@@ -13,11 +13,12 @@ import java.util.Date;
  * Created by antonPC on 19.12.15.
  */
 public class FacebookProfile implements SocialProfile {
-
     private User dto;
+    private byte[] picture;
 
     public FacebookProfile(Facebook dto) {
         this.dto = dto.userOperations().getUserProfile();
+        this.picture = dto.userOperations().getUserProfileImage(200, 200);
     }
 
     @Override
@@ -47,7 +48,11 @@ public class FacebookProfile implements SocialProfile {
 
     @Override
     public String getImage() {
-        return dto.getLink();
+        throw new UnsupportedOperationException("Use getImageByte() for facebook profile");
+    }
+
+    public byte[] getImageByte() {
+        return picture;
     }
 
     @Override

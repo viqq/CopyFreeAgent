@@ -22,6 +22,8 @@ public interface SocialProfile {
 
     String getImage();
 
+    byte[] getImageByte();
+
     String getCity();
 
     String getCountry();

@@ -9,6 +9,7 @@ import com.free.agent.dto.UserDto;
 import com.free.agent.dto.UserRegistrationDto;
 import com.free.agent.dto.UserWithScheduleUIDto;
 import com.free.agent.dto.UserWithSportUIDto;
+import com.free.agent.dto.network.SocialNetwork;
 import com.free.agent.dto.network.SocialProfile;
 import com.free.agent.exception.EmailAlreadyUsedException;
 import com.free.agent.exception.EmailDidNotRegisteredException;
@@ -39,9 +40,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +62,7 @@ import static com.free.agent.dao.impl.UserDaoImpl.BATCH_SIZE;
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
     private static final String SAVE_PATH = "/var/free-agent/images";
+    private static final String JPG = "JPG";
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 30; // 30MB
@@ -99,7 +106,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public User save(SocialProfile profile) throws EmailAlreadyUsedException, EmailIsNotDetectedException {
+    public User save(SocialProfile profile) throws EmailAlreadyUsedException, EmailIsNotDetectedException, IOException {
         User user = userDao.findByEmail(profile.getEmail());
         if (user != null) {
             LOGGER.error("User with " + profile.getEmail() + " has registered already");
@@ -114,6 +121,9 @@ public class UserServiceImpl implements UserService {
             sendLinkForConfirm(createdUser.getEmail(), createdUser.getHash());
         }
         LOGGER.info("New user " + profile.getEmail() + "was added from " + profile.getType());
+        createDirectory(profile.getEmail());
+        user.setImage(saveImage(profile));
+        userDao.update(user);
         return createdUser;
     }
 
@@ -311,16 +321,33 @@ public class UserServiceImpl implements UserService {
         return (path.delete());
     }
 
+    private void createDirectory(String email) {
+        File fileSaveDir = new File(SAVE_PATH + File.separator + email);
+        if (!fileSaveDir.exists()) {
+            if (!fileSaveDir.mkdir()) {
+                LOGGER.error("Don't have permission. Use sudo chmod 777 /var/free-agent/images ");
+                throw new UnsupportedOperationException("Can not create directory for user " + email);
+            }
+        }
+    }
+
+    private String saveImage(SocialProfile profile) throws IOException {
+        File file = new File(SAVE_PATH + File.separator + profile.getEmail() + File.separator + profile.getEmail() + "." + JPG);
+        RenderedImage image;
+        if (profile.getType() == SocialNetwork.FACEBOOK) {
+            image = ImageIO.read(new ByteArrayInputStream(profile.getImageByte()));
+        } else {
+            image = ImageIO.read(new URL(profile.getImage()));
+        }
+        ImageIO.write(image, JPG, file);
+        return SAVE_PATH + File.separator + profile.getEmail() + File.separator + profile.getEmail();
+    }
+
     private String saveImage(List<FileItem> image, String email) throws Exception {
         for (FileItem item : image) {
             if (!item.isFormField()) {
-                File fileSaveDir = new File(SAVE_PATH + File.separator + email);
-                if (!fileSaveDir.exists()) {
-                    if (!fileSaveDir.mkdir()) {
-                        LOGGER.error("Don't have permission. Use sudo chmod 777 /var/free-agent/images ");
-                    }
-                }
-                item.write(new File(SAVE_PATH + File.separator + email + File.separator + email + ".jpg"));
+                createDirectory(email);
+                item.write(new File(SAVE_PATH + File.separator + email + File.separator + email + "." + JPG));
                 break;
             }
         }

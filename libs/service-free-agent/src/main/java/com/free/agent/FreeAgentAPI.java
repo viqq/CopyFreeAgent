@@ -20,6 +20,7 @@ public final class FreeAgentAPI {
     public static final String PASSWORD_INVALID = "431";
     public static final String FIRST_NAME_INVALID = "432";
 
+    public static final String SAVE_SPORT = "/api/admin/sport"; //POST
     public static final String SAVE_USER = "/api/user"; //POST
     public static final String EDIT_USER = "/api/user/{id}"; //POST
     public static final String DELETE_USER = "/api/user/{id}"; //DELETE

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static com.free.agent.FreeAgentAPI.SAVE_SPORT;
+
 
 /**
  * Created by antonPC on 23.06.15.
@@ -30,7 +32,7 @@ public class AdminController {
         return Response.ok(sportService.getAllSports());
     }
 
-    @RequestMapping(value = "/admin/sport", method = RequestMethod.POST, produces = BaseController.PRODUCES)
+    @RequestMapping(value = SAVE_SPORT, method = RequestMethod.POST, produces = BaseController.PRODUCES)
     public Sport saveSport(Sport sport) {
         return sportService.save(sport);
     }

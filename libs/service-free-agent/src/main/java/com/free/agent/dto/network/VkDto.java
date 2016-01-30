@@ -14,7 +14,7 @@ public class VkDto {
     private String city;
     private String country;
     private String verified;
-    private String photo;
+    private String photo_200;
 
     public String getUid() {
         return uid;
@@ -96,12 +96,12 @@ public class VkDto {
         this.verified = verified;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getPhoto_200() {
+        return photo_200;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setPhoto_200(String photo) {
+        this.photo_200 = photo;
     }
 
 }

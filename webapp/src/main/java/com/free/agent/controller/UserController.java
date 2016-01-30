@@ -46,7 +46,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -180,11 +179,7 @@ public class UserController {
         User user = userService.findById(id);
         InputStream fis;
         if (user.getImage() != null) {
-            if (user.getImage().startsWith("http")) { //todo
-                fis = new ByteArrayInputStream(user.getImage().getBytes());
-            } else {
-                fis = new FileInputStream(userService.findById(id).getImage() + ".jpg");
-            }
+            fis = new FileInputStream(userService.findById(id).getImage() + ".jpg");
         } else {
             fis = new FileInputStream(UserController.class.getClassLoader().getResource("images/freeagent.jpg").getFile());
         }
@@ -298,7 +293,7 @@ public class UserController {
         Token token = new Gson().fromJson(EntityUtils.toString(response.getEntity()), Token.class);
         response = HttpClientBuilder.create().build().execute(new HttpGet(vkProperty.getProfile_url() +
                 "uids=" + token.getUser_id() + "&" +
-                "fields=uid,first_name,last_name,nickname,screen_name,sex,bdate,city,country,verified,photo&" +
+                "fields=uid,first_name,last_name,nickname,screen_name,sex,bdate,city,country,photo_200,verified&" +
                 "access_token=" + token.getAccess_token()));
         VkProfile profile = new VkProfile(response.getEntity());
         profile.setCity(getCityById(profile.getCityId()));
@@ -316,6 +311,8 @@ public class UserController {
         } catch (EmailAlreadyUsedException e) {
             return Response.error(EMAIL_REGISTERED_ERROR);
         } catch (EmailIsNotDetectedException e1) {
+            return Response.error(EMAIL_IS_NOT_DETECTED_ERROR);
+        } catch (IOException e) {
             return Response.error(EMAIL_IS_NOT_DETECTED_ERROR);
         }
     }

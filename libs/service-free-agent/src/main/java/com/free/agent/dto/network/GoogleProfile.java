@@ -53,6 +53,11 @@ public class GoogleProfile implements SocialProfile {
     }
 
     @Override
+    public byte[] getImageByte() {
+        throw new UnsupportedOperationException("Use getImage() for google profile");
+    }
+
+    @Override
     public String getCity() {
         return null;
     }

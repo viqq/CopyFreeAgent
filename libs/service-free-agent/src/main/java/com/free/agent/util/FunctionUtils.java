@@ -165,7 +165,6 @@ public final class FunctionUtils {
         user.setLastActivity(new Date());
         user.setCity(profile.getCity());
         user.setCountry(profile.getCountry());
-        user.setImage(profile.getImage());
         user.setLastName(profile.getLastName());
         user.setGender(profile.getGender());
         user.setDateOfBirth(profile.getBirthday());

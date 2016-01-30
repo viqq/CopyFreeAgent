@@ -28,7 +28,7 @@ public class MailServiceImpl implements MailService {
                 message.setSubject(subject);
                 message.setText(body);
                 LOGGER.info("sendMail before start");
-                mailSender.send(message);
+                //mailSender.send(message);
                 LOGGER.info("Email '" + subject + "' about '" + body + "' was sent to " + to);
             }
         }).start();

@@ -73,7 +73,12 @@ public class VkProfile implements SocialProfile {
 
     @Override
     public String getImage() {
-        return dto.getPhoto();
+        return dto.getPhoto_200();
+    }
+
+    @Override
+    public byte[] getImageByte() {
+        throw new UnsupportedOperationException("Use getImage() for vk profile");
     }
 
     @Override
