@@ -1,10 +1,10 @@
 package com.free.agent.service;
 
-import com.free.agent.Language;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
 import com.free.agent.dao.UserDao;
 import com.free.agent.dto.UserRegistrationDto;
+import com.free.agent.field.Language;
 import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.service.impl.UserServiceImpl;

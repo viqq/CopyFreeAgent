@@ -1,6 +1,6 @@
 package com.free.agent.dao;
 
-import com.free.agent.Language;
+import com.free.agent.field.Language;
 import com.free.agent.model.Sport;
 
 import java.util.Set;

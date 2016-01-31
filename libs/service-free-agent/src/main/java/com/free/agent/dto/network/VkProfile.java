@@ -122,6 +122,9 @@ public class VkProfile implements SocialProfile {
 
     @Override
     public boolean isAuthentication(User user) {
+        if (user.getVkId() == null) {
+            throw new IllegalArgumentException("Trying login with vk. But you registered by another social network");
+        }
         return user.getEmail().equals(getEmail()) && user.getVkId().equals(getId());
     }
 

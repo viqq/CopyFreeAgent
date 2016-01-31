@@ -62,11 +62,10 @@ import static com.free.agent.dao.impl.UserDaoImpl.BATCH_SIZE;
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
     private static final String SAVE_PATH = "/var/free-agent/images";
-    private static final String JPG = "JPG";
+    private static final String JPG = "jpg";
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 30; // 30MB
-
 
     @Autowired
     private UserDao userDao;

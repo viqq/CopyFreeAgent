@@ -86,6 +86,9 @@ public class FacebookProfile implements SocialProfile {
 
     @Override
     public boolean isAuthentication(com.free.agent.model.User user) {
+        if (user.getFacebookId() == null) {
+            throw new IllegalArgumentException("Trying login with facebook. But you registered by another social network");
+        }
         return (user.getEmail().equals(getEmail()) && user.getFacebookId().equals(getId()));
     }
 }

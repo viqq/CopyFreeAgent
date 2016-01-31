@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.free.agent.Language.ENG;
-import static com.free.agent.Language.RU;
+import static com.free.agent.field.Language.ENG;
+import static com.free.agent.field.Language.RU;
 import static com.free.agent.model.Sport_.nameEn;
 import static com.free.agent.model.Sport_.nameRu;
 

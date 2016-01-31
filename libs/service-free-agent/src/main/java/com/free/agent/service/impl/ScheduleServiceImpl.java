@@ -66,24 +66,24 @@ public class ScheduleServiceImpl implements ScheduleService {
         for (Day day : days) {
             day.setSchedule(schedule);
         }
-        dayDao.saveAll(days);
+        // dayDao.saveAll(days);
         schedule.setDays(days);
         Set<Weekday> weekdays = FluentIterable.from(scheduleDto.getDayOfWeeks()).transform(WEEKDAY_INVOKE).toSet();
         for (Weekday weekday : weekdays) {
             weekday.setSchedule(schedule);
         }
-        weekdayDao.saveAll(weekdays);
+        // weekdayDao.saveAll(weekdays);
         schedule.setWeekdays(weekdays);
         Sport sport = sportDao.find(scheduleDto.getSportId());
         if (!user.getSports().contains(sport)) {
             LOGGER.error("You can not select sport " + sport + " for your schedule");
             throw new SportNotSupportedException("You can not select sport " + sport + " for your schedule");
         }
-        schedule.setSport(sportDao.find(scheduleDto.getSportId()));
+        schedule.setSport(sport);
         schedule.setUser(user);
         user.getSchedules().add(schedule);
         userDao.update(user);
-        scheduleDao.update(schedule);
+        //scheduleDao.update(schedule);
     }
 
     @Override

@@ -91,7 +91,7 @@ public final class FunctionUtils {
         public ScheduleDto apply(Schedule input) {
             ScheduleDto dto = new ScheduleDto();
             dto.setId(input.getId());
-            //dto.setSport(input.getSport().getName()); todo
+            dto.setSportId(input.getSport().getId());
             dto.setStartTime(input.getStartTime().getTime());
             dto.setEndTime(input.getEndTime().getTime());
             dto.setDayOfWeeks(FluentIterable.from(input.getWeekdays()).transform(new Function<Weekday, String>() {
@@ -124,8 +124,8 @@ public final class FunctionUtils {
         userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
         userDto.setGender(getGender(user.getGender()));
         userDto.setRole(user.getRole().name());
-        userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), SPORT_NAME_INVOKE));
-        userDto.setSchedules(Lists.transform(Lists.newArrayList(user.getSchedules()), SCHEDULE_INVOKE));
+        userDto.setSports(FluentIterable.from(user.getSports()).transform(SPORT_NAME_INVOKE).toList());
+        userDto.setSchedules(FluentIterable.from(user.getSchedules()).transform(SCHEDULE_INVOKE).toList());
         return userDto;
     }
 
@@ -143,7 +143,7 @@ public final class FunctionUtils {
         userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
         userDto.setGender(getGender(user.getGender()));
         userDto.setRole(user.getRole().name());
-        userDto.setSports(Lists.transform(Lists.newArrayList(user.getSports()), SPORT_NAME_INVOKE));
+        userDto.setSports(FluentIterable.from(user.getSports()).transform(SPORT_NAME_INVOKE).toList());
         return userDto;
     }
 
@@ -206,6 +206,9 @@ public final class FunctionUtils {
             case FACEBOOK: {
                 user.setFacebookId(profile.getId());
                 break;
+            }
+            default: {
+                throw new UnsupportedOperationException("Unsupported type of social network");
             }
         }
     }

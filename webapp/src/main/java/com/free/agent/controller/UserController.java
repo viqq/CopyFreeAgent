@@ -142,14 +142,6 @@ public class UserController {
         }
     }
 
-    //todo only for admin
-    @RequestMapping(value = DELETE_USER, method = RequestMethod.DELETE, produces = BaseController.PRODUCES)
-    @ResponseBody
-    public String deleteUser(@PathVariable(value = "id") Long id) {
-        userService.deleteUser(id);
-        return Response.ok();
-    }
-
     @RequestMapping(value = EDIT_USER, method = RequestMethod.POST, produces = BaseController.PRODUCES)
     @ResponseBody
     public String editUser(@PathVariable(value = "id") Long id, Principal principal, UserDto userDto, HttpServletRequest request) {
@@ -313,7 +305,7 @@ public class UserController {
         } catch (EmailIsNotDetectedException e1) {
             return Response.error(EMAIL_IS_NOT_DETECTED_ERROR);
         } catch (IOException e) {
-            return Response.error(EMAIL_IS_NOT_DETECTED_ERROR);
+            return Response.error(SAVE_IMAGE_ERROR);
         }
     }
 

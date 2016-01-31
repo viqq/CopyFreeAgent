@@ -1,8 +1,8 @@
 package com.free.agent.dao.impl;
 
-import com.free.agent.Language;
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.SportDao;
+import com.free.agent.field.Language;
 import com.free.agent.model.Sport;
 import com.free.agent.model.Sport_;
 import com.free.agent.utils.DaoUtils;

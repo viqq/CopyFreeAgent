@@ -84,6 +84,9 @@ public class GoogleProfile implements SocialProfile {
 
     @Override
     public boolean isAuthentication(User user) {
+        if (user.getGoogleId() == null) {
+            throw new IllegalArgumentException("Trying login with google. But you registered by another social network");
+        }
         return (user.getEmail().equals(getEmail()) && user.getGoogleId().equals(getId()));
     }
 }
