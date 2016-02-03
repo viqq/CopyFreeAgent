@@ -82,7 +82,15 @@
                             <div class="edit-btn"></div>
                         </div>
                         <div ng-repeat="claim in user.claims">
+                            <div class="sport">
+                                {{claim.sport.name}}
+                                <select ng-model="claim.sportId" ng-options="sport.id as sport.name for sport in sports">
+                                    <option value="">Выберите спорт</option>
+                                </select>
+                            </div>
                             <dir-datepicker config="datePickersConfig" picked="claim.calendar"></dir-datepicker>
+                            <div class="time-start"></div>
+                            <div class="time-end"></div>
                         </div>
                     </div>
                 </div>
@@ -90,4 +98,5 @@
         </div>
     </div>
 </div>
+{{user.claims}}
 <dir-profile></dir-profile>

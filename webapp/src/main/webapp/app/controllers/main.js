@@ -81,11 +81,22 @@ define(
 
                 $scope.$root.updateUserInfo();
 
-                /**
-                 * Mock user object
-                 * @type {{}}
-                 */
-                $scope.$root.user = {
+                $scope.sports = [
+                    {
+                        id: 1,
+                        name:'Футбол'
+                    },
+                    {
+                        id: 2,
+                        name:'Преферанс'
+                    },
+                    {
+                        id: 3,
+                        name:'Виндсерфинг'
+                    }
+                ];
+
+                $scope.user = {
                     info: {
                         name: 'Тит Коваленко',
                         email: 't.a.kvlnk@gmail.com',
@@ -116,7 +127,7 @@ define(
                             },
                             startHour: 10,
                             endHour: 18,
-                            sport: 'Плавание'
+                            sportId: 2
                         },
                         {
                             calendar: {
@@ -125,7 +136,7 @@ define(
                             },
                             startHour: 10,
                             endHour: 18,
-                            sport: 'Плавание'
+                            sportId: 3
                         },
                         {
                             calendar: {
@@ -134,10 +145,12 @@ define(
                             },
                             startHour: 10,
                             endHour: 18,
-                            sport: 'Плавание'
+                            sportId: 1
                         }
                     ]
                 };
+
+
 
                 $scope.datePickerData = {
                     label: 'Число',
