@@ -72,7 +72,7 @@
                             {{'Phone: ' + user.info.phone}}
                         </div>
                     </div>
-                    <div class="claims">
+                    <div class="claims-wrapper">
                         <div class="title-wrapper">
                             <div class="title">
                                 <div class="fa-text"><span>I'm Free</span> Agent</div>
@@ -81,10 +81,10 @@
                             </div>
                             <div class="edit-btn"></div>
                         </div>
-                        <div ng-repeat="claim in user.claims">
+                        <div ng-repeat="claim in user.claims" class="claim">
                             <div class="sport">
                                 {{claim.sport.name}}
-                                <select ng-model="claim.sportId" ng-options="sport.id as sport.name for sport in sports">
+                                <select class="custom-select" ng-model="claim.sportId" ng-options="sport.id as sport.name for sport in sports">
                                     <option value="">Выберите спорт</option>
                                 </select>
                             </div>
