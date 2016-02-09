@@ -81,49 +81,51 @@
                             </div>
                             <div class="edit-btn" ng-click="editClaims()"></div>
                         </div>
-                        <div ng-repeat="claim in user.claims" class="claim">
-                            <div class="sport">
-                                <div class="value"
-                                     ng-hide="claimsEdited">
-                                    {{ sports[ claim.sportId ].name }}
-                                    <!--{{ sports }}-->
-                                </div>
-                                <select ng-show="claimsEdited"
-                                        class="custom-select"
-                                        ng-model="claim.sportId"
-                                        ng-options="sport.id as sport.name for sport in sports">
+                        <div class="list-wrapper">
+                            <div ng-repeat="claim in user.claims" class="claim">
+                                <div class="sport">
+                                    <div class="value"
+                                         ng-hide="claimsEdited">
+                                        {{ sports[ claim.sportId ].name }}
+                                        <!--{{ sports }}-->
+                                    </div>
+                                    <select ng-show="claimsEdited"
+                                            class="custom-select"
+                                            ng-model="claim.sportId"
+                                            ng-options="sport.id as sport.name for sport in sports">
 
-                                    <option value="">Выберите спорт</option>
-                                </select>
-                            </div>
-                            <div class="date">
-                                <dir-datepicker config="datePickersConfig" picked="claim.calendar"></dir-datepicker>
-                            </div>
-                            <div class="time-start">
-                                <div class="value"
-                                     ng-hide="claimsEdited">
-
-                                    {{ 'от ' + claim.startHour + ':00' }}
+                                        <option value="">Выберите спорт</option>
+                                    </select>
                                 </div>
-                                <select class="custom-select"
-                                        ng-show="claimsEdited"
-                                        ng-model="claim.startHour"
-                                        ng-options="hour as 'от ' + hour + ':00' for hour in hours">
-                                    <option value="">Время от</option>
-                                </select>
-                            </div>
-                            <div class="time-end">
-                                <div class="value"
-                                     ng-hide="claimsEdited">
-
-                                    {{ 'до ' + claim.endHour + ':00' }}
+                                <div class="date">
+                                    <dir-datepicker config="datePickersConfig" picked="claim.calendar"></dir-datepicker>
                                 </div>
-                                <select class="custom-select"
-                                        ng-show="claimsEdited"
-                                        ng-model="claim.endHour"
-                                        ng-options="hour as 'до ' + hour + ':00' for hour in hours">
-                                    <option value="">Время до</option>
-                                </select>
+                                <div class="time-start">
+                                    <div class="value"
+                                         ng-hide="claimsEdited">
+
+                                        {{ 'от ' + claim.startHour + ':00' }}
+                                    </div>
+                                    <select class="custom-select"
+                                            ng-show="claimsEdited"
+                                            ng-model="claim.startHour"
+                                            ng-options="hour as 'от ' + hour + ':00' for hour in hours">
+                                        <option value="">Время от</option>
+                                    </select>
+                                </div>
+                                <div class="time-end">
+                                    <div class="value"
+                                         ng-hide="claimsEdited">
+
+                                        {{ 'до ' + claim.endHour + ':00' }}
+                                    </div>
+                                    <select class="custom-select"
+                                            ng-show="claimsEdited"
+                                            ng-model="claim.endHour"
+                                            ng-options="hour as 'до ' + hour + ':00' for hour in hours">
+                                        <option value="">Время до</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

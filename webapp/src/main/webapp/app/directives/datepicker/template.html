@@ -1,6 +1,6 @@
 <div class="datepicker">
     <div class="overlay" ng-show="isVisible" ng-click="submit()"></div>
-    <div class="field" ng-click="openCalendar()">
+    <div class="field" ng-class="{'editable': config.editable}" ng-click="openCalendar()">
         <img class="icon" src="/img/datepicker/calendar.svg" width="12px">
         <div class="border-wrapper">
             <div class="label">

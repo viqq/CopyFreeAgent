@@ -262,13 +262,18 @@
 }
 
 #profile .content .column-wrapper .claims-wrapper
+.list-wrapper {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#profile .content .column-wrapper .claims-wrapper
 .claim {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: 10px 0px;
-    margin-right: 36px;
+    display: table-row;
     border-bottom: 1px #404449 dashed;
+    margin-bottom: 1px;
+    height: 2.75em;
 }
 
 #profile .content .column-wrapper .claims-wrapper
@@ -278,7 +283,9 @@
 
 #profile .content .column-wrapper .claims-wrapper
 .claim > * {
-    display: flex;
+    display: table-cell;
+    padding: 10px 0px;
+    vertical-align: bottom;
 }
 
 #profile .claims-wrapper
@@ -290,6 +297,27 @@
 .claim .value {
     color: white;
     font-size: 0.875em;
+    padding-bottom: 1px;
+}
+
+#profile .content .column-wrapper .claims-wrapper .claim
+.date {
+    width: 50%;
+}
+
+#profile .content .column-wrapper .claims-wrapper .claim
+.sport {
+    width: 20%;
+}
+
+#profile .content .column-wrapper .claims-wrapper .claim
+.time-start {
+    width: 15%;
+}
+
+#profile .content .column-wrapper .claims-wrapper .claim
+.time-end {
+    width: 15%;
 }
 
 .custom-select {
