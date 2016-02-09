@@ -265,7 +265,9 @@
 .claim {
     display: flex;
     align-items: flex-end;
+    justify-content: space-between;
     padding: 10px 0px;
+    margin-right: 36px;
     border-bottom: 1px #404449 dashed;
 }
 
@@ -277,11 +279,17 @@
 #profile .content .column-wrapper .claims-wrapper
 .claim > * {
     display: flex;
-    margin-right: 40px;
 }
 
-#profile .claims-wrapper .datepicker .field span {
+#profile .claims-wrapper
+.datepicker .field span {
     color: white;
+}
+
+#profile .claims-wrapper
+.claim .value {
+    color: white;
+    font-size: 0.875em;
 }
 
 .custom-select {

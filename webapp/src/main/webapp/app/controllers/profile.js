@@ -46,11 +46,19 @@ define(
                     value();
                 });
 
-                $scope.datePickersConfig = {
-                    label: 'Число',
-                    isMonFirst: true,
-                    editable: true
-                };
+                angular.extend($scope, {
+                    claimsEdited: false,
+                    datePickersConfig: {
+                        label: 'Число',
+                        isMonFirst: true,
+                        editable: true
+                    },
+                    editClaims: function() {
+                        $scope.claimsEdited = !$scope.claimsEdited;
+                    }
+                });
+
+                $scope.editable = $scope.claimsEdited;
 
                 //$scope.datePickerData = {
                 //    label: 'Число',
