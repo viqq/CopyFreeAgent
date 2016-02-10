@@ -239,7 +239,6 @@
 .datepicker
 .field > * {
     display: flex;
-    align-items: center;
 }
 
 .datepicker
@@ -250,14 +249,23 @@
 .datepicker
 .field .border-wrapper {
     min-width: 300px;
-    border-bottom: 1px #b0b0b0 solid;
-    background: url(/img/icons/arrow_small_bottom.svg) no-repeat right center;
-    background-size: 8px;
+    border: none;
+    background: none;
+    padding-bottom: .5px;
     padding-right: 20px;
     box-sizing: border-box;
 }
 
-.datepicker .field .border-wrapper > * {
+.datepicker
+.field.editable .border-wrapper {
+    padding-bottom: 0px;
+    border-bottom: 1px #b0b0b0 solid;
+    background:     url(/img/icons/arrow_small_bottom.svg) no-repeat right center;
+    background-size: 8px;
+}
+
+.datepicker
+.field .border-wrapper > * {
     display: flex;
 }
 

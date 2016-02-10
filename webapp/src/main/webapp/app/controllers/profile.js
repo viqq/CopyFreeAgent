@@ -51,14 +51,13 @@ define(
                     datePickersConfig: {
                         label: 'Число',
                         isMonFirst: true,
-                        editable: true
+                        editable: false
                     },
                     editClaims: function() {
                         $scope.claimsEdited = !$scope.claimsEdited;
+                        $scope.datePickersConfig.editable = $scope.claimsEdited;
                     }
                 });
-
-                $scope.editable = $scope.claimsEdited;
 
                 //$scope.datePickerData = {
                 //    label: 'Число',
