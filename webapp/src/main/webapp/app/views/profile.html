@@ -39,9 +39,9 @@
             "></div>
         </div>
         <div class="main">
-            <div class="column-wrapper">
-                <div class="column">
-                    <div class="info">
+            <div class="column">
+                <div class="info">
+                    <div class="info__main">
                         <div class="userpic">
 
                         </div>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="edit-btn"></div>
                     </div>
-                    <div class="contacts">
+                    <div class="info__contacts">
                         <div>
                             {{'Address: ' + user.info.address}}
                         </div>
@@ -72,70 +72,84 @@
                             {{'Phone: ' + user.info.phone}}
                         </div>
                     </div>
-                    <div class="claims-wrapper">
-                        <div class="title-wrapper">
-                            <div class="title">
-                                <div class="fa-text"><span>I'm Free</span> Agent</div>
-                                <div class="divider">/</div>
-                                <div class="hint">Заполние форму, чтобы показать когда вы свободны</div>
-                            </div>
-                            <div class="edit-btn" ng-click="editClaims()"></div>
+                </div>
+                <div class="claims-wrapper">
+                    <div class="title-wrapper">
+                        <div class="title">
+                            <div class="fa-text"><span>I'm Free</span> Agent</div>
+                            <div class="divider">/</div>
+                            <div class="hint">Заполние форму, чтобы показать когда вы свободны</div>
                         </div>
-                        <div class="list-wrapper">
-                            <div ng-repeat="claim in user.claims" class="claim">
-                                <div class="sport">
-                                    <div class="value"
-                                         ng-hide="claimsEdited">
-                                        {{ sports[ claim.sportId ].name }}
-                                        <!--{{ sports }}-->
-                                    </div>
-                                    <select ng-show="claimsEdited"
-                                            class="custom-select"
-                                            ng-model="claim.sportId"
-                                            ng-options="sport.id as sport.name for sport in sports">
+                        <div class="edit-btn" ng-click="editClaims()"></div>
+                    </div>
+                    <div class="list-wrapper">
+                        <div ng-repeat="claim in user.claims" class="claim">
+                            <div class="claim__sport">
+                                <div class="value"
+                                     ng-if="!claimsEdited"
+                                     ng-cloak>
+                                    {{ sports[ claim.sportId ].name }}
+                                </div>
+                                <select ng-if="claimsEdited"
+                                        class="custom-select"
+                                        ng-model="claim.sportId"
+                                        ng-options="sport.id as sport.name for sport in sports"
+                                        ng-cloak>
 
-                                        <option value="">Выберите спорт</option>
-                                    </select>
-                                </div>
-                                <div class="claim__date">
-                                    <dir-datepicker config="datePickersConfig" picked="claim.calendar"></dir-datepicker>
-                                </div>
-                                <div class="time-start">
-                                    <div class="value"
-                                         ng-hide="claimsEdited">
+                                    <option value="">Выберите спорт</option>
+                                </select>
+                            </div>
+                            <div class="date">
+                                <dir-datepicker config="datePickersConfig" picked="claim.calendar"></dir-datepicker>
+                            </div>
+                            <div class="time-start">
+                                <div class="value"
+                                     ng-if="!claimsEdited"
+                                     ng-cloak>
 
-                                        {{ 'от ' + claim.startHour + ':00' }}
-                                    </div>
-                                    <select class="custom-select"
-                                            ng-show="claimsEdited"
-                                            ng-model="claim.startHour"
-                                            ng-options="hour as 'от ' + hour + ':00' for hour in hours">
-                                        <option value="">Время от</option>
-                                    </select>
+                                    {{ 'от ' + claim.startHour + ':00' }}
                                 </div>
-                                <div class="time-end">
-                                    <div class="value"
-                                         ng-hide="claimsEdited">
+                                <select class="custom-select"
+                                        ng-if="claimsEdited"
+                                        ng-model="claim.startHour"
+                                        ng-options="hour as 'от ' + hour + ':00' for hour in hours"
+                                        ng-cloak>
+                                    <option value="">Время от</option>
+                                </select>
+                            </div>
+                            <div class="time-end">
+                                <div class="value"
+                                     ng-if="!claimsEdited"
+                                     ng-cloak>
 
-                                        {{ 'до ' + claim.endHour + ':00' }}
-                                    </div>
-                                    <select class="custom-select"
-                                            ng-show="claimsEdited"
-                                            ng-model="claim.endHour"
-                                            ng-options="hour as 'до ' + hour + ':00' for hour in hours">
-                                        <option value="">Время до</option>
-                                    </select>
+                                    {{ 'до ' + claim.endHour + ':00' }}
                                 </div>
-                                <div class="claim__remove">
-                                    DEL
+                                <select class="custom-select"
+                                        ng-if="claimsEdited"
+                                        ng-model="claim.endHour"
+                                        ng-options="hour as 'до ' + hour + ':00' for hour in hours"
+                                        ng-cloak>
+                                    <option value="">Время до</option>
+                                </select>
+                            </div>
+                            <div class="claim__remove">
+                                <div ng-show="claimsEdited"
+                                     ng-cloak>
+                                    <img width="14px" src="/img/profile/delete.svg">
                                 </div>
                             </div>
                         </div>
-                        <div class="claim-add">
-                            <div class="claim-add__btn">
-                                <div class="claim-add__text">+</div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div class="claim-btns">
+                    <div class="claim-btns__add claim-btns__btn" ng-if="!claimsEdited">
+                        <div class="claim-btns__add-text">+</div>
+                    </div>
+                    <div class="claim-btns__cancel claim-btns__btn" ng-if="claimsEdited">
+                        <div class="claim-btns__cancel-text">CANCEL</div>
+                    </div>
+                    <div class="claim-btns__ok claim-btns__btn" ng-if="claimsEdited">
+                        <div class="claim-btns__ok-text">OK</div>
                     </div>
                 </div>
             </div>

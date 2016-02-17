@@ -108,7 +108,7 @@
 }
 
 #profile .content
-.column-wrapper {
+.column {
     padding: 0 60px;
     min-height: 240px;
     max-width: 1060px;
@@ -118,12 +118,14 @@
 }
 
 #profile .content
-.column {
+.info {
     -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    margin-bottom: 30px;
 }
-#profile .content .column-wrapper
+
+#profile .content .column
 .userpic {
     border: 1px #e0e0e0 solid;
     border-radius: 50%;
@@ -137,26 +139,26 @@
     margin-right: 40px;
 }
 
-#profile .content .column-wrapper
-.column-wrapper {
+#profile .content .column
+.column {
     background-color: white;
 }
 
-#profile .content .column-wrapper
-.info {
+#profile .content .column
+.info__main {
     padding: 40px;
     background-color: white;
     display: flex;
 }
 
-#profile .content .column-wrapper
+#profile .content .column
 .heading {
     font-size: 1.25em;
     font-family: RobotoMedium;
     margin-bottom: 20px;
 }
 
-#profile .content .column-wrapper
+#profile .content .column
 .sports {
     display: flex;
     margin-bottom: 20px;
@@ -165,17 +167,17 @@
     font-size: 0.8em;
 }
 
-#profile .content .column-wrapper
+#profile .content .column
 .sports > div {
     margin-right: 10px;
 }
 
-#profile .content .column-wrapper
+#profile .content .column
 .sports > div:last-child {
     margin-right: 0px;
 }
 
-#profile .content .column-wrapper
+#profile .content .column
 .edit-btn {
     width: 36px;
     height: 36px;
@@ -188,8 +190,8 @@
     cursor: pointer;
 }
 
-#profile .content .column-wrapper
-.contacts {
+#profile .content .column
+.info__contacts {
     border-top: 1px #f0f0f0 solid;
     background-color: white;
     font-size: 0.75em;
@@ -200,28 +202,31 @@
     font-weight: bold;
 }
 
-#profile .content .column-wrapper
-.contacts > * {
+#profile .content .column
+.info__contacts > * {
     margin-right: 60px;
 }
 
-#profile .content .column-wrapper
-.contacts > *:last-child {
+#profile .content .column
+.info__contacts > *:last-child {
     margin-right: 0px;
 }
 
-#profile .content .column-wrapper .claims-wrapper {
+#profile .content .column .claims-wrapper {
     padding: 20px 40px 0px;
     background-color: #2b3035;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .title {
     display: flex;
     align-items: center;
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .fa-text {
     font-family: norwester;
     color: white;
@@ -229,31 +234,31 @@
     font-size: 1.25em;
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .fa-text span {
     font-family: norwester;
     color: #fa2044;
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .divider, .hint {
     color: #51565b;
     font-size: .75em;
     font-family: RobotoMedium;
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .divider {
     margin: 0px 20px;
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .title-wrapper {
     display: flex;
     justify-content: space-between;
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .edit-btn {
     margin-left: 0px;
     background-color: #3b444f;
@@ -261,32 +266,32 @@
     border: none;
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .list-wrapper {
-    display: table;
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 40px;
+    padding-top: 20px;
+    padding-bottom: 40px;
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .claim {
-    display: table-row;
+    display: flex;
     border-bottom: 1px #404449 dashed;
     margin-bottom: 1px;
     height: 2.75em;
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .claim:last-child {
     border: none;
 }
 
-#profile .content .column-wrapper .claims-wrapper
+#profile .content .column .claims-wrapper
 .claim > * {
-    display: table-cell;
+    display: flex;
     padding: 10px 0px;
-    vertical-align: bottom;
+    align-items: flex-end;
 }
 
 #profile .claims-wrapper
@@ -302,37 +307,37 @@
     padding-left: 4px;
 }
 
-#profile .content .column-wrapper .claims-wrapper .claim
+#profile .content .column .claims-wrapper .claim
 .date {
-    width: 50%;
+    width: 45%;
 }
 
-#profile .content .column-wrapper .claims-wrapper .claim
-.sport {
+#profile .content .column .claims-wrapper .claim
+.claim__sport {
     width: 20%;
 }
 
-#profile .content .column-wrapper .claims-wrapper .claim
+#profile .content .column .claims-wrapper .claim
 .time-start {
     width: 15%;
 }
 
-#profile .content .column-wrapper .claims-wrapper .claim
+#profile .content .column .claims-wrapper .claim
 .time-end {
     width: 15%;
 }
 
 
-.claim-add__btn {
+.claim-btns__btn {
     width: 60px;
     height: 60px;
     color: white;
-    background-color: #fa2044;
+
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5em;
+
     cursor: pointer;
     margin-top: -30px;
     -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.23);
@@ -340,27 +345,55 @@
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.23);
 }
 
-.claim-add__text {
+.claim-btns__add {
+    background-color: #fa2044;
+    font-size: 1.5em;
+}
+
+.claim-btns__ok {
+    background-color: #139cb5;
+}
+
+.claim-btns__cancel {
+    width: auto;
+    border-radius: 30px;
+    padding: 0px 30px;
+    background-color: #353d48;
+    margin-right: 20px;
+}
+
+.claim-btns__add-text {
     display: flex;
 }
 
-.claim-add {
+.claim-btns {
     height: 0px;
     display: flex;
     justify-content: flex-end;
+    padding-right: 27px;
 }
+
+.claim__remove {
+    width: 5%;
+    justify-content: flex-end;
+    padding-right: 11px !important;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+
 
 .custom-select {
     -webkit-appearance: none;
     -moz-appearance: none;
     border: none;
-    outline:none;
+    outline: none;
     font-family: RobotoLight;
     color: white;
     font-size: .875em;
     letter-spacing: 0.1em;
     background: url(/img/icons/arrow_small_bottom.svg) no-repeat right center;
-    background-size: 8px;
+    background-size: 8px 8px;
     border-bottom: 1px #b0b0b0 solid;
 }
 

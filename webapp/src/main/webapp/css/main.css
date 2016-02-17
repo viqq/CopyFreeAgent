@@ -55,6 +55,10 @@ img[src*=".svg"] {
     height: 100%;
 }
 
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+}
+
 .view {
     position:relative;
     background-color: white;
