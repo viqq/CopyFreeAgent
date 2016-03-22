@@ -1,2 +1,161 @@
-<dir-header></dir-header>
+<div id="profile">
+    <div class="header">
+        <div class="logo">
+            <img src="/img/logo.svg" width="25px">
+        </div>
+        <div class="right-group">
+            <a class="search" href="/search">
+                <img src="/img/profile/search_fa_white.svg" width="20px">
+
+            </a>
+            <a class="followed" href="/followings">
+                <img src="/img/profile/folow_white.svg" width="25px">
+            </a>
+            <a class="messages" href="/messages">
+                <img src="/img/profile/mail_white.svg" width="20px">
+            </a>
+
+            <div class="userbar">
+                <div class="userpic">
+                    <div></div>
+                </div>
+                <div class="email">
+                    {{ userInfo.email }}
+                </div>
+            </div>
+            <a class="logout" ng-click="">
+                <img src="/img/profile/logout_white.svg" width="18px">
+            </a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="cover">
+            <div style="
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0px;
+                display: block;
+            "></div>
+        </div>
+        <div class="main">
+            <div class="column">
+                <div class="info">
+                    <div class="info__main">
+                        <div class="userpic">
+
+                        </div>
+                        <div class="text-group">
+                            <div class="heading">
+                                {{user.info.name + ', ' + user.info.age}}
+                            </div>
+                            <div class="sports">
+                                <div ng-repeat="sport in user.info.sports">
+                                    <span>{{sport.name + ' /'}}</span>
+                                    <span>{{sport.level + (!$last ? ',' : '')}}</span>
+                                </div>
+                            </div>
+                            <div class="descr">
+                                {{user.info.description}}
+                            </div>
+                        </div>
+                        <div class="edit-btn"></div>
+                    </div>
+                    <div class="info__contacts">
+                        <div>
+                            {{'Address: ' + user.info.address}}
+                        </div>
+                        <div>
+                            {{'Email: ' + user.info.email}}
+                        </div>
+                        <div>
+                            {{'Phone: ' + user.info.phone}}
+                        </div>
+                    </div>
+                </div>
+                <div class="claims-wrapper">
+                    <div class="title-wrapper">
+                        <div class="title">
+                            <div class="fa-text"><span>I'm Free</span> Agent</div>
+                            <div class="divider">/</div>
+                            <div class="hint">Заполние форму, чтобы показать когда вы свободны</div>
+                        </div>
+                        <div class="edit-btn" ng-click="editClaims()"></div>
+                    </div>
+                    <div class="list-wrapper">
+                        <div ng-repeat="claim in user.claims" class="claim">
+                            <div class="claim__sport">
+                                <div class="value"
+                                     ng-if="!claimsEdited"
+                                     ng-cloak>
+                                    {{ sports[ claim.sportId ].name }}
+                                </div>
+                                <select ng-if="claimsEdited"
+                                        class="custom-select"
+                                        ng-model="claim.sportId"
+                                        ng-options="sport.id as sport.name for sport in sports"
+                                        ng-cloak>
+
+                                    <option value="">Выберите спорт</option>
+                                </select>
+                            </div>
+                            <div class="date">
+                                <dir-datepicker config="datePickersConfig" picked="claim.calendar"></dir-datepicker>
+                            </div>
+                            <div class="time-start">
+                                <div class="value"
+                                     ng-if="!claimsEdited"
+                                     ng-cloak>
+
+                                    {{ 'от ' + claim.startHour + ':00' }}
+                                </div>
+                                <select class="custom-select"
+                                        ng-if="claimsEdited"
+                                        ng-model="claim.startHour"
+                                        ng-options="hour as 'от ' + hour + ':00' for hour in hours"
+                                        ng-cloak>
+                                    <option value="">Время от</option>
+                                </select>
+                            </div>
+                            <div class="time-end">
+                                <div class="value"
+                                     ng-if="!claimsEdited"
+                                     ng-cloak>
+
+                                    {{ 'до ' + claim.endHour + ':00' }}
+                                </div>
+                                <select class="custom-select"
+                                        ng-if="claimsEdited"
+                                        ng-model="claim.endHour"
+                                        ng-options="hour as 'до ' + hour + ':00' for hour in hours"
+                                        ng-cloak>
+                                    <option value="">Время до</option>
+                                </select>
+                            </div>
+                            <div class="claim__remove">
+                                <div ng-show="claimsEdited"
+                                     ng-cloak>
+                                    <img width="14px" src="/img/profile/delete.svg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="claim-btns">
+                    <div class="claim-btns__add claim-btns__btn" ng-if="!claimsEdited">
+                        <div class="claim-btns__add-text">+</div>
+                    </div>
+                    <div class="claim-btns__cancel claim-btns__btn" ng-if="claimsEdited">
+                        <div class="claim-btns__cancel-text">CANCEL</div>
+                    </div>
+                    <div class="claim-btns__ok claim-btns__btn" ng-if="claimsEdited">
+                        <div class="claim-btns__ok-text">OK</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{user.claims}}
+{{datePickersConfig.editable}}
 <dir-profile></dir-profile>

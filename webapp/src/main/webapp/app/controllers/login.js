@@ -55,16 +55,16 @@ define(
 
                         login(data)
                             .then(function (data) {
-
+                                debugger;
                                 if (typeof data !== 'object') {
                                     $scope.error = 'Something went wrong';
                                     console.error('login: something wrong with response');
                                     return;
                                 }
 
-                                if (data.error === true || data.code) {
-                                    $scope.error = 'Login error. Code: ' + data.code;
-                                    console.error('login: request error code', data.code);
+                                if (data.error === true) {
+                                    $scope.error = 'Login error. Code: ' + data.payload;
+                                    console.error('login: request error code', data.payload);
                                     return;
                                 }
 

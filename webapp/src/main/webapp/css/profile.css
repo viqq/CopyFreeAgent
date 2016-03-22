@@ -1,20 +1,406 @@
-#profile img.userpic  {
-    width: 250px;
-    float: right;
+#profile {
+    background-color: #eeeeee;
 }
 
-#profile > div {
-    padding: 30px;
+#profile
+.header {
+    background-color: #181b1f;
+    height: auto;
 }
 
-#profile form {
-    margin-top: 20px;
+#profile
+.header img {
+    height: 100%;
+    display: block;
 }
 
-#profile form input {
+#profile
+.header .logo img {
+    display: block;
+}
+
+#profile
+.header {
+    display: flex;
+    padding: 0px 60px;
+    justify-content: space-between;
+    position: relative;
+    height: 60px;
+    align-items: center;
+}
+
+#profile
+.header .right-group {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+#profile
+.header .email {
+    color: white;
+}
+
+#profile
+.header .right-group .userbar {
+    display: flex;
+    align-items: center;
+    padding-left: 0px;
+}
+
+#profile
+.header .userbar .userpic {
+    padding: 0px 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#profile
+.header .userbar .userpic > div {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(/api/user/getImage/1);
+}
+
+#profile
+.header .right-group > * {
+    padding: 0px 20px;
+    height: 100%;
+    display: flex;
+}
+
+#profile
+.header .right-group .logout {
+    padding-right: 0px;
+}
+
+#profile
+.header .selected {
+    position: relative;
+}
+
+#profile
+.header .selected:after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    border-bottom: 4px #ff1342 solid;
+    box-sizing: border-box;
+}
+
+#profile .content
+.cover {
+    background-color: #484848;
+    background-image: url(http://1.bp.blogspot.com/-NYGL8rPRMeA/Ua3FFPY5baI/AAAAAAAAAKE/Fx5TmmmFxm0/s1600/facebook-cover-photo-8.jpg);
+    padding-top: 20%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+#profile .content
+.column {
+    padding: 0 60px;
+    min-height: 240px;
+    max-width: 1060px;
+    margin: auto;
+    margin-top: -40px;
+    position: relative;
+}
+
+#profile .content
+.info {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    margin-bottom: 30px;
+}
+
+#profile .content .column
+.userpic {
+    border: 1px #e0e0e0 solid;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(/api/user/getImage/1);
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+    margin-right: 40px;
+}
+
+#profile .content .column
+.column {
+    background-color: white;
+}
+
+#profile .content .column
+.info__main {
+    padding: 40px;
+    background-color: white;
+    display: flex;
+}
+
+#profile .content .column
+.heading {
+    font-size: 1.25em;
+    font-family: RobotoMedium;
     margin-bottom: 20px;
 }
 
-#profile h1  {
-    margin-top: 0;
+#profile .content .column
+.sports {
+    display: flex;
+    margin-bottom: 20px;
+    font-family: RobotoMedium;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+#profile .content .column
+.sports > div {
+    margin-right: 10px;
+}
+
+#profile .content .column
+.sports > div:last-child {
+    margin-right: 0px;
+}
+
+#profile .content .column
+.edit-btn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    background: #f0f0f0 url(/img/profile/edit_grey.svg) no-repeat center;
+    background-size: 20px;
+    border: 1px #e0e0e0 solid;
+    border-radius: 50%;
+    margin-left: 40px;
+    cursor: pointer;
+}
+
+#profile .content .column
+.info__contacts {
+    border-top: 1px #f0f0f0 solid;
+    background-color: white;
+    font-size: 0.75em;
+    display: flex;
+    color: #999999;
+    line-height: 3;
+    padding: 0 40px;
+    font-weight: bold;
+}
+
+#profile .content .column
+.info__contacts > * {
+    margin-right: 60px;
+}
+
+#profile .content .column
+.info__contacts > *:last-child {
+    margin-right: 0px;
+}
+
+#profile .content .column .claims-wrapper {
+    padding: 20px 40px 0px;
+    background-color: #2b3035;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+}
+
+#profile .content .column .claims-wrapper
+.title {
+    display: flex;
+    align-items: center;
+}
+
+#profile .content .column .claims-wrapper
+.fa-text {
+    font-family: norwester;
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.25em;
+}
+
+#profile .content .column .claims-wrapper
+.fa-text span {
+    font-family: norwester;
+    color: #fa2044;
+}
+
+#profile .content .column .claims-wrapper
+.divider, .hint {
+    color: #51565b;
+    font-size: .75em;
+    font-family: RobotoMedium;
+}
+
+#profile .content .column .claims-wrapper
+.divider {
+    margin: 0px 20px;
+}
+
+#profile .content .column .claims-wrapper
+.title-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+#profile .content .column .claims-wrapper
+.edit-btn {
+    margin-left: 0px;
+    background-color: #3b444f;
+    background-image: url(/img/profile/edit_white.svg);
+    border: none;
+}
+
+#profile .content .column .claims-wrapper
+.list-wrapper {
+    width: 100%;
+    border-collapse: collapse;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+#profile .content .column .claims-wrapper
+.claim {
+    display: flex;
+    border-bottom: 1px #404449 dashed;
+    margin-bottom: 1px;
+    height: 2.75em;
+}
+
+#profile .content .column .claims-wrapper
+.claim:last-child {
+    border: none;
+}
+
+#profile .content .column .claims-wrapper
+.claim > * {
+    display: flex;
+    padding: 10px 0px;
+    align-items: flex-end;
+}
+
+#profile .claims-wrapper
+.datepicker .field span {
+    color: white;
+}
+
+#profile .claims-wrapper
+.claim .value {
+    color: white;
+    font-size: 0.875em;
+    padding-bottom: 1px;
+    padding-left: 4px;
+}
+
+#profile .content .column .claims-wrapper .claim
+.date {
+    width: 45%;
+}
+
+#profile .content .column .claims-wrapper .claim
+.claim__sport {
+    width: 20%;
+}
+
+#profile .content .column .claims-wrapper .claim
+.time-start {
+    width: 15%;
+}
+
+#profile .content .column .claims-wrapper .claim
+.time-end {
+    width: 15%;
+}
+
+
+.claim-btns__btn {
+    width: 60px;
+    height: 60px;
+    color: white;
+
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    margin-top: -30px;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.23);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.23);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.23);
+}
+
+.claim-btns__add {
+    background-color: #fa2044;
+    font-size: 1.5em;
+}
+
+.claim-btns__ok {
+    background-color: #139cb5;
+}
+
+.claim-btns__cancel {
+    width: auto;
+    border-radius: 30px;
+    padding: 0px 30px;
+    background-color: #353d48;
+    margin-right: 20px;
+}
+
+.claim-btns__add-text {
+    display: flex;
+}
+
+.claim-btns {
+    height: 0px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 27px;
+}
+
+.claim__remove {
+    width: 5%;
+    justify-content: flex-end;
+    padding-right: 11px !important;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+
+
+.custom-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    outline: none;
+    font-family: RobotoLight;
+    color: white;
+    font-size: .875em;
+    letter-spacing: 0.1em;
+    background: url(/img/icons/arrow_small_bottom.svg) no-repeat right center;
+    background-size: 8px 8px;
+    border-bottom: 1px #b0b0b0 solid;
+}
+
+.custom-select option {
+    color: black;
+}
+
+.custom-select::-ms-expand {
+    display: none;
 }

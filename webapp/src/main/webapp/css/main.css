@@ -3,15 +3,18 @@ body,
 .view,
 .view > div {
     height: 100%;
-
 }
 
-html,
-body,
-.view {
-    min-width: 320px;
-    min-height: 480px;
+@media (max-height: 481px) or (max-width: 321px) {
+    html,
+    body,
+    .view {
+        min-width: 320px;
+        min-height: 480px;
+    }
 }
+
+
 
 body {
     font-family: RobotoLight, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -20,7 +23,7 @@ body {
     margin: 0px;
     position: relative;
     min-height: 100%;
-    background-image: url(/img/hex-loader.gif);
+    background-image: url(/img/hex_loader.gif);
     background-position: center;
     background-repeat: no-repeat;
     background-color: white;
@@ -46,6 +49,14 @@ span {
     font-size: 1em;
     display: inline-block;
     letter-spacing: 0.1em;
+}
+
+img[src*=".svg"] {
+    height: 100%;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
 }
 
 .view {

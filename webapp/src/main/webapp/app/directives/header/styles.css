@@ -2,7 +2,7 @@
     padding: 60px 60px 0px;
     width: 100%;
     box-sizing: border-box;
-    height: initial;
+    height: auto;
 }
 
 #header #logo > img:hover {

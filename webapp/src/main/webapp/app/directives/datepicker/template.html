@@ -1,0 +1,89 @@
+<div class="datepicker">
+    <div class="overlay" ng-show="isVisible" ng-click="submit()"></div>
+    <div class="field" ng-class="{'editable': config.editable}" ng-click="openCalendar()">
+        <img class="icon" src="/img/datepicker/calendar.svg" width="12px">
+        <div class="border-wrapper">
+            <div class="label">
+                <span ng-show="output.weekDays[0]">
+                    Всегда по
+                </span>
+                <span class="weekday first"
+                      ng-show="output.weekDays[0]">
+                    {{ (month[ output.weekDays[0] - 1 < 0 ? 6 : output.weekDays[0] - 1 ][0].date | date :'EEE') }}
+                </span>
+                <span class="weekday"
+                      ng-show="output.weekDays[1] && !output.dates[0]">
+                    {{ ', ' + (month[ output.weekDays[1] - 1 < 0 ? 6 : output.weekDays[1] - 1 ][0].date | date :'EEE') }}
+                </span>
+                <span ng-show="(output.weekDays[1] && output.dates[0]) || (output.weekDays[2] && !output.dates[0])">
+                    , ...
+                </span>
+                <span class="ampersand"
+                      ng-show="output.weekDays[0] && output.dates[0]">
+                    &
+                </span>
+                <span class="day first"
+                      ng-show="output.dates[0]">
+                    {{ datesInField[0] | date : 'shortDate' }}
+                </span>
+                <span class="day"
+                      ng-show="!output.weekDays[0] && output.dates[1]">
+                    {{ ', ' + (datesInField[1] | date : 'shortDate') }}
+                </span>
+                <span ng-show="(output.weekDays[0] && output.dates[1]) || (!output.weekDays[0] && output.dates[2])">
+                    , ...
+                </span>
+                <span ng-show="!output.weekDays[0] && !output.dates[0]">
+                    {{config.label}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="calendar" ng-class="{'visible': isVisible}">
+        <div class="nav">
+            <div class="prev" ng-click="changeMonth(monthNum - 1)">
+                <img src="/img/datepicker/arrow_left.png">
+            </div>
+            <div class="curr">
+                {{ month[0][1].date | date :'MMM' }} {{ month[0][1].date | date :'yyyy' }}
+            </div>
+            <div class="next" ng-click="changeMonth(monthNum + 1)">
+                <img src="/img/datepicker/arrow_right.png">
+            </div>
+            <div class="legend">Всегда по</div>
+        </div>
+        <div class="month">
+            <div class="col"
+                 ng-repeat="weekDays in month track by $index"
+                 ng-class="{'selected': week[$index].isPicked}">
+                <div class="row weekday"
+                     ng-click="pickWeek(week[$index])">
+                    <div>
+                        <div>
+                            <div class="valing-wrapper">
+                                {{ week[$index].date | date :'EEE'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"
+                     ng-class="{'selected': day.isPicked, 'wrong-month': day.wrongMonth}"
+                     ng-repeat="day in weekDays track by $index"
+                     ng-click="pickDay(day)">
+                    <div>
+                        <div>
+                            <div class="valing-wrapper">
+
+                                {{ day.date && day.date.getDate() || ''}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="action-btns" ng-show="config.editable">
+            <div class="btn primary" ng-click="submit()">Принять</div>
+            <div class="btn" ng-click="reset()">Сбросить</div>
+        </div>
+    </div>
+</div>

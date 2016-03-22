@@ -8,6 +8,10 @@
             <br>
             <br>
 
+            <!--<dir-datepicker config="datePickerData"></dir-datepicker>-->
+            <br>
+            <br>
+
             <h1>Profile data</h1>
             <a href="/edit">Edit</a>
             <br>
@@ -26,7 +30,7 @@
             <h1>Uppload new profile image</h1>
             <div>
                 <form id="userpic" ng-submit="uploadImage()">
-                    <input type="file" name="file">
+                    <input type="file" name="file" ng-model="imageInput">
                     <br>
                     <input type="submit">
                 </form>
