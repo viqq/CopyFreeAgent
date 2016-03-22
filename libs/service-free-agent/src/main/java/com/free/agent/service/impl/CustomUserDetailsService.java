@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserDao userDao;
 
-    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
+    @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         com.free.agent.model.User domainUser = userDao.findByEmail(email);
         if (domainUser == null) {

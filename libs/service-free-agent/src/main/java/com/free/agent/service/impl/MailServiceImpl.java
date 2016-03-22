@@ -11,15 +11,19 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Service("mailService")
 public class MailServiceImpl implements MailService {
     private static final Logger LOGGER = Logger.getLogger(MailServiceImpl.class);
+    private ExecutorService executor = Executors.newFixedThreadPool(4);
 
     @Autowired
     private MailSender mailSender;
 
     public void sendMail(final String to, final String subject, final String body) {
-        new Thread(new Runnable() {
+        executor.submit(new Runnable() {
             @Override
             public void run() {
                 LOGGER.info("sendMail start");
@@ -31,7 +35,6 @@ public class MailServiceImpl implements MailService {
                 //mailSender.send(message);
                 LOGGER.info("Email '" + subject + "' about '" + body + "' was sent to " + to);
             }
-        }).start();
-
+        });
     }
 }
