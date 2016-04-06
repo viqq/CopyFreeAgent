@@ -47,6 +47,16 @@ define(
                 });
 
                 angular.extend($scope, {
+                    profileClaims: {
+                        edited: {},
+                        statesCodes: [
+                            'default',
+                            'editing',
+                            'adding'
+                        ],
+                        state: 0
+                    },
+                    editedClaims: {},
                     claimsEdited: false,
                     datePickersConfig: {
                         label: 'Число',
@@ -54,18 +64,14 @@ define(
                         editable: false
                     },
                     editClaims: function() {
+                        angular.copy($scope.claims)
+
+                        $scope.profile.claims = $scope.profileClaims.statesCodes.indexOf()
+
                         $scope.claimsEdited = !$scope.claimsEdited;
                         $scope.datePickersConfig.editable = $scope.claimsEdited;
                     }
                 });
-
-                //$scope.datePickerData = {
-                //    label: 'Число',
-                //    pickedDates: [1452204000000],
-                //    pickedWeekDays: [1, 2],
-                //    isMonFirst: true,
-                //    editable: true
-                //}
             }
         ];
 

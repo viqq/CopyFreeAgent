@@ -55,8 +55,9 @@ define(
 
                         login(data)
                             .then(function (data) {
-                                debugger;
-                                if (typeof data !== 'object') {
+                                console.log(data);
+
+                                if (!data) {
                                     $scope.error = 'Something went wrong';
                                     console.error('login: something wrong with response');
                                     return;

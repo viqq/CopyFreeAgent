@@ -53,6 +53,7 @@ span {
 
 img[src*=".svg"] {
     height: 100%;
+    display: block;
 }
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
