@@ -1,0 +1,18 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="1" author="Create structure for tables">
+        <sqlFile path="/structure/init.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="2" author="Add default data">
+        <sqlFile path="/data/spots.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="/data/users.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="/data/user_sport.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="/data/skills.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+</databaseChangeLog>

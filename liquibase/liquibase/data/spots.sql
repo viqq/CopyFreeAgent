@@ -1,0 +1,11 @@
+INSERT INTO SPORT (SPORT_ID, NAME_EN, NAME_RU) VALUES (1, 'Football', 'Футбол');
+INSERT INTO SPORT (SPORT_ID, NAME_EN, NAME_RU) VALUES (2, 'Tennis', 'Теннис');
+INSERT INTO SPORT (SPORT_ID, NAME_EN, NAME_RU) VALUES (3, 'Basketball', 'Баскетбол');
+INSERT INTO SPORT (SPORT_ID, NAME_EN, NAME_RU) VALUES (4, 'Golf', 'Гольф');
+INSERT INTO SPORT (SPORT_ID, NAME_EN, NAME_RU) VALUES (5, 'Preferance', 'Преферанс');
+INSERT INTO SPORT (SPORT_ID, NAME_EN, NAME_RU) VALUES (6, 'Windsurfing', 'Виндсерфинг');
+INSERT INTO SPORT (SPORT_ID, NAME_EN, NAME_RU) VALUES (7, 'Diving', 'Дайвинг');
+INSERT INTO SPORT (SPORT_ID, NAME_EN, NAME_RU) VALUES (8, 'Crossfit', 'Кроссфит');
+INSERT INTO SPORT (SPORT_ID, NAME_EN, NAME_RU) VALUES (9, 'Ski', 'Лыжи');
+INSERT INTO SPORT (SPORT_ID, NAME_EN, NAME_RU) VALUES (10, 'Skydiving', 'Парашютный спорт');
+

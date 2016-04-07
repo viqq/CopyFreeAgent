@@ -16,6 +16,7 @@ import com.free.agent.util.FunctionUtils;
 import com.free.agent.util.LinkUtils;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -92,7 +92,7 @@ public class MessageServiceImpl implements MessageService {
             message.setAuthorId(userDao.findByEmail(principal.getName()).getId());
         }
 
-        message.setTimeOfCreate(new Date());
+        message.setTimeOfCreate(DateTime.now().toDate());
         User u = userDao.find(messageDto.getId());
         message.setUser(u);
         List<Message> list = u.getMessages();
@@ -125,7 +125,7 @@ public class MessageServiceImpl implements MessageService {
         User u = new User();
         u.setEmail(email);
         u.setRole(Role.ROLE_NOT_ACTIVATED);
-        u.setDateOfRegistration(new Date());
+        u.setDateOfRegistration(DateTime.now().toDate());
         u.setHash(EncryptionUtils.getRandomString());
         return userDao.create(u);
     }
@@ -135,7 +135,7 @@ public class MessageServiceImpl implements MessageService {
     public void updateMessageStatus(Long id, String email) {
         Message message = messageDao.find(id);
         if (message.getUser().getEmail().equals(email)) {
-            message.setTimeOfRead(new Date());
+            message.setTimeOfRead(DateTime.now().toDate());
             messageDao.update(message);
         }
     }

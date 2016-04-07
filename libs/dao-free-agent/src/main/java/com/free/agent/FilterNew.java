@@ -98,7 +98,7 @@ public final class FilterNew {
     }
 
     private Date validValue(Long dateOfBirthFrom) {
-        return dateOfBirthFrom == null ? null : new Date(dateOfBirthFrom);
+        return dateOfBirthFrom == null ? null : new DateTime(dateOfBirthFrom).toDate();
     }
 
     private String validValue(String value) {

@@ -29,6 +29,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,7 +50,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -286,7 +286,7 @@ public class UserServiceImpl implements UserService {
         user.setDescription(userDto.getDescription());
         user.setCity(userDto.getCity());
         user.setCountry(userDto.getCountry());
-        user.setDateOfBirth(userDto.getDateOfBirth() == null ? null : new Date(userDto.getDateOfBirth()));
+        user.setDateOfBirth(userDto.getDateOfBirth() == null ? null : new DateTime(userDto.getDateOfBirth()).toDate());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setGender(userDto.getGender() == null ? null : Gender.valueOf(userDto.getGender()));

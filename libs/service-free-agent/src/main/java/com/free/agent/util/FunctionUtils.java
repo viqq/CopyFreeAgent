@@ -161,8 +161,8 @@ public final class FunctionUtils {
         User user = new User();
         user.setEmail(profile.getEmail());
         user.setFirstName(profile.getFirstName());
-        user.setDateOfRegistration(new Date());
-        user.setLastActivity(new Date());
+        user.setDateOfRegistration(DateTime.now().toDate());
+        user.setLastActivity(DateTime.now().toDate());
         user.setCity(profile.getCity());
         user.setCountry(profile.getCountry());
         user.setLastName(profile.getLastName());

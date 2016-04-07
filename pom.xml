@@ -9,6 +9,7 @@
         <module>webapp</module>
         <module>libs</module>
         <module>free-agent-tests</module>
+        <module>liquibase</module>
     </modules>
     <packaging>pom</packaging>
     <name>${project.readable.name} :: Root</name>

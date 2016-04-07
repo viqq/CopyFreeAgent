@@ -5,6 +5,7 @@ import com.free.agent.dao.UserDao;
 import com.free.agent.exception.EmailDidNotRegisteredException;
 import com.free.agent.util.EncryptionUtils;
 import com.free.agent.util.FunctionUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
 
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
@@ -27,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (domainUser == null) {
             throw new EmailDidNotRegisteredException(email + " didn't register yet");
         }
-        domainUser.setLastActivity(new Date());
+        domainUser.setLastActivity(DateTime.now().toDate());
         userDao.update(domainUser);
 
         return new User(domainUser.getEmail(), EncryptionUtils.decrypt(domainUser.getPassword()),
