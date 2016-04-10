@@ -61,6 +61,19 @@ define(
                         isMonFirst: true,
                         editable: false
                     },
+                    addClaim: function() {
+                        angular.copy($scope.user.claims, $scope.claimsCache);
+
+                        $scope.user.claims.push({
+                            calendar: {
+                                dates: [],
+                                weekDays: []
+                            },
+                            startHour: null,
+                            endHour: null,
+                            sportId: null
+                        });
+                    },
                     editClaims: function() {
                         angular.copy($scope.user.claims, $scope.claimsCache);
 
@@ -77,6 +90,9 @@ define(
 
                         $scope.claimsEdited = false;
                         $scope.datePickersConfig.editable = $scope.claimsEdited;
+                    },
+                    deleteClaim: function(index) {
+                        $scope.user.claims.splice(index, 1);
                     }
                 });
 

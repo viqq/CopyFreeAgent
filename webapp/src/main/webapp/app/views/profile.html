@@ -87,15 +87,15 @@
                                 <div class="value"
                                      ng-if="!claimsEdited"
                                      ng-cloak>
-                                    {{ sports[ claim.sportId ].name }}
+                                    {{ sports[ claim.sportId ].name || 'Выберите спорт' }}
                                 </div>
-                                <select ng-if="claimsEdited"
-                                        class="custom-select"
+                                <select class="custom-select"
+                                        ng-if="claimsEdited"
                                         ng-model="claim.sportId"
                                         ng-options="sport.id as sport.name for sport in sports"
                                         ng-cloak>
 
-                                    <option value="">Выберите спорт</option>
+                                    <option disabled selected value="">Выберите спорт</option>
                                 </select>
                             </div>
                             <div class="date">
@@ -106,18 +106,14 @@
                                      ng-if="!claimsEdited"
                                      ng-cloak>
 
-                                    {{ 'от ' + claim.startHour + ':00' }}
+                                    {{ claim.startHour !== null ? 'c ' + claim.startHour + ':00' : 'Время от'}}
                                 </div>
                                 <select class="custom-select"
                                         ng-if="claimsEdited"
                                         ng-model="claim.startHour"
+                                        ng-options="hour as 'от ' + hour + ':00' for hour in hours.slice( 0, hours.indexOf(claim.endHour) )"
                                         ng-cloak>
-                                    <option value="">Время от</option>
-                                    <option ng-repeat="hour in hours"
-                                            value="{{hour}}"
-                                            ng-if="!claim.endHour || hour < claim.endHour">
-                                        {{ 'от ' + hour + ':00' }}
-                                    </option>
+                                    <option disabled selected value="">Время от</option>
                                 </select>
                             </div>
                             <div class="time-end">
@@ -125,22 +121,19 @@
                                      ng-if="!claimsEdited"
                                      ng-cloak>
 
-                                    {{ 'до ' + claim.endHour + ':00' }}
+                                    {{ claim.endHour !== null ?  'до ' + claim.endHour + ':00' : 'Время до' }}
                                 </div>
                                 <select class="custom-select"
                                         ng-if="claimsEdited"
                                         ng-model="claim.endHour"
+                                        ng-options="hour as 'до ' + hour + ':00' for hour in hours.slice(  hours.indexOf(claim.startHour) +1, hours.length - 1 )"
                                         ng-cloak>
-                                    <option value="">Время до</option>
-                                    <option ng-repeat="hour in hours"
-                                            value="{{hour}}"
-                                            ng-if="!claim.startHour || hour > claim.startHour">
-                                        {{ 'до ' + hour + ':00' }}
-                                    </option>
+                                    <option disabled selected value="" >Время до</option>
                                 </select>
                             </div>
                             <div class="claim__remove">
                                 <div ng-show="claimsEdited"
+                                     ng-click="deleteClaim($index)"
                                      ng-cloak>
                                     <img width="24px" src="/img/profile/delete.svg">
                                 </div>
@@ -149,7 +142,7 @@
                     </div>
                 </div>
                 <div class="claim-btns">
-                    <div class="claim-btns__add claim-btns__btn" ng-if="!claimsEdited">
+                    <div class="claim-btns__add claim-btns__btn" ng-if="!claimsEdited" ng-click="addClaim()">
                         <div class="claim-btns__add-text">+</div>
                     </div>
                     <div class="claim-btns__cancel claim-btns__btn" ng-if="claimsEdited" ng-click="revertClaims()">
