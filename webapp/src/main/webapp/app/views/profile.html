@@ -144,10 +144,10 @@
                     <div class="claim-btns__add claim-btns__btn" ng-if="!claimsEdited">
                         <div class="claim-btns__add-text">+</div>
                     </div>
-                    <div class="claim-btns__cancel claim-btns__btn" ng-if="claimsEdited">
+                    <div class="claim-btns__cancel claim-btns__btn" ng-if="claimsEdited" ng-click="revertClaims()">
                         <div class="claim-btns__cancel-text">CANCEL</div>
                     </div>
-                    <div class="claim-btns__ok claim-btns__btn" ng-if="claimsEdited">
+                    <div class="claim-btns__ok claim-btns__btn" ng-if="claimsEdited" ng-click="confirmClaims()">
                         <div class="claim-btns__ok-text">OK</div>
                     </div>
                 </div>
@@ -156,5 +156,6 @@
     </div>
 </div>
 {{user.claims}}
+{{claimsCache}}
 {{datePickersConfig.editable}}
 <dir-profile></dir-profile>

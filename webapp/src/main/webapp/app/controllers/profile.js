@@ -49,14 +49,12 @@ define(
                 angular.extend($scope, {
                     profileClaims: {
                         edited: {},
-                        statesCodes: [
-                            'default',
-                            'editing',
-                            'adding'
-                        ],
+                        STATE_DEFAULT: 0,
+                        STATE_EDITED: 1,
+                        STATE_ADDING: 2,
                         state: 0
                     },
-                    editedClaims: {},
+                    claimsCache: [],
                     claimsEdited: false,
                     datePickersConfig: {
                         label: 'Число',
@@ -64,11 +62,20 @@ define(
                         editable: false
                     },
                     editClaims: function() {
-                        angular.copy($scope.claims)
+                        angular.copy($scope.user.claims, $scope.claimsCache);
 
-                        $scope.profile.claims = $scope.profileClaims.statesCodes.indexOf()
+                        $scope.claimsEdited = true;
+                        $scope.datePickersConfig.editable = $scope.claimsEdited;
+                    },
+                    confirmClaims: function() {
+                        $scope.claimsEdited = false;
+                        $scope.datePickersConfig.editable = $scope.claimsEdited;
+                    },
+                    revertClaims: function() {
+                        $scope.user.claims = $scope.claimsCache;
+                        $scope.claimsCache = [];
 
-                        $scope.claimsEdited = !$scope.claimsEdited;
+                        $scope.claimsEdited = false;
                         $scope.datePickersConfig.editable = $scope.claimsEdited;
                     }
                 });
