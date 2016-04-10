@@ -79,6 +79,8 @@ define(
                         $scope.datePickersConfig.editable = $scope.claimsEdited;
                     }
                 });
+
+
             }
         ];
 

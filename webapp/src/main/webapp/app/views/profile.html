@@ -111,9 +111,13 @@
                                 <select class="custom-select"
                                         ng-if="claimsEdited"
                                         ng-model="claim.startHour"
-                                        ng-options="hour as 'от ' + hour + ':00' for hour in hours"
                                         ng-cloak>
                                     <option value="">Время от</option>
+                                    <option ng-repeat="hour in hours"
+                                            value="{{hour}}"
+                                            ng-if="!claim.endHour || hour < claim.endHour">
+                                        {{ 'от ' + hour + ':00' }}
+                                    </option>
                                 </select>
                             </div>
                             <div class="time-end">
@@ -126,9 +130,13 @@
                                 <select class="custom-select"
                                         ng-if="claimsEdited"
                                         ng-model="claim.endHour"
-                                        ng-options="hour as 'до ' + hour + ':00' for hour in hours"
                                         ng-cloak>
                                     <option value="">Время до</option>
+                                    <option ng-repeat="hour in hours"
+                                            value="{{hour}}"
+                                            ng-if="!claim.startHour || hour > claim.startHour">
+                                        {{ 'до ' + hour + ':00' }}
+                                    </option>
                                 </select>
                             </div>
                             <div class="claim__remove">
