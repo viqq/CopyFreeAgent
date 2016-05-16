@@ -1,0 +1,243 @@
+#search-user {
+  width: 920px;
+  margin: 30px auto 40px auto;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .39);
+  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, .39);
+  box-shadow: 0 0 1px rgba(0, 0, 0, .39);
+}
+
+#search-user #page-title {
+  color: #fa2044;
+  text-align: center;
+  font-size: 36px;
+  font-family: "norwester";
+  letter-spacing: .05em;
+  padding: 40px 0;
+}
+
+#search-user #search-form {
+  background-color: #f5f5f5;
+}
+
+#search-user .sub-title {
+  height: 20px;
+  border-bottom: 1px solid #e7e7e7;
+  padding-left: 40px;
+  margin-bottom: 15px;
+}
+
+#search-form .sub-title > span {
+  font-family: "RobotoLight";
+  font-size: 12px;
+  margin-top: 10px;
+  background-color: #f5f5f5;
+  line-height: 20px;
+  padding: 0 5px;
+}
+
+#search-form .container {
+  padding: 10px 40px;
+  box-sizing: border-box;
+}
+
+#search-form select, #search-form input[type="text"] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  border-bottom: 1px solid #cdcdcd;
+  font-size: 14px;
+  font-family: "RobotoRegular";
+  line-height: 21px;
+  color: #333;
+  letter-spacing: .02em;
+  padding: 0 35px 0 10px;
+  -moz-outline: none;
+  -webkit-outline: none;
+  outline: none;
+  cursor: pointer;
+}
+
+#search-form input[type="text"] {
+  margin-right: 20px;
+}
+
+input[type="text"]#sports {
+  width: 100%;
+  padding: 0;
+}
+
+#search-form .select-container {
+  display: inline-block;
+  position: relative;
+  margin-right: 20px;
+}
+
+#search-form .button-container {
+  float: right;
+  margin-top: -10px;
+}
+
+#search-form .action-button {
+  height: 36px;
+  padding: 0 20px 0 45px;
+  border-radius: 18px;
+  border: 0;
+  font-family: "RobotoMedium";
+  color: #666666;
+  font-size: 12px;
+  background: transparent url("../img/search/close.png") 20px center no-repeat;
+  background-size: 14px;
+  cursor: pointer;
+}
+
+#search-form .search-button {
+  color: #ffffff;
+  background: #139cb5 url("../img/search/search_whight.png") 20px center no-repeat;
+  background-size: 14px;
+}
+
+#search-form .select-container:after {
+  content: '▼';
+  font-size: 10px;
+  color: #b0b0b0;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  pointer-events: none;
+}
+
+#search-user .search-result {
+  padding: 30px 40px;
+}
+
+.search-result .avatar {
+  display: inline-block;
+  width: 85px;
+  height: 85px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid #e3e3e3;
+  margin-right: 20px;
+}
+
+.search-result .avatar img {
+  max-width: 100%;
+}
+
+.search-result .user-info {
+  position: relative;
+}
+
+.user-info .main-info {
+  padding-top: 10px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.main-info .name {
+  font-size: 20px;
+  font-family: "RobotoMedium";
+  letter-spacing: .02em;
+}
+
+.user-info .mail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background: #f0f0f0 url("../img/search/mail.png") center no-repeat;
+  background-size: 15px;
+  border: 1px solid #e2e2e2;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.main-info .location, .main-info .sport-short span {
+  color: #999;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: "RobotoMedium";
+}
+
+.main-info .sport-short span {
+  color: #333;
+}
+
+.sport-short .pro:after {
+  content: ' / Pro';
+  color: #fa2044;
+}
+
+.sport-short .middle:after {
+  content: ' / Middle';
+  color: #2196f3;
+}
+
+.sport-short .beginner:after {
+  content: ' / Begginer';
+  color: #00b599;
+}
+
+.search-result .table-title {
+  display: inline-block;
+  width: 110px;
+  float: left;
+  text-transform: uppercase;
+  font-family: "RobotoRegular";
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: .02em;
+  color: #999;
+  padding: 10px 0;
+}
+
+.search-result .timetable-container{
+  border-top: 1px dashed rgba(153,153,153, .56);
+}
+
+.search-result tr td{
+  border-top: 1px dashed rgba(153,153,153, .56);
+}
+
+.search-result table tr:first-child td{
+  border-top: 0;
+}
+
+.search-result table {
+  display: inline-table;
+  width: calc(100% - 110px);
+  font-family: "RobotoRegular";
+  font-size: 14px;
+  line-height: 21px;
+}
+.search-result td > span:before{
+  content: ' & ';
+  color: #fa2044;
+}
+.search-result td{
+  padding: 10px 0;
+}
+
+.search-result td > span:first-child:before{
+  content: none;
+}
+
+.search-result tr td:nth-child(1) {
+  width: 25%;
+}
+.search-result tr td:nth-child(2) {
+  width: 55%;
+}
+.search-result tr td:nth-child(3), .search-result tr td:nth-child(4){
+  min-width: 10%;
+}
+
+.search-result  .timetable-container{
+  border-bottom: 1px solid rgba(153,153,153, .56);
+}

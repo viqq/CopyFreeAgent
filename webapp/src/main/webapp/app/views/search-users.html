@@ -1,2 +1,240 @@
-<dir-header></dir-header>
-<dir-search-users></dir-search-users>
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+
+<!--<head>-->
+  <!--<meta charset="utf-8">-->
+  <!--<meta name="viewport" content="initial-scale=1">-->
+  <!--<link rel="stylesheet" href="../../css/main.css">-->
+  <!--<link rel="stylesheet" href="../../css/fonts.css">-->
+  <link rel="stylesheet" href="../../css/search-user.css">
+  <!--<link rel="stylesheet" href="../directives/header/styles.css">-->
+  <!--<link rel="stylesheet" href="/css/animations-route.css">-->
+
+  <!--<title>Free Agent</title>-->
+  <!--<link rel="shortcut icon" href="../../img/favicon.ico" type="image/ico">--><!---->
+  <!--<base href="/">-->
+<!--</head>-->
+<!--<body>-->
+<div id="header">
+  <a id="logo" href="/" class="">
+    <img src="../../img/logo.svg">
+  </a>
+
+  <a class="link" href="/login" class="" ng-hide="isLoggedIn">
+    <div class="icon"></div>
+    <span>LOGIN</span>
+  </a>
+  <a class="link"
+     href=""
+     class=""
+     ng-show="isLoggedIn"
+     ng-click="logoutHandler()">
+    <div class="icon"></div>
+    <span>LOGOUT</span>
+  </a>
+</div>
+<div id="search-user">
+  <div id="page-title">Search free agent</div>
+  <div id="search-form">
+    <div class="sub-title">
+      <span>Личные данные</span>
+    </div>
+    <div class="container">
+      <p>
+      <div class="select-container">
+        <select name="city">
+          <option value="" selected disabled style="display: none">город</option>
+          <option value="Днепропетровск">Днепропетровск</option>
+          <option value="Киев">Киев</option>
+          <option value="Одесса">Одесса</option>
+        </select>
+      </div>
+      <div class="select-container">
+        <select name="country">
+          <option value="" selected disabled style="display: none">странна</option>
+          <option value="Ukraine">Украина</option>
+          <option value="Bolgari">Болгария</option>
+          <option value="Poland">Польша</option>
+        </select>
+      </div>
+      <div class="select-container">
+        <select name="fromAge">
+          <option value="" selected disabled style="display: none;">Возраст от</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+          <option value="32">32</option>
+          <option value="33">33</option>
+          <option value="34">34</option>
+          <option value="35">35</option>
+          <option value="36">36</option>
+          <option value="37">37</option>
+          <option value="38">38</option>
+          <option value="39">39</option>
+          <option value="40">40</option>
+        </select>
+      </div>
+      <div class="select-container">
+        <select name="toAge">
+          <option value="" selected disabled style="display: none">Возраст до</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+          <option value="32">32</option>
+          <option value="33">33</option>
+          <option value="34">34</option>
+          <option value="35">35</option>
+          <option value="36">36</option>
+          <option value="37">37</option>
+          <option value="38">38</option>
+          <option value="39">39</option>
+          <option value="40">40</option>
+        </select>
+      </div>
+      </p>
+      <p>
+        <input type="text" placeholder="Имя">
+        <input type="text" placeholder="Фамилия">
+      </p>
+    </div>
+    <div class="sub-title">
+      <span>Виды спорта</span>
+    </div>
+    <div class="container">
+      <input id="sports" type="text">
+    </div>
+    <div class="sub-title">
+      <span>Free agent</span>
+    </div>
+    <div class="container">
+        <div class="select-container">
+            <dir-datepicker config="datePickersConfig" picked="claim.calendar"></dir-datepicker>
+        </div>
+      <div class="select-container">
+        <select name="timeFrom" id="">
+          <option value="" selected disabled style="display:none">Свободен с</option>
+          <option value="1">01-00</option>
+          <option value="2">02-00</option>
+          <option value="3">03-00</option>
+          <option value="4">04-00</option>
+          <option value="5">05-00</option>
+          <option value="6">06-00</option>
+          <option value="7">07-00</option>
+          <option value="8">08-00</option>
+          <option value="9">09-00</option>
+        </select>
+      </div>
+      <div class="select-container">
+        <select name="timeTo">
+          <option value="" disabled selected style="display: none;">Свободен до</option>
+          <option value="1">01-00</option>
+          <option value="2">02-00</option>
+          <option value="3">03-00</option>
+          <option value="4">04-00</option>
+          <option value="5">05-00</option>
+          <option value="6">06-00</option>
+          <option value="7">07-00</option>
+          <option value="8">08-00</option>
+          <option value="9">09-00</option>
+        </select>
+      </div>
+      <div class="button-container">
+        <button class="action-button">Сбросить</button>
+        <button class="action-button search-button">Найти</button>
+      </div>
+    </div>
+  </div>
+  <div class="search-result">
+    <div class="user-info">
+      <div class="avatar">
+        <img src="../../img/search/useravatar.png" alt="">
+      </div>
+      <div class="main-info">
+        <div class="name">Warior, 26 лет</div>
+        <div class="location">Украина, Днепропетровск</div>
+        <div class="sport-short">
+          <span class="pro">Плавание</span>
+          <span class="middle">Виндсерфинг</span>
+          <span class="beginner">Скайдайвинг</span>
+        </div>
+      </div>
+      <button class="mail"></button>
+    </div>
+    <div class="timetable-container">
+      <div class="table-title">free agent</div>
+      <table>
+        <tr>
+          <td>Виндсерфинг</td>
+          <td><span>20.12.2015 </span><span>25.12.2015 </span></td>
+          <td>с 10:00</td>
+          <td>до 16:00</td>
+        </tr>
+        <tr>
+          <td>Художественная
+              гимнастика</td>
+          <td><span>20.12.2015 </span><span>25.12.2015 </span></td>
+          <td>с 10:00</td>
+          <td>до 16:00</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<!--</body>-->
+<!--</html>-->

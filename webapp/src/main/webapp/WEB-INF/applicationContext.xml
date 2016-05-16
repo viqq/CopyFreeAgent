@@ -22,10 +22,6 @@
 
     <context:property-placeholder location="classpath:networks/*.properties"/>
 
-    <cache:annotation-driven/>
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehcache"/>
-    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
-          p:configLocation="classpath:ehcache.xml" p:shared="true"/>
 
     <bean id="vk" class="com.free.agent.SocialNetworkProperty">
         <constructor-arg name="client_id" value="${vk.client.id}"/>
