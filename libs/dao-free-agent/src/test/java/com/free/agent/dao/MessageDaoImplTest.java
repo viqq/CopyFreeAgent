@@ -68,7 +68,7 @@ public class MessageDaoImplTest extends TestCase {
         messageDao.deleteAll();
         assertEquals(0, messageDao.findAll().size());
         messageDao.create(new EntityTemplate<>(new Message()).onProperties(authorId, title, text)
-                .createOne(5l, "Title", "Text"));
+                .createOne(5L, "Title", "Text"));
         assertEquals(1, messageDao.findAll().size());
         Message m = messageDao.findAll().get(0);
         m.setText("Text2");
@@ -93,15 +93,15 @@ public class MessageDaoImplTest extends TestCase {
 
     @Test
     public void findAllByAuthor() {
-        assertEquals(1, messageDao.findAllByAuthorEmailAndId(1l).size());
-        assertEquals(2, messageDao.findAllByAuthorEmailAndId(2l).size());
+        assertEquals(1, messageDao.findAllByAuthorEmailAndId(1L).size());
+        assertEquals(2, messageDao.findAllByAuthorEmailAndId(2L).size());
 
-        AssertCollectionContains.with(messageDao.findAllByAuthorEmailAndId(1l))
+        AssertCollectionContains.with(messageDao.findAllByAuthorEmailAndId(1L))
                 .onProperties(authorId, title, text)
                 .values(1L, "Learning", "Hello, I am learning")
                 .assertEquals();
 
-        AssertCollectionContains.with(messageDao.findAllByAuthorEmailAndId(2l))
+        AssertCollectionContains.with(messageDao.findAllByAuthorEmailAndId(2L))
                 .onProperties(authorId, title, text)
                 .values(2L, "Play", "I like play")
                 .values(2L, "Play", "I like play again")
@@ -110,16 +110,16 @@ public class MessageDaoImplTest extends TestCase {
 
     @Test
     public void findAllByReceiverAndAuthor() {
-        assertEquals(1, messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 1l).size());
-        assertEquals(2, messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 2l).size());
-        assertEquals(0, messageDao.findAllByReceiverAndAuthor(u.get(1).getId(), 1l).size());
+        assertEquals(1, messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 1L).size());
+        assertEquals(2, messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 2L).size());
+        assertEquals(0, messageDao.findAllByReceiverAndAuthor(u.get(1).getId(), 1L).size());
 
-        AssertCollectionContains.with(messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 1l))
+        AssertCollectionContains.with(messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 1L))
                 .onProperties(authorId, title, text)
                 .values(1L, "Learning", "Hello, I am learning")
                 .assertEquals();
 
-        AssertCollectionContains.with(messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 2l))
+        AssertCollectionContains.with(messageDao.findAllByReceiverAndAuthor(u.get(0).getId(), 2L))
                 .onProperties(authorId, title, text)
                 .values(2L, "Play", "I like play")
                 .values(2L, "Play", "I like play again")

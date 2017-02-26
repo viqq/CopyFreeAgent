@@ -4,7 +4,7 @@ import com.free.agent.Filter;
 import com.free.agent.FilterNew;
 import com.free.agent.model.User;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 
@@ -16,11 +16,11 @@ public interface UserDao extends GenericDao<User,Long> {
     User findByEmail(String email);
 
     @Deprecated
-    Collection<User> findByFilter(Filter filter);
+    List<User> findByFilter(Filter filter);
 
-    Collection<User> findByFilter(FilterNew filter);
+    List<User> findByFilter(FilterNew filter);
 
-    Collection<User> findByNotFilter(FilterNew filter, String city, String country, Integer startIndex);
+    List<User> findByNotFilter(FilterNew filter, String city, String country, Integer startIndex);
 
     User findByHash(String hash);
 

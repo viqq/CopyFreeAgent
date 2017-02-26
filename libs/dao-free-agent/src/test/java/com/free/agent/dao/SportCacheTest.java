@@ -2,8 +2,8 @@ package com.free.agent.dao;
 
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.model.Sport;
-import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

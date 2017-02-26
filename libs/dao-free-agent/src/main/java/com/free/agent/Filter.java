@@ -5,6 +5,7 @@ import com.free.agent.model.Sport_;
 import com.free.agent.model.User;
 import com.free.agent.model.User_;
 import com.free.agent.utils.PredicateBuilder;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.criteria.*;
@@ -13,6 +14,7 @@ import java.util.Date;
 /**
  * Created by antonPC on 03.07.15.
  */
+@Data
 public final class Filter {
     //todo add ability to many sports
     private String sport;
@@ -38,47 +40,7 @@ public final class Filter {
                 .buildWithAndConjunction();
     }
 
-    public String getSport() {
-        return sport;
-    }
-
-    public void setSport(String sport) {
-        this.sport = sport;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Date getDateOfBirthFrom() {
-        return dateOfBirthFrom;
-    }
-
-    public void setDateOfBirthFrom(Date dateOfBirthFrom) {
-        this.dateOfBirthFrom = dateOfBirthFrom;
-    }
-
-    public Date getDateOfBirthTo() {
-        return dateOfBirthTo;
-    }
-
-    public void setDateOfBirthTo(Date dateOfBirthTo) {
-        this.dateOfBirthTo = dateOfBirthTo;
-    }
-
-    public String validValue(String value) {
+    private String validValue(String value) {
         return value == null ? null : value.equals("") ? null : value;
     }
 }

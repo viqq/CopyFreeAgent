@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by antonPC on 11.07.15.
  */
 public abstract class AbstractTable<PK> implements Serializable, Cloneable {
+
     protected abstract PK getId();
 
     @Override

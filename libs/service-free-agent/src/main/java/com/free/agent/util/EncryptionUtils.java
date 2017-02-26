@@ -1,5 +1,7 @@
 package com.free.agent.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.security.crypto.codec.Hex;
@@ -22,6 +24,7 @@ import java.util.StringTokenizer;
 /**
  * Created by antonPC on 15.08.15.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EncryptionUtils {
     private static final Logger LOGGER = Logger.getLogger(EncryptionUtils.class);
 

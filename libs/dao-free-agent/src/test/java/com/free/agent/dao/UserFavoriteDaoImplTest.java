@@ -4,8 +4,6 @@ import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.model.User;
 import com.free.agent.utils.AssertCollectionContains;
 import com.free.agent.utils.EntityTemplate;
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.joda.time.DateTime;
@@ -20,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.free.agent.model.User_.*;
 
@@ -31,12 +30,6 @@ import static com.free.agent.model.User_.*;
 @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
 @ActiveProfiles("test")
 public class UserFavoriteDaoImplTest extends TestCase {
-    private final Function<User, Long> getId = new Function<User, Long>() {
-        @Override
-        public Long apply(User input) {
-            return input.getId();
-        }
-    };
 
     @Autowired
     private UserDao userDao;
@@ -105,8 +98,8 @@ public class UserFavoriteDaoImplTest extends TestCase {
     }
 
     private void assertSetEquals(Set<User> favorites, Set<User> user) {
-        Set<Long> favoritesIds = FluentIterable.from(favorites).transform(getId).toSet();
-        Set<Long> userIds = FluentIterable.from(user).transform(getId).toSet();
+        Set<Long> favoritesIds = favorites.stream().map(User::getId).collect(Collectors.toSet());
+        Set<Long> userIds = user.stream().map(User::getId).collect(Collectors.toSet());
         assertEquals(0, Sets.difference(favoritesIds, userIds).size());
     }
 
