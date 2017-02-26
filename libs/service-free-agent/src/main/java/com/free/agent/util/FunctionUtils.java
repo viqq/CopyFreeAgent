@@ -61,14 +61,19 @@ public final class FunctionUtils {
         public Day apply(Long input) {
             DateTime dateTime = new DateTime((long) input);
             String dayOfWeek = new DateTime().dayOfWeek().getAsText(Locale.ENGLISH).toUpperCase();
-            return new Day(dateTime.toDate(), DayOfWeek.valueOf(dayOfWeek));
+            Day day = new Day();
+            day.setDate(dateTime.toDate());
+            day.setDayOfWeek(DayOfWeek.valueOf(dayOfWeek));
+            return day;
         }
     };
 
     public static final Function<String, Weekday> WEEKDAY_INVOKE = new Function<String, Weekday>() {
         @Override
         public Weekday apply(String input) {
-            return new Weekday(DayOfWeek.valueOf(input));
+            Weekday weekday = new Weekday();
+            weekday.setDayOfWeek(DayOfWeek.valueOf(input));
+            return weekday;
         }
     };
 
@@ -148,7 +153,9 @@ public final class FunctionUtils {
     }
 
     public static User getUser(UserRegistrationDto userDto) {
-        User user = new User(userDto.getEmail(), EncryptionUtils.encrypt(userDto.getPassword()));
+        User user = new User();
+        user.setEmail(userDto.getEmail());
+        user.setPassword(EncryptionUtils.encrypt(userDto.getPassword()));
         user.setFirstName(userDto.getFirstName());
         user.setDateOfRegistration(new Date());
         user.setHash(EncryptionUtils.getRandomString());

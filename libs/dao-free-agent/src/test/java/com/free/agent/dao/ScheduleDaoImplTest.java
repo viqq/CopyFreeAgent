@@ -153,7 +153,9 @@ public class ScheduleDaoImplTest extends TestCase {
     private Set<Weekday> getWeekday(Schedule schedule, DayOfWeek... dayOfWeeks) {
         Set<Weekday> set = Sets.newHashSet();
         for (DayOfWeek dayOfWeek : dayOfWeeks) {
-            Weekday weekday = new Weekday(dayOfWeek, schedule);
+            Weekday weekday = new Weekday();
+            weekday.setDayOfWeek(dayOfWeek);
+            weekday.setSchedule(schedule);
             weekdayDao.create(weekday);
             set.add(weekday);
         }

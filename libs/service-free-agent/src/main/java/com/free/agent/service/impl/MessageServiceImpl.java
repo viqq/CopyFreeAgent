@@ -73,7 +73,9 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void save(MessageDto messageDto, String email, Principal principal) throws EmailAlreadyUsedException {
-        Message message = new Message(messageDto.getTitle(), messageDto.getText());
+        Message message = new Message();
+        message.setTitle(messageDto.getTitle());
+        message.setText(messageDto.getText());
 
         if (principal == null) {
             if (isEmailFree(email)) {

@@ -1,12 +1,19 @@
 package com.free.agent.model;
 
 import com.free.agent.field.SkillLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 /**
  * Created by antonPC on 12.01.16.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "SKILL")
 public class Skill extends AbstractTable<Long> {
@@ -28,36 +35,4 @@ public class Skill extends AbstractTable<Long> {
     @Enumerated(value = EnumType.STRING)
     private SkillLevel skillLevel = SkillLevel.BEGINNER;
 
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Sport getSport() {
-        return sport;
-    }
-
-    public void setSport(Sport sport) {
-        this.sport = sport;
-    }
-
-    public SkillLevel getSkillLevel() {
-        return skillLevel;
-    }
-
-    public void setSkillLevel(SkillLevel skillLevel) {
-        this.skillLevel = skillLevel;
-    }
 }

@@ -75,7 +75,7 @@ public class UserServiceImplTest extends TestCase {
         User user = new User();
         user.setEmail("email@gmail.com");
         user.setPassword(EncryptionUtils.encrypt("12345"));
-        user.setSports(Sets.newHashSet(new Sport(FOOTBALL_EN, FOOTBALL_RU)));
+        user.setSports(Sets.newHashSet(sports()));
         return user;
     }
 }

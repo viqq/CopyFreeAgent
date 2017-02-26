@@ -1,5 +1,9 @@
 package com.free.agent.model;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
@@ -9,6 +13,9 @@ import java.util.Set;
 /**
  * Created by antonPC on 05.12.15.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "SCHEDULE")
 public class Schedule extends AbstractTable<Long> {
@@ -40,59 +47,4 @@ public class Schedule extends AbstractTable<Long> {
     @Temporal(TemporalType.TIME)
     private Date endTime;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Sport getSport() {
-        return sport;
-    }
-
-    public void setSport(Sport sport) {
-        this.sport = sport;
-    }
-
-    public Set<Weekday> getWeekdays() {
-        return weekdays;
-    }
-
-    public void setWeekdays(Set<Weekday> weekdays) {
-        this.weekdays = weekdays;
-    }
-
-    public Set<Day> getDays() {
-        return days;
-    }
-
-    public void setDays(Set<Day> days) {
-        this.days = days;
-    }
-
-    public Date getStartTime() {
-        return ObjectUtils.clone(startTime);
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = ObjectUtils.clone(startTime);
-    }
-
-    public Date getEndTime() {
-        return ObjectUtils.clone(endTime);
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = ObjectUtils.clone(endTime);
-    }
 }

@@ -177,7 +177,9 @@ public class FilerTest extends TestCase {
     private Day createDay(Schedule sch, int year, int month, int day) {
         DateTime dateTime = new DateTime(year, month, day, 10, 10);
         DayOfWeek dayOfWeek = DayOfWeek.valueOf(dateTime.dayOfWeek().getAsText(Locale.ENGLISH).toUpperCase());
-        Day d = new Day(dateTime.toDate(), dayOfWeek);
+        Day d = new Day();
+        d.setDate(dateTime.toDate());
+        d.setDayOfWeek(dayOfWeek);
         d.setSchedule(sch);
         return d;
     }
@@ -185,10 +187,11 @@ public class FilerTest extends TestCase {
     private Set<Weekday> getWeekday(Schedule schedule, DayOfWeek... dayOfWeeks) {
         Set<Weekday> set = Sets.newHashSet();
         for (DayOfWeek dayOfWeek : dayOfWeeks) {
-            Weekday weekday = new Weekday(dayOfWeek, schedule);
+            Weekday weekday = new Weekday();
+            weekday.setDayOfWeek(dayOfWeek);
+            weekday.setSchedule(schedule);
             set.add(weekday);
         }
         return set;
-
     }
 }

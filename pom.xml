@@ -266,6 +266,13 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 
@@ -278,13 +285,18 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.0.2</version>
+                    <version>3.6.0</version>
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
-
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>1.16.6</version>
+                            </path>
+                        </annotationProcessorPaths>
                     </configuration>
-
                 </plugin>
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>

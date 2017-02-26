@@ -14,7 +14,7 @@
     <name>${project.readable.name} :: Libs DB</name>
 
     <properties>
-        <jpa-model-gen.version>1.2.0.Final</jpa-model-gen.version>
+        <jpa-model-gen.version>5.2.8.Final</jpa-model-gen.version>
     </properties>
 
     <dependencies>
@@ -22,7 +22,8 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
             <version>${jpa-model-gen.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
     </dependencies>
     <build>
@@ -30,11 +31,14 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <compilerArguments>
-                        <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-                    </compilerArguments>
+                    <annotationProcessorPaths>
+                        <annotationProcessorPath>
+                            <groupId>org.hibernate</groupId>
+                            <artifactId>hibernate-jpamodelgen</artifactId>
+                            <version>${jpa-model-gen.version}</version>
+                        </annotationProcessorPath>
+                    </annotationProcessorPaths>
                 </configuration>
-                <version>2.3.2</version>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
