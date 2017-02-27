@@ -12,9 +12,7 @@ import com.free.agent.model.User;
 import com.free.agent.service.MailService;
 import com.free.agent.service.MessageService;
 import com.free.agent.util.EncryptionUtils;
-import com.free.agent.util.FunctionUtils;
 import com.free.agent.util.LinkUtils;
-import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.free.agent.util.FunctionUtils.getTime;
 
 /**
  * Created by antonPC on 29.07.15.
@@ -53,20 +54,29 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<MessageUIDto> findAllByReceiver(String email) {
-        return Collections2.transform(messageDao.findAllByReceiver(email), FunctionUtils.MESSAGE_INVOKE);
+    public List<MessageUIDto> findAllByReceiver(String email) {
+        return messageDao.findAllByReceiver(email).stream().map(input -> {
+            MessageUIDto message = new MessageUIDto();
+            message.setId(input.getId());
+            message.setTimeOfRead(getTime(input.getTimeOfRead()));
+            message.setTimeOfCreate(getTime(input.getTimeOfCreate()));
+            message.setTitle(input.getTitle());
+            message.setText(input.getText());
+            message.setAuthorId(input.getAuthorId());
+            return message;
+        }).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<Message> findAllByAuthor(String email) {
+    public Set<Message> findAllByAuthor(String email) {
         User user = userDao.findByEmail(email);
         return messageDao.findAllByAuthorEmailAndId(user.getId());
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<Message> findAllByReceiverAndAuthor(Long id, Principal principal) {
+    public Set<Message> findAllByReceiverAndAuthor(Long id, Principal principal) {
         return messageDao.findAllByReceiverAndAuthor(id, userDao.findByEmail(principal.getName()).getId());
     }
 
@@ -150,14 +160,23 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<MessageUIDto> getHistory(Long id, String email) {
+    public List<MessageUIDto> getHistory(Long id, String email) {
         User user = userDao.findByEmail(email);
-        return Collections2.transform(messageDao.getHistory(id, user.getId()), FunctionUtils.MESSAGE_INVOKE);
+        return messageDao.getHistory(id, user.getId()).stream().map(input -> {
+            MessageUIDto message = new MessageUIDto();
+            message.setId(input.getId());
+            message.setTimeOfRead(getTime(input.getTimeOfRead()));
+            message.setTimeOfCreate(getTime(input.getTimeOfCreate()));
+            message.setTitle(input.getTitle());
+            message.setText(input.getText());
+            message.setAuthorId(input.getAuthorId());
+            return message;
+        }).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<Long> getParticipants(String email) {
+    public Set<Long> getParticipants(String email) {
         return messageDao.getParticipants(userDao.findByEmail(email).getId());
     }
 

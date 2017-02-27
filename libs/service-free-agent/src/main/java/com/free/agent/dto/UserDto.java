@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class UserDto extends UserRegistrationDto {
+
     private String city;
     private String country;
     private String description;

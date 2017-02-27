@@ -1,11 +1,13 @@
 package com.free.agent;
 
 import com.google.gson.Gson;
+import lombok.Getter;
 
 /**
  * Created by antonPC on 28.07.15.
  */
-public final class Response<T> {
+@Getter
+public class Response<T> {
     private final T payload;
     private final Boolean error;
     private final Integer[] status;
@@ -42,18 +44,6 @@ public final class Response<T> {
 
     public static String error(Integer... status) {
         return new Response<>(status).toJSON();
-    }
-
-    public T getPayload() {
-        return payload;
-    }
-
-    public Boolean getError() {
-        return error;
-    }
-
-    public Integer[] getStatus() {
-        return status;
     }
 
     private String toJSON() {

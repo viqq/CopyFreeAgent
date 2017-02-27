@@ -20,6 +20,7 @@ import static com.free.agent.FreeAgentAPI.*;
  */
 @Controller
 public class MessageController {
+
     @Autowired
     private MessageService messageService;
 

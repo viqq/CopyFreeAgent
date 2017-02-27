@@ -6,34 +6,33 @@ import com.free.agent.dto.FavoriteDto;
 import com.free.agent.exception.UserIsNotFavoriteException;
 import com.free.agent.model.User;
 import com.free.agent.service.FavoriteService;
-import com.free.agent.util.FunctionUtils;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.FluentIterable;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by antonPC on 06.12.15.
  */
 @Service("favoriteService")
 public class FavoriteServiceImpl implements FavoriteService {
-    private static final Logger LOGGER = Logger.getLogger(FavoriteServiceImpl.class);
 
     @Autowired
     private UserDao userDao;
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<FavoriteDto> findAllByUserEmail(String email) {
-        return Collections2.transform(userDao.findFavoritesByUserId(userDao.findByEmail(email).getId()),
-                FunctionUtils.FAVORITE_INVOKE);
+    public List<FavoriteDto> findAllByUserEmail(String email) {
+        return userDao.findFavoritesByUserId(userDao.findByEmail(email).getId()).stream().map(user -> {
+            FavoriteDto dto = new FavoriteDto();
+            dto.setUserId(user.getId());
+            dto.setUserEmail(user.getEmail());
+            return dto;
+        }).collect(Collectors.toList());
+
     }
 
     @Override
@@ -50,18 +49,9 @@ public class FavoriteServiceImpl implements FavoriteService {
     public void removeUserFromFavorite(String email, final Long id) throws UserIsNotFavoriteException {
         User myUser = userDao.findByEmail(email);
         Set<User> favorite = myUser.getFavorites();
-        Optional<User> follower = FluentIterable.from(favorite).filter(new Predicate<User>() {
-            @Override
-            public boolean apply(User input) {
-                return input.getId().equals(id);
-            }
-        }).first();
-        if (!follower.isPresent()) {
-            LOGGER.error("User with id " + id + " is not in favorite set");
-            throw new UserIsNotFavoriteException("User with id " + id + " is not in favorite set");
-        }
-        myUser.getFavorites().remove(follower.get());
+        User follower = favorite.stream().filter(input -> input.getId().equals(id)).findFirst()
+                .orElseThrow(() -> new UserIsNotFavoriteException(String.format("User with id %s is not in favorite set", id)));
+        myUser.getFavorites().remove(follower);
         userDao.update(myUser);
-
     }
 }

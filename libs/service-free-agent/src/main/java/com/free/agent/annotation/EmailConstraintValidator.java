@@ -7,6 +7,7 @@ import javax.validation.ConstraintValidatorContext;
  * Created by antonPC on 02.12.15.
  */
 public class EmailConstraintValidator implements ConstraintValidator<Email, String> {
+
     @Override
     public void initialize(Email email) {
     }

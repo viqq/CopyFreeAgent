@@ -23,7 +23,6 @@ import com.free.agent.service.UserService;
 import com.free.agent.util.EncryptionUtils;
 import com.free.agent.util.FunctionUtils;
 import com.free.agent.util.LinkUtils;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -51,7 +50,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.free.agent.dao.impl.UserDaoImpl.BATCH_SIZE;
 
@@ -86,20 +87,20 @@ public class UserServiceImpl implements UserService {
         User user = userDao.findByEmail(userDto.getEmail());
         if (user != null) {
             if (!user.getRole().equals(Role.ROLE_NOT_ACTIVATED)) {
-                LOGGER.error("User with " + userDto.getEmail() + " has registered already");
-                throw new EmailAlreadyUsedException("User with " + userDto.getEmail() + " has registered already");
+                LOGGER.error(String.format("User with %s has registered already", userDto.getEmail()));
+                throw new EmailAlreadyUsedException(String.format("User with %s has registered already", userDto.getEmail()));
             } else {
                 User newUser = FunctionUtils.getUser(userDto);
                 newUser.setId(user.getId());
                 userDao.update(newUser);
                 sendLinkForConfirm(newUser.getEmail(), newUser.getHash());
-                LOGGER.info("New user " + newUser.getEmail() + "was added ");
+                LOGGER.info(String.format("New user %s was added", newUser.getEmail()));
                 return newUser;
             }
         }
         User createdUser = userDao.create(FunctionUtils.getUser(userDto));
         sendLinkForConfirm(createdUser.getEmail(), createdUser.getHash());
-        LOGGER.info("New user " + userDto.getEmail() + "was added ");
+        LOGGER.info(String.format("New user %s was added", userDto.getEmail()));
         return createdUser;
     }
 
@@ -108,18 +109,16 @@ public class UserServiceImpl implements UserService {
     public User save(SocialProfile profile) throws EmailAlreadyUsedException, EmailIsNotDetectedException, IOException {
         User user = userDao.findByEmail(profile.getEmail());
         if (user != null) {
-            LOGGER.error("User with " + profile.getEmail() + " has registered already");
-            throw new EmailAlreadyUsedException("User with " + profile.getEmail() + " has registered already");
+            LOGGER.error(String.format("User with %s has registered already", profile.getEmail()));
+            throw new EmailAlreadyUsedException(String.format("User with %s has registered already", profile.getEmail()));
         }
         user = FunctionUtils.getUser(profile);
-        if (user.getEmail() == null) {
-            throw new EmailIsNotDetectedException("You didn't detected email in " + profile.getType());
-        }
+        Optional.ofNullable(user.getEmail()).orElseThrow(() -> new EmailIsNotDetectedException(String.format("You didn't detected email in %s", profile.getType())));
         User createdUser = userDao.create(user);
         if (!profile.isVerified()) {
             sendLinkForConfirm(createdUser.getEmail(), createdUser.getHash());
         }
-        LOGGER.info("New user " + profile.getEmail() + "was added from " + profile.getType());
+        LOGGER.info(String.format("New user %s was added from %s", profile.getEmail(), profile.getType()));
         createDirectory(profile.getEmail());
         user.setImage(saveImage(profile));
         userDao.update(user);
@@ -143,7 +142,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<User> findAll() {
+    public List<User> findAll() {
         return userDao.findAll();
     }
 
@@ -155,44 +154,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
-    public Collection<UserWithSportUIDto> findByFilter(Filter filter) {
-        List<UserWithSportUIDto> list = Lists.newArrayList();
-        for (User user : userDao.findByFilter(filter)) {
-            list.add(FunctionUtils.getUserForUI(user));
-        }
-        return list;
+    public List<UserWithSportUIDto> findByFilter(Filter filter) {
+        return userDao.findByFilter(filter).stream().map(FunctionUtils::getUserForUI).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
-    public Collection<UserWithScheduleUIDto> findByFilter(FilterNew filter, Integer startIndex, String email) {
+    public List<UserWithScheduleUIDto> findByFilter(FilterNew filter, Integer startIndex, String email) {
         List<UserWithScheduleUIDto> result;
         Collection<User> userMatch = userDao.findByFilter(filter);
         if (userMatch.size() > startIndex + BATCH_SIZE) {
-            return FluentIterable.from(userMatch)
-                    .transform(FunctionUtils.USER_WITH_SCHEDULES_INVOKE)
-                    .toSortedList(FunctionUtils.USER_WITH_SCHEDULES_COMPARATOR)
+            return userMatch.stream().map(FunctionUtils::getUserWithScheduleForUI).sorted(FunctionUtils.USER_WITH_SCHEDULES_COMPARATOR).collect(Collectors.toList())
                     .subList(startIndex, startIndex + BATCH_SIZE);
         } else if (userMatch.size() > startIndex && userMatch.size() < startIndex + BATCH_SIZE) {
             User user = userDao.findByEmail(email);
-            List<UserWithScheduleUIDto> match = FluentIterable.from(userMatch)
-                    .transform(FunctionUtils.USER_WITH_SCHEDULES_INVOKE)
-                    .toSortedList(FunctionUtils.USER_WITH_SCHEDULES_COMPARATOR)
+            List<UserWithScheduleUIDto> match = userMatch.stream().map(FunctionUtils::getUserWithScheduleForUI).sorted(FunctionUtils.USER_WITH_SCHEDULES_COMPARATOR).collect(Collectors.toList())
                     .subList(startIndex, userMatch.size()); //is last element include?
-
-            List<UserWithScheduleUIDto> notMatch = FluentIterable.from(userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex))
-                    .transform(FunctionUtils.USER_WITH_SCHEDULES_INVOKE)
-                    .toList()
+            List<UserWithScheduleUIDto> notMatch = userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex).stream().map(FunctionUtils::getUserWithScheduleForUI).collect(Collectors.toList())
                     .subList(match.size(), BATCH_SIZE - match.size());
-
             result = Lists.newArrayList(match);
             result.addAll(notMatch);
             return result;
         } else {
             User user = userDao.findByEmail(email);
-            return FluentIterable.from(userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex))
-                    .transform(FunctionUtils.USER_WITH_SCHEDULES_INVOKE)
-                    .toList();
+            return userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex).stream().map(FunctionUtils::getUserWithScheduleForUI).collect(Collectors.toList());
         }
     }
 
@@ -201,7 +186,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
         User user = userDao.find(id);
         userDao.delete(user);
-        LOGGER.info("User " + user.getEmail() + "was deleted");
+        LOGGER.info(String.format("User %s was deleted",user.getEmail()));
         deleteImage(user.getEmail());
     }
 
@@ -235,10 +220,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void resetPassword(String email) throws EmailDidNotRegisteredException {
-        User user = userDao.findByEmail(email);
-        if (user == null) {
-            throw new EmailDidNotRegisteredException("User with email " + email + " didn't existed");
-        }
+        User user = Optional.ofNullable(userDao.findByEmail(email)).orElseThrow(()->new EmailDidNotRegisteredException(String.format("User with email %s didn't existed", email)));
         String password = EncryptionUtils.getRandomString();
         user.setPassword(EncryptionUtils.encrypt(password));
         userDao.update(user);
@@ -247,8 +229,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getPostponeEmail(String hash, String key) {
-        User user = findUserByHash(hash, key);
-        return user.getEmail();
+        return findUserByHash(hash, key).getEmail();
     }
 
     @Override
@@ -278,7 +259,7 @@ public class UserServiceImpl implements UserService {
     private void sendLinkForConfirm(String email, String hash) {
         String link = LinkUtils.getLinkForRegistration(email, hash, false);
         mailService.sendMail(email, "Activate yor profile", "Go to the link " + link);
-        LOGGER.info("Email was sent for " + email);
+        LOGGER.info(String.format("Email was sent for %s", email));
     }
 
     private User getUser(User user, UserDto userDto, Set<Long> sportIds) {
@@ -298,9 +279,9 @@ public class UserServiceImpl implements UserService {
         File fileSaveDir = new File(SAVE_PATH + File.separator + email);
         if (fileSaveDir.exists()) {
             if (deleteDirectory(fileSaveDir)) {
-                LOGGER.info("Image for " + email + "was deleted");
+                LOGGER.info(String.format("Image for %s was deleted", email));
             } else {
-                LOGGER.error("Image for " + email + "can not be deleted");
+                LOGGER.error(String.format("Image for %s can not be deleted", email));
             }
         }
     }
@@ -325,7 +306,7 @@ public class UserServiceImpl implements UserService {
         if (!fileSaveDir.exists()) {
             if (!fileSaveDir.mkdir()) {
                 LOGGER.error("Don't have permission. Use sudo chmod 777 /var/free-agent/images ");
-                throw new UnsupportedOperationException("Can not create directory for user " + email);
+                throw new UnsupportedOperationException(String.format("Can not create directory for user %s" , email));
             }
         }
     }

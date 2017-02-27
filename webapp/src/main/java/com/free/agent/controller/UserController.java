@@ -18,8 +18,6 @@ import com.free.agent.exception.WrongLinkException;
 import com.free.agent.model.User;
 import com.free.agent.service.SportService;
 import com.free.agent.service.UserService;
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
@@ -37,7 +35,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,6 +47,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 import static com.free.agent.FreeAgentAPI.*;
 
@@ -333,13 +331,8 @@ public class UserController {
     }
 
     private Integer[] getAllErrors(BindingResult bindingResult) {
-        return Collections2.transform(bindingResult.getAllErrors(), new Function<ObjectError, Integer>() {
-            @Override
-            public Integer apply(ObjectError input) {
-                return Integer.valueOf(input.getDefaultMessage());
-            }
-        }).toArray(new Integer[bindingResult.getErrorCount()]);
-
+        return bindingResult.getAllErrors().stream().map(input -> Integer.valueOf(input.getDefaultMessage()))
+                .collect(Collectors.toList()).toArray(new Integer[bindingResult.getErrorCount()]);
     }
 
 }

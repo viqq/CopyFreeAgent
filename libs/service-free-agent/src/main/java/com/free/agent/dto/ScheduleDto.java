@@ -9,6 +9,7 @@ import java.util.Set;
  */
 @Data
 public class ScheduleDto {
+
     private Long id;
     private Set<String> dayOfWeeks;
     private Set<Long> days;

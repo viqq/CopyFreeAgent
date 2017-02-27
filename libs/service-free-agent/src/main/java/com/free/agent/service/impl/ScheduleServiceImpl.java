@@ -5,12 +5,9 @@ import com.free.agent.dao.*;
 import com.free.agent.dto.ScheduleDto;
 import com.free.agent.exception.ScheduleNotFoundException;
 import com.free.agent.exception.SportNotSupportedException;
+import com.free.agent.field.DayOfWeek;
 import com.free.agent.model.*;
 import com.free.agent.service.ScheduleService;
-import com.free.agent.util.FunctionUtils;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import static com.free.agent.util.FunctionUtils.*;
+import static com.free.agent.util.FunctionUtils.getSchedule;
 
 /**
  * Created by antonPC on 05.12.15.
@@ -62,13 +62,24 @@ public class ScheduleServiceImpl implements ScheduleService {
         //todo cascade type
         User user = userDao.findByEmail(email);
         Schedule schedule = getSchedule(scheduleDto);
-        Set<Day> days = FluentIterable.from(scheduleDto.getDays()).transform(DAY_INVOKE).toSet();
+        Set<Day> days = scheduleDto.getDays().stream().map(input -> {
+            DateTime dateTime = new DateTime((long) input);
+            String dayOfWeek = new DateTime().dayOfWeek().getAsText(Locale.ENGLISH).toUpperCase();
+            Day day = new Day();
+            day.setDate(dateTime.toDate());
+            day.setDayOfWeek(DayOfWeek.valueOf(dayOfWeek));
+            return day;
+        }).collect(Collectors.toSet());
         for (Day day : days) {
             day.setSchedule(schedule);
         }
         // dayDao.saveAll(days);
         schedule.setDays(days);
-        Set<Weekday> weekdays = FluentIterable.from(scheduleDto.getDayOfWeeks()).transform(WEEKDAY_INVOKE).toSet();
+        Set<Weekday> weekdays = scheduleDto.getDayOfWeeks().stream().map(input -> {
+            Weekday weekday = new Weekday();
+            weekday.setDayOfWeek(DayOfWeek.valueOf(input));
+            return weekday;
+        }).collect(Collectors.toSet());
         for (Weekday weekday : weekdays) {
             weekday.setSchedule(schedule);
         }
@@ -76,8 +87,8 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setWeekdays(weekdays);
         Sport sport = sportDao.find(scheduleDto.getSportId());
         if (!user.getSports().contains(sport)) {
-            LOGGER.error("You can not select sport " + sport + " for your schedule");
-            throw new SportNotSupportedException("You can not select sport " + sport + " for your schedule");
+            LOGGER.error(String.format("You can not select sport %s for your schedule",sport));
+            throw new SportNotSupportedException(String.format("You can not select sport %s for your schedule",sport));
         }
         schedule.setSport(sport);
         schedule.setUser(user);
@@ -93,8 +104,19 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setSport(sportDao.find(dto.getSportId()));
         schedule.setStartTime(new DateTime(dto.getStartTime()).toDate());
         schedule.setEndTime(new DateTime(dto.getEndTime()).toDate());
-        schedule.setDays(FluentIterable.from(dto.getDays()).transform(FunctionUtils.DAY_INVOKE).toSet());
-        schedule.setWeekdays(FluentIterable.from(dto.getDayOfWeeks()).transform(FunctionUtils.WEEKDAY_INVOKE).toSet());
+        schedule.setDays(dto.getDays().stream().map(input -> {
+            DateTime dateTime = new DateTime((long) input);
+            String dayOfWeek = new DateTime().dayOfWeek().getAsText(Locale.ENGLISH).toUpperCase();
+            Day day = new Day();
+            day.setDate(dateTime.toDate());
+            day.setDayOfWeek(DayOfWeek.valueOf(dayOfWeek));
+            return day;
+        }).collect(Collectors.toSet()));
+        schedule.setWeekdays(dto.getDayOfWeeks().stream().map(input -> {
+            Weekday weekday = new Weekday();
+            weekday.setDayOfWeek(DayOfWeek.valueOf(input));
+            return weekday;
+        }).collect(Collectors.toSet()));
         scheduleDao.update(schedule);
     }
 
@@ -103,14 +125,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void delete(String email, final Long id) {
         User user = userDao.findByEmail(email);
         List<Schedule> schedules = scheduleDao.findAllByUserId(user.getId());
-        Optional<Schedule> scheduleOptional = FluentIterable.from(schedules).firstMatch(new Predicate<Schedule>() {
-            @Override
-            public boolean apply(Schedule input) {
-                return input.getId().equals(id);
-            }
-        });
+        Optional<Schedule> scheduleOptional = schedules.stream().filter(input -> input.getId().equals(id)).findFirst();
         if (!scheduleOptional.isPresent()) {
-            throw new ScheduleNotFoundException("Schedule with id " + id + " is not found");
+            throw new ScheduleNotFoundException(String.format("Schedule with id %s is not found", id));
         }
         Schedule schedule = scheduleOptional.get();
         user.getSchedules().remove(schedule);
@@ -119,4 +136,5 @@ public class ScheduleServiceImpl implements ScheduleService {
         userDao.update(user);
         scheduleDao.delete(schedule);
     }
+
 }

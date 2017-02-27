@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CleanMessageJob {
+
     private static final Logger LOGGER = Logger.getLogger(CleanMessageJob.class);
     @Autowired
     private MessageService service;

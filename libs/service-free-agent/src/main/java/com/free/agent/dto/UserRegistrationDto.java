@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class UserRegistrationDto extends EmailDto {
+
     private Long id;
     @Password
     private String password;

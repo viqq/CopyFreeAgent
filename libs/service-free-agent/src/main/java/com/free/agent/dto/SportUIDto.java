@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class SportUIDto {
+
     private Long id;
     private String nameEn;
     private String nameRu;

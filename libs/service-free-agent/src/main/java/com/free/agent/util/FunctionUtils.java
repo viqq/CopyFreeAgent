@@ -2,11 +2,10 @@ package com.free.agent.util;
 
 import com.free.agent.dto.*;
 import com.free.agent.dto.network.SocialProfile;
-import com.free.agent.field.DayOfWeek;
 import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
-import com.free.agent.model.*;
-import com.google.common.base.Function;
+import com.free.agent.model.Schedule;
+import com.free.agent.model.User;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
@@ -14,106 +13,21 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.sql.Time;
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by antonPC on 19.08.15.
  */
 public final class FunctionUtils {
 
-    public static final Function<Sport, SportUIDto> SPORT_NAME_INVOKE = new Function<Sport, SportUIDto>() {
-        @Override
-        public SportUIDto apply(Sport input) {
-            SportUIDto dto = new SportUIDto();
-            dto.setId(input.getId());
-            dto.setNameEn(input.getNameEn());
-            dto.setNameRu(input.getNameRu());
-            return dto;
-        }
+    public static final Comparator<UserWithScheduleUIDto> USER_WITH_SCHEDULES_COMPARATOR = (u1, u2) -> {
+        return 0; //todo
     };
 
-    public static final Function<Message, MessageUIDto> MESSAGE_INVOKE = new Function<Message, MessageUIDto>() {
-        @Override
-        public MessageUIDto apply(Message input) {
-            MessageUIDto message = new MessageUIDto();
-            message.setId(input.getId());
-            message.setTimeOfRead(getTime(input.getTimeOfRead()));
-            message.setTimeOfCreate(getTime(input.getTimeOfCreate()));
-            message.setTitle(input.getTitle());
-            message.setText(input.getText());
-            message.setAuthorId(input.getAuthorId());
-            return message;
-        }
-    };
-
-    public static final Function<User, FavoriteDto> FAVORITE_INVOKE = new Function<User, FavoriteDto>() {
-        @Override
-        public FavoriteDto apply(User input) {
-            FavoriteDto dto = new FavoriteDto();
-            dto.setUserId(input.getId());
-            dto.setUserEmail(input.getEmail());
-            return dto;
-        }
-    };
-
-    public static final Function<Long, Day> DAY_INVOKE = new Function<Long, Day>() {
-        @Override
-        public Day apply(Long input) {
-            DateTime dateTime = new DateTime((long) input);
-            String dayOfWeek = new DateTime().dayOfWeek().getAsText(Locale.ENGLISH).toUpperCase();
-            Day day = new Day();
-            day.setDate(dateTime.toDate());
-            day.setDayOfWeek(DayOfWeek.valueOf(dayOfWeek));
-            return day;
-        }
-    };
-
-    public static final Function<String, Weekday> WEEKDAY_INVOKE = new Function<String, Weekday>() {
-        @Override
-        public Weekday apply(String input) {
-            Weekday weekday = new Weekday();
-            weekday.setDayOfWeek(DayOfWeek.valueOf(input));
-            return weekday;
-        }
-    };
-
-    public static final Function<User, UserWithScheduleUIDto> USER_WITH_SCHEDULES_INVOKE = new Function<User, UserWithScheduleUIDto>() {
-        @Override
-        public UserWithScheduleUIDto apply(User input) {
-            return getUserWithScheduleForUI(input);
-        }
-    };
-
-    public static final Comparator<UserWithScheduleUIDto> USER_WITH_SCHEDULES_COMPARATOR = new Comparator<UserWithScheduleUIDto>() {
-        @Override
-        public int compare(UserWithScheduleUIDto u1, UserWithScheduleUIDto u2) {
-            return 0; //todo
-        }
-    };
-
-    public static final Function<Schedule, ScheduleDto> SCHEDULE_INVOKE = new Function<Schedule, ScheduleDto>() {
-        @Override
-        public ScheduleDto apply(Schedule input) {
-            ScheduleDto dto = new ScheduleDto();
-            dto.setId(input.getId());
-            dto.setSportId(input.getSport().getId());
-            dto.setStartTime(input.getStartTime().getTime());
-            dto.setEndTime(input.getEndTime().getTime());
-            dto.setDayOfWeeks(FluentIterable.from(input.getWeekdays()).transform(new Function<Weekday, String>() {
-                @Override
-                public String apply(Weekday input) {
-                    return input.getDayOfWeek().name();
-                }
-            }).toSet());
-            dto.setDays(FluentIterable.from(input.getDays()).transform(new Function<Day, Long>() {
-                @Override
-                public Long apply(Day input) {
-                    return input.getDate().getTime();
-                }
-            }).toSet());
-            return dto;
-        }
-    };
 
     public static UserWithScheduleUIDto getUserWithScheduleForUI(User user) {
         UserWithScheduleUIDto userDto = new UserWithScheduleUIDto();
@@ -129,8 +43,23 @@ public final class FunctionUtils {
         userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
         userDto.setGender(getGender(user.getGender()));
         userDto.setRole(user.getRole().name());
-        userDto.setSports(FluentIterable.from(user.getSports()).transform(SPORT_NAME_INVOKE).toList());
-        userDto.setSchedules(FluentIterable.from(user.getSchedules()).transform(SCHEDULE_INVOKE).toList());
+        userDto.setSports(user.getSports().stream().map(input -> {
+            SportUIDto dto = new SportUIDto();
+            dto.setId(input.getId());
+            dto.setNameEn(input.getNameEn());
+            dto.setNameRu(input.getNameRu());
+            return dto;
+        }).collect(Collectors.toList()));
+        userDto.setSchedules(user.getSchedules().stream().map(input -> {
+            ScheduleDto dto = new ScheduleDto();
+            dto.setId(input.getId());
+            dto.setSportId(input.getSport().getId());
+            dto.setStartTime(input.getStartTime().getTime());
+            dto.setEndTime(input.getEndTime().getTime());
+            dto.setDayOfWeeks(FluentIterable.from(input.getWeekdays()).transform(input1 -> input1.getDayOfWeek().name()).toSet());
+            dto.setDays(FluentIterable.from(input.getDays()).transform(input12 -> input12.getDate().getTime()).toSet());
+            return dto;
+        }).collect(Collectors.toList()));
         return userDto;
     }
 
@@ -148,7 +77,13 @@ public final class FunctionUtils {
         userDto.setDateOfRegistration(getTime(user.getDateOfRegistration()));
         userDto.setGender(getGender(user.getGender()));
         userDto.setRole(user.getRole().name());
-        userDto.setSports(FluentIterable.from(user.getSports()).transform(SPORT_NAME_INVOKE).toList());
+        userDto.setSports(user.getSports().stream().map(input -> {
+            SportUIDto dto = new SportUIDto();
+            dto.setId(input.getId());
+            dto.setNameEn(input.getNameEn());
+            dto.setNameRu(input.getNameRu());
+            return dto;
+        }).collect(Collectors.toList()));
         return userDto;
     }
 
@@ -224,7 +159,7 @@ public final class FunctionUtils {
         return gender == null ? null : gender.name();
     }
 
-    private static Long getTime(Date dateOfBirth) {
+    public static Long getTime(Date dateOfBirth) {
         return dateOfBirth == null ? null : dateOfBirth.getTime();
     }
 
@@ -254,10 +189,6 @@ public final class FunctionUtils {
     }
 
     private static List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
-        List<GrantedAuthority> authorities = Lists.newArrayList();
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
-        return authorities;
+        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 }
