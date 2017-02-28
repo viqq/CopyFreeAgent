@@ -31,8 +31,8 @@ define(
                         $scope.form = $element.find('form');
 
                         $scope.loginData = {
-                            j_username: '',
-                            j_password: '',
+                            username: '',
+                            password: '',
                             submit: 'Login'
                         };
 

@@ -46,8 +46,8 @@ define(
                     error: '',
                     loginHandler: function () {
                         var data = $scope.$root.toolkit.serialize({
-                            'j_username': $scope.fields.email.value,
-                            'j_password': $scope.fields.password.value,
+                            'username': $scope.fields.email.value,
+                            'password': $scope.fields.password.value,
                             'submit': 'Login'
                         });
 

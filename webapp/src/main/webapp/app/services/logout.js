@@ -6,7 +6,7 @@ define(['angularAMD'], function (angularAMD) {
         return function () {
             return $http({
                 method: 'GET',
-                url: '/api/j_spring_security_logout'
+                url: '/logout'
             })
                 .success(function(data) {
                     console.log(data)

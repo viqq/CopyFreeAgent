@@ -56,8 +56,8 @@ define([
 
             $scope.login = function() {
                 var data = $scope.$root.toolkit.serialize({
-                    'j_username': $scope.form.email,
-                    'j_password': $scope.form.password,
+                    'username': $scope.form.email,
+                    'password': $scope.form.password,
                     'submit': 'Login'
                 });
 
