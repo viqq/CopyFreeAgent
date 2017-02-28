@@ -21,7 +21,6 @@ import com.free.agent.model.User;
 import com.free.agent.service.MailService;
 import com.free.agent.service.UserService;
 import com.free.agent.util.EncryptionUtils;
-import com.free.agent.util.FunctionUtils;
 import com.free.agent.util.LinkUtils;
 import com.google.common.collect.Lists;
 import org.apache.commons.fileupload.FileItem;
@@ -31,6 +30,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,10 +48,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.free.agent.dao.impl.UserDaoImpl.BATCH_SIZE;
@@ -78,6 +75,9 @@ public class UserServiceImpl implements UserService {
     private MailService mailService;
 
     @Autowired
+    private ConversionService conversionService;
+
+    @Autowired
     @Qualifier("socialNetworkAuthenticationManager")
     private AuthenticationManager authenticationManager;
 
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
                 LOGGER.error(String.format("User with %s has registered already", userDto.getEmail()));
                 throw new EmailAlreadyUsedException(String.format("User with %s has registered already", userDto.getEmail()));
             } else {
-                User newUser = FunctionUtils.getUser(userDto);
+                User newUser = conversionService.convert(userDto, User.class);
                 newUser.setId(user.getId());
                 userDao.update(newUser);
                 sendLinkForConfirm(newUser.getEmail(), newUser.getHash());
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
                 return newUser;
             }
         }
-        User createdUser = userDao.create(FunctionUtils.getUser(userDto));
+        User createdUser = userDao.create(conversionService.convert(userDto, User.class));
         sendLinkForConfirm(createdUser.getEmail(), createdUser.getHash());
         LOGGER.info(String.format("New user %s was added", userDto.getEmail()));
         return createdUser;
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
             LOGGER.error(String.format("User with %s has registered already", profile.getEmail()));
             throw new EmailAlreadyUsedException(String.format("User with %s has registered already", profile.getEmail()));
         }
-        user = FunctionUtils.getUser(profile);
+        user = conversionService.convert(profile, User.class);
         Optional.ofNullable(user.getEmail()).orElseThrow(() -> new EmailIsNotDetectedException(String.format("You didn't detected email in %s", profile.getType())));
         User createdUser = userDao.create(user);
         if (!profile.isVerified()) {
@@ -155,8 +155,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public List<UserWithSportUIDto> findByFilter(Filter filter) {
-        return userDao.findByFilter(filter).stream().map(FunctionUtils::getUserForUI).collect(Collectors.toList());
+        return userDao.findByFilter(filter).stream().map(input -> conversionService.convert(input, UserWithSportUIDto.class)).collect(Collectors.toList());
     }
+
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
@@ -164,20 +165,25 @@ public class UserServiceImpl implements UserService {
         List<UserWithScheduleUIDto> result;
         Collection<User> userMatch = userDao.findByFilter(filter);
         if (userMatch.size() > startIndex + BATCH_SIZE) {
-            return userMatch.stream().map(FunctionUtils::getUserWithScheduleForUI).sorted(FunctionUtils.USER_WITH_SCHEDULES_COMPARATOR).collect(Collectors.toList())
+            return userMatch.stream().map(u -> conversionService.convert(u, UserWithScheduleUIDto.class))
+                    .sorted(USER_WITH_SCHEDULES_COMPARATOR).collect(Collectors.toList())
                     .subList(startIndex, startIndex + BATCH_SIZE);
         } else if (userMatch.size() > startIndex && userMatch.size() < startIndex + BATCH_SIZE) {
             User user = userDao.findByEmail(email);
-            List<UserWithScheduleUIDto> match = userMatch.stream().map(FunctionUtils::getUserWithScheduleForUI).sorted(FunctionUtils.USER_WITH_SCHEDULES_COMPARATOR).collect(Collectors.toList())
+            List<UserWithScheduleUIDto> match = userMatch.stream()
+                    .map(u -> conversionService.convert(u, UserWithScheduleUIDto.class))
+                    .sorted(USER_WITH_SCHEDULES_COMPARATOR).collect(Collectors.toList())
                     .subList(startIndex, userMatch.size()); //is last element include?
-            List<UserWithScheduleUIDto> notMatch = userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex).stream().map(FunctionUtils::getUserWithScheduleForUI).collect(Collectors.toList())
+            List<UserWithScheduleUIDto> notMatch = userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex).stream()
+                    .map(u -> conversionService.convert(u, UserWithScheduleUIDto.class)).collect(Collectors.toList())
                     .subList(match.size(), BATCH_SIZE - match.size());
             result = Lists.newArrayList(match);
             result.addAll(notMatch);
             return result;
         } else {
             User user = userDao.findByEmail(email);
-            return userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex).stream().map(FunctionUtils::getUserWithScheduleForUI).collect(Collectors.toList());
+            return userDao.findByNotFilter(filter, user.getCity(), user.getCountry(), startIndex).stream()
+                    .map(u -> conversionService.convert(u, UserWithScheduleUIDto.class)).collect(Collectors.toList());
         }
     }
 
@@ -186,7 +192,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
         User user = userDao.find(id);
         userDao.delete(user);
-        LOGGER.info(String.format("User %s was deleted",user.getEmail()));
+        LOGGER.info(String.format("User %s was deleted", user.getEmail()));
         deleteImage(user.getEmail());
     }
 
@@ -200,13 +206,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public UserWithSportUIDto getInfoAboutUser(String email) {
-        return FunctionUtils.getUserForUI(userDao.findByEmail(email));
+        return conversionService.convert(userDao.findByEmail(email), UserWithSportUIDto.class);
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public UserWithSportUIDto getInfoAboutUserById(Long id) {
-        return FunctionUtils.getUserForUI(userDao.find(id));
+        return conversionService.convert(userDao.find(id), UserWithSportUIDto.class);
     }
 
     @Override
@@ -214,13 +220,13 @@ public class UserServiceImpl implements UserService {
     public UserWithSportUIDto activateUser(String hash, String key) throws WrongLinkException {
         User user = findUserByHash(hash, key);
         user.setRole(Role.ROLE_MODERATOR);
-        return FunctionUtils.getUserForUI(userDao.update(user));
+        return conversionService.convert(userDao.update(user), UserWithSportUIDto.class);
     }
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public void resetPassword(String email) throws EmailDidNotRegisteredException {
-        User user = Optional.ofNullable(userDao.findByEmail(email)).orElseThrow(()->new EmailDidNotRegisteredException(String.format("User with email %s didn't existed", email)));
+        User user = Optional.ofNullable(userDao.findByEmail(email)).orElseThrow(() -> new EmailDidNotRegisteredException(String.format("User with email %s didn't existed", email)));
         String password = EncryptionUtils.getRandomString();
         user.setPassword(EncryptionUtils.encrypt(password));
         userDao.update(user);
@@ -306,7 +312,7 @@ public class UserServiceImpl implements UserService {
         if (!fileSaveDir.exists()) {
             if (!fileSaveDir.mkdir()) {
                 LOGGER.error("Don't have permission. Use sudo chmod 777 /var/free-agent/images ");
-                throw new UnsupportedOperationException(String.format("Can not create directory for user %s" , email));
+                throw new UnsupportedOperationException(String.format("Can not create directory for user %s", email));
             }
         }
     }
@@ -333,5 +339,9 @@ public class UserServiceImpl implements UserService {
         }
         return SAVE_PATH + File.separator + email + File.separator + email;
     }
+
+    private static final Comparator<UserWithScheduleUIDto> USER_WITH_SCHEDULES_COMPARATOR = (u1, u2) -> {
+        return 0; //todo
+    };
 
 }

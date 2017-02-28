@@ -7,6 +7,7 @@ import com.free.agent.model.Sport;
 import com.free.agent.service.SportService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,9 @@ public class SportServiceImpl implements SportService {
     @Autowired
     private SportDao sportDao;
 
+    @Autowired
+    ConversionService conversionService;
+
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)
     public Sport save(Sport sport) {
@@ -34,12 +38,7 @@ public class SportServiceImpl implements SportService {
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER, readOnly = true)
     public List<SportUIDto> getAllSports() {
-        return sportDao.findAll().stream().map(input -> {
-            SportUIDto dto = new SportUIDto();
-            dto.setId(input.getId());
-            dto.setNameEn(input.getNameEn());
-            dto.setNameRu(input.getNameRu());
-            return dto;
-        }) .collect(Collectors.toList());
+        return sportDao.findAll().stream().map(sport -> conversionService.convert(sport, SportUIDto.class))
+                .collect(Collectors.toList());
     }
 }

@@ -21,11 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.free.agent.util.FunctionUtils.getTime;
 
 /**
  * Created by antonPC on 29.07.15.
@@ -182,6 +182,10 @@ public class MessageServiceImpl implements MessageService {
 
     private boolean isEmailFree(String email) {
         return userDao.findByEmail(email) == null;
+    }
+
+    private static Long getTime(Date dateOfBirth) {
+        return dateOfBirth == null ? null : dateOfBirth.getTime();
     }
 
 }

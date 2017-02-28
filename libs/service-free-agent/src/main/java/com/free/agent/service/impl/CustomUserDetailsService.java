@@ -4,7 +4,7 @@ import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.dao.UserDao;
 import com.free.agent.exception.EmailDidNotRegisteredException;
 import com.free.agent.util.EncryptionUtils;
-import com.free.agent.util.FunctionUtils;
+import com.free.agent.util.RoleUtil;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         userDao.update(domainUser);
 
         return new User(domainUser.getEmail(), EncryptionUtils.decrypt(domainUser.getPassword()),
-                FunctionUtils.getAuthorities(domainUser.getRole()));
+                RoleUtil.getAuthorities(domainUser.getRole()));
     }
 
 }

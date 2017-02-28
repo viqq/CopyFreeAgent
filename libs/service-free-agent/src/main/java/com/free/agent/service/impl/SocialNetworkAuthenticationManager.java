@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static com.free.agent.util.FunctionUtils.getAuthorities;
+import static com.free.agent.util.RoleUtil.getAuthorities;
 
 /**
  * Created by antonPC on 20.12.15.
