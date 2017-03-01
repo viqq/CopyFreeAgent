@@ -5,6 +5,10 @@ import com.free.agent.field.Gender;
 import com.free.agent.field.Role;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
@@ -15,6 +19,9 @@ import java.util.Set;
 /**
  * Created by antonPC on 15.06.15.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "USER", uniqueConstraints = {@UniqueConstraint(columnNames = {"EMAIL"})})
 public class User extends AbstractTable<Long> {
@@ -107,212 +114,4 @@ public class User extends AbstractTable<Long> {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Message> messages = Lists.newArrayList();
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public User() {
-    }
-
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Set<Sport> getSports() {
-        return sports;
-    }
-
-    public void setSports(Set<Sport> sports) {
-        this.sports = sports;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Date getDateOfBirth() {
-        return ObjectUtils.clone(dateOfBirth);
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = ObjectUtils.clone(dateOfBirth);
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Date getDateOfRegistration() {
-        return ObjectUtils.clone(dateOfRegistration);
-    }
-
-    public void setDateOfRegistration(Date dateOfRegistration) {
-        this.dateOfRegistration = ObjectUtils.clone(dateOfRegistration);
-    }
-
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
-
-    public Date getLastActivity() {
-        return ObjectUtils.clone(lastActivity);
-    }
-
-    public void setLastActivity(Date lastActivity) {
-        this.lastActivity = ObjectUtils.clone(lastActivity);
-    }
-
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
-    }
-
-    public Set<User> getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(Set<User> favorites) {
-        this.favorites = favorites;
-    }
-
-    public Set<User> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Set<User> followers) {
-        this.followers = followers;
-    }
-
-    public Long getVkId() {
-        return vkId;
-    }
-
-    public void setVkId(Long vkId) {
-        this.vkId = vkId;
-    }
-
-    public Long getFacebookId() {
-        return facebookId;
-    }
-
-    public void setFacebookId(Long facebookId) {
-        this.facebookId = facebookId;
-    }
-
-    public Long getGoogleId() {
-        return googleId;
-    }
-
-    public void setGoogleId(Long googleId) {
-        this.googleId = googleId;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public Set<Skill> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(Set<Skill> skills) {
-        this.skills = skills;
-    }
 }

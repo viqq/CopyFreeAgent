@@ -2,8 +2,8 @@ package com.free.agent.dao;
 
 import com.free.agent.config.FreeAgentConstant;
 import com.free.agent.model.Sport;
-import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,10 @@ public class SportCacheTest extends TestCase {
     @Test
     public void cacheTest() {
         for (int i = 0; i < 1000; i++) {
-            sportDao.create(new Sport(String.valueOf(i), String.valueOf(i)));
+            Sport sport = new Sport();
+            sport.setNameEn(String.valueOf(i));
+            sport.setNameRu(String.valueOf(i));
+            sportDao.create(sport);
         }
 
         long start = System.nanoTime();

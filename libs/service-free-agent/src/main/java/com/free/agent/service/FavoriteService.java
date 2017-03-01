@@ -3,7 +3,7 @@ package com.free.agent.service;
 import com.free.agent.dto.FavoriteDto;
 import com.free.agent.exception.UserIsNotFavoriteException;
 
-import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -11,7 +11,7 @@ import java.util.Collection;
  */
 public interface FavoriteService {
 
-    Collection<FavoriteDto> findAllByUserEmail(String email);
+    List<FavoriteDto> findAllByUserEmail(String email);
 
     void addUserToFavorite(String name, Long id);
 

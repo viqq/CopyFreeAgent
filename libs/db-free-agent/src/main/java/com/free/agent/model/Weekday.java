@@ -1,12 +1,19 @@
 package com.free.agent.model;
 
 import com.free.agent.field.DayOfWeek;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 /**
  * Created by antonPC on 09.01.16.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "WEEKDAY")
 public class Weekday extends AbstractTable<Long> {
@@ -24,40 +31,4 @@ public class Weekday extends AbstractTable<Long> {
     @Column(name = "DAY_OF_WEEK")
     private DayOfWeek dayOfWeek;
 
-    public Weekday(DayOfWeek dayOfWeek, Schedule schedule) {
-        this.dayOfWeek = dayOfWeek;
-        this.schedule = schedule;
-    }
-
-    public Weekday(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
-    public Weekday() {
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Schedule getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
-
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
 }

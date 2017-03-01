@@ -1,7 +1,6 @@
 package com.free.agent.dao.impl;
 
 import com.free.agent.dao.GenericDao;
-import com.google.common.collect.Sets;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -10,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public abstract class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK> {
 
@@ -42,22 +42,14 @@ public abstract class GenericDaoImpl<T, PK extends Serializable> implements Gene
     }
 
     public void deleteAll() {
-        for (T t : findAll()) {
-            delete(t);
-        }
+        findAll().forEach(this::delete);
     }
 
     public void delete(Collection<T> entries) {
-        for (T t : entries) {
-            delete(t);
-        }
+        entries.forEach(this::delete);
     }
 
     public Set<T> saveAll(Collection<T> entries) {
-        Set<T> set = Sets.newHashSetWithExpectedSize(entries.size());
-        for (T t : entries) {
-            set.add(create(t));
-        }
-        return set;
+        return entries.stream().map(this::create).collect(Collectors.toSet());
     }
 }

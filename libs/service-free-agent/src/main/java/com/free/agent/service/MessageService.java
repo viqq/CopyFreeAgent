@@ -6,7 +6,8 @@ import com.free.agent.exception.EmailAlreadyUsedException;
 import com.free.agent.model.Message;
 
 import java.security.Principal;
-import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by antonPC on 29.07.15.
@@ -15,11 +16,11 @@ public interface MessageService {
 
     void removeOldMessages();
 
-    Collection<MessageUIDto> findAllByReceiver(String email);
+    List<MessageUIDto> findAllByReceiver(String email);
 
-    Collection<Message> findAllByAuthor(String email);
+    Set<Message> findAllByAuthor(String email);
 
-    Collection<Message> findAllByReceiverAndAuthor(Long id, Principal principal);
+    Set<Message> findAllByReceiverAndAuthor(Long id, Principal principal);
 
     void save(MessageDto messageDto, String email, Principal principal) throws EmailAlreadyUsedException;
 
@@ -27,7 +28,7 @@ public interface MessageService {
 
     int countUnreadMessages(String email);
 
-    Collection<MessageUIDto> getHistory(Long id, String email);
+    List<MessageUIDto> getHistory(Long id, String email);
 
-    Collection<Long> getParticipants(String email);
+    Set<Long> getParticipants(String email);
 }

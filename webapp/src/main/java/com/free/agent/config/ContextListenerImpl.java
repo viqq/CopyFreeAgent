@@ -6,16 +6,16 @@ package com.free.agent.config;
  */
 
 import com.free.agent.FreeAgentAPI;
+import lombok.NoArgsConstructor;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+@NoArgsConstructor
 public class ContextListenerImpl implements ServletContextListener {
-    private static final String PROD = "prod";
 
-    public ContextListenerImpl() {
-    }
+    private static final String PROD = "prod";
 
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();

@@ -15,7 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -38,7 +38,6 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
         return entityManager;
     }
 
-
     @Override
     public User findByEmail(String email) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
@@ -49,7 +48,7 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
     }
 
     @Override
-    public Collection<User> findByFilter(Filter filter) {
+    public List<User> findByFilter(Filter filter) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
         query.where(filter.getPredicate(cb, query));
@@ -57,7 +56,7 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
     }
 
     @Override
-    public Collection<User> findByFilter(FilterNew filter) {
+    public List<User> findByFilter(FilterNew filter) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
         query.where(filter.getPredicate(cb, query));
@@ -66,7 +65,7 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
     }
 
     @Override
-    public Collection<User> findByNotFilter(FilterNew filter, String city, String country, Integer startIndex) {
+    public List<User> findByNotFilter(FilterNew filter, String city, String country, Integer startIndex) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
         Root<User> fromUser = query.from(User.class);

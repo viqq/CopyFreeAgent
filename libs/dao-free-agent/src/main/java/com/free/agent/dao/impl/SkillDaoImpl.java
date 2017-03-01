@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
  */
 @Repository
 public class SkillDaoImpl extends GenericDaoImpl<Skill, Long> implements SkillDao {
+
     @PersistenceContext(unitName = FreeAgentConstant.PERSISTENCE_CONTEXT)
     protected EntityManager entityManager;
 

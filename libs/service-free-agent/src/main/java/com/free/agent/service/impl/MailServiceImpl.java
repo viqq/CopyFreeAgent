@@ -23,18 +23,15 @@ public class MailServiceImpl implements MailService {
     private MailSender mailSender;
 
     public void sendMail(final String to, final String subject, final String body) {
-        executor.submit(new Runnable() {
-            @Override
-            public void run() {
-                LOGGER.info("sendMail start");
-                SimpleMailMessage message = new SimpleMailMessage();
-                message.setTo(to);
-                message.setSubject(subject);
-                message.setText(body);
-                LOGGER.info("sendMail before start");
-                //mailSender.send(message);
-                LOGGER.info("Email '" + subject + "' about '" + body + "' was sent to " + to);
-            }
+        executor.submit(() -> {
+            LOGGER.info("sendMail start");
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            message.setSubject(subject);
+            message.setText(body);
+            LOGGER.info("sendMail before start");
+            mailSender.send(message);
+            LOGGER.info(String.format("Email %s about %s was sent to %s", subject, body, to));
         });
     }
 }

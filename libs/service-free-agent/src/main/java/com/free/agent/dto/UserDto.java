@@ -1,13 +1,15 @@
 package com.free.agent.dto;
 
 import com.free.agent.annotation.Phone;
+import lombok.Data;
 
 
 /**
  * Created by antonPC on 28.06.15.
  */
-
+@Data
 public class UserDto extends UserRegistrationDto {
+
     private String city;
     private String country;
     private String description;
@@ -17,59 +19,4 @@ public class UserDto extends UserRegistrationDto {
     private String phone;
     private String gender;
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Long getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Long dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
 }

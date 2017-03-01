@@ -7,6 +7,7 @@ import com.free.agent.model.Sport;
 import com.free.agent.model.Sport_;
 import com.free.agent.utils.DaoUtils;
 import com.free.agent.utils.PredicateBuilder;
+import com.google.common.collect.Maps;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,7 +18,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,6 +28,7 @@ import java.util.Set;
  */
 @Repository
 public class SportDaoImpl extends GenericDaoImpl<Sport, Long> implements SportDao {
+
     @PersistenceContext(unitName = FreeAgentConstant.PERSISTENCE_CONTEXT)
     protected EntityManager entityManager;
 
@@ -38,17 +42,20 @@ public class SportDaoImpl extends GenericDaoImpl<Sport, Long> implements SportDa
         return entityManager;
     }
 
+    private static Map<Language, SingularAttribute<Sport, String>> attributeMap = Maps.newHashMapWithExpectedSize(Language.values().length);
+
+    static {
+        attributeMap.put(Language.ENG, Sport_.nameEn);
+        attributeMap.put(Language.RU, Sport_.nameRu);
+    }
+
     @Override
     @Cacheable(value = "sportCache")
     public Set<Sport> findByNames(Set<String> name, Language language) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Sport> query = cb.createQuery(Sport.class);
         Root<Sport> from = query.from(Sport.class);
-        if (language == Language.ENG) {
-            query.where(new PredicateBuilder(cb).addInPredicate(from.get(Sport_.nameEn), name).buildWithAndConjunction());
-        } else {
-            query.where(new PredicateBuilder(cb).addInPredicate(from.get(Sport_.nameRu), name).buildWithAndConjunction());
-        }
+        query.where(new PredicateBuilder(cb).addInPredicate(from.get(attributeMap.get(language)), name).buildWithAndConjunction());
         return DaoUtils.getResultSet(getEntityManager().createQuery(query).getResultList());
     }
 
@@ -58,11 +65,7 @@ public class SportDaoImpl extends GenericDaoImpl<Sport, Long> implements SportDa
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Sport> query = cb.createQuery(Sport.class);
         Root<Sport> from = query.from(Sport.class);
-        if (language == Language.ENG) {
-            query.where(cb.equal(from.get(Sport_.nameEn), sport));
-        } else {
-            query.where(cb.equal(from.get(Sport_.nameRu), sport));
-        }
+        query.where(cb.equal(from.get(attributeMap.get(language)), sport));
         return DaoUtils.getSingleResult(getEntityManager().createQuery(query).getResultList());
     }
 

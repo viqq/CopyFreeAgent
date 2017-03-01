@@ -1,6 +1,5 @@
 package com.free.agent.utils;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
@@ -176,16 +175,12 @@ public class AssertCollectionContains<T> {
         while (!lines.isEmpty()) {
             String line = lines.getFirst();
             List<String> cols = Arrays.asList(line.split("\\|"));
-            cols = Lists.transform(cols, new Function<String, String>() {
-
-                @Override
-                public String apply(String s) {
-                    String trimed = s.trim();
-                    if (trimed.matches("-?[0-9]*\\.[0-9]*0+")) {
-                        return trimed.replaceAll("(\\.0*|0*)$", "");
-                    }
-                    return trimed;
+            cols = Lists.transform(cols, s -> {
+                String trimed = s.trim();
+                if (trimed.matches("-?[0-9]*\\.[0-9]*0+")) {
+                    return trimed.replaceAll("(\\.0*|0*)$", "");
                 }
+                return trimed;
             });
 
             lineColumns.add(cols);

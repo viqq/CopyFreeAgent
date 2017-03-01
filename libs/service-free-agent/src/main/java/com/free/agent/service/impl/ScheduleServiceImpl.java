@@ -7,20 +7,17 @@ import com.free.agent.exception.ScheduleNotFoundException;
 import com.free.agent.exception.SportNotSupportedException;
 import com.free.agent.model.*;
 import com.free.agent.service.ScheduleService;
-import com.free.agent.util.FunctionUtils;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import static com.free.agent.util.FunctionUtils.*;
 
 /**
  * Created by antonPC on 05.12.15.
@@ -37,6 +34,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
     private SportDao sportDao;
+
+    @Autowired
+    private ConversionService conversionService;
 
     @Autowired
     private DayDao dayDao;
@@ -61,23 +61,19 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void save(String email, ScheduleDto scheduleDto) {
         //todo cascade type
         User user = userDao.findByEmail(email);
-        Schedule schedule = getSchedule(scheduleDto);
-        Set<Day> days = FluentIterable.from(scheduleDto.getDays()).transform(DAY_INVOKE).toSet();
-        for (Day day : days) {
-            day.setSchedule(schedule);
-        }
+        Schedule schedule = conversionService.convert(scheduleDto, Schedule.class);
+        Set<Day> days = scheduleDto.getDays().stream().map(input -> conversionService.convert(input, Day.class)).collect(Collectors.toSet());
+        days.forEach(day -> day.setSchedule(schedule));
         // dayDao.saveAll(days);
         schedule.setDays(days);
-        Set<Weekday> weekdays = FluentIterable.from(scheduleDto.getDayOfWeeks()).transform(WEEKDAY_INVOKE).toSet();
-        for (Weekday weekday : weekdays) {
-            weekday.setSchedule(schedule);
-        }
+        Set<Weekday> weekdays = scheduleDto.getDayOfWeeks().stream().map(input -> conversionService.convert(input, Weekday.class)).collect(Collectors.toSet());
+        weekdays.forEach(weekday -> weekday.setSchedule(schedule));
         // weekdayDao.saveAll(weekdays);
         schedule.setWeekdays(weekdays);
         Sport sport = sportDao.find(scheduleDto.getSportId());
         if (!user.getSports().contains(sport)) {
-            LOGGER.error("You can not select sport " + sport + " for your schedule");
-            throw new SportNotSupportedException("You can not select sport " + sport + " for your schedule");
+            LOGGER.error(String.format("You can not select sport %s for your schedule", sport));
+            throw new SportNotSupportedException(String.format("You can not select sport %s for your schedule", sport));
         }
         schedule.setSport(sport);
         schedule.setUser(user);
@@ -93,8 +89,8 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setSport(sportDao.find(dto.getSportId()));
         schedule.setStartTime(new DateTime(dto.getStartTime()).toDate());
         schedule.setEndTime(new DateTime(dto.getEndTime()).toDate());
-        schedule.setDays(FluentIterable.from(dto.getDays()).transform(FunctionUtils.DAY_INVOKE).toSet());
-        schedule.setWeekdays(FluentIterable.from(dto.getDayOfWeeks()).transform(FunctionUtils.WEEKDAY_INVOKE).toSet());
+        schedule.setDays(dto.getDays().stream().map(input -> conversionService.convert(input, Day.class)).collect(Collectors.toSet()));
+        schedule.setWeekdays(dto.getDayOfWeeks().stream().map(input -> conversionService.convert(input, Weekday.class)).collect(Collectors.toSet()));
         scheduleDao.update(schedule);
     }
 
@@ -103,20 +99,13 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void delete(String email, final Long id) {
         User user = userDao.findByEmail(email);
         List<Schedule> schedules = scheduleDao.findAllByUserId(user.getId());
-        Optional<Schedule> scheduleOptional = FluentIterable.from(schedules).firstMatch(new Predicate<Schedule>() {
-            @Override
-            public boolean apply(Schedule input) {
-                return input.getId().equals(id);
-            }
-        });
-        if (!scheduleOptional.isPresent()) {
-            throw new ScheduleNotFoundException("Schedule with id " + id + " is not found");
-        }
-        Schedule schedule = scheduleOptional.get();
+        Schedule schedule = schedules.stream().filter(input -> input.getId().equals(id)).findFirst()
+                .orElseThrow(() -> new ScheduleNotFoundException(String.format("Schedule with id %s is not found", id)));
         user.getSchedules().remove(schedule);
         schedule.setSport(null);
         schedule.setUser(null);
         userDao.update(user);
         scheduleDao.delete(schedule);
     }
+
 }

@@ -9,7 +9,6 @@ import com.free.agent.model.Sport;
 import com.free.agent.model.User;
 import com.free.agent.service.impl.UserServiceImpl;
 import com.free.agent.util.EncryptionUtils;
-import com.free.agent.util.FunctionUtils;
 import com.google.common.collect.Sets;
 import junit.framework.TestCase;
 import org.junit.Assert;
@@ -20,10 +19,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * Created by antonPC on 28.06.15.
@@ -36,6 +37,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImplTest extends TestCase {
     private static final String FOOTBALL_EN = "FOOTBALL";
     private static final String FOOTBALL_RU = "ФУТБОЛ";
+
+    @Mock
+    private ConversionService conversionService;
 
     @Mock
     private SportDao sportDao;
@@ -56,10 +60,12 @@ public class UserServiceImplTest extends TestCase {
 
     @Test
     public void saveUserTest() {
-        UserRegistrationDto user = new UserRegistrationDto();
+        UserRegistrationDto userDto = new UserRegistrationDto();
+        User user = user();
         Mockito.when(sportDao.findByName(FOOTBALL_EN, Language.ENG)).thenReturn(sports());
-        Mockito.when(userDao.create(FunctionUtils.getUser(user))).thenReturn(user());
-        User savedUser = service.save(user);
+        Mockito.when(conversionService.convert(userDto, User.class)).thenReturn(user);
+        Mockito.when(userDao.create(user)).thenReturn(user);
+        User savedUser = service.save(userDto);
         Assert.assertEquals(1, savedUser.getSports().size());
         Assert.assertEquals(FOOTBALL_EN, savedUser.getSports().iterator().next().getNameEn());
     }
@@ -75,7 +81,7 @@ public class UserServiceImplTest extends TestCase {
         User user = new User();
         user.setEmail("email@gmail.com");
         user.setPassword(EncryptionUtils.encrypt("12345"));
-        user.setSports(Sets.newHashSet(new Sport(FOOTBALL_EN, FOOTBALL_RU)));
+        user.setSports(Sets.newHashSet(sports()));
         return user;
     }
 }

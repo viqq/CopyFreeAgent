@@ -16,7 +16,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,13 +30,13 @@ public interface UserService {
 
     void addImage(String email, HttpServletRequest request) throws Exception;
 
-    Collection<User> findAll();
+    List<User> findAll();
 
     User findById(Long id);
 
-    Collection<UserWithSportUIDto> findByFilter(Filter filter);
+    List<UserWithSportUIDto> findByFilter(Filter filter);
 
-    Collection<UserWithScheduleUIDto> findByFilter(FilterNew filter, Integer startIndex, String name);
+    List<UserWithScheduleUIDto> findByFilter(FilterNew filter, Integer startIndex, String name);
 
     void deleteUser(Long id);
 
