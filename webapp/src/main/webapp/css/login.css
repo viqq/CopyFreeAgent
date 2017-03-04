@@ -1,3 +1,8 @@
+#login{
+    background: url(/img/grid_white.png) #dee5ed center no-repeat;
+    background-size: 98%;
+}
+
 #login .login-links {
     margin-top: 45px;
     width: 100%;

@@ -3,13 +3,16 @@
         <img src="/img/logo.svg">
     </a>
 
-    <a class="link" href="/login" class="" ng-hide="isLoggedIn">
+    <a class="link" href="/registration"  ng-if="!isLoggedIn && currentLocation === '/login'">
+        <div class="icon"></div>
+        <span>REGISTER</span>
+    </a>
+    <a class="link" href="/login" ng-if="!isLoggedIn && currentLocation === '/registration'">
         <div class="icon"></div>
         <span>LOGIN</span>
     </a>
     <a class="link"
        href=""
-       class=""
        ng-show="isLoggedIn"
        ng-click="logoutHandler()">
         <div class="icon"></div>

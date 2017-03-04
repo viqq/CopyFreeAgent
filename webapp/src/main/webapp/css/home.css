@@ -1,10 +1,10 @@
 #home {
-    background-color: white;
+    background-color: #dee5ed;
     overflow: hidden;
     position: relative;
     width: 100%;
     height: 100%;
-    padding: 0px;
+    padding: 0;
 }
 
 #home span {
@@ -90,8 +90,8 @@
 #home .net-group {
     padding: 15px;
     box-sizing: border-box;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
 }
 
 #home .net-group > div {
@@ -162,7 +162,7 @@
 #home .title-group p.text-free,
 #home .title-group p.text-agent {
     font-size: 13.5vh;
-    margin: 0px;
+    margin: 0;
     text-align: center;
     position: relative;
     letter-spacing: 0.05em;
@@ -180,7 +180,7 @@
     top: 34.5%;
     left: 1.8vh;
     z-index: 3;
-    text-shadow: 0px -3px 20px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 -3px 20px rgba(0, 0, 0, 0.5);
 }
 
 #home .subtitle-group {
@@ -264,7 +264,7 @@
 
 @media (max-width: 1024px) {
     #home .inner-frame {
-        padding: 0px;
+        padding: 0;
     }
 
     #home #socials {
@@ -282,9 +282,9 @@
     }
 
     #home .subtitle-group {
-        padding: 0px 0.5em;
+        padding: 0 0.5em;
         position: absolute;
-        top: 0px;
+        top: 0;
         height: 100%;
         width: 100%;
         box-sizing: border-box;
@@ -313,10 +313,10 @@
 
     #home .subtitle-group #find, 
     #home .subtitle-group #register {
-        margin: 0px;
+        margin: 0;
         box-sizing: border-box;
         width: 100%;
-        padding: 0px;
+        padding: 0;
         line-height: 3;
     }
 
@@ -337,7 +337,7 @@
     }
 
     #home .net-group {
-        padding: 0px;
+        padding: 0;
     }
 
     #home .net-group > div {

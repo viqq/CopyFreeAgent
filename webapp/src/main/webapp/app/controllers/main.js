@@ -27,13 +27,17 @@ define(
                 });
 
                 $scope.$root.$on("$routeChangeSuccess", function (event, next, current) {
-                    console.log('success', 'nex:' + next.originalPath, 'curr:' + (current && current.originalPath))
+                    console.log('success', 'nex:' + next.originalPath, 'curr:' + (current && current.originalPath));
+
+                    $scope.$root.currentLocation = $location.path();
                 });
 
                 angular.extend($scope.$root, {
                     language: 'en',
                     toolkit: toolkit,
                     isLoggedIn: false,
+
+
 
                     currUserInfo: {},
                     updateUserInfo: function () {

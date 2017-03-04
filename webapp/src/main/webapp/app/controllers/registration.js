@@ -26,6 +26,8 @@ define(
                     return;
                 }
 
+                console.log($scope.currentLocation);
+
                 var validateForm = function () {
                     $scope.validationResults = [];
                     $scope.$broadcast('validate-form');
