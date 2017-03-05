@@ -18,6 +18,10 @@
 }
 
 @media (max-width: 1024px) {
+    #registration{
+        background-size: cover;
+    }
+
     #registration .row-wrapper .form-field:first-child {
         padding-right: 0%;
     }
