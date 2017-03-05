@@ -18,3 +18,9 @@
 #login .login-links > a:last-child {
     text-align:right;
 }
+
+@media (max-width: 1024px){
+    #login{
+        background-size: cover;
+    }
+}
