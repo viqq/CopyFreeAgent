@@ -12,10 +12,12 @@ define(
 
         'jquery',
 
-        'controllers/main'
+        'controllers/main',
+
+        'shared/shared.module'
     ],
     function (angularAMD) {
-        var app = angular.module('app', ['ngRoute','ngAnimate', 'ngLocale']);
+        var app = angular.module('app', ['ngRoute','ngAnimate', 'ngLocale', 'shared']);
 
         app.config([
             '$routeProvider',

@@ -17,10 +17,12 @@ define(
                 templateUrl: 'app/directives/header/template.html',
                 replace: true,
                 scope: true,
-                controller: ['$scope', '$location', 'logout', function ($scope, $location, logout) {
+                controller: ['$scope', '$location', 'logout', 'UserService', function ($scope, $location, logout, UserService) {
                     $scope.uiTranslations = uiTranslations[$scope.language].header;
 
                     $scope.loginData = {};
+
+                    console.log('@@@@@@@@2', UserService);
 
                     $scope.logoutHandler = function() {
                         logout()

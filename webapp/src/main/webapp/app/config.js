@@ -6,6 +6,7 @@ require.config({
 
     // alias libraries paths.  Must set 'angular'
     paths: {
+        // [start] framework part
         'angular': 'libs/angular.min',
         'angular-route': 'libs/angular-route.min',
         'angular-animate': 'libs/angular-animate.min',
@@ -18,6 +19,12 @@ require.config({
         'jquery': 'libs/jquery.min',
 
         'css': 'libs/require-css.min'
+        // [end] framework part
+
+        // [start] application part
+        //'shared': 'shared/shared.module'
+        // [end] application part
+
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim

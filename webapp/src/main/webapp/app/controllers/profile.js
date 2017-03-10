@@ -15,7 +15,8 @@ define(
             '$location',
             'checkUserState',
             'uploadUserPic',
-            function ($scope, $location, checkUserState, uploadUserPic) {
+            'logout',
+            function ($scope, $location, checkUserState, uploadUserPic, logout) {
                 var executors = {
                     'initImages' : function() {
                         //$scope.imageInput = $element.find('#userpic input[type="file"]');
@@ -42,7 +43,7 @@ define(
                     }
                 };
 
-                angular.forEach(executors, function(value, key) {
+                angular.forEach(executors, function(value) {
                     value();
                 });
 
@@ -58,6 +59,17 @@ define(
                         $scope.datePickersConfig.editable = $scope.claimsEdited;
                     }
                 });
+
+                $scope.logoutHandler = function() {
+                    logout()
+                        .success(function(data) {
+                            $scope.$root.isLoggedIn = false;
+                            $location.path('/');
+                        })
+                        .error(function(err) {
+                            console.error('logout: request failed', err);
+                        })
+                };
 
                 //$scope.datePickerData = {
                 //    label: 'Число',

@@ -1,8 +1,8 @@
 <div id="profile">
     <div class="header">
-        <div class="logo">
+        <a class="logo" href="/">
             <img src="/img/logo.svg" width="25px">
-        </div>
+        </a>
         <div class="right-group">
             <a class="search" href="/search">
                 <img src="/img/profile/search_fa_white.svg" width="20px">
@@ -23,7 +23,7 @@
                     {{ userInfo.email }}
                 </div>
             </div>
-            <a class="logout" ng-click="">
+            <a class="logout" ng-click="logoutHandler()">
                 <img src="/img/profile/logout_white.svg" width="18px">
             </a>
         </div>
