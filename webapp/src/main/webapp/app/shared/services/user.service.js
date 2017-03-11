@@ -5,8 +5,8 @@ define(
     [], function () {
         return function(){
             return {
-                getSports: function(){
-                    return ['user1', 'user2', 'user3'];
+                getInfo: function(){
+                    return 'some info';
                 }
             }
         }

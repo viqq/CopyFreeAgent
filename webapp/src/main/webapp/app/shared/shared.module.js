@@ -4,11 +4,13 @@
 define(
     [
         'shared/services/user.service',
-        'shared/services/sport.service'
-    ], function (UserService, SportService) {
-        console.log(arguments);
-        return angular.module('shared', [])
-                .factory('UserService', UserService)
-                .factory('SportService', SportService);
+        'shared/services/sport.service',
+        'shared/services/authentication.service'
+    ], function (UserService, SportService, AuthenticationService) {
+
+        return window.angular.module('shared', [])
+            .factory('UserService', UserService)
+            .factory('SportService', SportService)
+            .factory('AuthenticationService', AuthenticationService);
     }
 );
