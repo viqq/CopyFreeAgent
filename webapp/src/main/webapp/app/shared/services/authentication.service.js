@@ -4,7 +4,7 @@
 define(
     [], function () {
 
-        function AuthenticationService($q){
+        var AuthenticationService = function ($http, $q){
             return {
                 authenticated: false,
                 login: function(){
@@ -14,15 +14,27 @@ define(
                     return $q.resolve(true);
                 },
                 isAuthenticated: function(){
-                    return this.authenticated;
+
+                    var d = $http({
+                        method: 'GET',
+                        url: '/api/isLoggedIn'
+                    });
+
+                    d.success(function (data) {
+                        console.log(data)
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+
+                    return d;
                 },
                 register: function(){
                     return true;
                 }
             }
-        }
+        };
 
-        AuthenticationService.$inject = ['$q'];
+        AuthenticationService.$inject = ['$http','$q'];
 
         return AuthenticationService;
     }

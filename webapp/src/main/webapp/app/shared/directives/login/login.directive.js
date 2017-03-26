@@ -2,17 +2,12 @@
  * Created by TITUS on 30.07.2015.
  */
 define(
-    [
-        'angularAMD',
-        'resources/ui-translations',
-
-        'services/login'
-    ],
-    function (angularAMD, uiTranslations) {
-        angularAMD.directive('dirLogin', ['login', function () {
+    [ ],
+    function () {
+        function loginDirective (uiTranslations, login) {
             return {
                 restrict: 'E',
-                templateUrl: 'app/directives/login/template.html',
+                templateUrl: 'app/shared/directives/login/login.template.html',
                 replace: true,
                 scope: true,
                 controller: [
@@ -68,6 +63,10 @@ define(
                     }
                 ]
             };
-        }]);
+        }
+
+        loginDirective.$inject = ['uiTranslations', 'login'];
+
+        return loginDirective;
     }
 );

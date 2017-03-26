@@ -33,7 +33,7 @@ public final class FreeAgentAPI {
     public static final String SAVE_IMAGE = "/api/user/setImage"; //POST
     public static final String GET_IMAGE = "/api/user/getImage/{id}";
     public static final String GET_ALL_SPORTS = "/api/sports";
-    public static final String IS_AUTHENTICATION = "/api/isAuthentication";
+    public static final String IS_AUTHENTICATION = "/api/isLoggedIn";
     public static final String FIND_USER = "/api/search/user"; //POST
     public static final String GET_UNREAD_MESSAGES = "/api/message/unread";
     public static final String SAVE_MESSAGES = "/api/message"; //POST

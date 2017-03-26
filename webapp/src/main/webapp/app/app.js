@@ -19,20 +19,22 @@ define(
     function (angularAMD) {
         var app = angular.module('app', ['ngRoute','ngAnimate', 'ngLocale', 'shared']);
 
+        var pagesUrl = 'app/pages/';
+
         app.config([
             '$routeProvider',
             '$locationProvider',
             function ($routeProvider, $locationProvider) {
                 $routeProvider
                     .when('/', angularAMD.route({
-                        templateUrl: 'app/views/home.html',
+                        templateUrl: pagesUrl + 'home/home.html',
                         controller: 'HomeCtrl',
-                        controllerUrl: 'controllers/home'
+                        controllerUrl: pagesUrl + 'home/home.js'
                     }))
                     .when('/registration', angularAMD.route({
-                        templateUrl: 'app/views/registration.html',
+                        templateUrl: pagesUrl + 'registration/registration.html',
                         controller: 'RegistrationCtrl',
-                        controllerUrl: 'controllers/registration'
+                        controllerUrl: pagesUrl + 'registration/registration.js'
                     }))
                     .when('/reset-password', angularAMD.route({
                         templateUrl: 'app/views/password-reset.html',
@@ -40,14 +42,14 @@ define(
                         controllerUrl: 'controllers/password-reset'
                     }))
                     .when('/login', angularAMD.route({
-                        templateUrl: 'app/views/login.html',
+                        templateUrl: pagesUrl + 'login/login.html',
                         controller: 'LoginCtrl',
-                        controllerUrl: 'controllers/login'
+                        controllerUrl: pagesUrl + 'login/login.js'
                     }))
                     .when('/profile', angularAMD.route({
-                        templateUrl: 'app/views/profile.html',
+                        templateUrl: pagesUrl + 'profile/profile.html',
                         controller: 'ProfileCtrl',
-                        controllerUrl: 'controllers/profile'
+                        controllerUrl: pagesUrl + 'profile/profile'
                     }))
                     .when('/edit', angularAMD.route({
                         templateUrl: 'app/views/edit.html',

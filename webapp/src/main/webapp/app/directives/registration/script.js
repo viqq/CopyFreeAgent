@@ -12,7 +12,7 @@ define([
         angularAMD.directive('dirRegistration', function () {
             return {
                 restrict: 'E',
-                templateUrl: 'app/directives/registration/template.html',
+                templateUrl: 'app/directives/registration/login.template.html',
                 replace: true,
                 scope: true,
                 controller: controller
