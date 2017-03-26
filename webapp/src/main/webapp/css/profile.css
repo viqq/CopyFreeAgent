@@ -1,5 +1,6 @@
 #profile {
-    background-color: #eeeeee;
+    background: url(/img/grid_white.png) #dee5ed center no-repeat;
+    background-size: 98%;
 }
 
 #profile
@@ -113,7 +114,7 @@
     min-height: 240px;
     max-width: 1060px;
     margin: auto;
-    margin-top: -40px;
+    /*margin-top: -40px;*/
     position: relative;
 }
 
@@ -403,4 +404,10 @@
 
 .custom-select::-ms-expand {
     display: none;
+}
+
+@media (max-width: 1024px) {
+    #profile {
+        background-size: cover;
+    }
 }

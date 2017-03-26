@@ -49,7 +49,7 @@ define(
                     .when('/profile', angularAMD.route({
                         templateUrl: pagesUrl + 'profile/profile.html',
                         controller: 'ProfileCtrl',
-                        controllerUrl: pagesUrl + 'profile/profile'
+                        controllerUrl: pagesUrl + 'profile/profile.js'
                     }))
                     .when('/edit', angularAMD.route({
                         templateUrl: 'app/views/edit.html',
