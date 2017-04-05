@@ -25,7 +25,7 @@ public class SportServiceImpl implements SportService {
     private SportDao sportDao;
 
     @Autowired
-    ConversionService conversionService;
+    private ConversionService conversionService;
 
     @Override
     @Transactional(value = FreeAgentConstant.TRANSACTION_MANAGER)

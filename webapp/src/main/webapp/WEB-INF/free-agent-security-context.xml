@@ -14,6 +14,7 @@
 		<!--<intercept-url pattern="/admin/*" access="ROLE_ADMIN" />-->
 		<anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
 		<form-login default-target-url="/user/info"
+					login-page="/login"
 					authentication-success-handler-ref="loginSuccessHandler"
 					authentication-failure-handler-ref="loginFailureHandler"/>
 		<logout success-handler-ref="logoutSuccessHandler"/>
